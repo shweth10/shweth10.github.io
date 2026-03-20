@@ -4,233 +4,685 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>LensReport — Scan Receipts. Auto-Fill Reports. Export Instantly.</title>
-  <meta name="description" content="LensReport turns receipts and invoices into export-ready reports using AI. Scan, auto-fill, and export to PDF or Excel with real formulas.">
-  <meta name="theme-color" content="#4CAF7D">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📋</text></svg>">
+  <meta name="description" content="LensReport uses cloud AI to read your receipts and invoices, auto-populate report fields, and export to PDF or Excel with real working formulas. No manual data entry.">
+  <meta name="theme-color" content="#0A0A0A">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="LensReport — Scan Receipts. Auto-Fill Reports. Export Instantly.">
+  <meta property="og:description" content="Cloud AI reads your receipts and invoices, auto-fills every field, and exports to PDF or Excel with real formulas.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://lensreport.app">
+  <meta property="og:image" content="https://lensreport.app/assets/images/onboarding_01_scan_invoice.png">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="LensReport — Scan Receipts. Auto-Fill Reports.">
+  <meta name="twitter:description" content="Cloud AI reads your receipts, auto-fills reports, exports to PDF/Excel with real formulas.">
+
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect rx='20' width='100' height='100' fill='%234CAF7D'/><text x='50' y='68' font-size='55' text-anchor='middle' fill='white'>L</text></svg>">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --primary: #4CAF7D;
-      --primary-dark: #3a9468;
-      --bg: #FAFBFC;
-      --surface: #FFFFFF;
-      --text: #1A1D21;
-      --text-secondary: #6B7280;
-      --border: #E5E7EB;
-      --accent-purple: #6B5CE7;
-      --accent-orange: #E87040;
-      --accent-blue: #0EA5E9;
-    }
-
+    /* ═══════════════════════════════════════════════════════════════════
+       RESET & BASE
+       ═══════════════════════════════════════════════════════════════════ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-      background: var(--bg);
-      color: var(--text);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #0A0A0A;
+      color: #E8E8E8;
       line-height: 1.6;
       -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+
+    /* ═══════════════════════════════════════════════════════════════════
+       VARIABLES
+       ═══════════════════════════════════════════════════════════════════ */
+    :root {
+      --green: #4CAF7D;
+      --green-light: #5EC98F;
+      --green-glow: rgba(76, 175, 125, 0.15);
+      --green-dark: #3A9468;
+      --coral: #F0856A;
+      --purple: #6B5CE7;
+      --blue: #0EA5E9;
+      --bg: #0A0A0A;
+      --surface: #111111;
+      --card: #161616;
+      --card-hover: #1C1C1C;
+      --border: rgba(255,255,255,0.06);
+      --border-hover: rgba(255,255,255,0.12);
+      --text: #E8E8E8;
+      --text-secondary: #8892A0;
+      --text-muted: #555;
+      --radius: 16px;
+      --radius-sm: 12px;
+      --radius-xs: 8px;
     }
 
-    /* Nav */
+    /* ═══════════════════════════════════════════════════════════════════
+       UTILITIES
+       ═══════════════════════════════════════════════════════════════════ */
+    .container { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+    .section { padding: 120px 0; }
+    .section-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--green);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 16px;
+    }
+    .section-title {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: clamp(28px, 4vw, 40px);
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      line-height: 1.15;
+      margin-bottom: 16px;
+    }
+    .section-subtitle {
+      font-size: 16px;
+      color: var(--text-secondary);
+      max-width: 480px;
+      line-height: 1.7;
+    }
+    .section-header { text-align: center; margin-bottom: 64px; }
+    .section-header .section-subtitle { margin: 0 auto; }
+
+    /* ═══════════════════════════════════════════════════════════════════
+       SCROLL REVEAL
+       ═══════════════════════════════════════════════════════════════════ */
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .stagger > .reveal:nth-child(1) { transition-delay: 0ms; }
+    .stagger > .reveal:nth-child(2) { transition-delay: 80ms; }
+    .stagger > .reveal:nth-child(3) { transition-delay: 160ms; }
+    .stagger > .reveal:nth-child(4) { transition-delay: 240ms; }
+    .stagger > .reveal:nth-child(5) { transition-delay: 320ms; }
+    .stagger > .reveal:nth-child(6) { transition-delay: 400ms; }
+    .stagger > .reveal:nth-child(7) { transition-delay: 480ms; }
+    .stagger > .reveal:nth-child(8) { transition-delay: 560ms; }
+
+    /* ═══════════════════════════════════════════════════════════════════
+       NAV
+       ═══════════════════════════════════════════════════════════════════ */
     nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      background: rgba(255,255,255,0.92);
-      backdrop-filter: blur(12px);
+      background: rgba(10, 10, 10, 0.8);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
       border-bottom: 1px solid var(--border);
-      padding: 0 24px;
     }
     .nav-inner {
-      max-width: 1080px; margin: 0 auto;
+      max-width: 1120px; margin: 0 auto; padding: 0 24px;
       display: flex; align-items: center; justify-content: space-between;
       height: 64px;
     }
-    .logo { font-size: 20px; font-weight: 700; color: var(--primary); text-decoration: none; letter-spacing: -0.5px; }
-    .logo span { color: var(--text); }
-    .nav-links { display: flex; gap: 28px; align-items: center; }
-    .nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 14px; font-weight: 500; transition: color 0.2s; }
+    .logo {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 20px; font-weight: 800;
+      letter-spacing: -0.5px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .logo-icon {
+      width: 32px; height: 32px;
+      border-radius: 8px;
+      background: var(--green);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px; font-weight: 800; color: white;
+    }
+    .logo .green { color: var(--green); }
+    .nav-links { display: flex; gap: 32px; align-items: center; }
+    .nav-links a {
+      font-size: 14px; font-weight: 500;
+      color: var(--text-secondary);
+      transition: color 0.2s;
+    }
     .nav-links a:hover { color: var(--text); }
 
-    /* Hero */
+    /* ═══════════════════════════════════════════════════════════════════
+       HERO
+       ═══════════════════════════════════════════════════════════════════ */
     .hero {
-      padding: 140px 24px 80px;
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
       text-align: center;
-      max-width: 800px;
-      margin: 0 auto;
+      padding: 120px 24px 80px;
+      position: relative;
+      overflow: hidden;
     }
+    /* Ambient glow */
+    .hero-glow {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(100px);
+      pointer-events: none;
+    }
+    .hero-glow-1 {
+      width: 700px; height: 700px;
+      top: 10%; left: 50%;
+      background: radial-gradient(circle, var(--green-glow) 0%, transparent 70%);
+      animation: glow-float 10s ease-in-out infinite;
+    }
+    .hero-glow-2 {
+      width: 500px; height: 500px;
+      top: 30%; left: 30%;
+      background: radial-gradient(circle, rgba(107, 92, 231, 0.08) 0%, transparent 70%);
+      animation: glow-float 12s ease-in-out infinite reverse;
+    }
+    .hero-glow-3 {
+      width: 400px; height: 400px;
+      top: 20%; right: 20%;
+      background: radial-gradient(circle, rgba(240, 133, 106, 0.06) 0%, transparent 70%);
+      animation: glow-float 14s ease-in-out infinite 2s;
+    }
+    @keyframes glow-float {
+      0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+      50% { transform: translate(-50%, -50%) scale(1.3); opacity: 0.7; }
+    }
+
+    .hero-content { position: relative; z-index: 1; max-width: 800px; }
+
     .hero-badge {
-      display: inline-block;
-      background: #E8F5EE;
-      color: var(--primary-dark);
-      font-size: 13px;
-      font-weight: 600;
-      padding: 6px 16px;
-      border-radius: 20px;
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(76, 175, 125, 0.1);
+      border: 1px solid rgba(76, 175, 125, 0.2);
+      color: var(--green-light);
+      font-family: 'DM Mono', monospace;
+      font-size: 13px; font-weight: 500;
+      padding: 8px 18px;
+      border-radius: 100px;
+      margin-bottom: 32px;
+      animation: hero-fade-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
+    }
+    .hero-badge .dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--green);
+      animation: pulse-dot 2s ease-in-out infinite;
+    }
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(1.4); }
+    }
+
+    .hero h1 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: clamp(40px, 7vw, 72px);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -2.5px;
       margin-bottom: 24px;
     }
-    .hero h1 {
-      font-size: clamp(32px, 5vw, 52px);
-      font-weight: 800;
-      line-height: 1.1;
-      letter-spacing: -1.5px;
-      margin-bottom: 20px;
+    .hero h1 .line {
+      display: block;
+      animation: hero-line-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
     }
-    .hero h1 .accent { color: var(--primary); }
-    .hero p {
-      font-size: 18px;
+    .hero h1 .line:nth-child(1) { animation-delay: 0.3s; }
+    .hero h1 .line:nth-child(2) { animation-delay: 0.5s; }
+    .hero h1 .line:nth-child(3) { animation-delay: 0.7s; }
+    .hero h1 .green {
+      background: linear-gradient(135deg, var(--green) 0%, var(--green-light) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    @keyframes hero-line-in {
+      from { opacity: 0; transform: translateY(40px); filter: blur(8px); }
+      to { opacity: 1; transform: translateY(0); filter: blur(0); }
+    }
+    @keyframes hero-fade-in {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-sub {
+      font-size: clamp(16px, 2vw, 18px);
       color: var(--text-secondary);
       max-width: 560px;
-      margin: 0 auto 36px;
+      margin: 0 auto 40px;
       line-height: 1.7;
+      animation: hero-fade-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.9s both;
     }
-    .hero-cta {
-      display: inline-flex; gap: 12px; flex-wrap: wrap; justify-content: center;
-    }
-    .btn {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 14px 28px;
-      border-radius: 12px;
-      font-size: 15px;
-      font-weight: 600;
-      text-decoration: none;
-      transition: all 0.2s;
-    }
-    .btn-primary {
-      background: var(--primary);
-      color: white;
-    }
-    .btn-primary:hover { background: var(--primary-dark); transform: translateY(-1px); box-shadow: 0 8px 24px rgba(76,175,125,0.3); }
-    .btn-outline {
-      background: var(--surface);
-      color: var(--text);
-      border: 1.5px solid var(--border);
-    }
-    .btn-outline:hover { border-color: var(--primary); color: var(--primary); }
 
-    /* How it works */
-    .section {
-      padding: 80px 24px;
-      max-width: 1080px;
-      margin: 0 auto;
+    .hero-actions {
+      display: flex; gap: 16px;
+      justify-content: center; flex-wrap: wrap;
+      animation: hero-fade-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) 1.1s both;
     }
-    .section-header {
-      text-align: center;
-      margin-bottom: 56px;
+
+    /* Store badges */
+    .store-badge {
+      display: inline-flex; align-items: center; gap: 12px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      padding: 12px 24px;
+      border-radius: var(--radius-sm);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      cursor: pointer;
     }
-    .section-header h2 {
-      font-size: 32px;
-      font-weight: 700;
-      letter-spacing: -0.5px;
-      margin-bottom: 12px;
+    .store-badge:hover {
+      background: var(--card-hover);
+      border-color: var(--border-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
     }
-    .section-header p {
+    .store-badge svg { width: 28px; height: 28px; fill: white; }
+    .store-badge .badge-text { text-align: left; }
+    .store-badge .badge-label {
+      display: block;
+      font-size: 10px;
       color: var(--text-secondary);
-      font-size: 16px;
-      max-width: 520px;
-      margin: 0 auto;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+    .store-badge .badge-store {
+      display: block;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 17px;
+      font-weight: 700;
+      color: white;
+      letter-spacing: -0.3px;
     }
 
-    .steps {
+    /* Scroll indicator */
+    .scroll-indicator {
+      position: absolute;
+      bottom: 32px; left: 50%;
+      transform: translateX(-50%);
+      animation: hero-fade-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) 1.5s both;
+    }
+    .scroll-indicator .chevron {
+      width: 24px; height: 24px;
+      border-right: 2px solid var(--text-muted);
+      border-bottom: 2px solid var(--text-muted);
+      transform: rotate(45deg);
+      animation: scroll-bounce 2s ease-in-out infinite;
+    }
+    @keyframes scroll-bounce {
+      0%, 100% { transform: rotate(45deg) translate(0, 0); opacity: 0.4; }
+      50% { transform: rotate(45deg) translate(4px, 4px); opacity: 0.8; }
+    }
+
+    /* ═══════════════════════════════════════════════════════════════════
+       PRODUCT SHOWCASE
+       ═══════════════════════════════════════════════════════════════════ */
+    .showcase { background: var(--surface); }
+    .showcase-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      grid-template-columns: repeat(3, 1fr);
       gap: 32px;
     }
-    .step {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 32px 24px;
-      text-align: center;
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-    .step:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,0.08); }
-    .step-number {
-      width: 48px; height: 48px;
-      border-radius: 14px;
-      display: inline-flex; align-items: center; justify-content: center;
-      font-size: 20px; font-weight: 700; color: white;
+    .showcase-item { text-align: center; }
+    .phone-frame {
+      background: #1A1A1A;
+      border-radius: 28px;
+      padding: 12px;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.4),
+                  0 0 0 1px rgba(255,255,255,0.05);
       margin-bottom: 20px;
+      overflow: hidden;
     }
-    .step h3 { font-size: 17px; font-weight: 600; margin-bottom: 8px; }
-    .step p { font-size: 14px; color: var(--text-secondary); line-height: 1.6; }
+    .phone-frame img {
+      border-radius: 18px;
+      width: 100%;
+      aspect-ratio: 9/16;
+      object-fit: cover;
+    }
+    .showcase-caption {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text);
+    }
+    .showcase-subcaption {
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin-top: 4px;
+    }
 
-    /* Features */
-    .features {
+    /* ═══════════════════════════════════════════════════════════════════
+       HOW IT WORKS
+       ═══════════════════════════════════════════════════════════════════ */
+    .steps-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      grid-template-columns: repeat(3, 1fr);
       gap: 24px;
     }
-    .feature {
-      background: var(--surface);
+    .step-card {
+      background: var(--card);
       border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 28px;
+      border-radius: var(--radius);
+      padding: 36px 28px;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .step-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      border-radius: var(--radius) var(--radius) 0 0;
+    }
+    .step-card:nth-child(1)::before { background: var(--green); }
+    .step-card:nth-child(2)::before { background: var(--purple); }
+    .step-card:nth-child(3)::before { background: var(--coral); }
+    .step-card:hover {
+      border-color: var(--border-hover);
+      transform: translateY(-4px);
+      box-shadow: 0 16px 48px rgba(0,0,0,0.2);
+    }
+    .step-number {
+      width: 44px; height: 44px;
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'DM Mono', monospace;
+      font-size: 18px; font-weight: 500; color: white;
+      margin-bottom: 24px;
+    }
+    .step-card:nth-child(1) .step-number { background: var(--green); }
+    .step-card:nth-child(2) .step-number { background: var(--purple); }
+    .step-card:nth-child(3) .step-number { background: var(--coral); }
+    .step-card h3 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 18px; font-weight: 700;
+      margin-bottom: 8px; letter-spacing: -0.3px;
+    }
+    .step-card p { font-size: 14px; color: var(--text-secondary); line-height: 1.7; }
+
+    /* ═══════════════════════════════════════════════════════════════════
+       FEATURES
+       ═══════════════════════════════════════════════════════════════════ */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .feature-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px 24px;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .feature-card:hover {
+      border-color: var(--border-hover);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.2);
     }
     .feature-icon {
-      font-size: 28px;
-      margin-bottom: 16px;
+      width: 48px; height: 48px;
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 24px;
+      margin-bottom: 20px;
+      background: rgba(76, 175, 125, 0.1);
     }
-    .feature h3 { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
-    .feature p { font-size: 14px; color: var(--text-secondary); line-height: 1.6; }
+    .feature-card:nth-child(2) .feature-icon { background: rgba(107, 92, 231, 0.1); }
+    .feature-card:nth-child(3) .feature-icon { background: rgba(14, 165, 233, 0.1); }
+    .feature-card:nth-child(4) .feature-icon { background: rgba(240, 133, 106, 0.1); }
+    .feature-card:nth-child(5) .feature-icon { background: rgba(196, 168, 120, 0.1); }
+    .feature-card:nth-child(6) .feature-icon { background: rgba(139, 164, 196, 0.1); }
+    .feature-card h3 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 16px; font-weight: 700;
+      margin-bottom: 8px; letter-spacing: -0.2px;
+    }
+    .feature-card p { font-size: 14px; color: var(--text-secondary); line-height: 1.6; }
 
-    /* Templates */
+    /* ═══════════════════════════════════════════════════════════════════
+       TEMPLATES
+       ═══════════════════════════════════════════════════════════════════ */
+    .templates { background: var(--surface); }
     .templates-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      grid-template-columns: repeat(2, 1fr);
       gap: 16px;
     }
-    .template-card {
-      background: var(--surface);
+    .template-category {
+      background: var(--card);
       border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 20px;
-      display: flex; align-items: center; gap: 12px;
+      border-radius: var(--radius);
+      padding: 24px;
+      display: flex; gap: 16px;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     }
-    .template-dot {
-      width: 10px; height: 10px;
-      border-radius: 50%;
+    .template-category:hover {
+      border-color: var(--border-hover);
+      transform: translateY(-2px);
+    }
+    .cat-accent {
+      width: 4px;
+      border-radius: 4px;
       flex-shrink: 0;
     }
-    .template-card span { font-size: 13px; font-weight: 500; }
-
-    /* CTA */
-    .cta-section {
-      text-align: center;
-      padding: 80px 24px;
-      background: linear-gradient(135deg, #E8F5EE 0%, #EDE9FE 100%);
-      border-radius: 24px;
-      max-width: 1080px;
-      margin: 0 auto 80px;
+    .cat-content { flex: 1; }
+    .cat-header {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 12px;
     }
-    .cta-section h2 { font-size: 32px; font-weight: 700; margin-bottom: 12px; }
-    .cta-section p { color: var(--text-secondary); margin-bottom: 32px; font-size: 16px; }
+    .cat-name {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 15px; font-weight: 700;
+    }
+    .cat-count {
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+      color: var(--text-muted);
+      background: rgba(255,255,255,0.05);
+      padding: 2px 10px;
+      border-radius: 100px;
+    }
+    .cat-templates {
+      display: flex; flex-wrap: wrap; gap: 6px;
+    }
+    .cat-tag {
+      font-size: 12px;
+      color: var(--text-secondary);
+      background: rgba(255,255,255,0.04);
+      padding: 4px 10px;
+      border-radius: 6px;
+      border: 1px solid rgba(255,255,255,0.04);
+    }
 
-    /* Footer */
+    /* ═══════════════════════════════════════════════════════════════════
+       STATS
+       ═══════════════════════════════════════════════════════════════════ */
+    .stats-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin-top: 64px;
+    }
+    .stat {
+      background: var(--card);
+      padding: 32px 24px;
+      text-align: center;
+    }
+    .stat-value {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 32px;
+      font-weight: 800;
+      letter-spacing: -1px;
+      color: white;
+      margin-bottom: 4px;
+    }
+    .stat-value .green { color: var(--green); }
+    .stat-label {
+      font-size: 13px;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════════
+       CTA
+       ═══════════════════════════════════════════════════════════════════ */
+    .cta-section {
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-box {
+      position: relative;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 80px 40px;
+      text-align: center;
+      overflow: hidden;
+    }
+    .cta-glow {
+      position: absolute;
+      width: 500px; height: 500px;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      background: radial-gradient(circle, var(--green-glow) 0%, transparent 70%);
+      filter: blur(80px);
+      pointer-events: none;
+    }
+    .cta-box > * { position: relative; z-index: 1; }
+    .cta-box h2 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: clamp(28px, 4vw, 40px);
+      font-weight: 800;
+      letter-spacing: -1px;
+      margin-bottom: 12px;
+    }
+    .cta-box .section-subtitle { margin: 0 auto 36px; max-width: 440px; }
+
+    .cta-form {
+      display: flex; gap: 12px;
+      max-width: 440px; margin: 0 auto;
+    }
+    .cta-form input {
+      flex: 1;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 14px 20px;
+      font-size: 15px;
+      font-family: 'Inter', sans-serif;
+      color: white;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .cta-form input::placeholder { color: var(--text-muted); }
+    .cta-form input:focus { border-color: var(--green); }
+    .cta-btn {
+      background: var(--green);
+      color: white;
+      border: none;
+      border-radius: var(--radius-sm);
+      padding: 14px 28px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      white-space: nowrap;
+    }
+    .cta-btn:hover {
+      background: var(--green-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(76, 175, 125, 0.3);
+    }
+    .cta-note {
+      margin-top: 16px;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    /* ═══════════════════════════════════════════════════════════════════
+       FOOTER
+       ═══════════════════════════════════════════════════════════════════ */
     footer {
       border-top: 1px solid var(--border);
-      padding: 40px 24px;
-      text-align: center;
+      padding: 48px 0;
     }
     .footer-inner {
-      max-width: 1080px; margin: 0 auto;
+      max-width: 1120px; margin: 0 auto; padding: 0 24px;
+      display: flex; justify-content: space-between; align-items: center;
     }
-    .footer-links { display: flex; gap: 24px; justify-content: center; margin-bottom: 16px; flex-wrap: wrap; }
-    .footer-links a { color: var(--text-secondary); text-decoration: none; font-size: 13px; }
+    .footer-links { display: flex; gap: 28px; }
+    .footer-links a {
+      font-size: 13px;
+      color: var(--text-secondary);
+      transition: color 0.2s;
+    }
     .footer-links a:hover { color: var(--text); }
-    .footer-copy { color: var(--text-secondary); font-size: 12px; }
+    .footer-copy {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
 
+    /* ═══════════════════════════════════════════════════════════════════
+       RESPONSIVE
+       ═══════════════════════════════════════════════════════════════════ */
+    @media (max-width: 900px) {
+      .showcase-grid { grid-template-columns: repeat(3, 1fr); gap: 16px; }
+      .steps-grid { grid-template-columns: 1fr; }
+      .features-grid { grid-template-columns: repeat(2, 1fr); }
+      .templates-grid { grid-template-columns: 1fr; }
+      .stats-strip { grid-template-columns: repeat(2, 1fr); }
+    }
     @media (max-width: 640px) {
       .nav-links { display: none; }
-      .hero { padding: 120px 20px 60px; }
-      .section { padding: 60px 20px; }
-      .cta-section { margin: 0 16px 60px; padding: 48px 20px; }
+      .section { padding: 80px 0; }
+      .hero { padding: 100px 20px 60px; }
+      .hero h1 { letter-spacing: -1.5px; }
+      .showcase-grid {
+        grid-template-columns: 1fr;
+        max-width: 260px;
+        margin: 0 auto;
+      }
+      .showcase-grid .showcase-item:nth-child(n+2) { display: none; }
+      .features-grid { grid-template-columns: 1fr; }
+      .stats-strip { grid-template-columns: 1fr; }
+      .cta-form { flex-direction: column; }
+      .cta-box { padding: 48px 24px; }
+      .footer-inner { flex-direction: column; gap: 16px; text-align: center; }
+      .store-badge { padding: 10px 18px; }
+      .store-badge svg { width: 22px; height: 22px; }
+      .store-badge .badge-store { font-size: 15px; }
     }
   </style>
 </head>
 <body>
 
+  <!-- ════════════════════════════════════════════════════════════════
+       NAV
+       ════════════════════════════════════════════════════════════════ -->
   <nav>
     <div class="nav-inner">
-      <a href="/" class="logo">Lens<span>Report</span></a>
+      <a href="/" class="logo">
+        <div class="logo-icon">L</div>
+        <span class="green">Lens</span>Report
+      </a>
       <div class="nav-links">
         <a href="#how-it-works">How It Works</a>
         <a href="#features">Features</a>
@@ -240,120 +692,339 @@
     </div>
   </nav>
 
+  <!-- ════════════════════════════════════════════════════════════════
+       HERO
+       ════════════════════════════════════════════════════════════════ -->
   <section class="hero">
-    <div class="hero-badge">iOS + Android</div>
-    <h1>Scan receipts.<br><span class="accent">Auto-fill reports.</span><br>Export instantly.</h1>
-    <p>LensReport uses cloud AI to read your receipts and invoices, auto-populate report fields, and export to PDF or Excel with real working formulas. No manual data entry.</p>
-    <div class="hero-cta">
-      <a href="#" class="btn btn-primary">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
-        Coming Soon on App Store
-      </a>
-      <a href="#" class="btn btn-outline">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-        Coming Soon on Google Play
-      </a>
+    <div class="hero-glow hero-glow-1"></div>
+    <div class="hero-glow hero-glow-2"></div>
+    <div class="hero-glow hero-glow-3"></div>
+
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span class="dot"></span>
+        Launching on iOS &amp; Android
+      </div>
+
+      <h1>
+        <span class="line">Scan receipts.</span>
+        <span class="line"><span class="green">Auto-fill reports.</span></span>
+        <span class="line">Export instantly.</span>
+      </h1>
+
+      <p class="hero-sub">
+        Cloud AI reads your receipts and invoices, auto-populates every field,
+        and exports to PDF or Excel with real working formulas.
+        No manual data entry.
+      </p>
+
+      <div class="hero-actions">
+        <!-- Apple -->
+        <a href="#cta" class="store-badge">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+          <div class="badge-text">
+            <span class="badge-label">Coming soon on</span>
+            <span class="badge-store">App Store</span>
+          </div>
+        </a>
+        <!-- Google Play -->
+        <a href="#cta" class="store-badge">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 01-.61-.92V2.734a1 1 0 01.609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-3.199l2.302 2.302-2.302 2.302L15.396 12l2.302-2.492zM5.864 2.658L16.8 8.991l-2.302 2.302L5.864 2.658z"/></svg>
+          <div class="badge-text">
+            <span class="badge-label">Coming soon on</span>
+            <span class="badge-store">Google Play</span>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <div class="scroll-indicator">
+      <div class="chevron"></div>
     </div>
   </section>
 
+  <!-- ════════════════════════════════════════════════════════════════
+       PRODUCT SHOWCASE
+       ════════════════════════════════════════════════════════════════ -->
+  <section class="section showcase" id="showcase">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-label reveal">See it in action</p>
+        <h2 class="section-title reveal">From paper to report in seconds</h2>
+        <p class="section-subtitle reveal">AI reads every field — vendor, date, amounts, tax — and fills your report automatically.</p>
+      </div>
+      <div class="showcase-grid stagger">
+        <div class="showcase-item reveal">
+          <div class="phone-frame">
+            <img src="assets/images/onboarding_01_scan_invoice.png" alt="AI scanning an invoice" loading="lazy">
+          </div>
+          <p class="showcase-caption">Every field, filled automatically</p>
+          <p class="showcase-subcaption">AI reads vendor, date, amounts &amp; tax</p>
+        </div>
+        <div class="showcase-item reveal">
+          <div class="phone-frame">
+            <img src="assets/images/onboarding_02_scan_receipts.png" alt="Scanning multiple receipts" loading="lazy">
+          </div>
+          <p class="showcase-caption">Scan the pile. Get the report.</p>
+          <p class="showcase-subcaption">25+ receipts per session</p>
+        </div>
+        <div class="showcase-item reveal">
+          <div class="phone-frame">
+            <img src="assets/images/onboarding_04_export.png" alt="Export to PDF and Excel" loading="lazy">
+          </div>
+          <p class="showcase-caption">Export as Excel or PDF</p>
+          <p class="showcase-subcaption">Real formulas, not hardcoded values</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════
+       HOW IT WORKS
+       ════════════════════════════════════════════════════════════════ -->
   <section class="section" id="how-it-works">
-    <div class="section-header">
-      <h2>How It Works</h2>
-      <p>Three steps from paper receipt to export-ready report.</p>
-    </div>
-    <div class="steps">
-      <div class="step">
-        <div class="step-number" style="background: var(--primary);">1</div>
-        <h3>Pick a Template</h3>
-        <p>Choose from 30+ built-in report templates covering expenses, tax, travel, construction, medical, and more.</p>
+    <div class="container">
+      <div class="section-header">
+        <p class="section-label reveal">How it works</p>
+        <h2 class="section-title reveal">Three steps to done</h2>
+        <p class="section-subtitle reveal">From paper receipt to export-ready report.</p>
       </div>
-      <div class="step">
-        <div class="step-number" style="background: var(--accent-purple);">2</div>
-        <h3>Scan Your Documents</h3>
-        <p>Photograph receipts and invoices. Cloud AI reads the vendor, date, amounts, and tax — filling in every field automatically.</p>
-      </div>
-      <div class="step">
-        <div class="step-number" style="background: var(--accent-orange);">3</div>
-        <h3>Export Your Report</h3>
-        <p>Export to PDF, Excel (with real formulas), or CSV. Share with your accountant, boss, or tax office.</p>
+      <div class="steps-grid stagger">
+        <div class="step-card reveal">
+          <div class="step-number">1</div>
+          <h3>Pick a template</h3>
+          <p>Choose from 30+ built-in report templates covering expenses, tax, travel, construction, medical, inventory, and more.</p>
+        </div>
+        <div class="step-card reveal">
+          <div class="step-number">2</div>
+          <h3>Scan your documents</h3>
+          <p>Photograph receipts and invoices. Cloud AI reads the vendor, date, amounts, and tax — filling every field automatically.</p>
+        </div>
+        <div class="step-card reveal">
+          <div class="step-number">3</div>
+          <h3>Export your report</h3>
+          <p>Export to PDF, Excel with real formulas, or CSV. Share with your accountant, manager, or tax office in one tap.</p>
+        </div>
       </div>
     </div>
   </section>
 
+  <!-- ════════════════════════════════════════════════════════════════
+       FEATURES
+       ════════════════════════════════════════════════════════════════ -->
   <section class="section" id="features">
-    <div class="section-header">
-      <h2>Built for Real Work</h2>
-      <p>Everything you need to turn paper into structured data.</p>
+    <div class="container">
+      <div class="section-header">
+        <p class="section-label reveal">Features</p>
+        <h2 class="section-title reveal">Built for real work</h2>
+        <p class="section-subtitle reveal">Everything you need to turn paper into structured data.</p>
+      </div>
+      <div class="features-grid stagger">
+        <div class="feature-card reveal">
+          <div class="feature-icon">🤖</div>
+          <h3>Cloud AI Extraction</h3>
+          <p>GPT-4.1-mini reads your documents and extracts fields with high accuracy. No manual typing required.</p>
+        </div>
+        <div class="feature-card reveal">
+          <div class="feature-icon">📊</div>
+          <h3>Real Excel Formulas</h3>
+          <p>Calculated columns export as actual formulas like =H4*0.15 — not hardcoded numbers. Your spreadsheets stay live.</p>
+        </div>
+        <div class="feature-card reveal">
+          <div class="feature-icon">📶</div>
+          <h3>Offline-First</h3>
+          <p>Capture photos offline — they queue automatically and process when connectivity returns. Editing and export always work.</p>
+        </div>
+        <div class="feature-card reveal">
+          <div class="feature-icon">📱</div>
+          <h3>Multi-Document Sessions</h3>
+          <p>Scan 25+ receipts into a single report. Each becomes a row in your spreadsheet, ready to review and export.</p>
+        </div>
+        <div class="feature-card reveal">
+          <div class="feature-icon">🧮</div>
+          <h3>Smart Columns</h3>
+          <p>Auto-calculated tax, totals, variance, and running balances. Set the rate once — every row updates.</p>
+        </div>
+        <div class="feature-card reveal">
+          <div class="feature-icon">📈</div>
+          <h3>Dashboard Insights</h3>
+          <p>KPI cards, bar charts, pie charts, and time-series for every report. See spending patterns at a glance.</p>
+        </div>
+      </div>
     </div>
-    <div class="features">
-      <div class="feature">
-        <div class="feature-icon">🤖</div>
-        <h3>Cloud AI Extraction</h3>
-        <p>GPT-4.1-mini reads your documents and extracts fields with high accuracy. No manual typing.</p>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════
+       TEMPLATES
+       ════════════════════════════════════════════════════════════════ -->
+  <section class="section templates" id="templates">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-label reveal">Templates</p>
+        <h2 class="section-title reveal">30+ report templates</h2>
+        <p class="section-subtitle reveal">Every template maps to a real-world document you scan regularly.</p>
       </div>
-      <div class="feature">
-        <div class="feature-icon">📊</div>
-        <h3>Real Excel Formulas</h3>
-        <p>Calculated columns export as actual formulas (=H4*0.15), not hardcoded numbers. Your spreadsheets stay live.</p>
+      <div class="templates-grid stagger">
+        <div class="template-category reveal">
+          <div class="cat-accent" style="background:#C49A8A"></div>
+          <div class="cat-content">
+            <div class="cat-header">
+              <span class="cat-name">Finance &amp; Expense</span>
+              <span class="cat-count">10 templates</span>
+            </div>
+            <div class="cat-templates">
+              <span class="cat-tag">General Expense</span>
+              <span class="cat-tag">Credit Card</span>
+              <span class="cat-tag">Purchase Invoice</span>
+              <span class="cat-tag">Freelance Invoice</span>
+              <span class="cat-tag">Insurance Premium</span>
+            </div>
+          </div>
+        </div>
+        <div class="template-category reveal">
+          <div class="cat-accent" style="background:#6BAA96"></div>
+          <div class="cat-content">
+            <div class="cat-header">
+              <span class="cat-name">Tax &amp; Compliance</span>
+              <span class="cat-count">4 templates</span>
+            </div>
+            <div class="cat-templates">
+              <span class="cat-tag">GST / VAT Input</span>
+              <span class="cat-tag">Customs Duty</span>
+              <span class="cat-tag">Withholding Tax</span>
+              <span class="cat-tag">Donation / Charity</span>
+            </div>
+          </div>
+        </div>
+        <div class="template-category reveal">
+          <div class="cat-accent" style="background:#B08AA8"></div>
+          <div class="cat-content">
+            <div class="cat-header">
+              <span class="cat-name">Travel &amp; Vehicles</span>
+              <span class="cat-count">4 templates</span>
+            </div>
+            <div class="cat-templates">
+              <span class="cat-tag">Travel Expense</span>
+              <span class="cat-tag">Fuel Mileage</span>
+              <span class="cat-tag">Vehicle Maintenance</span>
+              <span class="cat-tag">Accommodation</span>
+            </div>
+          </div>
+        </div>
+        <div class="template-category reveal">
+          <div class="cat-accent" style="background:#C4A878"></div>
+          <div class="cat-content">
+            <div class="cat-header">
+              <span class="cat-name">Construction &amp; Trades</span>
+              <span class="cat-count">4 templates</span>
+            </div>
+            <div class="cat-templates">
+              <span class="cat-tag">Materials Cost</span>
+              <span class="cat-tag">Subcontractor</span>
+              <span class="cat-tag">Delivery Docket</span>
+              <span class="cat-tag">Plant Hire</span>
+            </div>
+          </div>
+        </div>
+        <div class="template-category reveal">
+          <div class="cat-accent" style="background:#9A8AB8"></div>
+          <div class="cat-content">
+            <div class="cat-header">
+              <span class="cat-name">Healthcare &amp; Medical</span>
+              <span class="cat-count">2 templates</span>
+            </div>
+            <div class="cat-templates">
+              <span class="cat-tag">Medical Expense</span>
+              <span class="cat-tag">Clinical Supply</span>
+            </div>
+          </div>
+        </div>
+        <div class="template-category reveal">
+          <div class="cat-accent" style="background:#8A96A8"></div>
+          <div class="cat-content">
+            <div class="cat-header">
+              <span class="cat-name">Operations &amp; Procurement</span>
+              <span class="cat-count">5 templates</span>
+            </div>
+            <div class="cat-templates">
+              <span class="cat-tag">Purchase Order</span>
+              <span class="cat-tag">Supplier Quote</span>
+              <span class="cat-tag">Training</span>
+              <span class="cat-tag">Inventory / Stock</span>
+            </div>
+          </div>
+        </div>
+        <div class="template-category reveal">
+          <div class="cat-accent" style="background:#0EA5E9"></div>
+          <div class="cat-content">
+            <div class="cat-header">
+              <span class="cat-name">Professional Services</span>
+              <span class="cat-count">1 template</span>
+            </div>
+            <div class="cat-templates">
+              <span class="cat-tag">Timesheet / Billable Hours</span>
+            </div>
+          </div>
+        </div>
+        <div class="template-category reveal">
+          <div class="cat-accent" style="background:#8BA8C4"></div>
+          <div class="cat-content">
+            <div class="cat-header">
+              <span class="cat-name">Personal</span>
+              <span class="cat-count">4 templates</span>
+            </div>
+            <div class="cat-templates">
+              <span class="cat-tag">Family Expense</span>
+              <span class="cat-tag">Subscription</span>
+              <span class="cat-tag">Warranty</span>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="feature">
-        <div class="feature-icon">📶</div>
-        <h3>Offline-First</h3>
-        <p>Capture photos offline — they queue automatically and process when connectivity returns. Editing and export always work.</p>
-      </div>
-      <div class="feature">
-        <div class="feature-icon">📱</div>
-        <h3>Multi-Document Sessions</h3>
-        <p>Scan 25+ receipts into a single report. Each becomes a row in your spreadsheet, ready for review.</p>
-      </div>
-      <div class="feature">
-        <div class="feature-icon">🧮</div>
-        <h3>Smart Columns</h3>
-        <p>Auto-calculated tax, totals, variance, and running balances. Set the rate once — every row updates.</p>
-      </div>
-      <div class="feature">
-        <div class="feature-icon">📈</div>
-        <h3>Dashboard Insights</h3>
-        <p>KPI cards, bar charts, pie charts, and time-series for every report. See spending patterns at a glance.</p>
+
+      <!-- Stats strip -->
+      <div class="stats-strip reveal">
+        <div class="stat">
+          <div class="stat-value"><span class="green">30</span>+</div>
+          <div class="stat-label">Report Templates</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value"><span class="green">12</span></div>
+          <div class="stat-label">Country Locales</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value"><span class="green">3</span></div>
+          <div class="stat-label">Export Formats</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value"><span class="green">100</span>%</div>
+          <div class="stat-label">Offline Capable</div>
+        </div>
       </div>
     </div>
   </section>
 
-  <section class="section" id="templates">
-    <div class="section-header">
-      <h2>30+ Report Templates</h2>
-      <p>Every template maps to a real-world document you scan regularly.</p>
-    </div>
-    <div class="templates-grid">
-      <div class="template-card"><div class="template-dot" style="background:#4CAF7D"></div><span>General Expense Claim</span></div>
-      <div class="template-card"><div class="template-dot" style="background:#4CAF7D"></div><span>Credit Card Expense</span></div>
-      <div class="template-card"><div class="template-dot" style="background:#4CAF7D"></div><span>Purchase Invoice Log</span></div>
-      <div class="template-card"><div class="template-dot" style="background:#4CAF7D"></div><span>Sales Invoice / Revenue</span></div>
-      <div class="template-card"><div class="template-dot" style="background:#4CAF7D"></div><span>Freelance Invoice Tracker</span></div>
-      <div class="template-card"><div class="template-dot" style="background:#6B5CE7"></div><span>GST / VAT Input Log</span></div>
-      <div class="template-card"><div class="template-dot" style="background:#6B5CE7"></div><span>Customs Import Duty</span></div>
-      <div class="template-card"><div class="template-dot" style="background:#6B5CE7"></div><span>Donation / Charity Receipt</span></div>
-      <div class="template-card"><div class="template-dot" style="background:#D97706"></div><span>Travel Expense Claim</span></div>
-      <div class="template-card"><div class="template-dot" style="background:#D97706"></div><span>Fuel Mileage Log</span></div>
-      <div class="template-card"><div class="template-dot" style="background:#D97706"></div><span>Vehicle Maintenance</span></div>
-      <div class="template-card"><div class="template-dot" style="background:#D97706"></div><span>Accommodation Receipt</span></div>
-      <div class="template-card"><div class="template-dot" style="background:#E87040"></div><span>Materials Cost Sheet</span></div>
-      <div class="template-card"><div class="template-dot" style="background:#E87040"></div><span>Subcontractor Invoice</span></div>
-      <div class="template-card"><div class="template-dot" style="background:#E87040"></div><span>Inventory / Stock Purchase</span></div>
-      <div class="template-card"><div class="template-dot" style="background:#0EA5E9"></div><span>Timesheet / Billable Hours</span></div>
-      <div class="template-card"><div class="template-dot" style="background:#8B5CF6"></div><span>Insurance Premium Tracker</span></div>
-      <div class="template-card"><div class="template-dot" style="background:#14B8A6"></div><span>Warranty / Service Claim</span></div>
-      <div class="template-card"><div class="template-dot" style="background:#14B8A6"></div><span>Subscription Tracker</span></div>
-      <div class="template-card"><div class="template-dot" style="background:#14B8A6"></div><span>Personal / Family Expense</span></div>
+  <!-- ════════════════════════════════════════════════════════════════
+       CTA
+       ════════════════════════════════════════════════════════════════ -->
+  <section class="section cta-section" id="cta">
+    <div class="container">
+      <div class="cta-box reveal">
+        <div class="cta-glow"></div>
+        <h2>Stop typing.<br>Start scanning.</h2>
+        <p class="section-subtitle">Be the first to know when LensReport launches. Free tier includes 25 AI scans per month.</p>
+        <form class="cta-form" onsubmit="handleSubmit(event)">
+          <input type="email" placeholder="Enter your email" required autocomplete="email">
+          <button type="submit" class="cta-btn">Get Early Access</button>
+        </form>
+        <p class="cta-note">No credit card required. Unsubscribe anytime.</p>
+      </div>
     </div>
   </section>
 
-  <div class="cta-section">
-    <h2>Stop typing. Start scanning.</h2>
-    <p>LensReport is launching soon on iOS and Android. Free tier includes 25 AI scans per month.</p>
-    <a href="mailto:shweth@lensreport.app" class="btn btn-primary">Get Notified at Launch</a>
-  </div>
-
+  <!-- ════════════════════════════════════════════════════════════════
+       FOOTER
+       ════════════════════════════════════════════════════════════════ -->
   <footer>
     <div class="footer-inner">
       <div class="footer-links">
@@ -365,5 +1036,58 @@
     </div>
   </footer>
 
+  <!-- ════════════════════════════════════════════════════════════════
+       SCRIPTS
+       ════════════════════════════════════════════════════════════════ -->
+  <script>
+    // Scroll reveal with IntersectionObserver
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // Smooth nav link clicks
+    document.querySelectorAll('a[href^="#"]').forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        const target = document.querySelector(link.getAttribute('href'));
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+
+    // Email form handler
+    function handleSubmit(e) {
+      e.preventDefault();
+      const input = e.target.querySelector('input');
+      const btn = e.target.querySelector('button');
+      const email = input.value;
+
+      btn.textContent = 'Sending...';
+      btn.disabled = true;
+
+      // Open mailto as fallback (replace with real backend later)
+      window.location.href = 'mailto:shweth@lensreport.app?subject=Early%20Access%20Request&body=Please%20add%20me%20to%20the%20LensReport%20early%20access%20list.%0A%0AEmail:%20' + encodeURIComponent(email);
+
+      setTimeout(() => {
+        btn.textContent = 'You\'re on the list!';
+        btn.style.background = '#2E9E5E';
+        input.value = '';
+      }, 1000);
+    }
+
+    // Nav background on scroll
+    const nav = document.querySelector('nav');
+    window.addEventListener('scroll', () => {
+      nav.style.borderBottomColor = window.scrollY > 50
+        ? 'rgba(255,255,255,0.08)'
+        : 'rgba(255,255,255,0.04)';
+    }, { passive: true });
+  </script>
 </body>
 </html>
