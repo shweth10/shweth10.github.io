@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>LensReport — Scan Receipts. Auto-Fill Reports. Export Instantly.</title>
   <meta name="description" content="LensReport uses cloud AI to read your receipts and invoices, auto-populate report fields, and export to PDF or Excel with real working formulas. No manual data entry.">
-  <meta name="theme-color" content="#0A0A0A">
+  <meta name="theme-color" content="#4CAF7D">
 
   <!-- Open Graph -->
   <meta property="og:title" content="LensReport — Scan Receipts. Auto-Fill Reports. Export Instantly.">
@@ -13,76 +13,67 @@
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://lensreport.app">
   <meta property="og:image" content="https://lensreport.app/assets/images/onboarding_01_scan_invoice.png">
-
-  <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="LensReport — Scan Receipts. Auto-Fill Reports.">
   <meta name="twitter:description" content="Cloud AI reads your receipts, auto-fills reports, exports to PDF/Excel with real formulas.">
 
-  <!-- Favicon -->
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect rx='20' width='100' height='100' fill='%234CAF7D'/><text x='50' y='68' font-size='55' text-anchor='middle' fill='white'>L</text></svg>">
+  <link rel="icon" href="assets/images/app-logo.png" type="image/png">
 
-  <!-- Fonts -->
+  <!-- Fonts (matching the Flutter app) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 
   <style>
-    /* ═══════════════════════════════════════════════════════════════════
-       RESET & BASE
-       ═══════════════════════════════════════════════════════════════════ */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      background: #0A0A0A;
-      color: #E8E8E8;
+      background: #F7F8FA;
+      color: #1A2332;
       line-height: 1.6;
       -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
       overflow-x: hidden;
     }
     a { color: inherit; text-decoration: none; }
     img { max-width: 100%; display: block; }
 
-    /* ═══════════════════════════════════════════════════════════════════
-       VARIABLES
-       ═══════════════════════════════════════════════════════════════════ */
     :root {
       --green: #4CAF7D;
       --green-light: #5EC98F;
-      --green-glow: rgba(76, 175, 125, 0.15);
+      --green-pale: #E8F5EE;
       --green-dark: #3A9468;
       --coral: #F0856A;
       --purple: #6B5CE7;
       --blue: #0EA5E9;
-      --bg: #0A0A0A;
-      --surface: #111111;
-      --card: #161616;
-      --card-hover: #1C1C1C;
-      --border: rgba(255,255,255,0.06);
-      --border-hover: rgba(255,255,255,0.12);
-      --text: #E8E8E8;
-      --text-secondary: #8892A0;
-      --text-muted: #555;
+      --bg: #F7F8FA;
+      --bg-white: #FFFFFF;
+      --surface: #FFFFFF;
+      --card: #FFFFFF;
+      --border: #E5E7EB;
+      --border-hover: #D1D5DB;
+      --text: #1A2332;
+      --text-secondary: #6B7280;
+      --text-muted: #9CA3AF;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
+      --shadow-md: 0 4px 16px rgba(0,0,0,0.08);
+      --shadow-lg: 0 12px 40px rgba(0,0,0,0.1);
+      --shadow-xl: 0 24px 64px rgba(0,0,0,0.12);
       --radius: 16px;
       --radius-sm: 12px;
       --radius-xs: 8px;
     }
 
-    /* ═══════════════════════════════════════════════════════════════════
-       UTILITIES
-       ═══════════════════════════════════════════════════════════════════ */
+    /* ═══ UTILITIES ═══ */
     .container { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
-    .section { padding: 120px 0; }
+    .section { padding: 100px 0; }
     .section-label {
       font-family: 'DM Mono', monospace;
-      font-size: 13px;
-      font-weight: 500;
+      font-size: 13px; font-weight: 500;
       color: var(--green);
       text-transform: uppercase;
       letter-spacing: 2px;
-      margin-bottom: 16px;
+      margin-bottom: 12px;
     }
     .section-title {
       font-family: 'Plus Jakarta Sans', sans-serif;
@@ -90,30 +81,26 @@
       font-weight: 700;
       letter-spacing: -0.5px;
       line-height: 1.15;
-      margin-bottom: 16px;
+      margin-bottom: 12px;
+      color: var(--text);
     }
     .section-subtitle {
       font-size: 16px;
       color: var(--text-secondary);
-      max-width: 480px;
+      max-width: 500px;
       line-height: 1.7;
     }
-    .section-header { text-align: center; margin-bottom: 64px; }
+    .section-header { text-align: center; margin-bottom: 56px; }
     .section-header .section-subtitle { margin: 0 auto; }
 
-    /* ═══════════════════════════════════════════════════════════════════
-       SCROLL REVEAL
-       ═══════════════════════════════════════════════════════════════════ */
+    /* ═══ SCROLL REVEAL ═══ */
     .reveal {
       opacity: 0;
-      transform: translateY(32px);
+      transform: translateY(28px);
       transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
                   transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
     }
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
     .stagger > .reveal:nth-child(1) { transition-delay: 0ms; }
     .stagger > .reveal:nth-child(2) { transition-delay: 80ms; }
     .stagger > .reveal:nth-child(3) { transition-delay: 160ms; }
@@ -123,12 +110,10 @@
     .stagger > .reveal:nth-child(7) { transition-delay: 480ms; }
     .stagger > .reveal:nth-child(8) { transition-delay: 560ms; }
 
-    /* ═══════════════════════════════════════════════════════════════════
-       NAV
-       ═══════════════════════════════════════════════════════════════════ */
+    /* ═══ NAV ═══ */
     nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      background: rgba(10, 10, 10, 0.8);
+      background: rgba(255, 255, 255, 0.85);
       backdrop-filter: blur(20px) saturate(180%);
       -webkit-backdrop-filter: blur(20px) saturate(180%);
       border-bottom: 1px solid var(--border);
@@ -143,13 +128,12 @@
       font-size: 20px; font-weight: 800;
       letter-spacing: -0.5px;
       display: flex; align-items: center; gap: 10px;
+      color: var(--text);
     }
-    .logo-icon {
-      width: 32px; height: 32px;
-      border-radius: 8px;
-      background: var(--green);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 16px; font-weight: 800; color: white;
+    .logo img {
+      width: 36px; height: 36px;
+      border-radius: 10px;
+      box-shadow: var(--shadow-sm);
     }
     .logo .green { color: var(--green); }
     .nav-links { display: flex; gap: 32px; align-items: center; }
@@ -160,9 +144,7 @@
     }
     .nav-links a:hover { color: var(--text); }
 
-    /* ═══════════════════════════════════════════════════════════════════
-       HERO
-       ═══════════════════════════════════════════════════════════════════ */
+    /* ═══ HERO ═══ */
     .hero {
       min-height: 100vh;
       display: flex; flex-direction: column;
@@ -171,49 +153,60 @@
       padding: 120px 24px 80px;
       position: relative;
       overflow: hidden;
+      background: linear-gradient(180deg, #FFFFFF 0%, var(--bg) 100%);
     }
-    /* Ambient glow */
+    /* Soft ambient glow */
     .hero-glow {
       position: absolute;
       border-radius: 50%;
-      filter: blur(100px);
+      filter: blur(120px);
       pointer-events: none;
+      opacity: 0.5;
     }
     .hero-glow-1 {
-      width: 700px; height: 700px;
-      top: 10%; left: 50%;
-      background: radial-gradient(circle, var(--green-glow) 0%, transparent 70%);
+      width: 600px; height: 600px;
+      top: 5%; left: 50%;
+      background: radial-gradient(circle, rgba(76,175,125,0.2) 0%, transparent 70%);
       animation: glow-float 10s ease-in-out infinite;
     }
     .hero-glow-2 {
-      width: 500px; height: 500px;
-      top: 30%; left: 30%;
-      background: radial-gradient(circle, rgba(107, 92, 231, 0.08) 0%, transparent 70%);
+      width: 400px; height: 400px;
+      top: 30%; left: 25%;
+      background: radial-gradient(circle, rgba(107,92,231,0.1) 0%, transparent 70%);
       animation: glow-float 12s ease-in-out infinite reverse;
     }
     .hero-glow-3 {
-      width: 400px; height: 400px;
-      top: 20%; right: 20%;
-      background: radial-gradient(circle, rgba(240, 133, 106, 0.06) 0%, transparent 70%);
+      width: 350px; height: 350px;
+      top: 15%; right: 15%;
+      background: radial-gradient(circle, rgba(14,165,233,0.08) 0%, transparent 70%);
       animation: glow-float 14s ease-in-out infinite 2s;
     }
     @keyframes glow-float {
-      0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
-      50% { transform: translate(-50%, -50%) scale(1.3); opacity: 0.7; }
+      0%, 100% { transform: translate(-50%, -50%) scale(1); }
+      50% { transform: translate(-50%, -50%) scale(1.3); }
     }
 
     .hero-content { position: relative; z-index: 1; max-width: 800px; }
 
+    /* App logo in hero */
+    .hero-logo {
+      width: 88px; height: 88px;
+      border-radius: 22px;
+      box-shadow: 0 8px 32px rgba(76,175,125,0.2), var(--shadow-lg);
+      margin: 0 auto 28px;
+      animation: hero-fade-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
+    }
+
     .hero-badge {
       display: inline-flex; align-items: center; gap: 8px;
-      background: rgba(76, 175, 125, 0.1);
-      border: 1px solid rgba(76, 175, 125, 0.2);
-      color: var(--green-light);
+      background: var(--green-pale);
+      border: 1px solid rgba(76,175,125,0.2);
+      color: var(--green-dark);
       font-family: 'DM Mono', monospace;
       font-size: 13px; font-weight: 500;
-      padding: 8px 18px;
+      padding: 7px 16px;
       border-radius: 100px;
-      margin-bottom: 32px;
+      margin-bottom: 28px;
       animation: hero-fade-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
     }
     .hero-badge .dot {
@@ -224,16 +217,17 @@
     }
     @keyframes pulse-dot {
       0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.5; transform: scale(1.4); }
+      50% { opacity: 0.4; transform: scale(1.5); }
     }
 
     .hero h1 {
       font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: clamp(40px, 7vw, 72px);
+      font-size: clamp(38px, 6.5vw, 68px);
       font-weight: 800;
-      line-height: 1.05;
-      letter-spacing: -2.5px;
-      margin-bottom: 24px;
+      line-height: 1.08;
+      letter-spacing: -2px;
+      margin-bottom: 20px;
+      color: var(--text);
     }
     .hero h1 .line {
       display: block;
@@ -249,7 +243,7 @@
       background-clip: text;
     }
     @keyframes hero-line-in {
-      from { opacity: 0; transform: translateY(40px); filter: blur(8px); }
+      from { opacity: 0; transform: translateY(36px); filter: blur(6px); }
       to { opacity: 1; transform: translateY(0); filter: blur(0); }
     }
     @keyframes hero-fade-in {
@@ -260,40 +254,38 @@
     .hero-sub {
       font-size: clamp(16px, 2vw, 18px);
       color: var(--text-secondary);
-      max-width: 560px;
-      margin: 0 auto 40px;
+      max-width: 540px;
+      margin: 0 auto 36px;
       line-height: 1.7;
       animation: hero-fade-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.9s both;
     }
 
     .hero-actions {
-      display: flex; gap: 16px;
+      display: flex; gap: 14px;
       justify-content: center; flex-wrap: wrap;
       animation: hero-fade-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) 1.1s both;
     }
 
-    /* Store badges */
+    /* Store badges — light style */
     .store-badge {
       display: inline-flex; align-items: center; gap: 12px;
-      background: var(--card);
-      border: 1px solid var(--border);
+      background: var(--text);
+      color: white;
       padding: 12px 24px;
       border-radius: var(--radius-sm);
       transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
       cursor: pointer;
     }
     .store-badge:hover {
-      background: var(--card-hover);
-      border-color: var(--border-hover);
       transform: translateY(-2px);
-      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+      box-shadow: var(--shadow-lg);
     }
-    .store-badge svg { width: 28px; height: 28px; fill: white; }
+    .store-badge svg { width: 26px; height: 26px; fill: white; }
     .store-badge .badge-text { text-align: left; }
     .store-badge .badge-label {
       display: block;
-      font-size: 10px;
-      color: var(--text-secondary);
+      font-size: 9px;
+      color: rgba(255,255,255,0.7);
       font-weight: 500;
       letter-spacing: 0.5px;
       text-transform: uppercase;
@@ -301,10 +293,9 @@
     .store-badge .badge-store {
       display: block;
       font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 17px;
+      font-size: 16px;
       font-weight: 700;
-      color: white;
-      letter-spacing: -0.3px;
+      letter-spacing: -0.2px;
     }
 
     /* Scroll indicator */
@@ -315,21 +306,19 @@
       animation: hero-fade-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) 1.5s both;
     }
     .scroll-indicator .chevron {
-      width: 24px; height: 24px;
+      width: 20px; height: 20px;
       border-right: 2px solid var(--text-muted);
       border-bottom: 2px solid var(--text-muted);
       transform: rotate(45deg);
       animation: scroll-bounce 2s ease-in-out infinite;
     }
     @keyframes scroll-bounce {
-      0%, 100% { transform: rotate(45deg) translate(0, 0); opacity: 0.4; }
-      50% { transform: rotate(45deg) translate(4px, 4px); opacity: 0.8; }
+      0%, 100% { transform: rotate(45deg) translate(0, 0); opacity: 0.3; }
+      50% { transform: rotate(45deg) translate(4px, 4px); opacity: 0.7; }
     }
 
-    /* ═══════════════════════════════════════════════════════════════════
-       PRODUCT SHOWCASE
-       ═══════════════════════════════════════════════════════════════════ */
-    .showcase { background: var(--surface); }
+    /* ═══ PRODUCT SHOWCASE ═══ */
+    .showcase { background: var(--bg-white); }
     .showcase-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -337,24 +326,22 @@
     }
     .showcase-item { text-align: center; }
     .phone-frame {
-      background: #1A1A1A;
-      border-radius: 28px;
-      padding: 12px;
-      box-shadow: 0 24px 64px rgba(0,0,0,0.4),
-                  0 0 0 1px rgba(255,255,255,0.05);
+      background: var(--bg);
+      border-radius: 24px;
+      padding: 10px;
+      box-shadow: var(--shadow-xl), 0 0 0 1px var(--border);
       margin-bottom: 20px;
       overflow: hidden;
     }
     .phone-frame img {
-      border-radius: 18px;
+      border-radius: 16px;
       width: 100%;
       aspect-ratio: 9/16;
       object-fit: cover;
     }
     .showcase-caption {
       font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 15px;
-      font-weight: 600;
+      font-size: 15px; font-weight: 700;
       color: var(--text);
     }
     .showcase-subcaption {
@@ -363,9 +350,7 @@
       margin-top: 4px;
     }
 
-    /* ═══════════════════════════════════════════════════════════════════
-       HOW IT WORKS
-       ═══════════════════════════════════════════════════════════════════ */
+    /* ═══ HOW IT WORKS ═══ */
     .steps-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -375,7 +360,7 @@
       background: var(--card);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 36px 28px;
+      padding: 32px 24px;
       position: relative;
       overflow: hidden;
       transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
@@ -393,7 +378,7 @@
     .step-card:hover {
       border-color: var(--border-hover);
       transform: translateY(-4px);
-      box-shadow: 0 16px 48px rgba(0,0,0,0.2);
+      box-shadow: var(--shadow-lg);
     }
     .step-number {
       width: 44px; height: 44px;
@@ -401,21 +386,20 @@
       display: flex; align-items: center; justify-content: center;
       font-family: 'DM Mono', monospace;
       font-size: 18px; font-weight: 500; color: white;
-      margin-bottom: 24px;
+      margin-bottom: 20px;
     }
     .step-card:nth-child(1) .step-number { background: var(--green); }
     .step-card:nth-child(2) .step-number { background: var(--purple); }
     .step-card:nth-child(3) .step-number { background: var(--coral); }
     .step-card h3 {
       font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 18px; font-weight: 700;
-      margin-bottom: 8px; letter-spacing: -0.3px;
+      font-size: 17px; font-weight: 700;
+      margin-bottom: 8px; letter-spacing: -0.2px;
     }
     .step-card p { font-size: 14px; color: var(--text-secondary); line-height: 1.7; }
 
-    /* ═══════════════════════════════════════════════════════════════════
-       FEATURES
-       ═══════════════════════════════════════════════════════════════════ */
+    /* ═══ FEATURES ═══ */
+    .features-section { background: var(--bg-white); }
     .features-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -425,38 +409,35 @@
       background: var(--card);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 32px 24px;
+      padding: 28px 24px;
       transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .feature-card:hover {
       border-color: var(--border-hover);
       transform: translateY(-3px);
-      box-shadow: 0 12px 40px rgba(0,0,0,0.2);
+      box-shadow: var(--shadow-md);
     }
     .feature-icon {
       width: 48px; height: 48px;
       border-radius: 12px;
       display: flex; align-items: center; justify-content: center;
       font-size: 24px;
-      margin-bottom: 20px;
-      background: rgba(76, 175, 125, 0.1);
+      margin-bottom: 16px;
     }
-    .feature-card:nth-child(2) .feature-icon { background: rgba(107, 92, 231, 0.1); }
-    .feature-card:nth-child(3) .feature-icon { background: rgba(14, 165, 233, 0.1); }
-    .feature-card:nth-child(4) .feature-icon { background: rgba(240, 133, 106, 0.1); }
-    .feature-card:nth-child(5) .feature-icon { background: rgba(196, 168, 120, 0.1); }
-    .feature-card:nth-child(6) .feature-icon { background: rgba(139, 164, 196, 0.1); }
+    .fi-green { background: rgba(76,175,125,0.1); }
+    .fi-purple { background: rgba(107,92,231,0.1); }
+    .fi-blue { background: rgba(14,165,233,0.1); }
+    .fi-coral { background: rgba(240,133,106,0.1); }
+    .fi-gold { background: rgba(196,168,120,0.12); }
+    .fi-slate { background: rgba(139,164,196,0.12); }
     .feature-card h3 {
       font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 16px; font-weight: 700;
-      margin-bottom: 8px; letter-spacing: -0.2px;
+      font-size: 15px; font-weight: 700;
+      margin-bottom: 6px; letter-spacing: -0.2px;
     }
     .feature-card p { font-size: 14px; color: var(--text-secondary); line-height: 1.6; }
 
-    /* ═══════════════════════════════════════════════════════════════════
-       TEMPLATES
-       ═══════════════════════════════════════════════════════════════════ */
-    .templates { background: var(--surface); }
+    /* ═══ TEMPLATES ═══ */
     .templates-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -466,13 +447,14 @@
       background: var(--card);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 24px;
-      display: flex; gap: 16px;
+      padding: 22px 20px;
+      display: flex; gap: 14px;
       transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .template-category:hover {
       border-color: var(--border-hover);
       transform: translateY(-2px);
+      box-shadow: var(--shadow-sm);
     }
     .cat-accent {
       width: 4px;
@@ -482,35 +464,30 @@
     .cat-content { flex: 1; }
     .cat-header {
       display: flex; justify-content: space-between; align-items: center;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
     }
     .cat-name {
       font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 15px; font-weight: 700;
+      font-size: 14px; font-weight: 700;
     }
     .cat-count {
       font-family: 'DM Mono', monospace;
-      font-size: 12px;
+      font-size: 11px;
       color: var(--text-muted);
-      background: rgba(255,255,255,0.05);
+      background: var(--bg);
       padding: 2px 10px;
       border-radius: 100px;
     }
-    .cat-templates {
-      display: flex; flex-wrap: wrap; gap: 6px;
-    }
+    .cat-templates { display: flex; flex-wrap: wrap; gap: 5px; }
     .cat-tag {
       font-size: 12px;
       color: var(--text-secondary);
-      background: rgba(255,255,255,0.04);
-      padding: 4px 10px;
+      background: var(--bg);
+      padding: 3px 9px;
       border-radius: 6px;
-      border: 1px solid rgba(255,255,255,0.04);
     }
 
-    /* ═══════════════════════════════════════════════════════════════════
-       STATS
-       ═══════════════════════════════════════════════════════════════════ */
+    /* ═══ STATS ═══ */
     .stats-strip {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -518,20 +495,20 @@
       background: var(--border);
       border-radius: var(--radius);
       overflow: hidden;
-      margin-top: 64px;
+      margin-top: 56px;
+      box-shadow: var(--shadow-sm);
     }
     .stat {
       background: var(--card);
-      padding: 32px 24px;
+      padding: 28px 20px;
       text-align: center;
     }
     .stat-value {
       font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 32px;
-      font-weight: 800;
+      font-size: 30px; font-weight: 800;
       letter-spacing: -1px;
-      color: white;
-      margin-bottom: 4px;
+      color: var(--text);
+      margin-bottom: 2px;
     }
     .stat-value .green { color: var(--green); }
     .stat-label {
@@ -540,19 +517,13 @@
       font-weight: 500;
     }
 
-    /* ═══════════════════════════════════════════════════════════════════
-       CTA
-       ═══════════════════════════════════════════════════════════════════ */
-    .cta-section {
-      position: relative;
-      overflow: hidden;
-    }
+    /* ═══ CTA ═══ */
+    .cta-section { background: var(--bg-white); }
     .cta-box {
       position: relative;
-      background: var(--card);
-      border: 1px solid var(--border);
+      background: linear-gradient(135deg, #1A2332 0%, #243447 100%);
       border-radius: 24px;
-      padding: 80px 40px;
+      padding: 72px 40px;
       text-align: center;
       overflow: hidden;
     }
@@ -561,7 +532,7 @@
       width: 500px; height: 500px;
       top: 50%; left: 50%;
       transform: translate(-50%, -50%);
-      background: radial-gradient(circle, var(--green-glow) 0%, transparent 70%);
+      background: radial-gradient(circle, rgba(76,175,125,0.15) 0%, transparent 70%);
       filter: blur(80px);
       pointer-events: none;
     }
@@ -572,8 +543,9 @@
       font-weight: 800;
       letter-spacing: -1px;
       margin-bottom: 12px;
+      color: white;
     }
-    .cta-box .section-subtitle { margin: 0 auto 36px; max-width: 440px; }
+    .cta-box .section-subtitle { margin: 0 auto 32px; max-width: 440px; color: rgba(255,255,255,0.6); }
 
     .cta-form {
       display: flex; gap: 12px;
@@ -581,8 +553,8 @@
     }
     .cta-form input {
       flex: 1;
-      background: rgba(255,255,255,0.06);
-      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.15);
       border-radius: var(--radius-sm);
       padding: 14px 20px;
       font-size: 15px;
@@ -591,7 +563,7 @@
       outline: none;
       transition: border-color 0.2s;
     }
-    .cta-form input::placeholder { color: var(--text-muted); }
+    .cta-form input::placeholder { color: rgba(255,255,255,0.4); }
     .cta-form input:focus { border-color: var(--green); }
     .cta-btn {
       background: var(--green);
@@ -600,8 +572,7 @@
       border-radius: var(--radius-sm);
       padding: 14px 28px;
       font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 15px;
-      font-weight: 700;
+      font-size: 15px; font-weight: 700;
       cursor: pointer;
       transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
       white-space: nowrap;
@@ -609,42 +580,42 @@
     .cta-btn:hover {
       background: var(--green-dark);
       transform: translateY(-2px);
-      box-shadow: 0 8px 32px rgba(76, 175, 125, 0.3);
+      box-shadow: 0 8px 24px rgba(76,175,125,0.3);
     }
     .cta-note {
-      margin-top: 16px;
+      margin-top: 14px;
       font-size: 13px;
-      color: var(--text-muted);
+      color: rgba(255,255,255,0.35);
     }
 
-    /* ═══════════════════════════════════════════════════════════════════
-       FOOTER
-       ═══════════════════════════════════════════════════════════════════ */
+    /* ═══ FOOTER ═══ */
     footer {
       border-top: 1px solid var(--border);
-      padding: 48px 0;
+      padding: 40px 0;
+      background: var(--bg);
     }
     .footer-inner {
       max-width: 1120px; margin: 0 auto; padding: 0 24px;
       display: flex; justify-content: space-between; align-items: center;
     }
-    .footer-links { display: flex; gap: 28px; }
+    .footer-logo {
+      display: flex; align-items: center; gap: 8px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 700; font-size: 15px;
+      color: var(--text-secondary);
+    }
+    .footer-logo img { width: 24px; height: 24px; border-radius: 6px; }
+    .footer-links { display: flex; gap: 24px; }
     .footer-links a {
       font-size: 13px;
       color: var(--text-secondary);
       transition: color 0.2s;
     }
     .footer-links a:hover { color: var(--text); }
-    .footer-copy {
-      font-size: 12px;
-      color: var(--text-muted);
-    }
+    .footer-copy { font-size: 12px; color: var(--text-muted); }
 
-    /* ═══════════════════════════════════════════════════════════════════
-       RESPONSIVE
-       ═══════════════════════════════════════════════════════════════════ */
+    /* ═══ RESPONSIVE ═══ */
     @media (max-width: 900px) {
-      .showcase-grid { grid-template-columns: repeat(3, 1fr); gap: 16px; }
       .steps-grid { grid-template-columns: 1fr; }
       .features-grid { grid-template-columns: repeat(2, 1fr); }
       .templates-grid { grid-template-columns: 1fr; }
@@ -652,35 +623,28 @@
     }
     @media (max-width: 640px) {
       .nav-links { display: none; }
-      .section { padding: 80px 0; }
-      .hero { padding: 100px 20px 60px; }
+      .section { padding: 72px 0; }
+      .hero { padding: 100px 20px 60px; min-height: auto; padding-bottom: 60px; }
       .hero h1 { letter-spacing: -1.5px; }
-      .showcase-grid {
-        grid-template-columns: 1fr;
-        max-width: 260px;
-        margin: 0 auto;
-      }
+      .hero-logo { width: 72px; height: 72px; border-radius: 18px; }
+      .showcase-grid { grid-template-columns: 1fr; max-width: 280px; margin: 0 auto; }
       .showcase-grid .showcase-item:nth-child(n+2) { display: none; }
       .features-grid { grid-template-columns: 1fr; }
       .stats-strip { grid-template-columns: 1fr; }
       .cta-form { flex-direction: column; }
       .cta-box { padding: 48px 24px; }
       .footer-inner { flex-direction: column; gap: 16px; text-align: center; }
-      .store-badge { padding: 10px 18px; }
-      .store-badge svg { width: 22px; height: 22px; }
-      .store-badge .badge-store { font-size: 15px; }
+      .footer-links { flex-wrap: wrap; justify-content: center; }
     }
   </style>
 </head>
 <body>
 
-  <!-- ════════════════════════════════════════════════════════════════
-       NAV
-       ════════════════════════════════════════════════════════════════ -->
+  <!-- NAV -->
   <nav>
     <div class="nav-inner">
       <a href="/" class="logo">
-        <div class="logo-icon">L</div>
+        <img src="assets/images/app-logo.png" alt="LensReport" width="36" height="36">
         <span class="green">Lens</span>Report
       </a>
       <div class="nav-links">
@@ -692,15 +656,15 @@
     </div>
   </nav>
 
-  <!-- ════════════════════════════════════════════════════════════════
-       HERO
-       ════════════════════════════════════════════════════════════════ -->
+  <!-- HERO -->
   <section class="hero">
     <div class="hero-glow hero-glow-1"></div>
     <div class="hero-glow hero-glow-2"></div>
     <div class="hero-glow hero-glow-3"></div>
 
     <div class="hero-content">
+      <img src="assets/images/app-logo.png" alt="LensReport App Icon" class="hero-logo">
+
       <div class="hero-badge">
         <span class="dot"></span>
         Launching on iOS &amp; Android
@@ -719,7 +683,6 @@
       </p>
 
       <div class="hero-actions">
-        <!-- Apple -->
         <a href="#cta" class="store-badge">
           <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
           <div class="badge-text">
@@ -727,7 +690,6 @@
             <span class="badge-store">App Store</span>
           </div>
         </a>
-        <!-- Google Play -->
         <a href="#cta" class="store-badge">
           <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 01-.61-.92V2.734a1 1 0 01.609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-3.199l2.302 2.302-2.302 2.302L15.396 12l2.302-2.492zM5.864 2.658L16.8 8.991l-2.302 2.302L5.864 2.658z"/></svg>
           <div class="badge-text">
@@ -743,10 +705,8 @@
     </div>
   </section>
 
-  <!-- ════════════════════════════════════════════════════════════════
-       PRODUCT SHOWCASE
-       ════════════════════════════════════════════════════════════════ -->
-  <section class="section showcase" id="showcase">
+  <!-- PRODUCT SHOWCASE -->
+  <section class="section showcase">
     <div class="container">
       <div class="section-header">
         <p class="section-label reveal">See it in action</p>
@@ -779,9 +739,7 @@
     </div>
   </section>
 
-  <!-- ════════════════════════════════════════════════════════════════
-       HOW IT WORKS
-       ════════════════════════════════════════════════════════════════ -->
+  <!-- HOW IT WORKS -->
   <section class="section" id="how-it-works">
     <div class="container">
       <div class="section-header">
@@ -809,10 +767,8 @@
     </div>
   </section>
 
-  <!-- ════════════════════════════════════════════════════════════════
-       FEATURES
-       ════════════════════════════════════════════════════════════════ -->
-  <section class="section" id="features">
+  <!-- FEATURES -->
+  <section class="section features-section" id="features">
     <div class="container">
       <div class="section-header">
         <p class="section-label reveal">Features</p>
@@ -821,32 +777,32 @@
       </div>
       <div class="features-grid stagger">
         <div class="feature-card reveal">
-          <div class="feature-icon">🤖</div>
+          <div class="feature-icon fi-green">🤖</div>
           <h3>Cloud AI Extraction</h3>
           <p>GPT-4.1-mini reads your documents and extracts fields with high accuracy. No manual typing required.</p>
         </div>
         <div class="feature-card reveal">
-          <div class="feature-icon">📊</div>
+          <div class="feature-icon fi-purple">📊</div>
           <h3>Real Excel Formulas</h3>
           <p>Calculated columns export as actual formulas like =H4*0.15 — not hardcoded numbers. Your spreadsheets stay live.</p>
         </div>
         <div class="feature-card reveal">
-          <div class="feature-icon">📶</div>
+          <div class="feature-icon fi-blue">📶</div>
           <h3>Offline-First</h3>
           <p>Capture photos offline — they queue automatically and process when connectivity returns. Editing and export always work.</p>
         </div>
         <div class="feature-card reveal">
-          <div class="feature-icon">📱</div>
+          <div class="feature-icon fi-coral">📱</div>
           <h3>Multi-Document Sessions</h3>
           <p>Scan 25+ receipts into a single report. Each becomes a row in your spreadsheet, ready to review and export.</p>
         </div>
         <div class="feature-card reveal">
-          <div class="feature-icon">🧮</div>
+          <div class="feature-icon fi-gold">🧮</div>
           <h3>Smart Columns</h3>
           <p>Auto-calculated tax, totals, variance, and running balances. Set the rate once — every row updates.</p>
         </div>
         <div class="feature-card reveal">
-          <div class="feature-icon">📈</div>
+          <div class="feature-icon fi-slate">📈</div>
           <h3>Dashboard Insights</h3>
           <p>KPI cards, bar charts, pie charts, and time-series for every report. See spending patterns at a glance.</p>
         </div>
@@ -854,10 +810,8 @@
     </div>
   </section>
 
-  <!-- ════════════════════════════════════════════════════════════════
-       TEMPLATES
-       ════════════════════════════════════════════════════════════════ -->
-  <section class="section templates" id="templates">
+  <!-- TEMPLATES -->
+  <section class="section" id="templates">
     <div class="container">
       <div class="section-header">
         <p class="section-label reveal">Templates</p>
@@ -868,145 +822,71 @@
         <div class="template-category reveal">
           <div class="cat-accent" style="background:#C49A8A"></div>
           <div class="cat-content">
-            <div class="cat-header">
-              <span class="cat-name">Finance &amp; Expense</span>
-              <span class="cat-count">10 templates</span>
-            </div>
-            <div class="cat-templates">
-              <span class="cat-tag">General Expense</span>
-              <span class="cat-tag">Credit Card</span>
-              <span class="cat-tag">Purchase Invoice</span>
-              <span class="cat-tag">Freelance Invoice</span>
-              <span class="cat-tag">Insurance Premium</span>
-            </div>
+            <div class="cat-header"><span class="cat-name">Finance &amp; Expense</span><span class="cat-count">10</span></div>
+            <div class="cat-templates"><span class="cat-tag">General Expense</span><span class="cat-tag">Credit Card</span><span class="cat-tag">Petty Cash</span><span class="cat-tag">Purchase Invoice</span><span class="cat-tag">Freelance Invoice</span></div>
           </div>
         </div>
         <div class="template-category reveal">
           <div class="cat-accent" style="background:#6BAA96"></div>
           <div class="cat-content">
-            <div class="cat-header">
-              <span class="cat-name">Tax &amp; Compliance</span>
-              <span class="cat-count">4 templates</span>
-            </div>
-            <div class="cat-templates">
-              <span class="cat-tag">GST / VAT Input</span>
-              <span class="cat-tag">Customs Duty</span>
-              <span class="cat-tag">Withholding Tax</span>
-              <span class="cat-tag">Donation / Charity</span>
-            </div>
+            <div class="cat-header"><span class="cat-name">Tax &amp; Compliance</span><span class="cat-count">4</span></div>
+            <div class="cat-templates"><span class="cat-tag">GST / VAT Input</span><span class="cat-tag">Customs Duty</span><span class="cat-tag">Withholding Tax</span><span class="cat-tag">Donation / Charity</span></div>
           </div>
         </div>
         <div class="template-category reveal">
           <div class="cat-accent" style="background:#B08AA8"></div>
           <div class="cat-content">
-            <div class="cat-header">
-              <span class="cat-name">Travel &amp; Vehicles</span>
-              <span class="cat-count">4 templates</span>
-            </div>
-            <div class="cat-templates">
-              <span class="cat-tag">Travel Expense</span>
-              <span class="cat-tag">Fuel Mileage</span>
-              <span class="cat-tag">Vehicle Maintenance</span>
-              <span class="cat-tag">Accommodation</span>
-            </div>
+            <div class="cat-header"><span class="cat-name">Travel &amp; Vehicles</span><span class="cat-count">4</span></div>
+            <div class="cat-templates"><span class="cat-tag">Travel Expense</span><span class="cat-tag">Fuel Mileage</span><span class="cat-tag">Vehicle Maintenance</span><span class="cat-tag">Accommodation</span></div>
           </div>
         </div>
         <div class="template-category reveal">
           <div class="cat-accent" style="background:#C4A878"></div>
           <div class="cat-content">
-            <div class="cat-header">
-              <span class="cat-name">Construction &amp; Trades</span>
-              <span class="cat-count">4 templates</span>
-            </div>
-            <div class="cat-templates">
-              <span class="cat-tag">Materials Cost</span>
-              <span class="cat-tag">Subcontractor</span>
-              <span class="cat-tag">Delivery Docket</span>
-              <span class="cat-tag">Plant Hire</span>
-            </div>
+            <div class="cat-header"><span class="cat-name">Construction &amp; Trades</span><span class="cat-count">4</span></div>
+            <div class="cat-templates"><span class="cat-tag">Materials Cost</span><span class="cat-tag">Subcontractor</span><span class="cat-tag">Delivery Docket</span><span class="cat-tag">Plant Hire</span></div>
           </div>
         </div>
         <div class="template-category reveal">
           <div class="cat-accent" style="background:#9A8AB8"></div>
           <div class="cat-content">
-            <div class="cat-header">
-              <span class="cat-name">Healthcare &amp; Medical</span>
-              <span class="cat-count">2 templates</span>
-            </div>
-            <div class="cat-templates">
-              <span class="cat-tag">Medical Expense</span>
-              <span class="cat-tag">Clinical Supply</span>
-            </div>
+            <div class="cat-header"><span class="cat-name">Healthcare &amp; Medical</span><span class="cat-count">2</span></div>
+            <div class="cat-templates"><span class="cat-tag">Medical Expense</span><span class="cat-tag">Clinical Supply</span></div>
           </div>
         </div>
         <div class="template-category reveal">
           <div class="cat-accent" style="background:#8A96A8"></div>
           <div class="cat-content">
-            <div class="cat-header">
-              <span class="cat-name">Operations &amp; Procurement</span>
-              <span class="cat-count">5 templates</span>
-            </div>
-            <div class="cat-templates">
-              <span class="cat-tag">Purchase Order</span>
-              <span class="cat-tag">Supplier Quote</span>
-              <span class="cat-tag">Training</span>
-              <span class="cat-tag">Inventory / Stock</span>
-            </div>
+            <div class="cat-header"><span class="cat-name">Operations &amp; Procurement</span><span class="cat-count">5</span></div>
+            <div class="cat-templates"><span class="cat-tag">Purchase Order</span><span class="cat-tag">Supplier Quote</span><span class="cat-tag">Training</span><span class="cat-tag">Inventory / Stock</span></div>
           </div>
         </div>
         <div class="template-category reveal">
           <div class="cat-accent" style="background:#0EA5E9"></div>
           <div class="cat-content">
-            <div class="cat-header">
-              <span class="cat-name">Professional Services</span>
-              <span class="cat-count">1 template</span>
-            </div>
-            <div class="cat-templates">
-              <span class="cat-tag">Timesheet / Billable Hours</span>
-            </div>
+            <div class="cat-header"><span class="cat-name">Professional Services</span><span class="cat-count">1</span></div>
+            <div class="cat-templates"><span class="cat-tag">Timesheet / Billable Hours</span></div>
           </div>
         </div>
         <div class="template-category reveal">
           <div class="cat-accent" style="background:#8BA8C4"></div>
           <div class="cat-content">
-            <div class="cat-header">
-              <span class="cat-name">Personal</span>
-              <span class="cat-count">4 templates</span>
-            </div>
-            <div class="cat-templates">
-              <span class="cat-tag">Family Expense</span>
-              <span class="cat-tag">Subscription</span>
-              <span class="cat-tag">Warranty</span>
-            </div>
+            <div class="cat-header"><span class="cat-name">Personal</span><span class="cat-count">4</span></div>
+            <div class="cat-templates"><span class="cat-tag">Family Expense</span><span class="cat-tag">Subscription</span><span class="cat-tag">Warranty</span></div>
           </div>
         </div>
       </div>
 
-      <!-- Stats strip -->
       <div class="stats-strip reveal">
-        <div class="stat">
-          <div class="stat-value"><span class="green">30</span>+</div>
-          <div class="stat-label">Report Templates</div>
-        </div>
-        <div class="stat">
-          <div class="stat-value"><span class="green">12</span></div>
-          <div class="stat-label">Country Locales</div>
-        </div>
-        <div class="stat">
-          <div class="stat-value"><span class="green">3</span></div>
-          <div class="stat-label">Export Formats</div>
-        </div>
-        <div class="stat">
-          <div class="stat-value"><span class="green">100</span>%</div>
-          <div class="stat-label">Offline Capable</div>
-        </div>
+        <div class="stat"><div class="stat-value"><span class="green">30</span>+</div><div class="stat-label">Report Templates</div></div>
+        <div class="stat"><div class="stat-value"><span class="green">12</span></div><div class="stat-label">Country Locales</div></div>
+        <div class="stat"><div class="stat-value"><span class="green">3</span></div><div class="stat-label">Export Formats</div></div>
+        <div class="stat"><div class="stat-value"><span class="green">100</span>%</div><div class="stat-label">Offline Capable</div></div>
       </div>
     </div>
   </section>
 
-  <!-- ════════════════════════════════════════════════════════════════
-       CTA
-       ════════════════════════════════════════════════════════════════ -->
+  <!-- CTA -->
   <section class="section cta-section" id="cta">
     <div class="container">
       <div class="cta-box reveal">
@@ -1022,11 +902,13 @@
     </div>
   </section>
 
-  <!-- ════════════════════════════════════════════════════════════════
-       FOOTER
-       ════════════════════════════════════════════════════════════════ -->
+  <!-- FOOTER -->
   <footer>
     <div class="footer-inner">
+      <div class="footer-logo">
+        <img src="assets/images/app-logo.png" alt="LensReport" width="24" height="24">
+        LensReport
+      </div>
       <div class="footer-links">
         <a href="/privacy/">Privacy Policy</a>
         <a href="/terms/">Terms of Service</a>
@@ -1036,11 +918,7 @@
     </div>
   </footer>
 
-  <!-- ════════════════════════════════════════════════════════════════
-       SCRIPTS
-       ════════════════════════════════════════════════════════════════ -->
   <script>
-    // Scroll reveal with IntersectionObserver
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -1049,10 +927,8 @@
         }
       });
     }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-    // Smooth nav link clicks
     document.querySelectorAll('a[href^="#"]').forEach(link => {
       link.addEventListener('click', e => {
         e.preventDefault();
@@ -1061,33 +937,20 @@
       });
     });
 
-    // Email form handler
     function handleSubmit(e) {
       e.preventDefault();
       const input = e.target.querySelector('input');
       const btn = e.target.querySelector('button');
       const email = input.value;
-
       btn.textContent = 'Sending...';
       btn.disabled = true;
-
-      // Open mailto as fallback (replace with real backend later)
       window.location.href = 'mailto:shweth@lensreport.app?subject=Early%20Access%20Request&body=Please%20add%20me%20to%20the%20LensReport%20early%20access%20list.%0A%0AEmail:%20' + encodeURIComponent(email);
-
       setTimeout(() => {
-        btn.textContent = 'You\'re on the list!';
+        btn.textContent = "You're on the list!";
         btn.style.background = '#2E9E5E';
         input.value = '';
       }, 1000);
     }
-
-    // Nav background on scroll
-    const nav = document.querySelector('nav');
-    window.addEventListener('scroll', () => {
-      nav.style.borderBottomColor = window.scrollY > 50
-        ? 'rgba(255,255,255,0.08)'
-        : 'rgba(255,255,255,0.04)';
-    }, { passive: true });
   </script>
 </body>
 </html>
