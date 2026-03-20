@@ -3,18 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LensReport — Scan Receipts. Auto-Fill Reports. Export Instantly.</title>
+  <title>LensReport — Scan Receipts. Auto-Fill Reports. Share with Your Team.</title>
   <meta name="description" content="LensReport uses cloud AI to read your receipts and invoices, auto-populate report fields, and export to PDF or Excel with real working formulas. No manual data entry.">
   <meta name="theme-color" content="#4CAF7D">
 
   <!-- Open Graph -->
-  <meta property="og:title" content="LensReport — Scan Receipts. Auto-Fill Reports. Export Instantly.">
+  <meta property="og:title" content="LensReport — Scan Receipts. Auto-Fill Reports. Share with Your Team.">
   <meta property="og:description" content="Cloud AI reads your receipts and invoices, auto-fills every field, and exports to PDF or Excel with real formulas.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://lensreport.app">
   <meta property="og:image" content="https://lensreport.app/assets/images/onboarding_01_scan_invoice.png">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="LensReport — Scan Receipts. Auto-Fill Reports.">
+  <meta name="twitter:title" content="LensReport — Scan Receipts. Auto-Fill Reports. Share with Your Team.">
   <meta name="twitter:description" content="Cloud AI reads your receipts, auto-fills reports, exports to PDF/Excel with real formulas.">
 
   <link rel="icon" href="assets/images/app-logo.png" type="image/png">
@@ -437,6 +437,48 @@
     }
     .feature-card p { font-size: 14px; color: var(--text-secondary); line-height: 1.6; }
 
+    /* ═══ TEAMS ═══ */
+    .teams-section { background: var(--bg); }
+    .teams-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: center;
+    }
+    .teams-image {
+      border-radius: 24px;
+      padding: 10px;
+      background: var(--bg-white);
+      box-shadow: var(--shadow-xl), 0 0 0 1px var(--border);
+      overflow: hidden;
+    }
+    .teams-image img {
+      border-radius: 16px;
+      width: 100%;
+      aspect-ratio: 3/4;
+      object-fit: contain;
+    }
+    .teams-features { display: flex; flex-direction: column; gap: 24px; }
+    .teams-feature {
+      display: flex; gap: 16px; align-items: flex-start;
+    }
+    .teams-feature-icon {
+      width: 44px; height: 44px;
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      font-size: 22px;
+    }
+    .tfi-green { background: rgba(76,175,125,0.12); color: var(--green); }
+    .tfi-purple { background: rgba(107,92,231,0.12); color: var(--purple); }
+    .tfi-coral { background: rgba(240,133,106,0.12); color: var(--coral); }
+    .teams-feature h3 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 16px; font-weight: 700;
+      margin-bottom: 4px; letter-spacing: -0.2px;
+    }
+    .teams-feature p { font-size: 14px; color: var(--text-secondary); line-height: 1.6; }
+
     /* ═══ TEMPLATES ═══ */
     .templates-grid {
       display: grid;
@@ -618,6 +660,7 @@
     @media (max-width: 900px) {
       .steps-grid { grid-template-columns: 1fr; }
       .features-grid { grid-template-columns: repeat(2, 1fr); }
+      .teams-grid { grid-template-columns: 1fr; gap: 32px; }
       .templates-grid { grid-template-columns: 1fr; }
       .stats-strip { grid-template-columns: repeat(2, 1fr); }
     }
@@ -665,6 +708,7 @@
       .hero-logo { width: 72px; height: 72px; border-radius: 18px; }
       .showcase-grid { grid-template-columns: 1fr; max-width: 340px; margin: 0 auto; gap: 40px; }
       .features-grid { grid-template-columns: 1fr; }
+      .teams-grid { gap: 24px; }
       .stats-strip { grid-template-columns: 1fr; }
       .cta-form { flex-direction: column; }
       .cta-box { padding: 48px 24px; }
@@ -686,6 +730,7 @@
       <div class="nav-links">
         <a href="#how-it-works">How It Works</a>
         <a href="#features">Features</a>
+        <a href="#teams">Teams</a>
         <a href="#templates">Templates</a>
         <a href="/privacy/">Privacy</a>
       </div>
@@ -698,6 +743,7 @@
   <div class="mobile-nav" id="mobileNav">
     <a href="#how-it-works" onclick="closeMobileNav()">How It Works</a>
     <a href="#features" onclick="closeMobileNav()">Features</a>
+    <a href="#teams" onclick="closeMobileNav()">Teams</a>
     <a href="#templates" onclick="closeMobileNav()">Templates</a>
     <a href="/privacy/" onclick="closeMobileNav()">Privacy</a>
   </div>
@@ -719,13 +765,13 @@
       <h1>
         <span class="line">Scan receipts.</span>
         <span class="line"><span class="green">Auto-fill reports.</span></span>
-        <span class="line">Export instantly.</span>
+        <span class="line">Share with your team.</span>
       </h1>
 
       <p class="hero-sub">
         Cloud AI reads your receipts and invoices, auto-populates every field,
         and exports to PDF or Excel with real working formulas.
-        No manual data entry.
+        Your team scans in the field — you see results in real time.
       </p>
 
       <div class="hero-actions">
@@ -848,9 +894,48 @@
           <p>Auto-calculated tax, totals, variance, and running balances. Set the rate once — every row updates.</p>
         </div>
         <div class="feature-card reveal">
-          <div class="feature-icon fi-slate">📈</div>
-          <h3>Dashboard Insights</h3>
-          <p>KPI cards, bar charts, pie charts, and time-series for every report. See spending patterns at a glance.</p>
+          <div class="feature-icon fi-purple">👥</div>
+          <h3>Team Collaboration</h3>
+          <p>Invite staff to scan in the field. Results land in your report with real-time notifications.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TEAMS -->
+  <section class="section teams-section" id="teams">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-label reveal">Team Collaboration</p>
+        <h2 class="section-title reveal">Your team scans in the field.<br>You get the report.</h2>
+        <p class="section-subtitle reveal">One subscription covers your whole team. Contributors join free and scan against your quota pool.</p>
+      </div>
+      <div class="teams-grid">
+        <div class="teams-image reveal">
+          <img src="assets/images/onboarding_03_team_collaboration.png" alt="Team collaboration in LensReport" loading="lazy">
+        </div>
+        <div class="teams-features stagger">
+          <div class="teams-feature reveal">
+            <div class="teams-feature-icon tfi-green">🔗</div>
+            <div>
+              <h3>Invite via link</h3>
+              <p>Send a link to your team — they join free, no subscription needed. Start scanning in under a minute.</p>
+            </div>
+          </div>
+          <div class="teams-feature reveal">
+            <div class="teams-feature-icon tfi-purple">📊</div>
+            <div>
+              <h3>Shared scan pool</h3>
+              <p>Your team scans against your quota. No per-seat fees — one plan covers everyone in the field.</p>
+            </div>
+          </div>
+          <div class="teams-feature reveal">
+            <div class="teams-feature-icon tfi-coral">🔔</div>
+            <div>
+              <h3>Real-time notifications</h3>
+              <p>Get notified the moment a team member adds an entry. Results land in your report instantly.</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -925,7 +1010,7 @@
 
       <div class="stats-strip reveal">
         <div class="stat"><div class="stat-value"><span class="green">30</span>+</div><div class="stat-label">Report Templates</div></div>
-        <div class="stat"><div class="stat-value"><span class="green">12</span></div><div class="stat-label">Country Locales</div></div>
+        <div class="stat"><div class="stat-value"><span class="green">Team</span></div><div class="stat-label">Invite &amp; Scan Together</div></div>
         <div class="stat"><div class="stat-value"><span class="green">3</span></div><div class="stat-label">Export Formats</div></div>
         <div class="stat"><div class="stat-value"><span class="green">100</span>%</div><div class="stat-label">Offline Capable</div></div>
       </div>
@@ -938,7 +1023,7 @@
       <div class="cta-box reveal">
         <div class="cta-glow"></div>
         <h2>Stop typing.<br>Start scanning.</h2>
-        <p class="section-subtitle">Be the first to know when LensReport launches. Free tier includes 25 AI scans per month.</p>
+        <p class="section-subtitle">From solo receipts to team field reports — LensReport handles it all. Be the first to know when we launch. Free tier includes 25 AI scans per month.</p>
         <form class="cta-form" onsubmit="handleSubmit(event)">
           <input type="email" placeholder="Enter your email" required autocomplete="email">
           <button type="submit" class="cta-btn">Get Early Access</button>
