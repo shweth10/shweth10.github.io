@@ -1,471 +1,369 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LensReport — Scan Receipts. Auto-Fill Reports. Export Instantly.</title>
+  <meta name="description" content="LensReport turns receipts and invoices into export-ready reports using AI. Scan, auto-fill, and export to PDF or Excel with real formulas.">
+  <meta name="theme-color" content="#4CAF7D">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📋</text></svg>">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
-  <title>Shweth Maharaj - Personal Portfolio</title>
-  <!--
-    - favicon
-  -->
-  <link rel="shortcut icon" href="logo.ico" type="image/x-icon">
+    :root {
+      --primary: #4CAF7D;
+      --primary-dark: #3a9468;
+      --bg: #FAFBFC;
+      --surface: #FFFFFF;
+      --text: #1A1D21;
+      --text-secondary: #6B7280;
+      --border: #E5E7EB;
+      --accent-purple: #6B5CE7;
+      --accent-orange: #E87040;
+      --accent-blue: #0EA5E9;
+    }
 
-  <!--
-    - custom css link
-  -->
-  <link rel="stylesheet" href="style.css">
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
 
-  <!--
-    - google font link
-  -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    /* Nav */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+    }
+    .nav-inner {
+      max-width: 1080px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 64px;
+    }
+    .logo { font-size: 20px; font-weight: 700; color: var(--primary); text-decoration: none; letter-spacing: -0.5px; }
+    .logo span { color: var(--text); }
+    .nav-links { display: flex; gap: 28px; align-items: center; }
+    .nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 14px; font-weight: 500; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--text); }
+
+    /* Hero */
+    .hero {
+      padding: 140px 24px 80px;
+      text-align: center;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: #E8F5EE;
+      color: var(--primary-dark);
+      font-size: 13px;
+      font-weight: 600;
+      padding: 6px 16px;
+      border-radius: 20px;
+      margin-bottom: 24px;
+    }
+    .hero h1 {
+      font-size: clamp(32px, 5vw, 52px);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -1.5px;
+      margin-bottom: 20px;
+    }
+    .hero h1 .accent { color: var(--primary); }
+    .hero p {
+      font-size: 18px;
+      color: var(--text-secondary);
+      max-width: 560px;
+      margin: 0 auto 36px;
+      line-height: 1.7;
+    }
+    .hero-cta {
+      display: inline-flex; gap: 12px; flex-wrap: wrap; justify-content: center;
+    }
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 14px 28px;
+      border-radius: 12px;
+      font-size: 15px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+    }
+    .btn-primary:hover { background: var(--primary-dark); transform: translateY(-1px); box-shadow: 0 8px 24px rgba(76,175,125,0.3); }
+    .btn-outline {
+      background: var(--surface);
+      color: var(--text);
+      border: 1.5px solid var(--border);
+    }
+    .btn-outline:hover { border-color: var(--primary); color: var(--primary); }
+
+    /* How it works */
+    .section {
+      padding: 80px 24px;
+      max-width: 1080px;
+      margin: 0 auto;
+    }
+    .section-header {
+      text-align: center;
+      margin-bottom: 56px;
+    }
+    .section-header h2 {
+      font-size: 32px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      margin-bottom: 12px;
+    }
+    .section-header p {
+      color: var(--text-secondary);
+      font-size: 16px;
+      max-width: 520px;
+      margin: 0 auto;
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 32px;
+    }
+    .step {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 32px 24px;
+      text-align: center;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .step:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,0.08); }
+    .step-number {
+      width: 48px; height: 48px;
+      border-radius: 14px;
+      display: inline-flex; align-items: center; justify-content: center;
+      font-size: 20px; font-weight: 700; color: white;
+      margin-bottom: 20px;
+    }
+    .step h3 { font-size: 17px; font-weight: 600; margin-bottom: 8px; }
+    .step p { font-size: 14px; color: var(--text-secondary); line-height: 1.6; }
+
+    /* Features */
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+    }
+    .feature {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px;
+    }
+    .feature-icon {
+      font-size: 28px;
+      margin-bottom: 16px;
+    }
+    .feature h3 { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+    .feature p { font-size: 14px; color: var(--text-secondary); line-height: 1.6; }
+
+    /* Templates */
+    .templates-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+    }
+    .template-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .template-dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .template-card span { font-size: 13px; font-weight: 500; }
+
+    /* CTA */
+    .cta-section {
+      text-align: center;
+      padding: 80px 24px;
+      background: linear-gradient(135deg, #E8F5EE 0%, #EDE9FE 100%);
+      border-radius: 24px;
+      max-width: 1080px;
+      margin: 0 auto 80px;
+    }
+    .cta-section h2 { font-size: 32px; font-weight: 700; margin-bottom: 12px; }
+    .cta-section p { color: var(--text-secondary); margin-bottom: 32px; font-size: 16px; }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 40px 24px;
+      text-align: center;
+    }
+    .footer-inner {
+      max-width: 1080px; margin: 0 auto;
+    }
+    .footer-links { display: flex; gap: 24px; justify-content: center; margin-bottom: 16px; flex-wrap: wrap; }
+    .footer-links a { color: var(--text-secondary); text-decoration: none; font-size: 13px; }
+    .footer-links a:hover { color: var(--text); }
+    .footer-copy { color: var(--text-secondary); font-size: 12px; }
+
+    @media (max-width: 640px) {
+      .nav-links { display: none; }
+      .hero { padding: 120px 20px 60px; }
+      .section { padding: 60px 20px; }
+      .cta-section { margin: 0 16px 60px; padding: 48px 20px; }
+    }
+  </style>
 </head>
-
 <body>
 
-  <!--
-    - #MAIN
-  -->
-
-  <main>
-
-    <!--
-      - #SIDEBAR
-    -->
-
-    <aside class="sidebar" data-sidebar>
-
-      <div class="sidebar-info">
-
-        <figure class="avatar-box">
-          <img src="my-avatar.png" alt="Shweth Maharaj" width="80">
-        </figure>
-
-        <div class="info-content">
-          <animt class="name" title="Shweth Maharaj">Shweth Maharaj</animt>
-
-          <p class="title">Software Engineer</p>
-        </div>
-
-        <button class="info_more-btn" data-sidebar-btn>
-          <span>Show Contacts</span>
-
-          <ion-icon name="chevron-down"></ion-icon>
-        </button>
-
+  <nav>
+    <div class="nav-inner">
+      <a href="/" class="logo">Lens<span>Report</span></a>
+      <div class="nav-links">
+        <a href="#how-it-works">How It Works</a>
+        <a href="#features">Features</a>
+        <a href="#templates">Templates</a>
+        <a href="/privacy/">Privacy</a>
       </div>
+    </div>
+  </nav>
 
-      <div class="sidebar-info_more">
+  <section class="hero">
+    <div class="hero-badge">iOS + Android</div>
+    <h1>Scan receipts.<br><span class="accent">Auto-fill reports.</span><br>Export instantly.</h1>
+    <p>LensReport uses cloud AI to read your receipts and invoices, auto-populate report fields, and export to PDF or Excel with real working formulas. No manual data entry.</p>
+    <div class="hero-cta">
+      <a href="#" class="btn btn-primary">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+        Coming Soon on App Store
+      </a>
+      <a href="#" class="btn btn-outline">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        Coming Soon on Google Play
+      </a>
+    </div>
+  </section>
 
-        <div class="separator"></div>
-
-        <ul class="contacts-list">
-
-          <li class="contact-item">
-
-            <div class="icon-box">
-              <ion-icon name="mail-outline"></ion-icon>
-            </div>
-
-            <div class="contact-info">
-              <p class="contact-title">Email</p>
-
-              <a href="mailto:shweth34@gmail.com" class="contact-link">shweth34@gmail.com</a>
-            </div>
-
-          </li>
-
-          <li class="contact-item">
-
-            <div class="icon-box">
-              <ion-icon name="phone-portrait-outline"></ion-icon>
-            </div>
-
-            <div class="contact-info">
-              <p class="contact-title">Phone</p>
-              <a href="tel:+12133522795" class="contact-link">+(679) 281-7098</a>
-
-            </div>
-
-          </li>
-
-          <li class="contact-item">
-
-            <div class="icon-box">
-              <ion-icon name="calendar-outline"></ion-icon>
-            </div>
-
-            <div class="contact-info">
-              <p class="contact-title">Birthday</p>
-
-              <time datetime="1982-06-23">January 10th, 2001</time>
-            </div>
-
-          </li>
-
-          <li class="contact-item">
-
-            <div class="icon-box">
-              <ion-icon name="location-outline"></ion-icon>
-            </div>
-
-            <div class="contact-info">
-              <p class="contact-title">Location</p>
-
-              <address>Suva, Fiji</address>
-            </div>
-
-          </li>
-
-        </ul>
-
-        <div class="separator"></div>
-
-        <ul class="social-list">
-
-          <li class="social-item">
-            <a href="https://www.linkedin.com/in/shweth-maharaj-227636225" target = "_blank" class="social-link">
-              <ion-icon name="logo-Linkedin"></ion-icon>
-            </a>
-          </li>
-
-        </ul>
-
+  <section class="section" id="how-it-works">
+    <div class="section-header">
+      <h2>How It Works</h2>
+      <p>Three steps from paper receipt to export-ready report.</p>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-number" style="background: var(--primary);">1</div>
+        <h3>Pick a Template</h3>
+        <p>Choose from 30+ built-in report templates covering expenses, tax, travel, construction, medical, and more.</p>
       </div>
-
-    </aside>
-
-
-
-
-
-    <!--
-      - #main-content
-    -->
-
-    <div class="main-content">
-
-      <!--
-        - #NAVBAR
-      -->
-
-      <nav class="navbar">
-
-        <ul class="navbar-list">
-
-          <li class="navbar-item">
-            <button class="navbar-link  active" data-nav-link>About</button>
-          </li>
-
-          <li class="navbar-item">
-            <a class = "navbar-link" target="_blank" href="CV.pdf">Resume</a>
-          </li>
-
-        </ul>
-
-      </nav>
-
-
-
-
-
-      <!--
-        - #ABOUT
-      -->
-
-      <article class="about  active" data-page="about">
-
-        <header>
-          <h2 class="h2 article-title">About me</h2>
-        </header>
-
-        <section class="about-text">
-          <p>
-            Hi there, my name is Shweth Maharaj, and I am a software engineer based in Fiji. I am currently studying at the University of the South Pacific, where I am pursuing a degree in Software Engineering.
-
-            My passion for technology and programming started at a young age, and I have been honing my skills ever since. I love the challenge of solving complex problems with code and seeing my solutions come to life in the form of software applications.
-          </p>
-
-          <p>
-            In addition to my studies, I am also actively involved in the local tech community, attending meetups and events to network with fellow developers and learn about the latest trends in the industry.
-
-            When I'm not coding or studying, you can usually find me exploring the beautiful natural landscapes of Fiji, playing sports, or spending time with friends and family.
-          </p>
-        </section>
-
-
-        <!--
-          - service
-        -->
-
-        <section class="service">
-
-          <h3 class="h3 service-title">What i'm doing</h3>
-
-          <ul class="service-list">
-
-            <li class="service-item">
-
-              <div class="service-icon-box">
-                <img src="icon-design.svg
-                " alt="design icon" width="40">
-              </div>
-
-              <div class="service-content-box">
-                <h4 class="h4 service-item-title">Web design</h4>
-
-                <p class="service-item-text">
-                  The most modern and high-quality design made at a professional level.
-                </p>
-              </div>
-
-            </li>
-
-            <li class="service-item">
-
-              <div class="service-icon-box">
-                <img src="icon-dev.svg" alt="Web development icon" width="40">
-              </div>
-
-              <div class="service-content-box">
-                <h4 class="h4 service-item-title">Software development</h4>
-
-                <p class="service-item-text">
-                  High-quality development of Software at the professional level.
-                </p>
-              </div>
-
-            </li>
-
-            <li class="service-item">
-
-              <div class="service-icon-box">
-                <img src="icon-app.svg" alt="mobile app icon" width="40">
-              </div>
-
-              <div class="service-content-box">
-                <h4 class="h4 service-item-title">Mobile apps</h4>
-
-                <p class="service-item-text">
-                  Professional development of applications for iOS and Android.
-                </p>
-              </div>
-
-            </li>
-
-            <li class="service-item">
-
-              <div class="service-icon-box">
-                <img src="icon-photo.svg" alt="camera icon" width="40">
-              </div>
-
-              <div class="service-content-box">
-                <h4 class="h4 service-item-title">Photography</h4>
-
-                <p class="service-item-text">
-                  I make high-quality photos of any category at a professional level.
-                </p>
-              </div>
-
-            </li>
-
-          </ul>
-
-        </section>
-
-
-        <!--
-          - testimonials
-
-
-        <section class="testimonials">
-
-          <h3 class="h3 testimonials-title">Testimonials</h3>
-
-          <ul class="testimonials-list has-scrollbar">
-
-            <li class="testimonials-item">
-              <div class="content-card" data-testimonials-item>
-
-                <figure class="testimonials-avatar-box">
-                  <img src="avatar-1.png" alt="Daniel lewis" width="60" data-testimonials-avatar>
-                </figure>
-
-                <h4 class="h4 testimonials-item-title" data-testimonials-title>Daniel lewis</h4>
-
-                <div class="testimonials-text" data-testimonials-text>
-                  <p>
-                    Shweth was hired to create a corporate identity. We were very pleased with the work done. She has a
-                    lot of experience
-                    and is very concerned about the needs of client. Lorem ipsum dolor sit amet, ullamcous cididt
-                    consectetur adipiscing
-                    elit, seds do et eiusmod tempor incididunt ut laborels dolore magnarels alia.
-                  </p>
-                </div>
-
-              </div>
-            </li>
-
-            <li class="testimonials-item">
-              <div class="content-card" data-testimonials-item>
-
-                <figure class="testimonials-avatar-box">
-                  <img src="avatar-2.png" alt="Jessica miller" width="60" data-testimonials-avatar>
-                </figure>
-
-                <h4 class="h4 testimonials-item-title" data-testimonials-title>Jessica miller</h4>
-
-                <div class="testimonials-text" data-testimonials-text>
-                  <p>
-                    Shweth was hired to create a corporate identity. We were very pleased with the work done. She has a
-                    lot of experience
-                    and is very concerned about the needs of client. Lorem ipsum dolor sit amet, ullamcous cididt
-                    consectetur adipiscing
-                    elit, seds do et eiusmod tempor incididunt ut laborels dolore magnarels alia.
-                  </p>
-                </div>
-
-              </div>
-            </li>
-
-            <li class="testimonials-item">
-              <div class="content-card" data-testimonials-item>
-
-                <figure class="testimonials-avatar-box">
-                  <img src="avatar-3.png" alt="Emily evans" width="60" data-testimonials-avatar>
-                </figure>
-
-                <h4 class="h4 testimonials-item-title" data-testimonials-title>Emily evans</h4>
-
-                <div class="testimonials-text" data-testimonials-text>
-                  <p>
-                    Shweth was hired to create a corporate identity. We were very pleased with the work done. She has a
-                    lot of experience
-                    and is very concerned about the needs of client. Lorem ipsum dolor sit amet, ullamcous cididt
-                    consectetur adipiscing
-                    elit, seds do et eiusmod tempor incididunt ut laborels dolore magnarels alia.
-                  </p>
-                </div>
-
-              </div>
-            </li>
-
-            <li class="testimonials-item">
-              <div class="content-card" data-testimonials-item>
-
-                <figure class="testimonials-avatar-box">
-                  <img src="avatar-4.png" alt="Henry william" width="60" data-testimonials-avatar>
-                </figure>
-
-                <h4 class="h4 testimonials-item-title" data-testimonials-title>Henry william</h4>
-
-                <div class="testimonials-text" data-testimonials-text>
-                  <p>
-                    Shweth was hired to create a corporate identity. We were very pleased with the work done. She has a
-                    lot of experience
-                    and is very concerned about the needs of client. Lorem ipsum dolor sit amet, ullamcous cididt
-                    consectetur adipiscing
-                    elit, seds do et eiusmod tempor incididunt ut laborels dolore magnarels alia.
-                  </p>
-                </div>
-
-              </div>
-            </li>
-
-          </ul>
-
-        </section>
--->
-
-        <!--
-          - testimonials modal
-
-        <div class="modal-container" data-modal-container>
-
-          <div class="overlay" data-overlay></div>
-
-          <section class="testimonials-modal">
-
-            <button class="modal-close-btn" data-modal-close-btn>
-              <ion-icon name="close-outline"></ion-icon>
-            </button>
-
-            <div class="modal-img-wrapper">
-              <figure class="modal-avatar-box">
-                <img src="avatar-1.png" alt="Daniel lewis" width="80" data-modal-img>
-              </figure>
-
-              <img src="icon-quote.svg" alt="quote icon">
-            </div>
-
-            <div class="modal-content">
-
-              <h4 class="h3 modal-title" data-modal-title>Daniel lewis</h4>
-
-              <time datetime="2021-06-14">14 June, 2021</time>
-
-              <div data-modal-text>
-                <p>
-                  Shweth was hired to create a corporate identity. We were very pleased with the work done. She has a
-                  lot of experience
-                  and is very concerned about the needs of client. Lorem ipsum dolor sit amet, ullamcous cididt
-                  consectetur adipiscing
-                  elit, seds do et eiusmod tempor incididunt ut laborels dolore magnarels alia.
-                </p>
-              </div>
-
-            </div>
-
-          </section>
-
-        </div>
-
-
-        <!--
-          - Projects
-        -->
-
-        <section class="Projects">
-
-          <h3 class="h3 clients-title">Projects</h3>
-
-          <ul class="clients-list has-scrollbar">
-
-            <li class="clients-item">
-              <iframe width="560" height="315" src="https://www.youtube.com/embed/IKrYXVbleqk" frameborder="0" allow="autoplay; encrypted-media; fullscreen; picture-in-picture" allowfullscreen></iframe>
-            </li>
-
-          </ul>
-
-        </section>
-
-      </article>
-
-
-
-
-  </main>
-
-
-
-
-
-
-  <!--
-    - custom js link
-  -->
-  <script src="./assets/js/script.js"></script>
-
-  <!--
-    - ionicon link
-  -->
-  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+      <div class="step">
+        <div class="step-number" style="background: var(--accent-purple);">2</div>
+        <h3>Scan Your Documents</h3>
+        <p>Photograph receipts and invoices. Cloud AI reads the vendor, date, amounts, and tax — filling in every field automatically.</p>
+      </div>
+      <div class="step">
+        <div class="step-number" style="background: var(--accent-orange);">3</div>
+        <h3>Export Your Report</h3>
+        <p>Export to PDF, Excel (with real formulas), or CSV. Share with your accountant, boss, or tax office.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="features">
+    <div class="section-header">
+      <h2>Built for Real Work</h2>
+      <p>Everything you need to turn paper into structured data.</p>
+    </div>
+    <div class="features">
+      <div class="feature">
+        <div class="feature-icon">🤖</div>
+        <h3>Cloud AI Extraction</h3>
+        <p>GPT-4.1-mini reads your documents and extracts fields with high accuracy. No manual typing.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">📊</div>
+        <h3>Real Excel Formulas</h3>
+        <p>Calculated columns export as actual formulas (=H4*0.15), not hardcoded numbers. Your spreadsheets stay live.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">📶</div>
+        <h3>Offline-First</h3>
+        <p>Capture photos offline — they queue automatically and process when connectivity returns. Editing and export always work.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">📱</div>
+        <h3>Multi-Document Sessions</h3>
+        <p>Scan 25+ receipts into a single report. Each becomes a row in your spreadsheet, ready for review.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">🧮</div>
+        <h3>Smart Columns</h3>
+        <p>Auto-calculated tax, totals, variance, and running balances. Set the rate once — every row updates.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">📈</div>
+        <h3>Dashboard Insights</h3>
+        <p>KPI cards, bar charts, pie charts, and time-series for every report. See spending patterns at a glance.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="templates">
+    <div class="section-header">
+      <h2>30+ Report Templates</h2>
+      <p>Every template maps to a real-world document you scan regularly.</p>
+    </div>
+    <div class="templates-grid">
+      <div class="template-card"><div class="template-dot" style="background:#4CAF7D"></div><span>General Expense Claim</span></div>
+      <div class="template-card"><div class="template-dot" style="background:#4CAF7D"></div><span>Credit Card Expense</span></div>
+      <div class="template-card"><div class="template-dot" style="background:#4CAF7D"></div><span>Purchase Invoice Log</span></div>
+      <div class="template-card"><div class="template-dot" style="background:#4CAF7D"></div><span>Sales Invoice / Revenue</span></div>
+      <div class="template-card"><div class="template-dot" style="background:#4CAF7D"></div><span>Freelance Invoice Tracker</span></div>
+      <div class="template-card"><div class="template-dot" style="background:#6B5CE7"></div><span>GST / VAT Input Log</span></div>
+      <div class="template-card"><div class="template-dot" style="background:#6B5CE7"></div><span>Customs Import Duty</span></div>
+      <div class="template-card"><div class="template-dot" style="background:#6B5CE7"></div><span>Donation / Charity Receipt</span></div>
+      <div class="template-card"><div class="template-dot" style="background:#D97706"></div><span>Travel Expense Claim</span></div>
+      <div class="template-card"><div class="template-dot" style="background:#D97706"></div><span>Fuel Mileage Log</span></div>
+      <div class="template-card"><div class="template-dot" style="background:#D97706"></div><span>Vehicle Maintenance</span></div>
+      <div class="template-card"><div class="template-dot" style="background:#D97706"></div><span>Accommodation Receipt</span></div>
+      <div class="template-card"><div class="template-dot" style="background:#E87040"></div><span>Materials Cost Sheet</span></div>
+      <div class="template-card"><div class="template-dot" style="background:#E87040"></div><span>Subcontractor Invoice</span></div>
+      <div class="template-card"><div class="template-dot" style="background:#E87040"></div><span>Inventory / Stock Purchase</span></div>
+      <div class="template-card"><div class="template-dot" style="background:#0EA5E9"></div><span>Timesheet / Billable Hours</span></div>
+      <div class="template-card"><div class="template-dot" style="background:#8B5CF6"></div><span>Insurance Premium Tracker</span></div>
+      <div class="template-card"><div class="template-dot" style="background:#14B8A6"></div><span>Warranty / Service Claim</span></div>
+      <div class="template-card"><div class="template-dot" style="background:#14B8A6"></div><span>Subscription Tracker</span></div>
+      <div class="template-card"><div class="template-dot" style="background:#14B8A6"></div><span>Personal / Family Expense</span></div>
+    </div>
+  </section>
+
+  <div class="cta-section">
+    <h2>Stop typing. Start scanning.</h2>
+    <p>LensReport is launching soon on iOS and Android. Free tier includes 25 AI scans per month.</p>
+    <a href="mailto:shweth@lensreport.app" class="btn btn-primary">Get Notified at Launch</a>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-links">
+        <a href="/privacy/">Privacy Policy</a>
+        <a href="/terms/">Terms of Service</a>
+        <a href="mailto:shweth@lensreport.app">Contact</a>
+      </div>
+      <p class="footer-copy">&copy; 2026 LensReport. All rights reserved.</p>
+    </div>
+  </footer>
 
 </body>
-
 </html>
