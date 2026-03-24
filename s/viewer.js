@@ -237,7 +237,9 @@ function computeDashboardFromEntries(data) {
   const columns = data.columns || [];
   if (entries.length < 2) return null;
 
-  // Find the primary currency field
+  const parseNum = (v) => v != null ? parseFloat(String(v).replace(/[^0-9.\-]/g, '')) : NaN;
+
+  // Find the primary currency/amount field
   let amountCol = null;
   for (const col of columns) {
     const name = col.name || col;
@@ -245,22 +247,39 @@ function computeDashboardFromEntries(data) {
     if (isCurrencyType(type, name)) { amountCol = name; break; }
   }
   if (!amountCol) {
-    // Heuristic: find first field where most values are numeric
     for (const col of columns) {
       const name = col.name || col;
       const vals = entries.map(e => e.fields ? e.fields[name] : null).filter(v => v != null && v !== '');
       if (vals.length === 0) continue;
-      const numCount = vals.filter(v => !isNaN(parseFloat(v))).length;
-      if (numCount > vals.length * 0.6) { amountCol = name; break; }
+      if (vals.filter(v => !isNaN(parseNum(v))).length > vals.length * 0.6) { amountCol = name; break; }
     }
   }
   if (!amountCol) return null;
 
+  // Find date field
+  let dateCol = null;
+  for (const col of columns) {
+    const name = col.name || col;
+    const type = (col.type || '').toLowerCase();
+    if (isDateType(type, name)) { dateCol = name; break; }
+  }
+
+  // Find text field for categories (first non-amount, non-date text column)
+  let catCol = null;
+  for (const col of columns) {
+    const name = col.name || col;
+    const type = (col.type || '').toLowerCase();
+    if (name === amountCol || name === dateCol) continue;
+    if (isCurrencyType(type, name) || isDateType(type, name) || isNumberType(type)) continue;
+    const vals = entries.map(e => e.fields ? e.fields[name] : null).filter(v => v != null && v !== '');
+    if (vals.length > 0) { catCol = name; break; }
+  }
+
+  // Parse amounts
   const amounts = entries.map(e => {
     const raw = e.fields ? e.fields[amountCol] : null;
-    return raw != null ? parseFloat(String(raw).replace(/[^0-9.\-]/g, '')) : NaN;
+    return parseNum(raw);
   }).filter(v => !isNaN(v));
-
   if (amounts.length === 0) return null;
 
   const total = amounts.reduce((a, b) => a + b, 0);
@@ -268,48 +287,138 @@ function computeDashboardFromEntries(data) {
   const highest = Math.max(...amounts);
   const fmt = currencyFormatter(data.currency);
 
+  // KPIs
   const kpis = [
-    { title: 'TOTAL', value: total, formattedValue: fmt.format(total), entryCount: amounts.length },
-    { title: 'AVERAGE', value: avg, formattedValue: fmt.format(avg), entryCount: amounts.length },
-    { title: 'HIGHEST', value: highest, formattedValue: fmt.format(highest), entryCount: 1 },
     { title: 'ENTRIES', value: entries.length, formattedValue: String(entries.length), entryCount: entries.length },
+    { title: 'TOTAL AMOUNT', value: total, formattedValue: fmt.format(total), entryCount: amounts.length },
+    { title: 'AVERAGE AMOUNT', value: avg, formattedValue: fmt.format(avg), entryCount: amounts.length },
+    { title: 'HIGHEST', value: highest, formattedValue: fmt.format(highest), entryCount: 1 },
   ];
 
-  // Find a text field for category breakdown
-  let catCol = null;
-  for (const col of columns) {
-    const name = col.name || col;
-    const type = (col.type || '').toLowerCase();
-    if (name === amountCol) continue;
-    if (isCurrencyType(type, name) || isDateType(type, name) || isNumberType(type)) continue;
-    const vals = entries.map(e => e.fields ? e.fields[name] : null).filter(v => v != null && v !== '');
-    if (vals.length > 0) { catCol = name; break; }
-  }
-
+  // Category Breakdown
   let categoryBreakdown = [];
   if (catCol && total > 0) {
     const catTotals = {};
     entries.forEach(e => {
       const cat = (e.fields ? e.fields[catCol] : null) || 'Other';
-      const raw = e.fields ? e.fields[amountCol] : null;
-      const val = raw != null ? parseFloat(String(raw).replace(/[^0-9.\-]/g, '')) : 0;
+      const val = parseNum(e.fields ? e.fields[amountCol] : null);
       if (!isNaN(val)) catTotals[cat] = (catTotals[cat] || 0) + val;
     });
     categoryBreakdown = Object.entries(catTotals)
       .sort((a, b) => b[1] - a[1])
       .map(([category, amount]) => ({
-        category,
-        amount: Math.round(amount * 100) / 100,
+        category, amount: Math.round(amount * 100) / 100,
         percentage: Math.round((amount / total) * 1000) / 10,
       }));
+  }
+
+  // Daily Spending (bar chart) — group amounts by date
+  let charts = [];
+  if (dateCol) {
+    const dailyTotals = {};
+    entries.forEach(e => {
+      const dateRaw = e.fields ? e.fields[dateCol] : null;
+      const val = parseNum(e.fields ? e.fields[amountCol] : null);
+      if (!dateRaw || isNaN(val)) return;
+      const d = new Date(dateRaw);
+      if (isNaN(d.getTime())) return;
+      const key = d.toISOString().substring(0, 10);
+      dailyTotals[key] = (dailyTotals[key] || 0) + val;
+    });
+    const sorted = Object.entries(dailyTotals).sort((a, b) => a[0].localeCompare(b[0]));
+    if (sorted.length > 0) {
+      charts.push({
+        title: 'Daily Spending',
+        type: 'barChart',
+        dataPoints: sorted.map(([label, value]) => ({
+          label: new Date(label + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
+          value: Math.round(value * 100) / 100,
+          colorIndex: 0,
+        })),
+      });
+    }
+
+    // Monthly Trend (line chart) — only if 2+ months
+    const monthlyTotals = {};
+    entries.forEach(e => {
+      const dateRaw = e.fields ? e.fields[dateCol] : null;
+      const val = parseNum(e.fields ? e.fields[amountCol] : null);
+      if (!dateRaw || isNaN(val)) return;
+      const d = new Date(dateRaw);
+      if (isNaN(d.getTime())) return;
+      const key = d.toISOString().substring(0, 7);
+      monthlyTotals[key] = (monthlyTotals[key] || 0) + val;
+    });
+    const monthSorted = Object.entries(monthlyTotals).sort((a, b) => a[0].localeCompare(b[0]));
+    if (monthSorted.length >= 2) {
+      charts.push({
+        title: 'Monthly Trend',
+        type: 'lineChart',
+        dataPoints: monthSorted.map(([label, value]) => ({
+          label: new Date(label + '-01T00:00:00').toLocaleDateString('en-US', { month: 'short', year: 'numeric' }),
+          value: Math.round(value * 100) / 100,
+          colorIndex: 0,
+        })),
+      });
+    }
+  }
+
+  // Top Merchants — group by category field, include transaction count
+  let topMerchants = [];
+  if (catCol && total > 0) {
+    const merchantData = {};
+    entries.forEach(e => {
+      const name = (e.fields ? e.fields[catCol] : null) || 'Other';
+      const val = parseNum(e.fields ? e.fields[amountCol] : null);
+      if (isNaN(val)) return;
+      if (!merchantData[name]) merchantData[name] = { amount: 0, count: 0 };
+      merchantData[name].amount += val;
+      merchantData[name].count += 1;
+    });
+    topMerchants = Object.entries(merchantData)
+      .sort((a, b) => b[1].amount - a[1].amount)
+      .slice(0, 10)
+      .map(([merchant, d]) => ({
+        merchant,
+        totalSpent: Math.round(d.amount * 100) / 100,
+        transactionCount: d.count,
+        percentageOfTotal: Math.round((d.amount / total) * 1000) / 10,
+      }));
+  }
+
+  // Smart Insights
+  const insights = [];
+  if (categoryBreakdown.length > 0) {
+    const top = categoryBreakdown[0];
+    insights.push({
+      text: `${top.category} is your top expense at ${fmt.format(top.amount)} (${top.percentage}%)`,
+      type: 'info',
+    });
+  }
+  // Largest single expense
+  let maxEntry = null, maxVal = 0;
+  entries.forEach(e => {
+    const val = parseNum(e.fields ? e.fields[amountCol] : null);
+    if (!isNaN(val) && val > maxVal) {
+      maxVal = val;
+      maxEntry = e;
+    }
+  });
+  if (maxEntry) {
+    const who = catCol && maxEntry.fields ? maxEntry.fields[catCol] : null;
+    const when = dateCol && maxEntry.fields ? maxEntry.fields[dateCol] : null;
+    let text = `Largest expense: ${fmt.format(maxVal)}`;
+    if (who) text += ` at ${who}`;
+    if (when) text += ` on ${when}`;
+    insights.push({ text, type: 'neutral' });
   }
 
   return {
     kpis,
     categoryBreakdown: categoryBreakdown.length > 0 ? categoryBreakdown : null,
-    charts: null,
-    topMerchants: null,
-    insights: null,
+    charts: charts.length > 0 ? charts : null,
+    topMerchants: topMerchants.length > 0 ? topMerchants : null,
+    insights: insights.length > 0 ? insights : null,
   };
 }
 
