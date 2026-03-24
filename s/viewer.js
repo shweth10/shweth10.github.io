@@ -76,9 +76,11 @@ function renderReport(data) {
 
   renderReportTable(data);
 
-  if (data.dashboard) {
+  // Use server-computed dashboard if available, otherwise compute client-side
+  const dashboard = data.dashboard || computeDashboardFromEntries(data);
+  if (dashboard) {
     document.getElementById('dashboardSection').classList.remove('hidden');
-    renderDashboard(data.dashboard, data.currency);
+    renderDashboard(dashboard, data.currency);
   }
 
   document.getElementById('footer').classList.remove('hidden');
@@ -226,6 +228,89 @@ function isDateType(type, name) {
 
 function isNumberType(type) {
   return type === 'number' || type === 'quantity' || type === 'integer';
+}
+
+// ── Client-Side Dashboard Computation ─────────────────────────────────────
+
+function computeDashboardFromEntries(data) {
+  const entries = data.entries || [];
+  const columns = data.columns || [];
+  if (entries.length < 2) return null;
+
+  // Find the primary currency field
+  let amountCol = null;
+  for (const col of columns) {
+    const name = col.name || col;
+    const type = (col.type || '').toLowerCase();
+    if (isCurrencyType(type, name)) { amountCol = name; break; }
+  }
+  if (!amountCol) {
+    // Heuristic: find first field where most values are numeric
+    for (const col of columns) {
+      const name = col.name || col;
+      const vals = entries.map(e => e.fields ? e.fields[name] : null).filter(v => v != null && v !== '');
+      if (vals.length === 0) continue;
+      const numCount = vals.filter(v => !isNaN(parseFloat(v))).length;
+      if (numCount > vals.length * 0.6) { amountCol = name; break; }
+    }
+  }
+  if (!amountCol) return null;
+
+  const amounts = entries.map(e => {
+    const raw = e.fields ? e.fields[amountCol] : null;
+    return raw != null ? parseFloat(String(raw).replace(/[^0-9.\-]/g, '')) : NaN;
+  }).filter(v => !isNaN(v));
+
+  if (amounts.length === 0) return null;
+
+  const total = amounts.reduce((a, b) => a + b, 0);
+  const avg = total / amounts.length;
+  const highest = Math.max(...amounts);
+  const fmt = currencyFormatter(data.currency);
+
+  const kpis = [
+    { title: 'TOTAL', value: total, formattedValue: fmt.format(total), entryCount: amounts.length },
+    { title: 'AVERAGE', value: avg, formattedValue: fmt.format(avg), entryCount: amounts.length },
+    { title: 'HIGHEST', value: highest, formattedValue: fmt.format(highest), entryCount: 1 },
+    { title: 'ENTRIES', value: entries.length, formattedValue: String(entries.length), entryCount: entries.length },
+  ];
+
+  // Find a text field for category breakdown
+  let catCol = null;
+  for (const col of columns) {
+    const name = col.name || col;
+    const type = (col.type || '').toLowerCase();
+    if (name === amountCol) continue;
+    if (isCurrencyType(type, name) || isDateType(type, name) || isNumberType(type)) continue;
+    const vals = entries.map(e => e.fields ? e.fields[name] : null).filter(v => v != null && v !== '');
+    if (vals.length > 0) { catCol = name; break; }
+  }
+
+  let categoryBreakdown = [];
+  if (catCol && total > 0) {
+    const catTotals = {};
+    entries.forEach(e => {
+      const cat = (e.fields ? e.fields[catCol] : null) || 'Other';
+      const raw = e.fields ? e.fields[amountCol] : null;
+      const val = raw != null ? parseFloat(String(raw).replace(/[^0-9.\-]/g, '')) : 0;
+      if (!isNaN(val)) catTotals[cat] = (catTotals[cat] || 0) + val;
+    });
+    categoryBreakdown = Object.entries(catTotals)
+      .sort((a, b) => b[1] - a[1])
+      .map(([category, amount]) => ({
+        category,
+        amount: Math.round(amount * 100) / 100,
+        percentage: Math.round((amount / total) * 1000) / 10,
+      }));
+  }
+
+  return {
+    kpis,
+    categoryBreakdown: categoryBreakdown.length > 0 ? categoryBreakdown : null,
+    charts: null,
+    topMerchants: null,
+    insights: null,
+  };
 }
 
 // ── Dashboard Tab ────────────────────────────────────────────────────────
