@@ -26,20 +26,8 @@ document.addEventListener('DOMContentLoaded', () => {
     showError('not_found');
     return;
   }
-  setupTabs();
   loadReport();
 });
-
-function setupTabs() {
-  document.querySelectorAll('.tab').forEach(tab => {
-    tab.addEventListener('click', () => {
-      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-      tab.classList.add('active');
-      document.getElementById(tab.dataset.tab + 'Tab').classList.add('active');
-    });
-  });
-}
 
 // ── API ──────────────────────────────────────────────────────────────────
 
@@ -89,9 +77,8 @@ function renderReport(data) {
   renderReportTable(data);
 
   if (data.dashboard) {
+    document.getElementById('dashboardSection').classList.remove('hidden');
     renderDashboard(data.dashboard, data.currency);
-  } else {
-    document.querySelector('[data-tab="dashboard"]').classList.add('hidden');
   }
 
   document.getElementById('footer').classList.remove('hidden');

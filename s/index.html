@@ -19,7 +19,7 @@
   <nav class="nav" id="nav">
     <div class="nav-inner">
       <a href="https://lensreport.app" class="nav-brand">
-        <div class="nav-logo">L</div>
+        <div class="nav-logo"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4-4h-2v4h-1V8h1v3h2v1z" fill="white"/></svg></div>
         <span class="nav-name">LensReport</span>
       </a>
       <a href="https://lensreport.app" class="nav-link">lensreport.app<span class="nav-arrow"> →</span></a>
@@ -30,7 +30,7 @@
     <!-- Loading State -->
     <div id="loadingState" class="state-container">
       <div class="loader-logo">
-        <div class="loader-icon">L</div>
+        <div class="loader-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4-4h-2v4h-1V8h1v3h2v1z" fill="white"/></svg></div>
       </div>
       <p class="loader-text">Loading report...</p>
     </div>
@@ -52,15 +52,15 @@
           <div class="report-shared-by" id="sharedBy"></div>
         </header>
 
-        <!-- Tab Bar -->
-        <div class="tab-bar" id="tabBar">
-          <button class="tab active" data-tab="data">Report Data</button>
-          <button class="tab" data-tab="dashboard">Dashboard</button>
-        </div>
+        <!-- Report Data -->
+        <div id="dataTab"></div>
 
-        <!-- Tab Content -->
-        <div id="dataTab" class="tab-content active"></div>
-        <div id="dashboardTab" class="tab-content"></div>
+        <!-- Dashboard (rendered below table when data exists) -->
+        <div id="dashboardSection" class="dashboard-section hidden">
+          <div class="section-divider"></div>
+          <h2 class="section-heading">Report Dashboard</h2>
+          <div id="dashboardTab"></div>
+        </div>
       </div>
     </div>
 
