@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <script>
+    // GitHub Pages SPA redirect for /s/{token} share links
+    var path = window.location.pathname;
+    if (path.startsWith('/s/') && path.length > 3) {
+      // Store the path and redirect to /s/ which serves index.html
+      sessionStorage.setItem('shareRedirect', path);
+      window.location.replace('/s/');
+    }
+  </script>
+  <title>Page Not Found — LensReport</title>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; text-align: center; padding: 60px 20px; color: #333; background: #FAFAFA; }
+    h1 { font-size: 48px; color: #4CAF7D; margin-bottom: 8px; }
+    p { color: #666; max-width: 400px; margin: 8px auto; }
+    a { color: #4CAF7D; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <h1>404</h1>
+  <p>This page doesn't exist.</p>
+  <p><a href="https://lensreport.app">Go to LensReport</a></p>
+</body>
+</html>
