@@ -3,74 +3,89 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src https://*.execute-api.ap-southeast-2.amazonaws.com; img-src 'self' data:;">
   <title>LensReport — Shared Report</title>
   <meta property="og:title" content="Shared Report — LensReport">
   <meta property="og:description" content="View this report shared via LensReport. Your team scans. Your spreadsheet builds itself.">
   <meta property="og:image" content="https://lensreport.app/og-image.png">
   <meta property="og:type" content="website">
-  <link rel="stylesheet" href="viewer.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/viewer.css">
 </head>
 <body>
+  <!-- Top Navigation -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="https://lensreport.app" class="nav-brand">
+        <div class="nav-logo">L</div>
+        <span class="nav-name">LensReport</span>
+      </a>
+      <a href="https://lensreport.app" class="nav-link">lensreport.app<span class="nav-arrow"> →</span></a>
+    </div>
+  </nav>
+
   <div id="app">
-    <header class="header">
-      <div class="header-logo">LensReport</div>
-      <h1 class="header-title" id="reportName"></h1>
-      <div class="header-meta">
-        <span id="templateName"></span>
-        <span id="entryCount"></span>
-        <span id="lastUpdated"></span>
-        <span id="sharedBy"></span>
+    <!-- Loading State -->
+    <div id="loadingState" class="state-container">
+      <div class="loader-logo">
+        <div class="loader-icon">L</div>
       </div>
-    </header>
-
-    <nav class="tab-bar" id="tabBar">
-      <button class="tab active" data-tab="data">Report Data</button>
-      <button class="tab" data-tab="dashboard">Dashboard</button>
-    </nav>
-
-    <main class="content">
-      <div id="dataTab" class="tab-content active"></div>
-      <div id="dashboardTab" class="tab-content"></div>
-    </main>
-
-    <div id="loadingState" class="state-screen">
-      <div class="loader"></div>
-      <p>Loading report...</p>
+      <p class="loader-text">Loading report...</p>
     </div>
 
-    <div id="errorState" class="state-screen hidden">
-      <div class="error-icon" id="errorIcon"></div>
-      <h2 id="errorTitle"></h2>
-      <p id="errorMessage"></p>
-      <div class="error-cta">
-        <p>Want this as an Excel file with working formulas?</p>
-        <a href="https://lensreport.app" class="cta-button">Download LensReport</a>
+    <!-- Report Content -->
+    <div id="reportContent" class="report-content hidden">
+      <div class="container">
+        <!-- Report Header -->
+        <header class="report-header">
+          <div class="report-label">Shared Report</div>
+          <h1 class="report-title" id="reportName"></h1>
+          <div class="report-meta">
+            <span id="templateName"></span>
+            <span class="meta-dot" id="entryCountDot">·</span>
+            <span id="entryCount"></span>
+            <span class="meta-dot" id="updatedDot">·</span>
+            <span id="lastUpdated"></span>
+          </div>
+          <div class="report-shared-by" id="sharedBy"></div>
+        </header>
+
+        <!-- Tab Bar -->
+        <div class="tab-bar" id="tabBar">
+          <button class="tab active" data-tab="data">Report Data</button>
+          <button class="tab" data-tab="dashboard">Dashboard</button>
+        </div>
+
+        <!-- Tab Content -->
+        <div id="dataTab" class="tab-content active"></div>
+        <div id="dashboardTab" class="tab-content"></div>
       </div>
-      <div class="store-badges">
-        <a href="https://apps.apple.com/app/lensreport" class="store-badge apple">Download on App Store</a>
-        <a href="https://play.google.com/store/apps/details?id=com.shweth.lensreport" class="store-badge google">Get it on Google Play</a>
+    </div>
+
+    <!-- Error State -->
+    <div id="errorState" class="state-container hidden">
+      <div class="error-content">
+        <div class="error-icon" id="errorIcon"></div>
+        <h2 class="error-title" id="errorTitle"></h2>
+        <p class="error-message" id="errorMessage"></p>
+        <a href="https://lensreport.app" class="cta-pill">Get LensReport →</a>
+        <p class="cta-tagline">Scan receipts · AI extracts data · Export-ready reports</p>
       </div>
     </div>
   </div>
 
+  <!-- Footer CTA -->
   <footer class="footer" id="footer">
     <div class="footer-inner">
-      <div class="footer-brand">
-        <span class="footer-logo">LensReport</span>
-        <p class="footer-tagline">Your team scans. Your spreadsheet builds itself.</p>
-      </div>
-      <div class="footer-cta">
-        <p>Want this as an Excel file with working formulas? <a href="https://lensreport.app">Download LensReport</a></p>
-      </div>
-      <div class="store-badges">
-        <a href="https://apps.apple.com/app/lensreport" class="store-badge apple">Download on App Store</a>
-        <a href="https://play.google.com/store/apps/details?id=com.shweth.lensreport" class="store-badge google">Get it on Google Play</a>
-      </div>
-      <p class="footer-attribution">Created with LensReport</p>
+      <div class="footer-prepared">Prepared with LensReport</div>
+      <a href="https://lensreport.app" class="cta-pill">Get LensReport →</a>
+      <p class="cta-tagline">Scan receipts · AI extracts data · Export-ready reports</p>
     </div>
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js"></script>
-  <script src="viewer.js"></script>
+  <script src="/viewer.js"></script>
 </body>
 </html>

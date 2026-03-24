@@ -1,8 +1,8 @@
 const API_BASE_URL = 'https://430cl6azv8.execute-api.ap-southeast-2.amazonaws.com/v1';
 
-const DASHBOARD_COLORS = ['#4CAF50', '#2196F3', '#FF9800', '#9C27B0', '#F44336', '#00BCD4'];
+const DASHBOARD_COLORS = ['#4CAF7D', '#5E5CE6', '#FF6B6B', '#30D5C8', '#FFAB40', '#BF5AF2'];
 
-// Extract token: check sessionStorage redirect first (GitHub Pages SPA), then URL path
+// Extract token from URL path: /s/{token}
 const redirectPath = sessionStorage.getItem('shareRedirect');
 if (redirectPath) sessionStorage.removeItem('shareRedirect');
 const tokenPath = redirectPath || window.location.pathname;
@@ -19,10 +19,10 @@ const dateFormatter = new Intl.DateTimeFormat('en-US', {
   year: 'numeric', month: 'short', day: 'numeric'
 });
 
-// --- Init ---
+// ── Init ─────────────────────────────────────────────────────────────────
 
 document.addEventListener('DOMContentLoaded', () => {
-  if (!token || token === 's') {
+  if (!token || token === 's' || token === '') {
     showError('not_found');
     return;
   }
@@ -41,7 +41,7 @@ function setupTabs() {
   });
 }
 
-// --- API ---
+// ── API ──────────────────────────────────────────────────────────────────
 
 async function loadReport() {
   try {
@@ -63,7 +63,7 @@ async function loadReport() {
   }
 }
 
-// --- Render ---
+// ── Render Report ────────────────────────────────────────────────────────
 
 function renderReport(data) {
   hideLoading();
@@ -77,6 +77,9 @@ function renderReport(data) {
   if (data.updatedAt) {
     document.getElementById('lastUpdated').textContent =
       'Updated ' + dateFormatter.format(new Date(data.updatedAt));
+  } else {
+    document.getElementById('updatedDot').classList.add('hidden');
+    document.getElementById('lastUpdated').classList.add('hidden');
   }
 
   if (data.ownerDisplayName) {
@@ -94,7 +97,7 @@ function renderReport(data) {
   document.getElementById('footer').classList.remove('hidden');
 }
 
-// --- Report Data Tab ---
+// ── Report Data Tab ──────────────────────────────────────────────────────
 
 function renderReportTable(data) {
   const container = document.getElementById('dataTab');
@@ -124,7 +127,12 @@ function renderReportTable(data) {
 
   columns.forEach(col => {
     const th = document.createElement('th');
-    th.textContent = formatColumnName(col.name || col);
+    const colName = col.name || col;
+    const colType = (col.type || '').toLowerCase();
+    th.textContent = formatColumnName(colName);
+    if (isCurrencyType(colType, colName) || isNumberType(colType)) {
+      th.style.textAlign = 'right';
+    }
     headerRow.appendChild(th);
   });
   thead.appendChild(headerRow);
@@ -148,7 +156,7 @@ function renderReportTable(data) {
       const raw = entry.fields ? entry.fields[colName] : entry[colName];
 
       if (raw == null || raw === '') {
-        td.textContent = '—';
+        td.textContent = '\u2014';
         td.className = 'empty-cell';
       } else if (isCurrencyType(colType, colName)) {
         const num = parseFloat(raw);
@@ -233,7 +241,7 @@ function isNumberType(type) {
   return type === 'number' || type === 'quantity' || type === 'integer';
 }
 
-// --- Dashboard Tab ---
+// ── Dashboard Tab ────────────────────────────────────────────────────────
 
 function renderDashboard(dashboard, currency) {
   const container = document.getElementById('dashboardTab');
@@ -242,26 +250,21 @@ function renderDashboard(dashboard, currency) {
   if (dashboard.kpis && dashboard.kpis.length) {
     renderKPIs(container, dashboard.kpis, currency);
   }
-
   if (dashboard.categoryBreakdown && dashboard.categoryBreakdown.length) {
     renderCategoryBreakdown(container, dashboard.categoryBreakdown, currency);
   }
-
   if (dashboard.charts && dashboard.charts.length) {
     renderCharts(container, dashboard.charts);
   }
-
   if (dashboard.topMerchants && dashboard.topMerchants.length) {
     renderTopMerchants(container, dashboard.topMerchants, currency);
   }
-
   if (dashboard.insights && dashboard.insights.length) {
     renderInsights(container, dashboard.insights);
   }
 }
 
 function renderKPIs(container, kpis, currency) {
-  const fmt = currencyFormatter(currency);
   const grid = document.createElement('div');
   grid.className = 'kpi-grid';
 
@@ -276,13 +279,7 @@ function renderKPIs(container, kpis, currency) {
 
     const value = document.createElement('div');
     value.className = 'kpi-value';
-    if (kpi.formattedValue) {
-      value.textContent = kpi.formattedValue;
-    } else if (typeof kpi.value === 'number') {
-      value.textContent = kpi.value.toLocaleString('en-US');
-    } else {
-      value.textContent = kpi.value;
-    }
+    value.textContent = kpi.formattedValue || (typeof kpi.value === 'number' ? kpi.value.toLocaleString('en-US') : kpi.value);
 
     card.appendChild(title);
     card.appendChild(value);
@@ -324,7 +321,7 @@ function renderCategoryBreakdown(container, categories, currency) {
     dot.className = 'color-dot';
     dot.style.backgroundColor = DASHBOARD_COLORS[i % DASHBOARD_COLORS.length];
     nameSpan.appendChild(dot);
-    nameSpan.appendChild(document.createTextNode(cat.name));
+    nameSpan.appendChild(document.createTextNode(cat.category || cat.name));
 
     const valueSpan = document.createElement('span');
     valueSpan.className = 'category-value';
@@ -371,52 +368,31 @@ function renderCharts(container, charts) {
     const values = (chart.dataPoints || []).map(dp => dp.value);
     const colors = (chart.dataPoints || []).map((_, i) => DASHBOARD_COLORS[i % DASHBOARD_COLORS.length]);
 
-    let type, options;
     const baseOptions = {
       responsive: true,
       maintainAspectRatio: true,
-      plugins: { legend: { position: 'bottom', labels: { padding: 16, usePointStyle: true } } }
+      plugins: {
+        legend: { position: 'bottom', labels: { padding: 16, usePointStyle: true, font: { family: 'Inter', size: 11 } } }
+      }
     };
 
     if (chart.type === 'pieChart' || chart.type === 'donutChart') {
-      type = 'doughnut';
-      options = { ...baseOptions };
       new Chart(canvas, {
-        type,
-        data: {
-          labels,
-          datasets: [{ data: values, backgroundColor: colors, borderWidth: 0 }]
-        },
-        options
+        type: 'doughnut',
+        data: { labels, datasets: [{ data: values, backgroundColor: colors, borderWidth: 0, borderRadius: 2 }] },
+        options: baseOptions
       });
     } else if (chart.type === 'barChart') {
-      type = 'bar';
-      options = { ...baseOptions, scales: { y: { beginAtZero: true } } };
       new Chart(canvas, {
-        type,
-        data: {
-          labels,
-          datasets: [{ data: values, backgroundColor: colors, borderRadius: 4 }]
-        },
-        options
+        type: 'bar',
+        data: { labels, datasets: [{ data: values, backgroundColor: DASHBOARD_COLORS[0] + '80', borderColor: DASHBOARD_COLORS[0], borderWidth: 1, borderRadius: 4 }] },
+        options: { ...baseOptions, plugins: { ...baseOptions.plugins, legend: { display: false } }, scales: { y: { beginAtZero: true, grid: { color: '#F0F1F3' } }, x: { grid: { display: false } } } }
       });
     } else if (chart.type === 'lineChart') {
-      type = 'line';
-      options = { ...baseOptions, scales: { y: { beginAtZero: true } } };
       new Chart(canvas, {
-        type,
-        data: {
-          labels,
-          datasets: [{
-            data: values,
-            borderColor: DASHBOARD_COLORS[0],
-            backgroundColor: DASHBOARD_COLORS[0] + '20',
-            fill: true,
-            tension: 0.4,
-            pointRadius: 4
-          }]
-        },
-        options
+        type: 'line',
+        data: { labels, datasets: [{ data: values, borderColor: DASHBOARD_COLORS[0], backgroundColor: DASHBOARD_COLORS[0] + '15', fill: true, tension: 0.4, pointRadius: 4, pointBackgroundColor: '#fff', pointBorderColor: DASHBOARD_COLORS[0], pointBorderWidth: 2 }] },
+        options: { ...baseOptions, plugins: { ...baseOptions.plugins, legend: { display: false } }, scales: { y: { beginAtZero: true, grid: { color: '#F0F1F3' } }, x: { grid: { display: false } } } }
       });
     }
   });
@@ -450,7 +426,7 @@ function renderTopMerchants(container, merchants, currency) {
     meta.className = 'merchant-meta';
     const merchantTotal = m.totalSpent || m.total || 0;
     const merchantCount = m.transactionCount || m.count || 0;
-    meta.textContent = `${fmt.format(merchantTotal)} · ${merchantCount} ${merchantCount === 1 ? 'entry' : 'entries'}`;
+    meta.textContent = `${fmt.format(merchantTotal)} \u00B7 ${merchantCount} ${merchantCount === 1 ? 'entry' : 'entries'}`;
     info.appendChild(name);
     info.appendChild(meta);
 
@@ -462,9 +438,12 @@ function renderTopMerchants(container, merchants, currency) {
       const bar = document.createElement('div');
       bar.className = 'merchant-bar';
       const fill = document.createElement('div');
-      fill.className = 'progress-fill';
-      fill.style.width = `${pctVal}%`;
-      fill.style.backgroundColor = DASHBOARD_COLORS[i % DASHBOARD_COLORS.length];
+      fill.className = 'progress-bar';
+      const fillInner = document.createElement('div');
+      fillInner.className = 'progress-fill';
+      fillInner.style.width = `${pctVal}%`;
+      fillInner.style.backgroundColor = DASHBOARD_COLORS[i % DASHBOARD_COLORS.length];
+      fill.appendChild(fillInner);
       bar.appendChild(fill);
       row.appendChild(bar);
     }
@@ -480,13 +459,13 @@ function renderInsights(container, insights) {
   section.className = 'dashboard-card';
 
   const heading = document.createElement('h3');
-  heading.textContent = 'Smart Insights';
+  heading.textContent = 'Insights';
   section.appendChild(heading);
 
   const grid = document.createElement('div');
   grid.className = 'insights-grid';
 
-  const iconMap = { positive: '\u2713', negative: '\u26A0', neutral: '\u2139', info: '\uD83D\uDCA1' };
+  const iconMap = { positive: '\u2713', negative: '\u26A0', neutral: '\u2139', info: '\u2139' };
   const classMap = { positive: 'insight-positive', negative: 'insight-negative', neutral: 'insight-neutral', info: 'insight-info' };
 
   insights.forEach(insight => {
@@ -510,29 +489,23 @@ function renderInsights(container, insights) {
   container.appendChild(section);
 }
 
-// --- States ---
+// ── States ───────────────────────────────────────────────────────────────
 
 function showLoading() {
   document.getElementById('loadingState').classList.remove('hidden');
-  document.querySelector('.header').classList.add('hidden');
-  document.getElementById('tabBar').classList.add('hidden');
-  document.querySelector('.content').classList.add('hidden');
+  document.getElementById('reportContent').classList.add('hidden');
   document.getElementById('errorState').classList.add('hidden');
   document.getElementById('footer').classList.add('hidden');
 }
 
 function hideLoading() {
   document.getElementById('loadingState').classList.add('hidden');
-  document.querySelector('.header').classList.remove('hidden');
-  document.getElementById('tabBar').classList.remove('hidden');
-  document.querySelector('.content').classList.remove('hidden');
+  document.getElementById('reportContent').classList.remove('hidden');
 }
 
 function showError(status) {
   document.getElementById('loadingState').classList.add('hidden');
-  document.querySelector('.header').classList.add('hidden');
-  document.getElementById('tabBar').classList.add('hidden');
-  document.querySelector('.content').classList.add('hidden');
+  document.getElementById('reportContent').classList.add('hidden');
   document.getElementById('footer').classList.add('hidden');
 
   const errorState = document.getElementById('errorState');
@@ -549,7 +522,7 @@ function showError(status) {
     not_found: 'This report was not found. It may have been deleted or the link is incorrect.',
     expired: 'This share link has expired. Ask the report owner for a new link.',
     revoked: 'This report is no longer shared. The owner has revoked access.',
-    error: 'Something went wrong. Please try again later.'
+    error: 'Something went wrong loading this report. Please try again later.'
   };
 
   const icons = {
