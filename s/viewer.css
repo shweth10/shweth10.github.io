@@ -62,18 +62,10 @@ body {
   color: var(--text);
 }
 
-.nav-logo {
+.nav-logo-img {
   width: 30px;
   height: 30px;
-  background: linear-gradient(135deg, var(--brand), var(--brand-dark));
   border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-weight: 800;
-  font-size: 15px;
   flex-shrink: 0;
 }
 
@@ -460,15 +452,7 @@ body {
 .loader-icon {
   width: 48px;
   height: 48px;
-  background: linear-gradient(135deg, var(--brand), var(--brand-dark));
   border-radius: 13px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-weight: 800;
-  font-size: 22px;
   animation: pulse 1.8s ease-in-out infinite;
 }
 

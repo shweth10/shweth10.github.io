@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src https://*.execute-api.ap-southeast-2.amazonaws.com; img-src 'self' data:;">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src https://*.execute-api.ap-southeast-2.amazonaws.com; img-src 'self' data: https://lensreport.app;">
   <title>LensReport — Shared Report</title>
   <meta property="og:title" content="Shared Report — LensReport">
   <meta property="og:description" content="View this report shared via LensReport. Your team scans. Your spreadsheet builds itself.">
@@ -19,7 +19,7 @@
   <nav class="nav" id="nav">
     <div class="nav-inner">
       <a href="https://lensreport.app" class="nav-brand">
-        <div class="nav-logo"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect width="24" height="24" rx="4" fill="none"/><path d="M7 5h2v14H7V5zm4 0h2v8h3v2h-3v4h-2V5z" fill="white"/></svg></div>
+        <img class="nav-logo-img" src="https://lensreport.app/assets/images/app-logo.png" alt="LensReport" width="30" height="30">
         <span class="nav-name">LensReport</span>
       </a>
       <a href="https://lensreport.app" class="nav-link">lensreport.app<span class="nav-arrow"> →</span></a>
@@ -30,7 +30,7 @@
     <!-- Loading State -->
     <div id="loadingState" class="state-container">
       <div class="loader-logo">
-        <div class="loader-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4-4h-2v4h-1V8h1v3h2v1z" fill="white"/></svg></div>
+        <img class="loader-icon" src="https://lensreport.app/assets/images/app-logo.png" alt="LensReport" width="48" height="48">
       </div>
       <p class="loader-text">Loading report...</p>
     </div>
