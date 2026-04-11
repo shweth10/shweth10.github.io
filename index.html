@@ -411,10 +411,10 @@
 
       /* Cells start hidden at each loop, revealed as the wave crosses */
       .row-new-grid .fill { opacity: 0; }
-      .row-new-grid .c:nth-child(2) .fill { animation: cell-a var(--t) cubic-bezier(0.16, 1, 0.3, 1) infinite; }
-      .row-new-grid .c:nth-child(3) .fill { animation: cell-b var(--t) cubic-bezier(0.16, 1, 0.3, 1) infinite; }
-      .row-new-grid .c:nth-child(4) .fill { animation: cell-c var(--t) cubic-bezier(0.16, 1, 0.3, 1) infinite; }
-      .row-new-grid .c:nth-child(5) .fill { animation: cell-d var(--t) cubic-bezier(0.16, 1, 0.3, 1) infinite; }
+      .row-new-grid .c:nth-child(3) .fill { animation: cell-a var(--t) cubic-bezier(0.16, 1, 0.3, 1) infinite; }
+      .row-new-grid .c:nth-child(4) .fill { animation: cell-b var(--t) cubic-bezier(0.16, 1, 0.3, 1) infinite; }
+      .row-new-grid .c:nth-child(5) .fill { animation: cell-c var(--t) cubic-bezier(0.16, 1, 0.3, 1) infinite; }
+      .row-new-grid .c:nth-child(6) .fill { animation: cell-d var(--t) cubic-bezier(0.16, 1, 0.3, 1) infinite; }
 
       /* Thumbnail pops in after cells fill */
       .row-new-grid .thumb-wrap.active { opacity: 0; transform: scale(0.6); animation: thumb-pop var(--t) cubic-bezier(0.16, 1, 0.3, 1) infinite; }
@@ -460,7 +460,7 @@
       .sheet-head, .row-s-grid, .row-new-grid {
         grid-template-columns: 26px minmax(0, 1.2fr) 0.8fr 0.8fr 48px;
       }
-      .sheet-head .hc:nth-child(3), .row-s-grid .c:nth-child(3), .row-new-grid .c:nth-child(3) { display: none; }
+      .sheet-head .hc:nth-child(3), .row-s-grid .c:nth-child(3), .row-new-grid .c:nth-child(4) { display: none; }
       .sheet-head .hc, .row-s-grid .c, .row-new-grid .c { padding: 10px 8px; font-size: 11px; }
       .thumb { width: 24px; height: 32px; }
       .row-new-grid .c:last-child, .row-s-grid .c:last-child { padding: 4px; }
@@ -889,7 +889,7 @@
           <div class="step-card reveal">
             <div class="step-number">1</div>
             <h3>Pick a template.</h3>
-            <p>Choose from 32 built-in reports across Finance, Tax, Travel, Construction, Healthcare, Ops, Professional and Personal — or upload your own PDF or Excel and we'll detect the columns for you.</p>
+            <p>Choose from a library of built-in reports spanning Finance, Tax, Travel, Construction, Healthcare, Ops, Professional and Personal — or upload your own PDF or Excel and we'll detect the columns for you.</p>
           </div>
           <div class="step-card reveal">
             <div class="step-number">2</div>
@@ -910,7 +910,7 @@
           <p class="section-label">Template-first AI</p>
           <h2 id="template-first-heading">You tell it what you're building — then scan.</h2>
           <p>Generic document scanners dump raw OCR into a file and leave you to sort it. LensReport does the opposite: pick a report template first, and the AI knows exactly what to extract from every photo.</p>
-          <p>32 built-in templates across Finance &amp; Expense, Tax &amp; Compliance, Travel &amp; Vehicles, Construction &amp; Trades, Healthcare &amp; Medical, Operations &amp; Procurement, Professional Services and Personal. Or upload your own layout — we'll read the columns and map them automatically.</p>
+          <p>Built-in templates covering Finance &amp; Expense, Tax &amp; Compliance, Travel &amp; Vehicles, Construction &amp; Trades, Healthcare &amp; Medical, Operations &amp; Procurement, Professional Services and Personal — with new ones added regularly. Or upload your own layout and we'll read the columns and map them automatically.</p>
         </div>
         <div class="story-visual reveal">
           <img src="assets/images/onboarding_01_scan_invoice.png" alt="LensReport template browser and AI scanning an invoice" loading="lazy">
