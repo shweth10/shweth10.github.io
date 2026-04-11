@@ -344,6 +344,61 @@
     .sheet-status .live { display: inline-flex; align-items: center; gap: 5px; color: #3A9468; }
     .sheet-status .live .d { width: 5px; height: 5px; border-radius: 50%; background: #4CAF7D; }
 
+    /* === HERO KEYFRAMES (referenced by animation rules in prefers-reduced-motion block below) === */
+    @keyframes softpulse { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(1.4); } }
+    @keyframes scan-sweep { 0% { top: 68px; opacity: 0; } 3% { opacity: 1; } 18% { top: 240px; opacity: 1; } 22% { top: 240px; opacity: 0; } 100% { top: 240px; opacity: 0; } }
+    @keyframes row-glow {
+      0%, 15%   { background: rgba(76,175,125,0.08); }
+      45%       { background: rgba(76,175,125,0.20); }
+      75%       { background: rgba(76,175,125,0.12); }
+      90%, 100% { background: rgba(76,175,125,0.06); }
+    }
+    @keyframes wave-travel {
+      0%, 18%   { transform: translateX(-100%); opacity: 0; }
+      22%       { opacity: 1; }
+      42%       { transform: translateX(300%); opacity: 1; }
+      46%       { transform: translateX(300%); opacity: 0; }
+      100%      { transform: translateX(300%); opacity: 0; }
+    }
+    @keyframes cell-a { 0%, 20% { opacity: 0; transform: translateY(-2px); } 24% { opacity: 1; transform: translateY(0); } 98% { opacity: 1; } 100% { opacity: 0; } }
+    @keyframes cell-b { 0%, 24% { opacity: 0; transform: translateY(-2px); } 28% { opacity: 1; transform: translateY(0); } 98% { opacity: 1; } 100% { opacity: 0; } }
+    @keyframes cell-c { 0%, 28% { opacity: 0; transform: translateY(-2px); } 32% { opacity: 1; transform: translateY(0); } 98% { opacity: 1; } 100% { opacity: 0; } }
+    @keyframes cell-d { 0%, 32% { opacity: 0; transform: translateY(-2px); } 36% { opacity: 1; transform: translateY(0); } 98% { opacity: 1; } 100% { opacity: 0; } }
+    @keyframes thumb-pop {
+      0%, 36% { opacity: 0; transform: scale(0.6); }
+      42% { opacity: 1; transform: scale(1.15); }
+      48% { opacity: 1; transform: scale(1); }
+      98% { opacity: 1; transform: scale(1); }
+      100% { opacity: 0; transform: scale(0.9); }
+    }
+    @keyframes lbl-a { 0%, 38% { opacity: 1; } 42%, 100% { opacity: 0; } }
+    @keyframes lbl-b { 0%, 38% { opacity: 0; } 44%, 98% { opacity: 1; } 100% { opacity: 0; } }
+
+    /* === HERO ANIMATIONS — only for users who haven't requested reduced motion === */
+    @media (prefers-reduced-motion: no-preference) {
+      .h-badge .dot { animation: softpulse 1.4s infinite; }
+      .scan-line { animation: scan-sweep var(--t) cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+      .sheet-chrome .live::before { animation: softpulse 1.4s infinite; }
+      .sheet-status .live .d { animation: softpulse 1.4s infinite; }
+
+      .row-wrap { animation: row-glow var(--t) ease-in-out infinite; }
+      .row-wave { animation: wave-travel var(--t) cubic-bezier(0.25, 0.1, 0.25, 1) infinite; }
+
+      /* Cells start hidden at each loop, revealed as the wave crosses */
+      .row-new-grid .fill { opacity: 0; }
+      .row-new-grid .c:nth-child(2) .fill { animation: cell-a var(--t) cubic-bezier(0.16, 1, 0.3, 1) infinite; }
+      .row-new-grid .c:nth-child(3) .fill { animation: cell-b var(--t) cubic-bezier(0.16, 1, 0.3, 1) infinite; }
+      .row-new-grid .c:nth-child(4) .fill { animation: cell-c var(--t) cubic-bezier(0.16, 1, 0.3, 1) infinite; }
+      .row-new-grid .c:nth-child(5) .fill { animation: cell-d var(--t) cubic-bezier(0.16, 1, 0.3, 1) infinite; }
+
+      /* Thumbnail pops in after cells fill */
+      .row-new-grid .thumb-wrap.active { opacity: 0; transform: scale(0.6); animation: thumb-pop var(--t) cubic-bezier(0.16, 1, 0.3, 1) infinite; }
+
+      /* Label swap: scanning → filled */
+      .row-label .lbl-a { display: inline-block; animation: lbl-a var(--t) ease-in-out infinite; }
+      .row-label .lbl-b { display: inline-block; position: absolute; top: 5px; left: 11px; right: 11px; opacity: 0; animation: lbl-b var(--t) ease-in-out infinite; }
+    }
+
     /* ====== Responsive ====== */
     @media (max-width: 960px) {
       .stage { grid-template-columns: 1fr; gap: 40px; }
