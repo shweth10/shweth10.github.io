@@ -157,12 +157,13 @@
     .h-store .st { font-size: 15px; font-weight: 700; display: block; white-space: nowrap; letter-spacing: -0.2px; }
 
     /* ====== Stage ====== */
-    .stage { position: relative; z-index: 2; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: clamp(24px, 5vw, 72px); max-width: 1160px; margin: 0 auto; padding: 0 clamp(20px, 4vw, 56px) clamp(48px, 8vw, 80px); align-items: center; }
-    .stage-phone-wrap { display: flex; justify-content: center; position: relative; }
+    .stage { --phone-scale: 1; position: relative; z-index: 2; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: clamp(12px, 3vw, 72px); max-width: 1160px; margin: 0 auto; padding: 0 clamp(12px, 3vw, 56px) clamp(48px, 8vw, 80px); align-items: center; }
+    /* Phone wrapper sizes itself to the scaled phone so the grid column collapses cleanly; phone inside is absolutely positioned at 220x440 intrinsic and transform-scaled. */
+    .stage-phone-wrap { position: relative; flex-shrink: 0; width: calc(220px * var(--phone-scale)); height: calc(440px * var(--phone-scale)); }
     .stage-sheet-wrap { position: relative; min-width: 0; }
 
     /* ====== Phone ====== */
-    .phone { position: relative; width: 220px; height: 440px; background: #1A2332; border-radius: 34px; padding: 10px; box-shadow: 0 30px 70px rgba(14,23,42,0.22), 0 0 0 1px rgba(14,23,42,0.08), inset 0 0 0 2px rgba(255,255,255,0.08); flex-shrink: 0; }
+    .phone { position: absolute; top: 0; left: 0; width: 220px; height: 440px; background: #1A2332; border-radius: 34px; padding: 10px; box-shadow: 0 30px 70px rgba(14,23,42,0.22), 0 0 0 1px rgba(14,23,42,0.08), inset 0 0 0 2px rgba(255,255,255,0.08); transform: scale(var(--phone-scale)); transform-origin: top left; }
     .phone-notch { position: absolute; top: 14px; left: 50%; transform: translateX(-50%); width: 60px; height: 18px; background: #0B0D12; border-radius: 100px; z-index: 2; }
     .phone-screen { width: 100%; height: 100%; border-radius: 24px; background: #0B0D12; position: relative; overflow: hidden; }
     .scanner { position: absolute; inset: 0; background: radial-gradient(ellipse at center, #1a2332 0%, #0B0D12 70%); }
@@ -432,43 +433,54 @@
     @media (max-width: 640px) { .trust-inner { gap: 24px; font-size: 11px; } }
 
     /* ====== Responsive ====== */
-    @media (max-width: 960px) {
-      .stage { grid-template-columns: 1fr; gap: 40px; }
-      .stage-phone-wrap { order: 1; }
-      .stage-sheet-wrap { order: 2; }
-      .row-label { left: auto; right: 12px; top: -14px; transform: none; padding: 4px 9px; font-size: 9px; }
-      .row-label::after { display: none; }
+    /* === STAGE RESPONSIVE ===
+       Keeps phone + sheet side-by-side at every width so the animation story
+       (phone → wave → row fill) always reads. Phone scales via --phone-scale.
+       Sheet drops columns progressively. */
+    @media (max-width: 1040px) { .stage { --phone-scale: 0.86; } } /* ~189 */
+    @media (max-width: 880px)  { .stage { --phone-scale: 0.75; } } /* ~165 */
+    @media (max-width: 720px)  {
+      .stage { --phone-scale: 0.62; } /* ~136 */
       .sheet-share .label { display: none; }
-    }
-    @media (max-width: 560px) {
-      .phone { width: 180px; height: 360px; border-radius: 28px; padding: 8px; }
-      .phone-notch { width: 50px; height: 15px; }
-      .phone-screen { border-radius: 20px; }
-      .template-chip { font-size: 7px; padding: 2px 8px; }
-      .receipt { width: 108px; height: 150px; top: 56px; padding: 10px 9px; font-size: 6px; }
-      .receipt .store { font-size: 7px; }
-      .receipt .addr { font-size: 5px; }
-      .receipt .total { font-size: 7px; }
-      .bracket { width: 12px; height: 12px; }
-      .bracket.tl { top: 50px; left: 20px; }
-      .bracket.tr { top: 50px; right: 20px; }
-      .bracket.bl { bottom: 96px; left: 20px; }
-      .bracket.br { bottom: 96px; right: 20px; }
-      .scan-line { left: 24px; right: 24px; top: 56px; }
-      .capture-btn { width: 36px; height: 36px; bottom: 16px; }
-      .process-btn { bottom: 62px; font-size: 8px; padding: 5px 11px; }
-      .sheet-head, .row-s-grid, .row-new-grid {
-        grid-template-columns: 26px minmax(0, 1.2fr) 0.8fr 0.8fr 48px;
-      }
+      /* Row label moves above the row with a down-pointing arrow */
+      .row-label { left: auto; right: 10px; top: -14px; transform: none; padding: 4px 10px; font-size: 9px; }
+      .row-label::after { display: none; }
+      /* Drop Date column; keep idx + vendor + amount + vat + src = 5 cols */
+      .sheet-head, .row-s-grid, .row-new-grid { grid-template-columns: 26px minmax(0, 1.2fr) 0.9fr 0.9fr 44px; }
       .sheet-head .hc:nth-child(3), .row-s-grid .c:nth-child(3), .row-new-grid .c:nth-child(4) { display: none; }
       .sheet-head .hc, .row-s-grid .c, .row-new-grid .c { padding: 10px 8px; font-size: 11px; }
-      .thumb { width: 24px; height: 32px; }
-      .row-new-grid .c:last-child, .row-s-grid .c:last-child { padding: 4px; }
-      .sheet-chrome .title { font-size: 10px; }
+      .thumb { width: 22px; height: 30px; }
       .chip { font-size: 10px; padding: 4px 9px; }
+      .sheet-chrome .title { font-size: 10px; }
+    }
+    @media (max-width: 560px) {
+      .stage { --phone-scale: 0.54; gap: 14px; } /* ~119 */
+      /* Drop Amount column too; keep idx + vendor + vat + src = 4 cols */
+      .sheet-head, .row-s-grid, .row-new-grid { grid-template-columns: 22px minmax(0, 1.3fr) 0.95fr 38px; }
+      .sheet-head .hc:nth-child(4), .row-s-grid .c:nth-child(4), .row-new-grid .c:nth-child(5) { display: none; }
+      .sheet-head .hc, .row-s-grid .c, .row-new-grid .c { padding: 9px 6px; font-size: 10px; }
+      .thumb { width: 20px; height: 26px; }
+      .chip { font-size: 9px; padding: 3px 8px; }
+      .chip.csv { display: none; }
+      .sheet-chrome { padding: 8px 10px; gap: 6px; }
+      .sheet-chrome .title { font-size: 9px; }
+      .sheet-chrome .d { width: 8px; height: 8px; }
+      .sheet-share { padding: 6px 10px; gap: 5px; }
+      /* Pitch section — CTA stacks */
       .pitch { padding-top: clamp(48px, 10vw, 56px); padding-bottom: 24px; }
       .h-cta { flex-direction: column; align-items: stretch; max-width: 260px; margin: 0 auto; }
       .h-store { justify-content: center; }
+      /* Row label shrinks further */
+      .row-label { font-size: 8px; padding: 3px 8px; top: -11px; }
+    }
+    @media (max-width: 420px) {
+      .stage { --phone-scale: 0.46; gap: 10px; padding: 0 12px clamp(40px, 8vw, 64px); } /* ~101 */
+      /* Narrowest: show only idx + vendor + vat = 3 cols (drop Src). */
+      .sheet-head, .row-s-grid, .row-new-grid { grid-template-columns: 20px minmax(0, 1.4fr) 0.95fr; }
+      .sheet-head .hc:nth-child(6), .row-s-grid .c:nth-child(6), .row-new-grid .c:nth-child(7) { display: none; }
+      .sheet-head .hc, .row-s-grid .c, .row-new-grid .c { padding: 8px 5px; font-size: 9px; }
+      .chip.xls { display: none; }
+      .row-label { display: none; }
     }
 
     /* === HOW IT WORKS === */
