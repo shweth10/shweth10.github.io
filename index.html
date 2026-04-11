@@ -495,6 +495,33 @@
     .sc-footer { padding: 14px 16px; background: #F7F8FA; border-top: 1px solid var(--border); font-family: 'DM Mono', monospace; font-size: 11px; color: var(--text-secondary); }
     .sc-footer .label { color: var(--green-dark); }
 
+
+    /* === SECURE SHARING MOCKUP === */
+    .share-mock-wrap { display: flex; flex-direction: column; gap: 20px; align-items: center; }
+    .share-dialog { background: #FFF; border-radius: 18px; box-shadow: var(--shadow-xl), 0 0 0 1px var(--border); padding: 22px 24px; width: 100%; max-width: 360px; }
+    .share-dialog h4 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 15px; font-weight: 700; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+    .share-dialog .url-box { background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px; font-family: 'DM Mono', monospace; font-size: 12px; color: var(--text-secondary); margin-bottom: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .share-dialog .pin-row { display: flex; align-items: center; gap: 10px; padding: 12px; background: rgba(76,175,125,0.06); border: 1px solid rgba(76,175,125,0.2); border-radius: 10px; margin-bottom: 12px; }
+    .share-dialog .pin-label { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--green-dark); text-transform: uppercase; letter-spacing: 0.5px; flex: 1; }
+    .share-dialog .pin-code { font-family: 'DM Mono', monospace; font-size: 18px; font-weight: 600; color: var(--text); letter-spacing: 3px; }
+    .share-dialog .share-row { display: flex; align-items: center; justify-content: space-between; font-size: 12px; color: var(--text-secondary); }
+    .share-dialog .share-row .green { color: var(--green-dark); font-weight: 600; }
+    .browser-frame { background: #FFF; border-radius: 12px; box-shadow: var(--shadow-xl), 0 0 0 1px var(--border); width: 100%; max-width: 380px; overflow: hidden; }
+    .browser-frame .bf-chrome { background: #F7F8FA; padding: 10px 14px; border-bottom: 1px solid var(--border); display: flex; gap: 6px; align-items: center; }
+    .browser-frame .bf-chrome .dot { width: 10px; height: 10px; border-radius: 50%; }
+    .browser-frame .bf-chrome .dot:nth-child(1) { background: #F0856A; }
+    .browser-frame .bf-chrome .dot:nth-child(2) { background: #E5B35A; }
+    .browser-frame .bf-chrome .dot:nth-child(3) { background: #5EC98F; }
+    .browser-frame .bf-chrome .url { flex: 1; margin-left: 10px; background: #FFF; border: 1px solid var(--border); border-radius: 6px; padding: 4px 10px; font-family: 'DM Mono', monospace; font-size: 10px; color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .browser-frame .bf-chrome .url::before { content: '🔒 '; margin-right: 4px; }
+    .browser-frame .bf-body { padding: 24px 20px; text-align: center; }
+    .browser-frame .bf-body .lock-icon { width: 40px; height: 40px; background: rgba(76,175,125,0.1); border-radius: 10px; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px; }
+    .browser-frame .bf-body .lock-icon svg { width: 20px; height: 20px; color: var(--green); }
+    .browser-frame .bf-body h5 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+    .browser-frame .bf-body p { font-size: 12px; color: var(--text-secondary); margin-bottom: 14px; }
+    .browser-frame .bf-body .pin-inputs { display: flex; gap: 6px; justify-content: center; margin-bottom: 14px; }
+    .browser-frame .bf-body .pin-inputs .pi { width: 26px; height: 32px; border: 1.5px solid var(--border); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-family: 'DM Mono', monospace; font-size: 14px; font-weight: 600; color: var(--text); background: #FFF; }
+    .browser-frame .bf-body .pin-inputs .pi.filled { border-color: var(--green); background: var(--green-pale); }
   </style>
 </head>
 <body>
@@ -741,7 +768,40 @@
         </div>
       </div>
     </section>
-    <!-- Tasks 13-14: additional feature story sections go here -->
+    <section class="feature-story alt">
+      <div class="story-grid">
+        <div class="story-copy reveal">
+          <p class="section-label">Secure web sharing</p>
+          <h2>Send a link, not a file.</h2>
+          <p>Generate a secure web link for any report. Your accountant, client, or auditor opens it in any browser — no app install, no sign-up, no friction.</p>
+          <p>Lock it with a six-digit PIN. Set an expiry. Revoke with one tap. Every view lands in your audit trail. Your data stays yours.</p>
+        </div>
+        <div class="share-mock-wrap reveal">
+          <div class="share-dialog">
+            <h4><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>Share report</h4>
+            <div class="url-box">lensreport.app/s/xJ7kf2m9</div>
+            <div class="pin-row">
+              <span class="pin-label">PIN enabled</span>
+              <span class="pin-code">483 · 210</span>
+            </div>
+            <div class="share-row"><span>Expires in 7 days</span><span class="green">✓ Revoke anytime</span></div>
+          </div>
+          <div class="browser-frame">
+            <div class="bf-chrome">
+              <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+              <div class="url">lensreport.app/s/xJ7kf2m9</div>
+            </div>
+            <div class="bf-body">
+              <div class="lock-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+              <h5>Enter the PIN to view this report</h5>
+              <p>Shared by Shweth Maharaj</p>
+              <div class="pin-inputs"><div class="pi filled">4</div><div class="pi filled">8</div><div class="pi filled">3</div><div class="pi">•</div><div class="pi">•</div><div class="pi">•</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Task 14: export story goes here -->
     <!-- Task 15: Persona tiles go here -->
     <!-- Task 16: Templates grid goes here -->
     <!-- Task 17: Trust & control goes here -->
