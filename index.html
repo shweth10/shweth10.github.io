@@ -689,6 +689,13 @@
     /* === SR-ONLY === */
     .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
 
+    /* === ACCESSIBILITY === */
+    .skip-link { position: absolute; top: -40px; left: 0; background: var(--green); color: white; padding: 10px 16px; font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 700; font-size: 14px; border-radius: 0 0 8px 0; z-index: 1000; transition: top 0.2s; }
+    .skip-link:focus { top: 0; outline: 2px solid white; outline-offset: -4px; }
+    :focus-visible { outline: 2px solid var(--green); outline-offset: 3px; border-radius: 4px; }
+    .h-store:focus-visible, .cta-btn:focus-visible, .nav-links a:focus-visible, .mobile-nav a:focus-visible, .footer-links a:focus-visible, .chip:focus-visible { outline: 2px solid var(--green); outline-offset: 3px; }
+    .cta-form input:focus { outline: none; border-color: var(--green); }
+
   </style>
   <script type="application/ld+json">
   {
@@ -704,6 +711,7 @@
   </script>
 </head>
 <body>
+  <a href="#main" class="skip-link">Skip to main content</a>
 
   <nav>
     <div class="nav-inner">
@@ -731,7 +739,7 @@
     <a href="/privacy/" onclick="closeMobileNav()">Privacy</a>
   </div>
 
-  <main>
+  <main id="main">
     <section class="hero">
       <div class="glow g1"></div>
       <div class="glow g2"></div>
@@ -740,6 +748,7 @@
       <div class="pitch">
         <div class="h-logo">L</div>
         <div class="h-badge"><span class="dot"></span>LAUNCHING ON iOS &amp; ANDROID</div>
+        <p class="sr-only">Animation: a phone scans a fuel receipt. A new row appears in a spreadsheet with the vendor, date, amount and calculated VAT extracted by AI.</p>
         <h1 class="h-headline">Pick a report.<br><span class="green">Scan.</span> Done.</h1>
         <p class="h-sub">Template-first AI fills your report, row by row. Your team scans in the field — you see the results land in real time, ready to export as PDF, Excel or CSV.</p>
         <div class="h-cta">
