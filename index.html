@@ -445,6 +445,23 @@
       .h-cta { flex-direction: column; align-items: stretch; max-width: 260px; margin: 0 auto; }
       .h-store { justify-content: center; }
     }
+
+    /* === HOW IT WORKS === */
+    .steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .step-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 32px 24px; position: relative; overflow: hidden; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+    .step-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; border-radius: var(--radius) var(--radius) 0 0; }
+    .step-card:nth-child(1)::before { background: var(--green); }
+    .step-card:nth-child(2)::before { background: var(--purple); }
+    .step-card:nth-child(3)::before { background: var(--coral); }
+    .step-card:hover { border-color: var(--border-hover); transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+    .step-number { width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-family: 'DM Mono', monospace; font-size: 18px; font-weight: 500; color: white; margin-bottom: 20px; }
+    .step-card:nth-child(1) .step-number { background: var(--green); }
+    .step-card:nth-child(2) .step-number { background: var(--purple); }
+    .step-card:nth-child(3) .step-number { background: var(--coral); }
+    .step-card h3 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 18px; font-weight: 700; margin-bottom: 10px; letter-spacing: -0.2px; }
+    .step-card p { font-size: 14px; color: var(--text-secondary); line-height: 1.7; }
+    @media (max-width: 900px) { .steps-grid { grid-template-columns: 1fr; } }
+
   </style>
 </head>
 <body>
@@ -600,7 +617,32 @@
         <div class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>PIN-locked sharing</div>
       </div>
     </section>
-    <!-- Task 8: How it works goes here -->
+    <section class="section" id="how-it-works">
+      <div class="container">
+        <div class="section-header">
+          <p class="section-label reveal">How it works</p>
+          <h2 class="section-title reveal">Three steps to done.</h2>
+          <p class="section-subtitle reveal">From paper receipt to export-ready report.</p>
+        </div>
+        <div class="steps-grid stagger">
+          <div class="step-card reveal">
+            <div class="step-number">1</div>
+            <h3>Pick a template.</h3>
+            <p>Choose from 32 built-in reports across Finance, Tax, Travel, Construction, Healthcare, Ops, Professional and Personal — or upload your own PDF or Excel and we'll detect the columns for you.</p>
+          </div>
+          <div class="step-card reveal">
+            <div class="step-number">2</div>
+            <h3>Scan with your camera.</h3>
+            <p>Photograph receipts, invoices, or forms. Template-first AI reads every field — vendor, date, amounts, tax — and drops each one into the right column.</p>
+          </div>
+          <div class="step-card reveal">
+            <div class="step-number">3</div>
+            <h3>Export or share.</h3>
+            <p>PDF, Excel with real working formulas, CSV, or a PIN-locked web link your accountant opens in any browser. No app install required on their end.</p>
+          </div>
+        </div>
+      </div>
+    </section>
     <!-- Tasks 9-14: Feature story sections go here -->
     <!-- Task 15: Persona tiles go here -->
     <!-- Task 16: Templates grid goes here -->
