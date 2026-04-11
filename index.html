@@ -477,6 +477,24 @@
     .story-visual img { width: 100%; aspect-ratio: 3/4; object-fit: contain; display: block; padding: 10px; }
     @media (max-width: 960px) { .story-grid { grid-template-columns: 1fr; gap: 40px; } .story-grid.reverse { direction: ltr; } }
 
+
+    /* === SMART COLUMNS MOCKUP === */
+    .sc-mockup { background: #FFF; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow-lg), 0 0 0 1px rgba(14,23,42,0.04); font-family: 'Inter', sans-serif; }
+    .sc-head { display: grid; grid-template-columns: 40px minmax(0, 1.3fr) 0.85fr 0.85fr 0.95fr; background: #FAFBFC; border-bottom: 1px solid var(--border); }
+    .sc-head .hc { padding: 12px 12px; font-size: 10px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.6px; font-family: 'DM Mono', monospace; border-right: 1px solid var(--border); }
+    .sc-head .hc:last-child { border-right: none; }
+    .sc-head .hc.idx { background: #F7F8FA; }
+    .sc-head .hc.formula { color: var(--green); background: rgba(76,175,125,0.06); }
+    .sc-row { display: grid; grid-template-columns: 40px minmax(0, 1.3fr) 0.85fr 0.85fr 0.95fr; border-bottom: 1px solid #F3F4F6; }
+    .sc-row .c { padding: 13px 12px; font-size: 13px; color: var(--text); border-right: 1px solid #F3F4F6; }
+    .sc-row .c:last-child { border-right: none; }
+    .sc-row .c.idx { background: #F7F8FA; color: var(--text-muted); font-family: 'DM Mono', monospace; font-size: 12px; font-weight: 500; }
+    .sc-row .c.num { text-align: right; font-variant-numeric: tabular-nums; }
+    .sc-row .c.formula { color: var(--green-dark); font-weight: 600; text-align: right; font-variant-numeric: tabular-nums; background: rgba(76,175,125,0.04); }
+    .sc-row .c.formula::before { content: 'ƒ '; font-family: 'DM Mono', monospace; color: var(--text-muted); font-size: 11px; font-weight: 400; }
+    .sc-footer { padding: 14px 16px; background: #F7F8FA; border-top: 1px solid var(--border); font-family: 'DM Mono', monospace; font-size: 11px; color: var(--text-secondary); }
+    .sc-footer .label { color: var(--green-dark); }
+
   </style>
 </head>
 <body>
@@ -684,7 +702,33 @@
         </div>
       </div>
     </section>
-    <!-- Tasks 11-14: additional feature story sections go here -->
+    <section class="feature-story alt">
+      <div class="story-grid">
+        <div class="story-copy reveal">
+          <p class="section-label">Smart Columns</p>
+          <h2>Your spreadsheet, with the math built in.</h2>
+          <p>Calculated columns export as real, working Excel formulas — not hardcoded values. Change a tax rate or markup once, and every row updates the moment the file opens.</p>
+          <p>LensReport builds GST, VAT, subtotals, running totals, row counts, and your own recurring calculations straight into the template. You set the rate once. The spreadsheet takes care of itself.</p>
+        </div>
+        <div class="reveal">
+          <div class="sc-mockup">
+            <div class="sc-head">
+              <div class="hc idx">#</div>
+              <div class="hc">ITEM</div>
+              <div class="hc">COST</div>
+              <div class="hc">QTY</div>
+              <div class="hc formula">TOTAL</div>
+            </div>
+            <div class="sc-row"><div class="c idx">1</div><div class="c">Concrete Mix 25kg</div><div class="c num">$14.80</div><div class="c num">40</div><div class="c formula">$592.00</div></div>
+            <div class="sc-row"><div class="c idx">2</div><div class="c">Reinforcing Mesh</div><div class="c num">$72.00</div><div class="c num">12</div><div class="c formula">$864.00</div></div>
+            <div class="sc-row"><div class="c idx">3</div><div class="c">Timber 90×45 2.4m</div><div class="c num">$8.95</div><div class="c num">60</div><div class="c formula">$537.00</div></div>
+            <div class="sc-row"><div class="c idx">4</div><div class="c">Labour Hours</div><div class="c num">$55.00</div><div class="c num">14</div><div class="c formula">$770.00</div></div>
+            <div class="sc-footer">ƒ TOTAL column: <span class="label">=C{n}*D{n}</span> — live in your exported Excel file</div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Tasks 12-14: additional feature story sections go here -->
     <!-- Task 15: Persona tiles go here -->
     <!-- Task 16: Templates grid goes here -->
     <!-- Task 17: Trust & control goes here -->
