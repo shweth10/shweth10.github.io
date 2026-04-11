@@ -58,6 +58,7 @@
       text-align: left;
       padding: 10px 14px;
       border: 1px solid #ddd;
+      vertical-align: top;
     }
     th {
       background: #f5f5f5;
@@ -69,6 +70,13 @@
       display: inline-block;
       margin-bottom: 20px;
       font-size: 14px;
+    }
+    .callout {
+      background: #f0f9f4;
+      border-left: 4px solid #4CAF7D;
+      padding: 14px 18px;
+      margin: 16px 0;
+      font-size: 15px;
     }
     footer {
       margin-top: 60px;
@@ -85,7 +93,7 @@
 
 <header>
   <h1>Terms of Service</h1>
-  <p>Effective Date: March 1, 2026 &nbsp;|&nbsp; Last Updated: March 20, 2026</p>
+  <p>Effective Date: April 12, 2026 &nbsp;|&nbsp; Last Updated: April 12, 2026 &nbsp;|&nbsp; Version 2.0</p>
 </header>
 
 <p>
@@ -101,25 +109,40 @@
 
 <h2>1. Description of Service</h2>
 <p>
-  LensReport is a mobile application for iOS and Android that enables users to scan paper documents
-  (receipts, invoices, and other records) using their device camera or by importing images and PDFs.
-  The App uses cloud-based artificial intelligence to extract structured data from
-  scanned documents and generates professional reports that can be exported as PDF or Excel files
-  with working formulas.
+  LensReport is a mobile application for iOS and Android that lets you scan paper documents
+  (receipts, invoices, and other records) with your device camera or import existing images and
+  PDFs. The App uses cloud-based artificial intelligence to extract structured data from your
+  scanned documents and builds reports from templates that you can edit, share, and export as
+  PDF, Excel (with live Smart Columns / formulas), or CSV files.
+</p>
+<p>
+  Paid plans unlock higher scan limits, team collaboration, share links, customized templates,
+  business branding on exports, and other features listed in Section 4.
 </p>
 
 <h2>2. Eligibility</h2>
 <p>
-  You must be at least 13 years of age to use LensReport. If you are under 18, you must have the
-  consent of a parent or legal guardian to use the App. By using the App, you represent and warrant
-  that you meet these eligibility requirements.
+  You must be at least 13 years of age to use LensReport. If you are under the age of majority
+  in your jurisdiction (typically 18), you must have the consent of a parent or legal guardian
+  to use the App. By using the App, you represent and warrant that you meet these eligibility
+  requirements.
 </p>
 
-<h2>3. Account Registration</h2>
+<h2>3. Account Registration and Authentication</h2>
 <p>
   LensReport offers anonymous authentication by default, allowing you to use the App without
-  providing personal information. You may optionally create an account using your email address or
-  Google sign-in to access additional features such as data backup and higher usage limits.
+  providing any personal information. You may optionally upgrade your account to a real
+  identity using:
+</p>
+<ul>
+  <li>Email and password</li>
+  <li>Sign in with Google</li>
+  <li>Sign in with Apple</li>
+</ul>
+<p>
+  Upgrading is required to export reports, subscribe to a paid plan, collaborate with team
+  members, or restore data across devices. Your data carries over from the anonymous session
+  when you sign in.
 </p>
 <p>
   If you create an account, you are responsible for maintaining the confidentiality of your
@@ -136,106 +159,130 @@
   <thead>
     <tr>
       <th>Plan</th>
-      <th>Price</th>
-      <th>Key Features</th>
+      <th>Price (USD)</th>
+      <th>Scan limit</th>
+      <th>Key features</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <td><strong>Free</strong></td>
       <td>$0</td>
-      <td>25 scans per month, 3 active reports, PDF export (watermarked)</td>
+      <td>5 lifetime entries</td>
+      <td>Unlimited reports, view and edit, 4 built-in templates. <strong>Export, collaboration, share links, custom templates, and business branding are not included.</strong></td>
     </tr>
     <tr>
       <td><strong>Individual</strong></td>
-      <td>$6.99/month</td>
-      <td>200 scans per month, unlimited reports, PDF + Excel export</td>
+      <td>$6.99 / month</td>
+      <td>200 scans / month</td>
+      <td>Everything in Free, plus PDF / Excel / CSV export with Smart Columns, all templates, customized column configuration, up to 5 active share links, business profile branding.</td>
     </tr>
     <tr>
       <td><strong>Family / Team</strong></td>
-      <td>$14.99/month</td>
-      <td>750 scans per month, unlimited reports, PDF + Excel export, up to 3 contributors per report</td>
+      <td>$14.99 / month</td>
+      <td>750 scans / month (shared pool)</td>
+      <td>Everything in Individual, plus up to 3 team contributors, shared team quota pool, per-contributor activity dashboard, push notifications for team activity, and up to 25 active share links.</td>
     </tr>
     <tr>
       <td><strong>Enterprise</strong></td>
-      <td>$24.99/month</td>
-      <td>2,000 scans per month, unlimited reports, PDF + Excel export, up to 7 contributors per report</td>
+      <td>$24.99 / month</td>
+      <td>2,000 scans / month (shared pool)</td>
+      <td>Everything in Family / Team, plus up to 7 team contributors, up to 100 active share links, priority support.</td>
     </tr>
   </tbody>
 </table>
 
 <p>
-  All prices are in United States Dollars (USD). Prices are subject to change with 30 days prior
-  notice. Annual billing is available at a discounted rate for all paid plans.
+  All prices are in United States Dollars (USD) and are subject to the exchange and tax rules of
+  the store you purchase through. Prices are subject to change with 30 days prior notice to
+  existing subscribers. Annual billing is available at a discounted rate for all paid plans.
 </p>
 
-<h3>4.2 Free Trial</h3>
+<h3>4.2 Scan top-up packs</h3>
 <p>
-  All paid plans include a <strong>7-day free trial</strong>. During the trial period, you have
-  full access to all features of the selected plan at no charge. At the end of the 7-day trial,
-  your subscription will <strong>automatically convert to a paid subscription</strong> at the
-  applicable rate, unless you cancel before the trial period ends.
-</p>
-<p>
-  You will not be charged during the free trial. If you cancel before the trial expires, you will
-  not be billed, and your access will revert to the Free plan.
+  If you run out of scans before your next billing period, you can purchase a one-time scan
+  top-up pack as an in-app purchase. Top-up packs are consumed from your account&rsquo;s
+  top-up balance after your monthly quota is used up, and any remaining balance carries over
+  until fully used. Top-up packs are non-refundable except where required by law or the
+  policies of the store you purchased through.
 </p>
 
-<h3>4.3 Billing and Auto-Renewal</h3>
+<h3>4.3 Free trial</h3>
 <p>
-  Paid subscriptions are billed in advance on a recurring basis at the start of each billing period
-  (monthly or annual, depending on your selection). Subscriptions <strong>automatically renew</strong>
-  at the end of each billing period unless you cancel before the renewal date.
-</p>
-<p>
-  Payments are processed through Apple App Store (iOS) or Google Play Store (Android). Billing is
-  managed by the respective platform, and their terms apply to payment processing, refunds, and
-  billing disputes.
+  Paid plans may include a limited free trial offered through the App Store or Google Play at
+  our discretion. If a trial is offered and you accept it, the full feature set of the selected
+  plan is available during the trial at no charge. At the end of the trial period, your
+  subscription will <strong>automatically convert to a paid subscription</strong> at the
+  applicable rate unless you cancel before the trial period ends. You will not be charged
+  during the trial; if you cancel before the trial expires, you will not be billed and your
+  access will revert to the Free plan.
 </p>
 
-<h3>4.4 Cancellation</h3>
+<h3>4.4 Billing and auto-renewal</h3>
+<p>
+  Paid subscriptions are billed in advance on a recurring basis at the start of each billing
+  period (monthly or annual, depending on your selection). Subscriptions
+  <strong>automatically renew</strong> at the end of each billing period unless you cancel at
+  least 24 hours before the renewal date.
+</p>
+<p>
+  Payments are processed through the Apple App Store (iOS) or Google Play Store (Android).
+  Billing is managed by the respective platform, and their terms apply to payment processing,
+  refunds, and billing disputes. We never see your card details &mdash; billing happens entirely
+  inside the App Store or Google Play.
+</p>
+
+<h3>4.5 Cancellation</h3>
 <p>
   You may cancel your subscription at any time. To manage or cancel your subscription:
 </p>
 <ul>
-  <li><strong>iOS:</strong> Open Settings &gt; tap your name &gt; Subscriptions &gt; select LensReport &gt; Cancel Subscription.</li>
-  <li><strong>Android:</strong> Open Google Play Store &gt; tap your profile icon &gt; Payments &amp; subscriptions &gt; Subscriptions &gt; select LensReport &gt; Cancel subscription.</li>
+  <li><strong>iOS:</strong> open Settings &rarr; tap your name &rarr; Subscriptions &rarr; select LensReport &rarr; Cancel Subscription.</li>
+  <li><strong>Android:</strong> open the Google Play Store &rarr; tap your profile icon &rarr; Payments &amp; subscriptions &rarr; Subscriptions &rarr; select LensReport &rarr; Cancel subscription.</li>
 </ul>
 <p>
   Upon cancellation:
 </p>
 <ul>
-  <li>You will retain access to your paid plan features until the end of the current billing
-    period.</li>
+  <li>You will retain access to your paid plan features until the end of the current billing period.</li>
   <li>No further charges will be applied after the current billing period ends.</li>
   <li>Your account will revert to the Free plan at the end of the billing period.</li>
-  <li>Your existing reports and data will remain accessible, subject to Free plan limitations.</li>
+  <li>Your existing reports and data will remain accessible, subject to Free plan limitations.
+    Reports will not be deleted; you will simply be unable to add new entries beyond the Free
+    plan&rsquo;s 5-entry lifetime limit.</li>
 </ul>
 <p>
-  We do not offer prorated refunds for partial billing periods. For refund requests, please contact
-  Apple or Google through their respective support channels, as they handle all billing.
+  We do not offer prorated refunds for partial billing periods. For refund requests, please
+  contact Apple or Google through their respective support channels, as they handle all billing
+  on our behalf.
 </p>
 
 <h2>5. Acceptable Use</h2>
 <p>You agree to use LensReport only for lawful purposes and in accordance with these Terms. You agree <strong>not</strong> to:</p>
 <ul>
-  <li>Use the App to scan, process, or store illegal documents or materials, including but not
-    limited to counterfeit currency, forged documents, or documents related to illegal
-    activities.</li>
-  <li>Abuse, disrupt, or interfere with the App's services, servers, or infrastructure, including
-    any attempt to overload, flood, or crash the service.</li>
+  <li>Use the App to scan, process, or store illegal materials or documents, including but not
+    limited to counterfeit currency, forged documents, child sexual abuse material, or
+    documents related to illegal activities.</li>
+  <li>Use the App to collect, extract, or otherwise process personal data of third parties in
+    ways that would violate applicable data protection or privacy laws.</li>
+  <li>Abuse, disrupt, or interfere with the App&rsquo;s services, servers, or infrastructure,
+    including any attempt to overload, flood, crash, or exhaust our AI extraction quota through
+    automated means.</li>
   <li>Use automated scripts, bots, scrapers, or any other automated means to access or interact
     with the App, unless expressly authorized in writing by us.</li>
   <li>Reverse engineer, decompile, disassemble, or otherwise attempt to derive the source code
-    of the App or any part of it.</li>
-  <li>Circumvent, disable, or otherwise interfere with any security, rate-limiting, or
-    access-control features of the App.</li>
-  <li>Use the App to infringe upon or violate the intellectual property rights, privacy rights,
-    or other rights of any third party.</li>
+    of the App or any part of it, except to the limited extent that applicable law expressly
+    permits despite this limitation.</li>
+  <li>Circumvent, disable, or otherwise interfere with any security, rate-limiting, quota,
+    PIN-protection, or access-control features of the App.</li>
   <li>Share your account credentials with unauthorized users or allow others to access your
-    account in violation of your plan's user limits.</li>
-  <li>Resell, sublicense, or redistribute access to the App or its services without our prior
-    written consent.</li>
+    account in a way that circumvents your plan&rsquo;s scan quota or collaborator limit.</li>
+  <li>Use the App to harass, spam, or send unsolicited team invitations to people who have not
+    consented to receive them.</li>
+  <li>Resell, sublicense, rent, lease, or redistribute access to the App or its output without
+    our prior written consent.</li>
+  <li>Use the App in violation of any applicable law, regulation, or court order, or in any way
+    that infringes the intellectual property, privacy, or other rights of any third party.</li>
 </ul>
 <p>
   We reserve the right to suspend or terminate your account if we reasonably believe you have
@@ -246,56 +293,116 @@
 
 <h3>6.1 Your Content</h3>
 <p>
-  You retain full ownership of all documents, images, and data that you scan, import, or create
-  using the App ("Your Content"). We do not claim any ownership rights over Your Content.
+  You retain full ownership of all documents, images, extracted data, and reports that you
+  scan, import, edit, or create using the App ("Your Content"). We do not claim any ownership
+  rights over Your Content.
 </p>
 <p>
-  By using the App, you grant us a limited, non-exclusive, royalty-free license to process Your
-  Content solely for the purpose of providing the service (i.e., AI extraction, report generation,
-  and export). This license terminates when you delete your data or your account.
+  By using the App, you grant us a limited, worldwide, non-exclusive, royalty-free license to
+  process Your Content solely for the purpose of providing the service to you &mdash; that is,
+  AI extraction, report generation, export, collaboration, and share links you create. This
+  license terminates when you delete Your Content or your account, subject only to the limited
+  retention described in our <a href="/privacy/">Privacy Policy</a>.
 </p>
 
 <h3>6.2 Our Intellectual Property</h3>
 <p>
   The App, including its design, code, features, templates, branding, and all associated
   intellectual property, is owned by LensReport and is protected by copyright, trademark, and
-  other intellectual property laws. These Terms do not grant you any rights to use our trademarks,
-  logos, or branding except as necessary to use the App in its intended manner.
+  other intellectual property laws. These Terms do not grant you any rights to use our
+  trademarks, logos, or branding except as necessary to use the App in its intended manner.
 </p>
 
 <h2>7. AI Processing and Accuracy</h2>
 <p>
-  LensReport uses artificial intelligence to extract data from scanned documents.
-  While we strive for high accuracy, AI extraction is not guaranteed to be error-free. You
-  acknowledge and agree that:
+  LensReport uses artificial intelligence to extract data from scanned documents. While we
+  strive for high accuracy, AI extraction is <strong>not</strong> guaranteed to be error-free.
+  You acknowledge and agree that:
 </p>
 <ul>
-  <li>Extracted data should be reviewed for accuracy before use in financial, legal, or other
-    critical applications.</li>
-  <li>We are not responsible for errors in AI-extracted data, including incorrect amounts, dates,
-    or other fields.</li>
+  <li>Extracted data must be reviewed for accuracy before you rely on it for any financial,
+    legal, tax, accounting, or other critical purpose.</li>
+  <li>We are not responsible for errors or omissions in AI-extracted data, including incorrect
+    amounts, dates, vendor names, line items, totals, tax calculations, or any other fields.</li>
   <li>You are solely responsible for verifying the accuracy of all exported reports before
-    relying on them.</li>
+    relying on them, submitting them to a third party, or using them in any regulated process.</li>
+  <li>LensReport is a productivity tool, not a substitute for professional tax, accounting, or
+    legal advice.</li>
 </ul>
 
-<h2>8. Account Deletion</h2>
+<h2>8. Team Collaboration and Share Links</h2>
+
+<h3>8.1 Collaboration</h3>
 <p>
-  You may delete your account at any time through the <strong>Settings</strong> screen within the
-  App. Upon account deletion:
+  On plans that include team collaboration (Family / Team and Enterprise), you may invite other
+  people as contributors to specific reports. Contributors use their own accounts but their
+  scans count against the <strong>inviting owner&rsquo;s</strong> shared scan quota pool. You
+  are responsible for:
 </p>
 <ul>
-  <li>Your authentication credentials and personal information (email) will be permanently
-    removed.</li>
-  <li>Your scan usage data will be deleted from our servers.</li>
-  <li>All local data (reports, entries, templates) will be deleted from your device.</li>
-  <li>Any active subscription will continue until the end of the current billing period; you must
-    cancel your subscription separately through Apple App Store or Google Play Store.</li>
-  <li><strong>Audit logs</strong> associated with your account will be retained on our servers even
-    after deletion, as described in our <a href="/privacy/">Privacy Policy</a>. This is
-    necessary for data integrity, compliance, and fraud prevention.</li>
+  <li>Ensuring that you have the right to share report content with anyone you invite.</li>
+  <li>Only sending invitations to people who have consented to be invited.</li>
+  <li>Managing your team: owners can remove any contributor at any time, and a 30-day cooldown
+    applies before a removed contributor can rejoin the same team.</li>
 </ul>
 
-<h2>9. Disclaimer of Warranties</h2>
+<h3>8.2 Share links</h3>
+<p>
+  On paid plans, you can generate a public share link that lets anyone with the URL view a
+  read-only snapshot of one of your reports at <code>share.lensreport.app</code>. Share links
+  can be PIN-protected and expire at a time you choose (1 hour to 1 year). You are responsible
+  for:
+</p>
+<ul>
+  <li>Who you give the link and PIN to.</li>
+  <li>Revoking any link that is no longer needed. You can revoke any link from
+    <strong>Settings &rarr; Manage Shared Reports</strong>.</li>
+  <li>Understanding that a public share link is exactly that &mdash; public &mdash; and that
+    anything the recipient sees on the linked page can be downloaded, screenshot, or forwarded
+    by them. Do not create share links for reports you would not be comfortable handing to an
+    unknown third party.</li>
+</ul>
+
+<h2>9. Account Deletion</h2>
+<p>
+  You may delete your account at any time through <strong>Settings &rarr; Delete Account</strong>.
+  Deletion is a two-step confirmation flow and requires fresh re-authentication within the
+  last 5 minutes (you will be asked to sign in again if your session is older than that). This
+  protects your account from being destroyed by a stolen session.
+</p>
+<p>
+  Upon account deletion:
+</p>
+<ul>
+  <li>Your reports, entries, scanned images, and business profile assets are permanently
+    removed from our servers.</li>
+  <li>Your authentication credentials and personal profile information are permanently removed
+    from Firebase Authentication.</li>
+  <li>Any active subscription will continue until the end of the current billing period; you
+    must cancel your subscription separately through the Apple App Store or Google Play Store.</li>
+  <li>Your active share links are revoked and their snapshots deleted.</li>
+  <li>Your team invitations are deleted.</li>
+  <li>The server-side account-level audit log described in our
+    <a href="/privacy/">Privacy Policy</a> is retained even after deletion, for data integrity
+    and fraud-prevention purposes. It contains only action type, timestamp, and anonymized
+    identifier &mdash; no document content.</li>
+</ul>
+
+<h2>10. Export Your Data (GDPR Article 20)</h2>
+<p>
+  You can export your data in two ways:
+</p>
+<ul>
+  <li><strong>Per-report export</strong> &mdash; in any report, tap the upload icon to generate a
+    PDF, Excel, or CSV file. Excel exports preserve live formulas in calculated columns.</li>
+  <li><strong>Full-account export</strong> &mdash; from <strong>Settings &rarr; Export my data</strong>,
+    you can request a signed download URL (valid for 7 days) to a JSON bundle containing all
+    your reports, entries, quota history, team memberships, invitations, and share tokens,
+    together with short-lived signed URLs for each scanned image. You can request a new export
+    at any time.</li>
+</ul>
+
+<h2>11. Disclaimer of Warranties</h2>
 <p>
   THE APP IS PROVIDED ON AN "AS IS" AND "AS AVAILABLE" BASIS, WITHOUT WARRANTIES OF ANY KIND,
   EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO IMPLIED WARRANTIES OF MERCHANTABILITY,
@@ -310,99 +417,131 @@
   YOU USE THE APP AT YOUR OWN RISK. NO ADVICE OR INFORMATION, WHETHER ORAL OR WRITTEN, OBTAINED
   FROM US SHALL CREATE ANY WARRANTY NOT EXPRESSLY STATED IN THESE TERMS.
 </p>
+<p>
+  Some jurisdictions do not allow the exclusion of certain warranties, so the above exclusions
+  may not apply to you to the extent prohibited by applicable law. Nothing in these Terms
+  excludes or limits any warranty or right that cannot be excluded or limited under the
+  consumer protection law of your country.
+</p>
 
-<h2>10. Limitation of Liability</h2>
+<h2>12. Limitation of Liability</h2>
 <p>
   TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT SHALL LENSREPORT, ITS OFFICERS,
   DIRECTORS, EMPLOYEES, AGENTS, OR AFFILIATES BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL,
-  CONSEQUENTIAL, OR PUNITIVE DAMAGES, INCLUDING BUT NOT LIMITED TO LOSS OF PROFITS, REVENUE, DATA,
-  USE, GOODWILL, OR OTHER INTANGIBLE LOSSES, ARISING OUT OF OR IN CONNECTION WITH:
+  CONSEQUENTIAL, OR PUNITIVE DAMAGES, INCLUDING BUT NOT LIMITED TO LOSS OF PROFITS, REVENUE,
+  DATA, USE, GOODWILL, OR OTHER INTANGIBLE LOSSES, ARISING OUT OF OR IN CONNECTION WITH:
 </p>
 <ul>
   <li>Your use of or inability to use the App;</li>
   <li>Any errors, inaccuracies, or omissions in AI-extracted data;</li>
-  <li>Unauthorized access to or alteration of your transmissions or data;</li>
+  <li>Any unauthorized access to or alteration of your transmissions or data;</li>
+  <li>The content of any public share link you create or of any shared report accessed by a
+    third party;</li>
   <li>Any third-party conduct on or related to the App; or</li>
   <li>Any other matter relating to the App.</li>
 </ul>
 <p>
-  TO THE MAXIMUM EXTENT PERMITTED BY LAW, OUR TOTAL AGGREGATE LIABILITY FOR ALL CLAIMS ARISING OUT
-  OF OR RELATING TO THESE TERMS OR YOUR USE OF THE APP SHALL NOT EXCEED THE GREATER OF (A) THE
-  AMOUNT YOU PAID TO US IN THE TWELVE (12) MONTHS PRECEDING THE CLAIM, OR (B) FIFTY UNITED STATES
-  DOLLARS (USD $50.00).
+  TO THE MAXIMUM EXTENT PERMITTED BY LAW, OUR TOTAL AGGREGATE LIABILITY FOR ALL CLAIMS ARISING
+  OUT OF OR RELATING TO THESE TERMS OR YOUR USE OF THE APP SHALL NOT EXCEED THE GREATER OF
+  (A) THE AMOUNT YOU PAID TO US IN THE TWELVE (12) MONTHS PRECEDING THE CLAIM, OR (B) FIFTY
+  UNITED STATES DOLLARS (USD $50.00).
+</p>
+<p>
+  Some jurisdictions do not allow the exclusion or limitation of certain damages, so the above
+  limitations may not apply to you to the extent prohibited by applicable law.
 </p>
 
-<h2>11. Indemnification</h2>
+<h2>13. Indemnification</h2>
 <p>
   You agree to indemnify, defend, and hold harmless LensReport and its officers, directors,
   employees, and agents from and against any and all claims, liabilities, damages, losses, and
-  expenses (including reasonable attorneys' fees) arising out of or in connection with: (a) your
-  use of the App; (b) your violation of these Terms; (c) your violation of any rights of a third
-  party; or (d) Your Content.
+  expenses (including reasonable attorneys&rsquo; fees) arising out of or in connection with:
+  (a) your use of the App; (b) your violation of these Terms; (c) your violation of any rights
+  of a third party; or (d) Your Content, including anything you share via team collaboration or
+  public share links.
 </p>
 
-<h2>12. Termination</h2>
+<h2>14. Termination</h2>
 <p>
-  We may suspend or terminate your access to the App at any time, with or without cause, and with
-  or without notice, including if we reasonably believe you have violated these Terms. Upon
-  termination:
+  We may suspend or terminate your access to the App at any time, with or without cause, and
+  with or without notice, including if we reasonably believe you have violated these Terms.
+  Upon termination:
 </p>
 <ul>
   <li>Your right to use the App will immediately cease.</li>
   <li>We may delete your account and associated data, except for audit logs as described in our
-    Privacy Policy.</li>
+    <a href="/privacy/">Privacy Policy</a>.</li>
   <li>Provisions of these Terms that by their nature should survive termination will survive,
-    including but not limited to Sections 6, 9, 10, 11, and 14.</li>
+    including but not limited to Sections 6, 11, 12, 13, and 16.</li>
 </ul>
 
-<h2>13. Changes to These Terms</h2>
+<h2>15. Changes to These Terms</h2>
 <p>
-  We reserve the right to modify these Terms at any time. When we make material changes, we will
-  provide you with at least <strong>30 days prior notice</strong> by posting the updated Terms
-  within the App, sending an email to your registered email address (if available), or by other
-  appropriate means.
+  We reserve the right to modify these Terms at any time. When we make material changes, we
+  will provide you with at least <strong>30 days prior notice</strong> by posting the updated
+  Terms within the App, sending an email to your registered email address (if available), or by
+  other appropriate means. The "Last Updated" and "Version" fields at the top of this page
+  reflect the date and version of the current Terms.
 </p>
 <p>
   Your continued use of the App after the effective date of the revised Terms constitutes your
-  acceptance of the changes. If you do not agree with the revised Terms, you must stop using the
-  App and delete your account.
+  acceptance of the changes. If you do not agree with the revised Terms, you must stop using
+  the App and may delete your account as described in Section 9.
 </p>
 
-<h2>14. Governing Law and Dispute Resolution</h2>
+<h2>16. Governing Law and Dispute Resolution</h2>
 <p>
   These Terms are governed by and construed in accordance with the laws of the
-  <strong>Republic of Fiji</strong>, without regard to its conflict of law provisions.
+  <strong>Republic of Fiji</strong>, without regard to its conflict-of-law provisions.
 </p>
 <p>
   Any disputes arising out of or in connection with these Terms or your use of the App shall be
-  subject to the exclusive jurisdiction of the courts of the Republic of Fiji. You consent to the
-  personal jurisdiction of such courts and waive any objections based on venue or inconvenient
-  forum.
+  subject to the exclusive jurisdiction of the courts of the Republic of Fiji. You consent to
+  the personal jurisdiction of such courts and waive any objections based on venue or
+  inconvenient forum. Nothing in this Section overrides any mandatory consumer-protection right
+  you have under the law of your country of residence.
 </p>
 
-<h2>15. Severability</h2>
+<h2>17. Apple App Store and Google Play Additional Terms</h2>
 <p>
-  If any provision of these Terms is held to be invalid, illegal, or unenforceable by a court of
-  competent jurisdiction, the remaining provisions shall continue in full force and effect. The
-  invalid provision shall be modified to the minimum extent necessary to make it valid and
+  If you download the App from the Apple App Store, you acknowledge and agree that these Terms
+  are between you and LensReport only, and not with Apple. Apple is not responsible for the App
+  or its content. Apple has no obligation to provide maintenance or support services for the
+  App. In the event of any failure of the App to conform to any applicable warranty, you may
+  notify Apple, and Apple will refund the purchase price (if any) for the App. Apple is not
+  responsible for addressing any claims by you or any third party relating to the App,
+  including product liability claims, consumer protection claims, or intellectual property
+  claims. Apple is a third-party beneficiary of these Terms and may enforce them against you.
+</p>
+<p>
+  If you download the App from Google Play, you acknowledge that Google is not a party to these
+  Terms and has no responsibility for the App. Google&rsquo;s Terms of Service and Google Play
+  policies govern the payment, refund, and distribution relationship between you and Google.
+</p>
+
+<h2>18. Severability</h2>
+<p>
+  If any provision of these Terms is held to be invalid, illegal, or unenforceable by a court
+  of competent jurisdiction, the remaining provisions shall continue in full force and effect.
+  The invalid provision shall be modified to the minimum extent necessary to make it valid and
   enforceable while preserving its original intent.
 </p>
 
-<h2>16. Entire Agreement</h2>
+<h2>19. Entire Agreement</h2>
 <p>
-  These Terms, together with our <a href="/privacy/">Privacy Policy</a>, constitute the
-  entire agreement between you and LensReport regarding your use of the App and supersede any
-  prior agreements, communications, or understandings, whether written or oral.
+  These Terms, together with our <a href="/privacy/">Privacy Policy</a>, constitute the entire
+  agreement between you and LensReport regarding your use of the App and supersede any prior
+  agreements, communications, or understandings, whether written or oral.
 </p>
 
-<h2>17. Waiver</h2>
+<h2>20. Waiver</h2>
 <p>
-  Our failure to enforce any right or provision of these Terms shall not be considered a waiver of
-  that right or provision. A waiver of any term shall only be effective if made in writing and
-  signed by an authorized representative of LensReport.
+  Our failure to enforce any right or provision of these Terms shall not be considered a waiver
+  of that right or provision. A waiver of any term shall only be effective if made in writing
+  and signed by an authorized representative of LensReport.
 </p>
 
-<h2>18. Contact Us</h2>
+<h2>21. Contact Us</h2>
 <p>
   If you have any questions or concerns about these Terms, please contact us:
 </p>
