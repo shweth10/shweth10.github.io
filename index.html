@@ -462,6 +462,21 @@
     .step-card p { font-size: 14px; color: var(--text-secondary); line-height: 1.7; }
     @media (max-width: 900px) { .steps-grid { grid-template-columns: 1fr; } }
 
+
+    /* === FEATURE STORY LAYOUT (reused by Tasks 9, 10, 12, 14) === */
+    .feature-story { padding: 100px 0; }
+    .feature-story.alt { background: var(--bg-white); }
+    .story-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: center; max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+    .story-grid.reverse { direction: rtl; }
+    .story-grid.reverse > * { direction: ltr; }
+    .story-copy .section-label { margin-bottom: 16px; }
+    .story-copy h2 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: clamp(28px, 3.6vw, 38px); font-weight: 800; letter-spacing: -1px; line-height: 1.1; margin-bottom: 18px; color: var(--text); }
+    .story-copy p { font-size: 16px; color: var(--text-secondary); line-height: 1.75; margin-bottom: 20px; max-width: 480px; }
+    .story-copy p:last-child { margin-bottom: 0; }
+    .story-visual { border-radius: 20px; overflow: hidden; box-shadow: var(--shadow-xl), 0 0 0 1px var(--border); background: var(--bg-white); }
+    .story-visual img { width: 100%; aspect-ratio: 3/4; object-fit: contain; display: block; padding: 10px; }
+    @media (max-width: 960px) { .story-grid { grid-template-columns: 1fr; gap: 40px; } .story-grid.reverse { direction: ltr; } }
+
   </style>
 </head>
 <body>
@@ -643,7 +658,20 @@
         </div>
       </div>
     </section>
-    <!-- Tasks 9-14: Feature story sections go here -->
+    <section class="feature-story alt" id="features">
+      <div class="story-grid">
+        <div class="story-copy reveal">
+          <p class="section-label">Template-first AI</p>
+          <h2>You tell it what you're building — then scan.</h2>
+          <p>Generic document scanners dump raw OCR into a file and leave you to sort it. LensReport does the opposite: pick a report template first, and the AI knows exactly what to extract from every photo.</p>
+          <p>32 built-in templates across Finance &amp; Expense, Tax &amp; Compliance, Travel &amp; Vehicles, Construction &amp; Trades, Healthcare &amp; Medical, Operations &amp; Procurement, Professional Services and Personal. Or upload your own layout — we'll read the columns and map them automatically.</p>
+        </div>
+        <div class="story-visual reveal">
+          <img src="assets/images/onboarding_01_scan_invoice.png" alt="LensReport template browser and AI scanning an invoice" loading="lazy">
+        </div>
+      </div>
+    </section>
+    <!-- Tasks 10-14: additional feature story sections go here -->
     <!-- Task 15: Persona tiles go here -->
     <!-- Task 16: Templates grid goes here -->
     <!-- Task 17: Trust & control goes here -->
