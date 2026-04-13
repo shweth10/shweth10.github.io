@@ -8,7 +8,7 @@
 **Does your app use encryption?** Yes
 
 **Exemption basis:** The app uses HTTPS/TLS (AES-256) for data in transit
-to communicate with AWS API Gateway and Firebase. This qualifies for the
+to communicate with Firebase and third-party APIs (OpenAI, Postmark). This qualifies for the
 standard encryption exemption under U.S. Export Administration Regulations
 (EAR) Category 5, Part 2, Note 4.
 
