@@ -1,4 +1,7 @@
-const API_BASE_URL = 'https://us-central1-lensreport-9f4ac.cloudfunctions.net';
+// Firebase Functions Gen 2 — per-function Cloud Run URLs. Project hash is
+// stable unless the function is deleted and recreated; if share-viewer ever
+// breaks with a CORS/404 on load, re-check the deployed URL here.
+const GET_SHARED_REPORT_URL = 'https://getsharedreport-zpzuagqvoq-uc.a.run.app';
 
 const DASHBOARD_COLORS = ['#4CAF7D', '#5E5CE6', '#FF6B6B', '#30D5C8', '#FFAB40', '#BF5AF2'];
 
@@ -34,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
 async function loadReport() {
   try {
     showLoading();
-    const res = await fetch(`${API_BASE_URL}/getSharedReport/${token}`);
+    const res = await fetch(`${GET_SHARED_REPORT_URL}/${token}`);
 
     if (res.status === 404) { showError('not_found'); return; }
     if (res.status === 410) {
