@@ -1,4 +1,4 @@
-const API_BASE_URL = 'https://430cl6azv8.execute-api.ap-southeast-2.amazonaws.com/v1';
+const API_BASE_URL = 'https://us-central1-lensreport-9f4ac.cloudfunctions.net';
 
 const DASHBOARD_COLORS = ['#4CAF7D', '#5E5CE6', '#FF6B6B', '#30D5C8', '#FFAB40', '#BF5AF2'];
 
@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
 async function loadReport() {
   try {
     showLoading();
-    const res = await fetch(`${API_BASE_URL}/report/share/${token}`);
+    const res = await fetch(`${API_BASE_URL}/getSharedReport/${token}`);
 
     if (res.status === 404) { showError('not_found'); return; }
     if (res.status === 410) {
@@ -42,10 +42,17 @@ async function loadReport() {
       showError(data.status || 'expired');
       return;
     }
+    if (res.status === 429) { showError('rate_limited'); return; }
     if (!res.ok) { showError('error'); return; }
 
     const json = await res.json();
-    renderReport(json.data);
+    if (json && json.pinRequired) {
+      // PIN-protected shares are not yet supported in this viewer.
+      // Server returns {pinRequired: true} with 200 — show a clear message.
+      showError('pin_required');
+      return;
+    }
+    renderReport(json.data || json);
   } catch (e) {
     showError('error');
   }
@@ -696,6 +703,8 @@ function showError(status) {
     not_found: 'Report Not Found',
     expired: 'Link Expired',
     revoked: 'No Longer Shared',
+    rate_limited: 'Too Many Requests',
+    pin_required: 'PIN Required',
     error: 'Something Went Wrong'
   };
 
@@ -703,6 +712,8 @@ function showError(status) {
     not_found: 'This report was not found. It may have been deleted or the link is incorrect.',
     expired: 'This share link has expired. Ask the report owner for a new link.',
     revoked: 'This report is no longer shared. The owner has revoked access.',
+    rate_limited: 'Too many requests in a short time. Please wait a moment and try again.',
+    pin_required: 'This report is protected with a PIN. Open the link in the LensReport mobile app to enter it.',
     error: 'Something went wrong loading this report. Please try again later.'
   };
 
@@ -710,6 +721,8 @@ function showError(status) {
     not_found: '\uD83D\uDD0D',
     expired: '\u23F3',
     revoked: '\uD83D\uDD12',
+    rate_limited: '\u23F1\uFE0F',
+    pin_required: '\uD83D\uDD10',
     error: '\u26A0\uFE0F'
   };
 
