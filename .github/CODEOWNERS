@@ -1,0 +1,4 @@
+# Every change to main requires review from the listed owner.
+# Combined with branch protection ("Require review from Code Owners"),
+# this blocks unauthorized merges even from collaborators.
+* @shweth10
