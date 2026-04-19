@@ -566,6 +566,74 @@
       .app-preview-card { width: min(48vw, 180px); border-radius: 12px; }
       .app-preview-track { gap: 10px; padding: 6px 16px 16px; }
     }
+    .app-preview-card { cursor: zoom-in; position: relative; }
+    .app-preview-card:focus-visible { outline: 3px solid var(--green); outline-offset: 3px; }
+    .app-preview-card .expand-hint {
+      position: absolute; top: 10px; right: 10px;
+      width: 30px; height: 30px;
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(17, 24, 39, 0.55);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      border-radius: 50%; color: #fff;
+      opacity: 0; transition: opacity 0.2s ease;
+      pointer-events: none;
+    }
+    .app-preview-card:hover .expand-hint { opacity: 1; }
+    .app-preview-card .expand-hint svg { width: 14px; height: 14px; }
+    @media (hover: none) {
+      .app-preview-card .expand-hint { opacity: 0.85; }
+    }
+
+    /* === APP PREVIEW LIGHTBOX === */
+    .preview-lightbox {
+      border: none; padding: 0; margin: 0;
+      max-width: 100vw; max-height: 100vh;
+      width: 100vw; height: 100vh;
+      background: transparent; color: #fff;
+      overflow: hidden;
+    }
+    .preview-lightbox::backdrop { background: rgba(10, 15, 28, 0.94); backdrop-filter: blur(4px); }
+    .preview-lightbox[open] { display: flex; align-items: center; justify-content: center; }
+    .preview-lightbox-figure {
+      margin: 0; display: flex; flex-direction: column; align-items: center;
+      gap: 14px; max-width: 94vw; max-height: 94vh;
+    }
+    .preview-lightbox-image {
+      max-width: 94vw; max-height: 84vh;
+      width: auto; height: auto; display: block;
+      border-radius: 14px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.55);
+    }
+    .preview-lightbox-caption {
+      font-family: 'DM Mono', monospace;
+      font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase;
+      color: rgba(255,255,255,0.7);
+    }
+    .preview-lightbox-btn {
+      position: fixed;
+      background: rgba(255,255,255,0.12);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.18);
+      border-radius: 50%;
+      color: #fff; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .preview-lightbox-btn:hover { background: rgba(255,255,255,0.22); }
+    .preview-lightbox-close { top: 20px; right: 20px; width: 44px; height: 44px; }
+    .preview-lightbox-nav { top: 50%; width: 48px; height: 48px; transform: translateY(-50%); }
+    .preview-lightbox-nav:hover { transform: translateY(-50%) scale(1.06); }
+    .preview-lightbox-nav.prev { left: 20px; }
+    .preview-lightbox-nav.next { right: 20px; }
+    @media (max-width: 640px) {
+      .preview-lightbox-close { top: 12px; right: 12px; width: 40px; height: 40px; }
+      .preview-lightbox-nav { width: 40px; height: 40px; }
+      .preview-lightbox-nav.prev { left: 8px; }
+      .preview-lightbox-nav.next { right: 8px; }
+      .preview-lightbox-image { max-height: 80vh; }
+    }
 
 
     /* === SMART COLUMNS MOCKUP === */
@@ -941,17 +1009,17 @@
     </section>
     <section class="app-preview" aria-labelledby="app-preview-heading">
       <div class="section-header">
-        <p class="section-label reveal">See it in action</p>
-        <h2 class="section-title reveal" id="app-preview-heading">A five-second tour.</h2>
-        <p class="section-subtitle reveal">From team scanning to shared reports — every way LensReport saves you hours.</p>
+        <p class="section-label reveal">Inside the app</p>
+        <h2 class="section-title reveal" id="app-preview-heading">Scan. Extract. Share.</h2>
+        <p class="section-subtitle reveal">Five frames, end to end — from the template browser to a PIN-locked link your accountant opens in any browser. Tap any frame to view full size.</p>
       </div>
       <div class="app-preview-track-wrap">
         <div class="app-preview-track stagger" role="list">
-          <figure class="app-preview-card reveal" role="listitem"><img src="assets/images/app-preview/1.jpg" alt="Your team scans in the field, reports land instantly on your phone — one plan, whole team included" loading="lazy" width="621" height="1344"></figure>
-          <figure class="app-preview-card reveal" role="listitem"><img src="assets/images/app-preview/2.jpg" alt="Pick a report template, scan, done — LensReport category browser with Finance, Tax, Travel and Personal tiles" loading="lazy" width="621" height="1344"></figure>
-          <figure class="app-preview-card reveal" role="listitem"><img src="assets/images/app-preview/3.jpg" alt="Three-step flow — grab the document, scan it, the report is auto-filled by AI" loading="lazy" width="621" height="1344"></figure>
-          <figure class="app-preview-card reveal" role="listitem"><img src="assets/images/app-preview/4.jpg" alt="Ready-made templates or build your own with Column Studio and smart calculated columns" loading="lazy" width="621" height="1344"></figure>
-          <figure class="app-preview-card reveal" role="listitem"><img src="assets/images/app-preview/5.jpg" alt="Share reports with anyone via a PIN-locked web link — no app needed, opens in any browser" loading="lazy" width="621" height="1344"></figure>
+          <figure class="app-preview-card reveal" role="listitem" data-caption="Frame 1 of 5 — Team scanning"><img src="assets/images/app-preview/1.jpg" alt="Your team scans in the field, reports land instantly on your phone — one plan, whole team included" loading="lazy" width="621" height="1344"><span class="expand-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></span></figure>
+          <figure class="app-preview-card reveal" role="listitem" data-caption="Frame 2 of 5 — Pick a template"><img src="assets/images/app-preview/2.jpg" alt="Pick a report template, scan, done — LensReport category browser with Finance, Tax, Travel and Personal tiles" loading="lazy" width="621" height="1344"><span class="expand-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></span></figure>
+          <figure class="app-preview-card reveal" role="listitem" data-caption="Frame 3 of 5 — Three-step scan"><img src="assets/images/app-preview/3.jpg" alt="Three-step flow — grab the document, scan it, the report is auto-filled by AI" loading="lazy" width="621" height="1344"><span class="expand-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></span></figure>
+          <figure class="app-preview-card reveal" role="listitem" data-caption="Frame 4 of 5 — Templates &amp; Column Studio"><img src="assets/images/app-preview/4.jpg" alt="Ready-made templates or build your own with Column Studio and smart calculated columns" loading="lazy" width="621" height="1344"><span class="expand-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></span></figure>
+          <figure class="app-preview-card reveal" role="listitem" data-caption="Frame 5 of 5 — Secure web sharing"><img src="assets/images/app-preview/5.jpg" alt="Share reports with anyone via a PIN-locked web link — no app needed, opens in any browser" loading="lazy" width="621" height="1344"><span class="expand-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></span></figure>
         </div>
       </div>
     </section>
@@ -1190,6 +1258,21 @@
         </div>
       </div>
     </section>
+    <dialog id="appPreviewLightbox" class="preview-lightbox" aria-label="App preview — fullscreen viewer">
+      <button type="button" class="preview-lightbox-btn preview-lightbox-close" aria-label="Close fullscreen preview">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+      <button type="button" class="preview-lightbox-btn preview-lightbox-nav prev" aria-label="Previous image">
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <button type="button" class="preview-lightbox-btn preview-lightbox-nav next" aria-label="Next image">
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+      <figure class="preview-lightbox-figure">
+        <img class="preview-lightbox-image" src="" alt="">
+        <figcaption class="preview-lightbox-caption"></figcaption>
+      </figure>
+    </dialog>
   </main>
 
   <footer>
@@ -1233,6 +1316,48 @@
         if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
       });
     });
+
+    (function initAppPreviewLightbox() {
+      var dlg = document.getElementById('appPreviewLightbox');
+      if (!dlg || typeof dlg.showModal !== 'function') return;
+      var img = dlg.querySelector('.preview-lightbox-image');
+      var caption = dlg.querySelector('.preview-lightbox-caption');
+      var cards = Array.prototype.slice.call(document.querySelectorAll('.app-preview-card'));
+      if (cards.length === 0) return;
+      var idx = 0;
+
+      function show(i) {
+        idx = (i + cards.length) % cards.length;
+        var src = cards[idx].querySelector('img');
+        img.src = src.src;
+        img.alt = src.alt;
+        caption.textContent = cards[idx].getAttribute('data-caption') || '';
+        if (!dlg.open) dlg.showModal();
+      }
+
+      cards.forEach(function(card, i) {
+        card.setAttribute('role', 'button');
+        card.setAttribute('tabindex', '0');
+        var altText = card.querySelector('img').alt;
+        card.setAttribute('aria-label', 'View full size: ' + altText);
+        card.addEventListener('click', function() { show(i); });
+        card.addEventListener('keydown', function(e) {
+          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); show(i); }
+        });
+      });
+
+      dlg.querySelector('.preview-lightbox-close').addEventListener('click', function() { dlg.close(); });
+      dlg.querySelector('.preview-lightbox-nav.prev').addEventListener('click', function(e) { e.stopPropagation(); show(idx - 1); });
+      dlg.querySelector('.preview-lightbox-nav.next').addEventListener('click', function(e) { e.stopPropagation(); show(idx + 1); });
+      dlg.addEventListener('click', function(e) {
+        if (e.target === dlg) dlg.close();
+      });
+      document.addEventListener('keydown', function(e) {
+        if (!dlg.open) return;
+        if (e.key === 'ArrowLeft') show(idx - 1);
+        else if (e.key === 'ArrowRight') show(idx + 1);
+      });
+    })();
 
     function handleSubmit(e) {
       e.preventDefault();
