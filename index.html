@@ -567,23 +567,22 @@
       .app-preview-track { gap: 10px; padding: 6px 16px 16px; }
     }
     .app-preview-card { cursor: zoom-in; position: relative; }
-    .app-preview-card:focus-visible { outline: 3px solid var(--green); outline-offset: 3px; }
+    .app-preview-card:focus-visible { outline: 2px solid var(--green); outline-offset: 3px; }
     .app-preview-card .expand-hint {
-      position: absolute; top: 10px; right: 10px;
-      width: 30px; height: 30px;
+      position: absolute; top: 8px; right: 8px;
+      width: 26px; height: 26px;
       display: flex; align-items: center; justify-content: center;
-      background: rgba(17, 24, 39, 0.55);
+      background: rgba(17, 24, 39, 0.45);
       backdrop-filter: blur(6px);
       -webkit-backdrop-filter: blur(6px);
       border-radius: 50%; color: #fff;
       opacity: 0; transition: opacity 0.2s ease;
       pointer-events: none;
     }
-    .app-preview-card:hover .expand-hint { opacity: 1; }
-    .app-preview-card .expand-hint svg { width: 14px; height: 14px; }
-    @media (hover: none) {
-      .app-preview-card .expand-hint { opacity: 0.85; }
+    @media (hover: hover) {
+      .app-preview-card:hover .expand-hint { opacity: 1; }
     }
+    .app-preview-card .expand-hint svg { width: 12px; height: 12px; }
 
     /* === APP PREVIEW LIGHTBOX === */
     .preview-lightbox {
@@ -1011,15 +1010,15 @@
       <div class="section-header">
         <p class="section-label reveal">Inside the app</p>
         <h2 class="section-title reveal" id="app-preview-heading">Scan. Extract. Share.</h2>
-        <p class="section-subtitle reveal">Five frames, end to end — from the template browser to a PIN-locked link your accountant opens in any browser. Tap any frame to view full size.</p>
+        <p class="section-subtitle reveal">Tap any frame to view full size.</p>
       </div>
       <div class="app-preview-track-wrap">
         <div class="app-preview-track stagger" role="list">
-          <figure class="app-preview-card reveal" role="listitem" data-caption="Frame 1 of 5 — Team scanning"><img src="assets/images/app-preview/1.jpg" alt="Your team scans in the field, reports land instantly on your phone — one plan, whole team included" loading="lazy" width="621" height="1344"><span class="expand-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></span></figure>
-          <figure class="app-preview-card reveal" role="listitem" data-caption="Frame 2 of 5 — Pick a template"><img src="assets/images/app-preview/2.jpg" alt="Pick a report template, scan, done — LensReport category browser with Finance, Tax, Travel and Personal tiles" loading="lazy" width="621" height="1344"><span class="expand-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></span></figure>
-          <figure class="app-preview-card reveal" role="listitem" data-caption="Frame 3 of 5 — Three-step scan"><img src="assets/images/app-preview/3.jpg" alt="Three-step flow — grab the document, scan it, the report is auto-filled by AI" loading="lazy" width="621" height="1344"><span class="expand-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></span></figure>
-          <figure class="app-preview-card reveal" role="listitem" data-caption="Frame 4 of 5 — Templates &amp; Column Studio"><img src="assets/images/app-preview/4.jpg" alt="Ready-made templates or build your own with Column Studio and smart calculated columns" loading="lazy" width="621" height="1344"><span class="expand-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></span></figure>
-          <figure class="app-preview-card reveal" role="listitem" data-caption="Frame 5 of 5 — Secure web sharing"><img src="assets/images/app-preview/5.jpg" alt="Share reports with anyone via a PIN-locked web link — no app needed, opens in any browser" loading="lazy" width="621" height="1344"><span class="expand-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></span></figure>
+          <figure class="app-preview-card reveal" role="listitem" data-caption="1 / 5"><img src="assets/images/app-preview/1.jpg" alt="Your team scans in the field, reports land instantly on your phone — one plan, whole team included" loading="lazy" width="621" height="1344"><span class="expand-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></span></figure>
+          <figure class="app-preview-card reveal" role="listitem" data-caption="2 / 5"><img src="assets/images/app-preview/2.jpg" alt="Pick a report template, scan, done — LensReport category browser with Finance, Tax, Travel and Personal tiles" loading="lazy" width="621" height="1344"><span class="expand-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></span></figure>
+          <figure class="app-preview-card reveal" role="listitem" data-caption="3 / 5"><img src="assets/images/app-preview/3.jpg" alt="Three-step flow — grab the document, scan it, the report is auto-filled by AI" loading="lazy" width="621" height="1344"><span class="expand-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></span></figure>
+          <figure class="app-preview-card reveal" role="listitem" data-caption="4 / 5"><img src="assets/images/app-preview/4.jpg" alt="Ready-made templates or build your own with Column Studio and smart calculated columns" loading="lazy" width="621" height="1344"><span class="expand-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></span></figure>
+          <figure class="app-preview-card reveal" role="listitem" data-caption="5 / 5"><img src="assets/images/app-preview/5.jpg" alt="Share reports with anyone via a PIN-locked web link — no app needed, opens in any browser" loading="lazy" width="621" height="1344"><span class="expand-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></span></figure>
         </div>
       </div>
     </section>
