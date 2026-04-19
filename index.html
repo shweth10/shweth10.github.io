@@ -515,6 +515,46 @@
     @media (max-width: 960px) { .story-grid { grid-template-columns: 1fr; gap: 40px; } .story-grid.reverse { direction: ltr; } }
 
 
+    /* === APP PREVIEW GALLERY === */
+    .app-preview { padding: 72px 0 88px; background: var(--bg); position: relative; }
+    .app-preview .section-header { margin-bottom: 36px; padding: 0 24px; }
+    .app-preview-track-wrap { position: relative; }
+    .app-preview-track {
+      display: flex;
+      gap: 20px;
+      padding: 20px max(24px, calc((100vw - 1120px) / 2 + 24px)) 32px;
+      overflow-x: auto;
+      overflow-y: visible;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: thin;
+      scrollbar-color: var(--border-hover) transparent;
+    }
+    .app-preview-card {
+      flex: 0 0 auto;
+      width: clamp(220px, 24vw, 260px);
+      aspect-ratio: 1242 / 2688;
+      border-radius: 22px;
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+      background: var(--bg-white);
+      scroll-snap-align: center;
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s;
+      margin: 0;
+    }
+    .app-preview-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-xl); }
+    .app-preview-card img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .app-preview-track::-webkit-scrollbar { height: 8px; }
+    .app-preview-track::-webkit-scrollbar-thumb { background: var(--border-hover); border-radius: 4px; }
+    .app-preview-track::-webkit-scrollbar-track { background: transparent; }
+    @media (max-width: 720px) {
+      .app-preview { padding: 48px 0 64px; }
+      .app-preview .section-header { margin-bottom: 24px; padding: 0 16px; }
+      .app-preview-card { width: min(72vw, 300px); border-radius: 20px; }
+      .app-preview-track { gap: 16px; padding: 16px 16px 24px; }
+    }
+
+
     /* === SMART COLUMNS MOCKUP === */
     .sc-mockup { background: #FFF; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow-lg), 0 0 0 1px rgba(14,23,42,0.04); font-family: 'Inter', sans-serif; }
     .sc-head { display: grid; grid-template-columns: 40px minmax(0, 1.3fr) 0.85fr 0.85fr 0.95fr; background: #FAFBFC; border-bottom: 1px solid var(--border); }
@@ -884,6 +924,22 @@
         <div class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>No manual entry</div>
         <div class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="3" x2="9" y2="21"/><line x1="15" y1="3" x2="15" y2="21"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/></svg>Real Excel formulas</div>
         <div class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>PIN-locked sharing</div>
+      </div>
+    </section>
+    <section class="app-preview" aria-labelledby="app-preview-heading">
+      <div class="section-header">
+        <p class="section-label reveal">See it in action</p>
+        <h2 class="section-title reveal" id="app-preview-heading">A five-second tour.</h2>
+        <p class="section-subtitle reveal">From team scanning to shared reports — every way LensReport saves you hours.</p>
+      </div>
+      <div class="app-preview-track-wrap">
+        <div class="app-preview-track stagger" role="list">
+          <figure class="app-preview-card reveal" role="listitem"><img src="assets/images/app-preview/1.jpg" alt="Your team scans in the field, reports land instantly on your phone — one plan, whole team included" loading="lazy" width="621" height="1344"></figure>
+          <figure class="app-preview-card reveal" role="listitem"><img src="assets/images/app-preview/2.jpg" alt="Pick a report template, scan, done — LensReport category browser with Finance, Tax, Travel and Personal tiles" loading="lazy" width="621" height="1344"></figure>
+          <figure class="app-preview-card reveal" role="listitem"><img src="assets/images/app-preview/3.jpg" alt="Three-step flow — grab the document, scan it, the report is auto-filled by AI" loading="lazy" width="621" height="1344"></figure>
+          <figure class="app-preview-card reveal" role="listitem"><img src="assets/images/app-preview/4.jpg" alt="Ready-made templates or build your own with Column Studio and smart calculated columns" loading="lazy" width="621" height="1344"></figure>
+          <figure class="app-preview-card reveal" role="listitem"><img src="assets/images/app-preview/5.jpg" alt="Share reports with anyone via a PIN-locked web link — no app needed, opens in any browser" loading="lazy" width="621" height="1344"></figure>
+        </div>
       </div>
     </section>
     <section class="section" id="how-it-works" aria-labelledby="how-it-works-heading">
