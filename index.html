@@ -541,8 +541,8 @@
       .app-preview-track {
         display: flex;
         grid-template-columns: none;
-        gap: 14px;
-        padding: 6px 16px 20px;
+        gap: 12px;
+        padding: 8px 16px 20px;
         overflow-x: auto;
         overflow-y: visible;
         scroll-snap-type: x mandatory;
@@ -552,9 +552,9 @@
       }
       .app-preview-card {
         flex: 0 0 auto;
-        width: min(66vw, 260px);
-        scroll-snap-align: center;
-        border-radius: 16px;
+        width: min(44vw, 200px);
+        scroll-snap-align: start;
+        border-radius: 14px;
       }
       .app-preview-track::-webkit-scrollbar { height: 6px; }
       .app-preview-track::-webkit-scrollbar-thumb { background: var(--border-hover); border-radius: 3px; }
@@ -563,6 +563,8 @@
     @media (max-width: 480px) {
       .app-preview { padding: 40px 0 48px; }
       .app-preview .section-header { margin-bottom: 20px; padding: 0 16px; }
+      .app-preview-card { width: min(48vw, 180px); border-radius: 12px; }
+      .app-preview-track { gap: 10px; padding: 6px 16px 16px; }
     }
 
 
