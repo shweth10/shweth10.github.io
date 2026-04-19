@@ -589,13 +589,13 @@
       border: none; padding: 0; margin: 0;
       max-width: 100vw; max-height: 100vh;
       width: 100vw; height: 100vh;
-      background: transparent; color: #fff;
+      background: transparent; color: var(--text);
       overflow: hidden;
     }
     .preview-lightbox::backdrop {
-      background: rgba(10, 15, 28, 0.55);
-      backdrop-filter: blur(16px) saturate(150%);
-      -webkit-backdrop-filter: blur(16px) saturate(150%);
+      background: rgba(247, 248, 250, 0.6);
+      backdrop-filter: blur(18px) saturate(160%);
+      -webkit-backdrop-filter: blur(18px) saturate(160%);
     }
     .preview-lightbox[open] { display: flex; align-items: center; justify-content: center; }
     .preview-lightbox-figure {
@@ -611,20 +611,21 @@
     .preview-lightbox-caption {
       font-family: 'DM Mono', monospace;
       font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase;
-      color: rgba(255,255,255,0.7);
+      color: var(--text-secondary);
     }
     .preview-lightbox-btn {
       position: fixed;
-      background: rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.7);
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
-      border: 1px solid rgba(255,255,255,0.18);
+      border: 1px solid var(--border);
       border-radius: 50%;
-      color: #fff; cursor: pointer;
+      color: var(--text); cursor: pointer;
       display: flex; align-items: center; justify-content: center;
-      transition: background 0.2s, transform 0.2s;
+      transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+      box-shadow: var(--shadow-sm);
     }
-    .preview-lightbox-btn:hover { background: rgba(255,255,255,0.22); }
+    .preview-lightbox-btn:hover { background: #fff; box-shadow: var(--shadow-md); }
     .preview-lightbox-close { top: 20px; right: 20px; width: 44px; height: 44px; }
     .preview-lightbox-nav { top: 50%; width: 48px; height: 48px; transform: translateY(-50%); }
     .preview-lightbox-nav:hover { transform: translateY(-50%) scale(1.06); }
