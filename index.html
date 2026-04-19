@@ -592,7 +592,11 @@
       background: transparent; color: #fff;
       overflow: hidden;
     }
-    .preview-lightbox::backdrop { background: rgba(10, 15, 28, 0.94); backdrop-filter: blur(4px); }
+    .preview-lightbox::backdrop {
+      background: rgba(10, 15, 28, 0.55);
+      backdrop-filter: blur(16px) saturate(150%);
+      -webkit-backdrop-filter: blur(16px) saturate(150%);
+    }
     .preview-lightbox[open] { display: flex; align-items: center; justify-content: center; }
     .preview-lightbox-figure {
       margin: 0; display: flex; flex-direction: column; align-items: center;
