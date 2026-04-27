@@ -4,15 +4,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>LensReport — Pick a report. Scan. Done.</title>
-  <meta name="description" content="Template-first AI that fills your report row by row. Scan receipts, invoices and forms with your phone — export to PDF, Excel with real formulas, or a PIN-locked web link. Collaborate with your field team in real time.">
-  <meta property="og:title" content="LensReport — Pick a report. Scan. Done.">
-  <meta property="og:description" content="Template-first AI that fills your report row by row. Scan receipts, invoices and forms with your phone — export to PDF, Excel with real formulas, or a PIN-locked web link.">
+  <meta name="description" content="Template-first AI that fills your report row by row. Ask your data anything in plain English — vendor breakdowns, biggest purchases, what's on a specific receipt. Export to PDF, Excel with real formulas, or a PIN-locked web link.">
+  <meta property="og:title" content="LensReport — Scan, ask, and export.">
+  <meta property="og:description" content="Template-first AI fills your report row by row. AI Insights answers free-text questions about your own data — grounded, sourced, no hallucinations. Export to PDF, Excel with real formulas, or a PIN-locked web link.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://lensreport.app/">
   <meta property="og:image" content="https://lensreport.app/assets/images/onboarding_01_scan_invoice.png">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="LensReport — Pick a report. Scan. Done.">
-  <meta name="twitter:description" content="Template-first AI that fills your report row by row. Scan with your phone, export with real Excel formulas.">
+  <meta name="twitter:title" content="LensReport — Scan, ask, and export.">
+  <meta name="twitter:description" content="Template-first AI fills your report row by row. AI Insights answers free-text questions about your own data — no hallucinations. Real Excel formulas in every export.">
   <meta name="twitter:image" content="https://lensreport.app/assets/images/onboarding_01_scan_invoice.png">
   <meta name="theme-color" content="#4CAF7D">
   <link rel="canonical" href="https://lensreport.app/">
@@ -658,6 +658,29 @@
     .sc-footer .label { color: var(--green-dark); }
 
 
+    /* === AI INSIGHTS MOCKUP === */
+    .ai-mockup { background: #FFF; border-radius: 22px; box-shadow: var(--shadow-xl), 0 0 0 1px var(--border); width: 100%; max-width: 380px; overflow: hidden; }
+    .ai-mockup .ai-head { display: flex; align-items: center; justify-content: space-between; padding: 14px 18px; background: linear-gradient(180deg, rgba(76,175,125,0.06) 0%, rgba(76,175,125,0) 100%); border-bottom: 1px solid var(--border); }
+    .ai-mockup .ai-head .ai-title { display: flex; flex-direction: column; gap: 2px; }
+    .ai-mockup .ai-head .t1 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px; font-weight: 700; color: var(--text); display: flex; align-items: center; gap: 8px; }
+    .ai-mockup .ai-head .t1::before { content: '✨'; font-size: 13px; }
+    .ai-mockup .ai-head .t2 { font-size: 11px; color: var(--text-muted); font-family: 'DM Mono', monospace; }
+    .ai-mockup .ai-head .ai-x { width: 24px; height: 24px; border-radius: 50%; background: var(--bg); display: flex; align-items: center; justify-content: center; color: var(--text-muted); font-size: 14px; }
+    .ai-mockup .ai-body { padding: 16px 18px 18px; }
+    .ai-mockup .ai-asked { font-size: 11px; font-family: 'DM Mono', monospace; color: var(--green-dark); text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 6px; }
+    .ai-mockup .ai-question { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 15px; font-weight: 600; color: var(--text); line-height: 1.4; margin-bottom: 14px; }
+    .ai-mockup .ai-stat { background: linear-gradient(180deg, #FCFEFD 0%, #F7FBF9 100%); border: 1px solid rgba(76,175,125,0.2); border-radius: 14px; padding: 14px 16px; }
+    .ai-mockup .ai-big { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 26px; font-weight: 800; color: var(--text); letter-spacing: -0.5px; line-height: 1; margin-bottom: 4px; }
+    .ai-mockup .ai-sub { font-size: 12px; color: var(--text-secondary); margin-bottom: 10px; font-weight: 500; }
+    .ai-mockup .ai-divider { height: 1px; background: var(--border); margin: 8px 0 10px; }
+    .ai-mockup .ai-line { font-size: 12px; color: var(--text); line-height: 1.5; margin-bottom: 4px; }
+    .ai-mockup .ai-line.muted { color: var(--text-secondary); font-family: 'DM Mono', monospace; font-size: 11px; }
+    .ai-mockup .ai-cta { margin-top: 14px; display: flex; align-items: center; justify-content: center; gap: 8px; padding: 11px 14px; background: var(--green); color: #FFF; border-radius: 12px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 13px; font-weight: 600; box-shadow: 0 6px 16px rgba(76,175,125,0.25); }
+    .ai-mockup .ai-cta::before { content: '↻'; font-size: 16px; }
+    .ai-mockup .ai-foot { padding: 10px 18px; background: #FAFBFC; border-top: 1px solid var(--border); display: flex; align-items: center; gap: 8px; font-size: 11px; color: var(--text-muted); font-family: 'DM Mono', monospace; }
+    .ai-mockup .ai-foot .dot-g { width: 6px; height: 6px; border-radius: 50%; background: var(--green); }
+
+
     /* === SECURE SHARING MOCKUP === */
     .share-mock-wrap { display: flex; flex-direction: column; gap: 20px; align-items: center; }
     .share-dialog { background: #FFF; border-radius: 18px; box-shadow: var(--shadow-xl), 0 0 0 1px var(--border); padding: 22px 24px; width: 100%; max-width: 360px; }
@@ -790,6 +813,7 @@
       <div class="nav-links">
         <a href="#how-it-works">How It Works</a>
         <a href="#features">Features</a>
+        <a href="#ai-insights">AI Insights</a>
         <a href="#collaboration">Teams</a>
         <a href="#templates">Templates</a>
         <a href="/privacy/">Privacy</a>
@@ -802,6 +826,7 @@
   <div class="mobile-nav" id="mobileNav">
     <a href="#how-it-works" onclick="closeMobileNav()">How It Works</a>
     <a href="#features" onclick="closeMobileNav()">Features</a>
+    <a href="#ai-insights" onclick="closeMobileNav()">AI Insights</a>
     <a href="#collaboration" onclick="closeMobileNav()">Teams</a>
     <a href="#templates" onclick="closeMobileNav()">Templates</a>
     <a href="/privacy/" onclick="closeMobileNav()">Privacy</a>
@@ -818,7 +843,7 @@
         <div class="h-badge"><span class="dot"></span>LAUNCHING ON iOS &amp; ANDROID</div>
         <p class="sr-only">Animation: a phone scans a fuel receipt. A new row appears in a spreadsheet with the vendor, date, amount and calculated VAT extracted by AI.</p>
         <h1 class="h-headline" id="hero-heading">Pick a report.<br><span class="green">Scan.</span> Done.</h1>
-        <p class="h-sub">Template-first AI fills your report, row by row. Your team scans in the field — you see the results land in real time. Export as PDF, Excel or CSV, or share a PIN-locked web link your accountant opens in any browser.</p>
+        <p class="h-sub">Template-first AI fills your report, row by row. Then <strong>ask your own data anything</strong> — "what did I buy from Kundan Singh?", "where did my money go this month?" — and get grounded answers, not guesses. Export as PDF, Excel or CSV, or share a PIN-locked web link your accountant opens in any browser.</p>
         <div class="h-cta">
           <span class="h-store" role="img" aria-label="Coming soon on the App Store">
             <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
@@ -928,7 +953,7 @@
     <section class="trust-strip" aria-label="Key features">
       <div class="trust-inner">
         <div class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/><line x1="1" y1="1" x2="23" y2="23"/></svg>Offline-capable</div>
-        <div class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>No manual entry</div>
+        <div class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Ask anything in plain English</div>
         <div class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="3" x2="9" y2="21"/><line x1="15" y1="3" x2="15" y2="21"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/></svg>Real Excel formulas</div>
         <div class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>PIN-locked sharing</div>
       </div>
@@ -969,8 +994,8 @@
           </div>
           <div class="step-card reveal">
             <div class="step-number">3</div>
-            <h3>Export or share.</h3>
-            <p>PDF, Excel with real working formulas, CSV, or a PIN-locked web link your accountant opens in any browser. No app install required on their end.</p>
+            <h3>Ask, export or share.</h3>
+            <p>Ask the AI anything about your report, then export to PDF, Excel with real working formulas, CSV, or a PIN-locked web link your accountant opens in any browser. No app install required on their end.</p>
           </div>
         </div>
       </div>
@@ -1001,8 +1026,47 @@
         </div>
       </div>
     </section>
-    <section class="feature-story alt" aria-labelledby="smart-columns-heading">
+    <section class="feature-story alt" id="ai-insights" aria-labelledby="ai-insights-heading">
       <div class="story-grid">
+        <div class="story-copy reveal">
+          <p class="section-label">AI Insights</p>
+          <h2 id="ai-insights-heading">Ask anything. Get the answer from your own data.</h2>
+          <p>Tap the AI button on any report and ask in plain English — "what did I buy from Kundan Singh?", "where did my money go this month?", "show me the receipts where notes mention VAT". LensReport's AI reads your entries, finds the matches (loose business names, partial vendor spellings and typos all welcome), and answers with the actual numbers and the actual receipt detail — not a hallucination.</p>
+          <p>An adaptive dashboard greets you the moment you open Insights, surfacing your biggest purchase, top vendors, daily trend, weekly pattern and outliers without a single tap. Every answer is built deterministically from your entries on the device — and every recommendation is grounded, sourced, and disclosed.</p>
+          <p>Available across all paid plans. Same daily limits everywhere. Owners pay for AI on their shared reports — contributors just use it.</p>
+        </div>
+        <div class="reveal" style="display: flex; justify-content: center;">
+          <div class="ai-mockup">
+            <div class="ai-head">
+              <div class="ai-title">
+                <div class="t1">AI Insights</div>
+                <div class="t2">Personal/Family Expenses · 12 entries</div>
+              </div>
+              <div class="ai-x">×</div>
+            </div>
+            <div class="ai-body">
+              <div class="ai-asked">You asked</div>
+              <div class="ai-question">What did I buy from kundan singh?</div>
+              <div class="ai-stat">
+                <div class="ai-big">$12.00</div>
+                <div class="ai-sub">Kundan Singh &amp; Sons Holdings Ltd · Apr 20</div>
+                <div class="ai-divider"></div>
+                <div class="ai-line">FIJI WATER 1.5L, Nescafe Original 220ml, BUY 2 PGS $7</div>
+                <div class="ai-line muted">Groceries · Cash</div>
+                <div class="ai-line muted">VAT 12.5% · 1.33</div>
+              </div>
+              <div class="ai-cta">Start another conversation</div>
+            </div>
+            <div class="ai-foot">
+              <span class="dot-g"></span>
+              <span>Grounded in your entries · 1 match · 0 hallucinations</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="feature-story" aria-labelledby="smart-columns-heading">
+      <div class="story-grid reverse">
         <div class="story-copy reveal">
           <p class="section-label">Smart Columns</p>
           <h2 id="smart-columns-heading">Your spreadsheet, with the math built in.</h2>
@@ -1027,8 +1091,8 @@
         </div>
       </div>
     </section>
-    <section class="feature-story" id="collaboration" aria-labelledby="collab-heading">
-      <div class="story-grid reverse">
+    <section class="feature-story alt" id="collaboration" aria-labelledby="collab-heading">
+      <div class="story-grid">
         <div class="story-copy reveal">
           <p class="section-label">Team collaboration</p>
           <h2 id="collab-heading">Your team scans in the field. You get the report.</h2>
@@ -1040,8 +1104,8 @@
         </div>
       </div>
     </section>
-    <section class="feature-story alt" aria-labelledby="sharing-heading">
-      <div class="story-grid">
+    <section class="feature-story" aria-labelledby="sharing-heading">
+      <div class="story-grid reverse">
         <div class="story-copy reveal">
           <p class="section-label">Secure web sharing</p>
           <h2 id="sharing-heading">Send a link, not a file.</h2>
@@ -1073,8 +1137,8 @@
         </div>
       </div>
     </section>
-    <section class="feature-story" aria-labelledby="export-heading">
-      <div class="story-grid reverse">
+    <section class="feature-story alt" aria-labelledby="export-heading">
+      <div class="story-grid">
         <div class="story-copy reveal">
           <p class="section-label">Export anywhere</p>
           <h2 id="export-heading">PDF, Excel, CSV, Word — your call.</h2>
