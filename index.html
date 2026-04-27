@@ -658,15 +658,12 @@
     .sc-footer .label { color: var(--green-dark); }
 
 
-    /* === AI INSIGHTS MOCKUP — true 9:16 phone frame, dashboard view === */
-    /* Use calc-based width+height (not aspect-ratio) so the phone stays a
-       hard 9:16 even when the inner flex content's min-content would
-       otherwise force the box taller. --w resolves to min(320, container). */
-    .ai-mockup { --w: min(320px, 100%); width: var(--w); height: calc(var(--w) * 16 / 9); background: #1A2332; border-radius: 36px; padding: 8px; box-shadow: var(--shadow-xl), 0 0 0 1px rgba(0,0,0,0.4); overflow: hidden; box-sizing: border-box; }
-    .ai-mockup .ai-screen { width: 100%; height: 100%; min-height: 0; background: #FFF; border-radius: 28px; overflow: hidden; display: flex; flex-direction: column; font-family: 'Inter', sans-serif; position: relative; }
+    /* === AI INSIGHTS MOCKUP — 9:16 phone frame, dashboard view === */
+    .ai-mockup { width: 100%; max-width: 320px; aspect-ratio: 9 / 16; background: #1A2332; border-radius: 36px; padding: 8px; box-shadow: var(--shadow-xl), 0 0 0 1px rgba(0,0,0,0.4); overflow: hidden; }
+    .ai-mockup .ai-screen { width: 100%; height: 100%; background: #FFF; border-radius: 28px; overflow: hidden; display: flex; flex-direction: column; font-family: 'Inter', sans-serif; position: relative; }
     .ai-mockup .ai-status { display: flex; align-items: center; justify-content: space-between; padding: 8px 18px 4px; font-size: 10px; font-weight: 700; color: var(--text); }
     .ai-mockup .ai-status .ai-icons { display: flex; align-items: center; gap: 4px; opacity: 0.65; letter-spacing: 1px; font-size: 9px; }
-    .ai-mockup .ai-sheet { flex: 1; min-height: 0; background: linear-gradient(180deg, #EBF7F0 0%, #FFFFFF 35%, #FFFFFF 100%); margin: 0 6px 6px; border-radius: 22px; padding: 10px 12px 8px; display: flex; flex-direction: column; gap: 8px; overflow: hidden; box-shadow: inset 0 0 0 1px rgba(76,175,125,0.08); }
+    .ai-mockup .ai-sheet { flex: 1; background: linear-gradient(180deg, #EBF7F0 0%, #FFFFFF 35%, #FFFFFF 100%); margin: 0 6px 6px; border-radius: 22px; padding: 10px 12px 8px; display: flex; flex-direction: column; gap: 9px; overflow: hidden; box-shadow: inset 0 0 0 1px rgba(76,175,125,0.08); }
     .ai-mockup .ai-grabber { width: 32px; height: 3px; background: var(--text-muted); border-radius: 2px; margin: 0 auto 2px; opacity: 0.4; }
     .ai-mockup .ai-h h4 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px; font-weight: 700; color: var(--text); letter-spacing: -0.3px; }
     .ai-mockup .ai-h .meta { font-size: 9.5px; color: var(--text-muted); margin-top: 1px; font-family: 'DM Mono', monospace; }
