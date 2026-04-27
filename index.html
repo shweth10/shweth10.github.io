@@ -658,27 +658,40 @@
     .sc-footer .label { color: var(--green-dark); }
 
 
-    /* === AI INSIGHTS MOCKUP === */
-    .ai-mockup { background: #FFF; border-radius: 22px; box-shadow: var(--shadow-xl), 0 0 0 1px var(--border); width: 100%; max-width: 380px; overflow: hidden; }
-    .ai-mockup .ai-head { display: flex; align-items: center; justify-content: space-between; padding: 14px 18px; background: linear-gradient(180deg, rgba(76,175,125,0.06) 0%, rgba(76,175,125,0) 100%); border-bottom: 1px solid var(--border); }
-    .ai-mockup .ai-head .ai-title { display: flex; flex-direction: column; gap: 2px; }
-    .ai-mockup .ai-head .t1 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px; font-weight: 700; color: var(--text); display: flex; align-items: center; gap: 8px; }
-    .ai-mockup .ai-head .t1::before { content: '✨'; font-size: 13px; }
-    .ai-mockup .ai-head .t2 { font-size: 11px; color: var(--text-muted); font-family: 'DM Mono', monospace; }
-    .ai-mockup .ai-head .ai-x { width: 24px; height: 24px; border-radius: 50%; background: var(--bg); display: flex; align-items: center; justify-content: center; color: var(--text-muted); font-size: 14px; }
-    .ai-mockup .ai-body { padding: 16px 18px 18px; }
-    .ai-mockup .ai-asked { font-size: 11px; font-family: 'DM Mono', monospace; color: var(--green-dark); text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 6px; }
-    .ai-mockup .ai-question { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 15px; font-weight: 600; color: var(--text); line-height: 1.4; margin-bottom: 14px; }
-    .ai-mockup .ai-stat { background: linear-gradient(180deg, #FCFEFD 0%, #F7FBF9 100%); border: 1px solid rgba(76,175,125,0.2); border-radius: 14px; padding: 14px 16px; }
-    .ai-mockup .ai-big { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 26px; font-weight: 800; color: var(--text); letter-spacing: -0.5px; line-height: 1; margin-bottom: 4px; }
-    .ai-mockup .ai-sub { font-size: 12px; color: var(--text-secondary); margin-bottom: 10px; font-weight: 500; }
-    .ai-mockup .ai-divider { height: 1px; background: var(--border); margin: 8px 0 10px; }
-    .ai-mockup .ai-line { font-size: 12px; color: var(--text); line-height: 1.5; margin-bottom: 4px; }
-    .ai-mockup .ai-line.muted { color: var(--text-secondary); font-family: 'DM Mono', monospace; font-size: 11px; }
-    .ai-mockup .ai-cta { margin-top: 14px; display: flex; align-items: center; justify-content: center; gap: 8px; padding: 11px 14px; background: var(--green); color: #FFF; border-radius: 12px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 13px; font-weight: 600; box-shadow: 0 6px 16px rgba(76,175,125,0.25); }
-    .ai-mockup .ai-cta::before { content: '↻'; font-size: 16px; }
-    .ai-mockup .ai-foot { padding: 10px 18px; background: #FAFBFC; border-top: 1px solid var(--border); display: flex; align-items: center; gap: 8px; font-size: 11px; color: var(--text-muted); font-family: 'DM Mono', monospace; }
-    .ai-mockup .ai-foot .dot-g { width: 6px; height: 6px; border-radius: 50%; background: var(--green); }
+    /* === AI INSIGHTS MOCKUP — 9:16 phone frame, dashboard view === */
+    .ai-mockup { width: 100%; max-width: 320px; aspect-ratio: 9 / 16; background: #1A2332; border-radius: 36px; padding: 8px; box-shadow: var(--shadow-xl), 0 0 0 1px rgba(0,0,0,0.4); overflow: hidden; }
+    .ai-mockup .ai-screen { width: 100%; height: 100%; background: #FFF; border-radius: 28px; overflow: hidden; display: flex; flex-direction: column; font-family: 'Inter', sans-serif; position: relative; }
+    .ai-mockup .ai-status { display: flex; align-items: center; justify-content: space-between; padding: 8px 18px 4px; font-size: 10px; font-weight: 700; color: var(--text); }
+    .ai-mockup .ai-status .ai-icons { display: flex; align-items: center; gap: 4px; opacity: 0.65; letter-spacing: 1px; font-size: 9px; }
+    .ai-mockup .ai-sheet { flex: 1; background: linear-gradient(180deg, #EBF7F0 0%, #FFFFFF 35%, #FFFFFF 100%); margin: 0 6px 6px; border-radius: 22px; padding: 10px 12px 8px; display: flex; flex-direction: column; gap: 9px; overflow: hidden; box-shadow: inset 0 0 0 1px rgba(76,175,125,0.08); }
+    .ai-mockup .ai-grabber { width: 32px; height: 3px; background: var(--text-muted); border-radius: 2px; margin: 0 auto 2px; opacity: 0.4; }
+    .ai-mockup .ai-h h4 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px; font-weight: 700; color: var(--text); letter-spacing: -0.3px; }
+    .ai-mockup .ai-h .meta { font-size: 9.5px; color: var(--text-muted); margin-top: 1px; font-family: 'DM Mono', monospace; }
+    .ai-mockup .ai-row { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; }
+    .ai-mockup .card { background: #FFF; border: 1px solid var(--border); border-radius: 11px; padding: 9px 10px; font-size: 10px; color: var(--text-secondary); display: flex; flex-direction: column; min-height: 70px; }
+    .ai-mockup .card .ct { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 11px; font-weight: 700; color: var(--text); margin-bottom: 6px; line-height: 1.2; }
+    .ai-mockup .card .donut-row { display: flex; align-items: center; gap: 7px; flex: 1; }
+    .ai-mockup .card .donut { width: 28px; height: 28px; border-radius: 50%; background: conic-gradient(var(--green) 0 65%, var(--green-pale) 65% 100%); flex-shrink: 0; box-shadow: inset 0 0 0 6px #FFF; }
+    .ai-mockup .card .legend { font-size: 9.5px; line-height: 1.3; color: var(--text); }
+    .ai-mockup .card .badge { display: inline-block; align-self: flex-start; font-size: 8.5px; font-weight: 700; background: var(--green-pale); color: var(--green-dark); padding: 2px 7px; border-radius: 999px; margin-bottom: 4px; letter-spacing: 0.3px; text-transform: uppercase; }
+    .ai-mockup .card .big { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 18px; font-weight: 800; color: var(--text); display: block; line-height: 1; margin-bottom: 2px; }
+    .ai-mockup .card .sub-line { font-size: 9.5px; line-height: 1.3; color: var(--text-secondary); }
+    .ai-mockup .card-wide { background: #FFF; border: 1px solid var(--border); border-radius: 11px; padding: 9px 10px; }
+    .ai-mockup .card-wide .ct { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 11px; font-weight: 700; color: var(--text); margin-bottom: 7px; }
+    .ai-mockup .bar-row { display: flex; align-items: center; gap: 6px; font-size: 9.5px; margin-bottom: 5px; color: var(--text); }
+    .ai-mockup .bar-row:last-child { margin-bottom: 0; }
+    .ai-mockup .bar-row .label { width: 62px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 500; }
+    .ai-mockup .bar-row .bar { flex: 1; height: 5px; background: var(--green-pale); border-radius: 3px; overflow: hidden; }
+    .ai-mockup .bar-row .fill { display: block; height: 100%; background: var(--green); border-radius: 3px; }
+    .ai-mockup .bar-row .num { width: 14px; text-align: right; font-family: 'DM Mono', monospace; font-size: 9px; color: var(--text-muted); }
+    .ai-mockup .qsec { display: flex; flex-direction: column; gap: 4px; }
+    .ai-mockup .qsec .qhead { font-size: 9.5px; color: var(--text-secondary); font-family: 'DM Mono', monospace; text-transform: uppercase; letter-spacing: 0.6px; padding-left: 2px; }
+    .ai-mockup .qchip { background: #FFF; border: 1px solid var(--border); border-radius: 10px; padding: 7px 10px; font-size: 10px; color: var(--text); display: flex; align-items: center; gap: 7px; line-height: 1.3; }
+    .ai-mockup .qchip .icon { width: 18px; height: 18px; border-radius: 50%; background: var(--green-pale); color: var(--green-dark); display: flex; align-items: center; justify-content: center; font-size: 11px; flex-shrink: 0; font-weight: 700; }
+    .ai-mockup .qchip .qtext { flex: 1; }
+    .ai-mockup .qchip .chev { color: var(--text-muted); font-size: 12px; }
+    .ai-mockup .ask { margin-top: auto; background: #FFF; border: 1px solid var(--border); border-radius: 999px; padding: 7px 8px 7px 14px; display: flex; align-items: center; gap: 8px; font-size: 10px; color: var(--text-muted); }
+    .ai-mockup .ask .send { width: 22px; height: 22px; border-radius: 50%; background: var(--green-pale); display: flex; align-items: center; justify-content: center; color: var(--green-dark); font-size: 12px; margin-left: auto; flex-shrink: 0; font-weight: 700; }
 
 
     /* === SECURE SHARING MOCKUP === */
@@ -843,7 +856,7 @@
         <div class="h-badge"><span class="dot"></span>LAUNCHING ON iOS &amp; ANDROID</div>
         <p class="sr-only">Animation: a phone scans a fuel receipt. A new row appears in a spreadsheet with the vendor, date, amount and calculated VAT extracted by AI.</p>
         <h1 class="h-headline" id="hero-heading">Pick a report.<br><span class="green">Scan.</span> Done.</h1>
-        <p class="h-sub">Template-first AI fills your report, row by row. Then <strong>ask your own data anything</strong> — "what did I buy from Northwind Market?", "where did my money go this month?" — and get grounded answers, not guesses. Export as PDF, Excel or CSV, or share a PIN-locked web link your accountant opens in any browser.</p>
+        <p class="h-sub">Template-first AI fills your report, row by row. Then <strong>ask your own data anything</strong> — "how much did I sell to Acme Corp?", "what's my biggest invoice this month?" — and get grounded answers, not guesses. Export as PDF, Excel or CSV, or share a PIN-locked web link your accountant opens in any browser.</p>
         <div class="h-cta">
           <span class="h-store" role="img" aria-label="Coming soon on the App Store">
             <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
@@ -1031,35 +1044,51 @@
         <div class="story-copy reveal">
           <p class="section-label">AI Insights</p>
           <h2 id="ai-insights-heading">Ask anything. Get the answer from your own data.</h2>
-          <p>Tap the AI button on any report and ask in plain English — "what did I buy from Northwind Market?", "where did my money go this month?", "show me the receipts where notes mention VAT". LensReport's AI reads your entries, finds the matches (loose business names, partial vendor spellings and typos all welcome), and answers with the actual numbers and the actual receipt detail — not a hallucination.</p>
-          <p>An adaptive dashboard greets you the moment you open Insights, surfacing your biggest purchase, top vendors, daily trend, weekly pattern and outliers without a single tap. Every answer is built deterministically from your entries on the device — and every recommendation is grounded, sourced, and disclosed.</p>
+          <p>Open the AI button on any report — a sales log, an expense ledger, an inventory count — and an adaptive dashboard greets you on the spot: top customers, sales split by category, biggest invoice, daily trend and outliers worth a second look. No taps, no wait, no setup.</p>
+          <p>Then type a question in plain English: "how much did I sell to Acme Corp?", "which day brought the most sales?", "show me invoices flagged for follow-up". LensReport's AI reads your entries, finds the matches (loose customer names, partial spellings and typos all welcome), and answers with the actual numbers and the actual line-item detail — not a hallucination. Every answer is grounded in your data, sourced when it matters, and gated behind a "start another conversation" button so context never drifts.</p>
           <p>Available across all paid plans. Same daily limits everywhere. Owners pay for AI on their shared reports — contributors just use it.</p>
         </div>
         <div class="reveal" style="display: flex; justify-content: center;">
-          <div class="ai-mockup">
-            <div class="ai-head">
-              <div class="ai-title">
-                <div class="t1">AI Insights</div>
-                <div class="t2">Personal/Family Expenses · 12 entries</div>
+          <div class="ai-mockup" role="img" aria-label="LensReport AI Insights opening view: sales-split donut, advisor outlier card, top-customers bar list, suggested questions and an ask-anything input bar.">
+            <div class="ai-screen">
+              <div class="ai-status"><span>9:41</span><span class="ai-icons">●●●●</span></div>
+              <div class="ai-sheet">
+                <div class="ai-grabber"></div>
+                <div class="ai-h">
+                  <h4>Let's read your report</h4>
+                  <div class="meta">18 invoices · Apr 1–30 · $24,580.50</div>
+                </div>
+                <div class="ai-row">
+                  <div class="card">
+                    <div class="ct">Sales split</div>
+                    <div class="donut-row">
+                      <span class="donut" aria-hidden="true"></span>
+                      <span class="legend">65% Hardware<br>35% Services</span>
+                    </div>
+                  </div>
+                  <div class="card">
+                    <span class="badge">Advisor</span>
+                    <span class="big">1 found</span>
+                    <span class="sub-line">Possible outliers worth a look</span>
+                  </div>
+                </div>
+                <div class="card-wide">
+                  <div class="ct">Top customers</div>
+                  <div class="bar-row"><span class="label">Acme Corp</span><span class="bar"><span class="fill" style="width:100%;"></span></span><span class="num">4</span></div>
+                  <div class="bar-row"><span class="label">Contoso Ltd</span><span class="bar"><span class="fill" style="width:75%;"></span></span><span class="num">3</span></div>
+                  <div class="bar-row"><span class="label">Northwind</span><span class="bar"><span class="fill" style="width:50%;"></span></span><span class="num">2</span></div>
+                  <div class="bar-row"><span class="label">Fabrikam</span><span class="bar"><span class="fill" style="width:50%;"></span></span><span class="num">2</span></div>
+                </div>
+                <div class="qsec">
+                  <div class="qhead">More questions</div>
+                  <div class="qchip"><div class="icon">↗</div><div class="qtext">How much did I sell to Acme Corp?</div><span class="chev">›</span></div>
+                  <div class="qchip"><div class="icon">$</div><div class="qtext">What's my biggest invoice this month?</div><span class="chev">›</span></div>
+                </div>
+                <div class="ask">
+                  <span>New customers this month…</span>
+                  <span class="send">↑</span>
+                </div>
               </div>
-              <div class="ai-x">×</div>
-            </div>
-            <div class="ai-body">
-              <div class="ai-asked">You asked</div>
-              <div class="ai-question">What did I buy from northwind market?</div>
-              <div class="ai-stat">
-                <div class="ai-big">$12.00</div>
-                <div class="ai-sub">Northwind Market Holdings Ltd · Apr 20</div>
-                <div class="ai-divider"></div>
-                <div class="ai-line">Sparkling water 1.5L, instant coffee 220g, snack pack 2×</div>
-                <div class="ai-line muted">Groceries · Cash</div>
-                <div class="ai-line muted">VAT 12.5% · 1.33</div>
-              </div>
-              <div class="ai-cta">Start another conversation</div>
-            </div>
-            <div class="ai-foot">
-              <span class="dot-g"></span>
-              <span>Grounded in your entries · 1 match · 0 hallucinations</span>
             </div>
           </div>
         </div>
