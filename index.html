@@ -25,6 +25,11 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 
+  <link rel="preload" as="image" type="image/webp" href="assets/whos-it-for/accounting/panel-1.webp">
+  <link rel="preload" as="image" type="image/webp" href="assets/whos-it-for/accounting/panel-2.webp">
+  <link rel="preload" as="image" type="image/webp" href="assets/whos-it-for/accounting/panel-3.webp">
+  <link rel="preload" as="image" type="image/webp" href="assets/whos-it-for/accounting/panel-4.webp">
+
   <style>
     /* === RESET === */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -125,9 +130,11 @@
     .footer-copy { font-size: 12px; color: var(--text-muted); }
 
     /* === RESPONSIVE BASE === */
-    @media (max-width: 640px) {
+    @media (max-width: 820px) {
       .nav-links { display: none; }
       .nav-toggle { display: block; }
+    }
+    @media (max-width: 640px) {
       .section { padding: 72px 0; }
       .footer-inner { flex-direction: column; gap: 16px; text-align: center; }
       .footer-links { flex-wrap: wrap; justify-content: center; }
@@ -807,6 +814,72 @@
     :focus-visible { outline: 2px solid var(--green); outline-offset: 3px; border-radius: 4px; }
     .h-store:focus-visible, .nav-links a:focus-visible, .mobile-nav a:focus-visible, .footer-links a:focus-visible, .chip:focus-visible { outline: 2px solid var(--green); outline-offset: 3px; }
 
+    /* === WHO'S IT FOR === */
+    .wif-section .container { max-width: 1120px; }
+    .wif-picker { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin: 0 auto 44px; max-width: 720px; }
+    .wif-tab { display: inline-flex; flex-direction: column; align-items: center; gap: 6px; padding: 12px 12px; min-width: 0; border: 1.5px solid var(--border); border-radius: var(--radius-sm); background: var(--surface); color: var(--text-secondary); font-family: inherit; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.01em; cursor: pointer; transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease; }
+    .wif-tab:hover { border-color: var(--green-light); background: var(--green-pale); color: var(--green-dark); transform: translateY(-2px); }
+    .wif-tab[aria-selected="true"] { border-color: var(--green-dark); background: var(--green-pale); color: var(--green-dark); box-shadow: 0 0 0 3px rgba(76,175,125,0.18); }
+    .wif-tab-icon { width: 26px; height: 26px; display: inline-flex; align-items: center; justify-content: center; }
+    .wif-tab-icon svg { width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .wif-tab-label { white-space: nowrap; }
+
+    .wif-stage { display: flex; flex-direction: column; align-items: center; gap: 20px; opacity: 1; transition: opacity 0.2s ease; }
+    .wif-stage.is-fading { opacity: 0; }
+
+    .wif-carousel { position: relative; width: 100%; max-width: 1120px; display: flex; align-items: flex-start; gap: 16px; }
+    .wif-track { flex: 1; display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+    .wif-panel { margin: 0; display: flex; flex-direction: column; }
+    .wif-panel picture, .wif-panel img { display: block; width: 100%; height: auto; }
+    .wif-panel img { aspect-ratio: 4 / 5; object-fit: cover; border-radius: var(--radius); border: 1px solid var(--border); background: var(--green-pale); transition: transform 0.3s ease, box-shadow 0.3s ease; }
+    .wif-panel:hover img { transform: translateY(-3px); box-shadow: var(--shadow-md); }
+    .wif-panel-caption { padding: 18px 4px 0; text-align: center; }
+    .wif-panel-label { font-family: 'DM Mono', monospace; font-size: 0.7rem; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--green-dark); margin-bottom: 8px; }
+    .wif-panel-text { font-size: 0.92rem; line-height: 1.6; color: var(--text-secondary); }
+
+    .wif-arrow { width: 40px; height: 40px; border-radius: 50%; border: 1.5px solid var(--border); background: var(--surface); display: inline-flex; align-items: center; justify-content: center; color: var(--text); cursor: pointer; flex-shrink: 0; transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease, opacity 0.2s ease; align-self: center; }
+    .wif-arrow:hover { border-color: var(--green-dark); background: var(--green-pale); color: var(--green-dark); }
+    .wif-arrow:disabled { opacity: 0.32; cursor: not-allowed; }
+    .wif-arrow svg { width: 20px; height: 20px; }
+
+    .wif-dots { display: flex; gap: 8px; justify-content: center; }
+    .wif-dot { width: 8px; height: 8px; border-radius: 50%; border: none; background: var(--border); padding: 0; cursor: pointer; transition: background 0.2s ease, transform 0.2s ease; }
+    .wif-dot:hover { background: var(--green-light); }
+    .wif-dot.is-active { background: var(--green-dark); transform: scale(1.3); }
+
+    /* Desktop: 4-up grid, no arrows or dots */
+    @media (min-width: 900px) {
+      .wif-arrow, .wif-dots { display: none; }
+    }
+
+    /* Tablet: 2 panels via adjacent-sibling; .is-pair-prev covers the last-panel edge case */
+    @media (min-width: 600px) and (max-width: 899px) {
+      .wif-track { grid-template-columns: repeat(2, 1fr); }
+      .wif-panel { display: none; }
+      .wif-panel.is-active,
+      .wif-panel.is-active + .wif-panel,
+      .wif-panel.is-pair-prev { display: flex; }
+    }
+
+    /* Mobile: single-panel carousel + horizontal-scroll picker */
+    @media (max-width: 599px) {
+      .wif-section { padding-left: 16px; padding-right: 16px; }
+      .wif-track { grid-template-columns: 1fr; }
+      .wif-panel { display: none; }
+      .wif-panel.is-active { display: flex; }
+      .wif-picker { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 6px; max-width: 100%; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+      .wif-picker::-webkit-scrollbar { display: none; }
+      .wif-tab { flex: 0 0 auto; min-width: 84px; padding: 10px 14px; font-size: 0.72rem; }
+      .wif-panel-text { font-size: 0.98rem; line-height: 1.65; }
+      .wif-carousel { gap: 8px; }
+      .wif-arrow { width: 36px; height: 36px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .wif-stage { transition: none; }
+      .wif-tab, .wif-arrow, .wif-dot, .wif-panel img { transition: none; }
+    }
+
   </style>
   <script type="application/ld+json">
   {
@@ -832,6 +905,7 @@
         <a href="#how-it-works">How It Works</a>
         <a href="#features">Features</a>
         <a href="#ai-insights">AI Insights</a>
+        <a href="#whos-it-for">Who's it for</a>
         <a href="#collaboration">Teams</a>
         <a href="#templates">Templates</a>
         <a href="/privacy/">Privacy</a>
@@ -845,6 +919,7 @@
     <a href="#how-it-works" onclick="closeMobileNav()">How It Works</a>
     <a href="#features" onclick="closeMobileNav()">Features</a>
     <a href="#ai-insights" onclick="closeMobileNav()">AI Insights</a>
+    <a href="#whos-it-for" onclick="closeMobileNav()">Who's it for</a>
     <a href="#collaboration" onclick="closeMobileNav()">Teams</a>
     <a href="#templates" onclick="closeMobileNav()">Templates</a>
     <a href="/privacy/" onclick="closeMobileNav()">Privacy</a>
@@ -989,6 +1064,115 @@
           <figure class="app-preview-card reveal" role="listitem" data-caption="3 / 5"><img src="assets/images/app-preview/3.jpg" alt="Three-step flow — grab the document, scan it, the report is auto-filled by AI" loading="lazy" width="621" height="1344"><span class="expand-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></span></figure>
           <figure class="app-preview-card reveal" role="listitem" data-caption="4 / 5"><img src="assets/images/app-preview/4.jpg" alt="Ready-made templates or build your own with Column Studio and smart calculated columns" loading="lazy" width="621" height="1344"><span class="expand-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></span></figure>
           <figure class="app-preview-card reveal" role="listitem" data-caption="5 / 5"><img src="assets/images/app-preview/5.jpg" alt="Share reports with anyone via a PIN-locked web link — no app needed, opens in any browser" loading="lazy" width="621" height="1344"><span class="expand-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></span></figure>
+        </div>
+      </div>
+    </section>
+    <section class="section wif-section" id="whos-it-for" aria-labelledby="wif-heading">
+      <div class="container">
+        <div class="section-header">
+          <p class="section-label reveal">Who's it for</p>
+          <h2 class="section-title reveal" id="wif-heading">Built for your industry.</h2>
+          <p class="section-subtitle reveal">Pick yours and see exactly how a LensReport workflow plays out — receipt to report.</p>
+        </div>
+        <div class="wif-picker stagger" role="tablist" aria-label="Select your industry">
+          <button type="button" id="wif-tab-accounting" class="wif-tab reveal" role="tab" aria-selected="true" aria-controls="wif-stage" data-sector="accounting">
+            <span class="wif-tab-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="10" y2="10"/><line x1="12" y1="10" x2="14" y2="10"/><line x1="16" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="10" y2="14"/><line x1="12" y1="14" x2="14" y2="14"/><line x1="16" y1="14" x2="16" y2="14"/><line x1="8" y1="18" x2="10" y2="18"/><line x1="12" y1="18" x2="16" y2="18"/></svg></span>
+            <span class="wif-tab-label">Accounting</span>
+          </button>
+          <button type="button" id="wif-tab-construction" class="wif-tab reveal" role="tab" aria-selected="false" aria-controls="wif-stage" data-sector="construction">
+            <span class="wif-tab-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M2 18h20"/><path d="M4 18v-3a8 8 0 0 1 16 0v3"/><path d="M10 10V6a2 2 0 0 1 4 0v4"/><line x1="12" y1="3" x2="12" y2="6"/></svg></span>
+            <span class="wif-tab-label">Construction</span>
+          </button>
+          <button type="button" id="wif-tab-property" class="wif-tab reveal" role="tab" aria-selected="false" aria-controls="wif-stage" data-sector="property">
+            <span class="wif-tab-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="9" x2="9" y2="9.01"/><line x1="15" y1="9" x2="15" y2="9.01"/><line x1="9" y1="13" x2="9" y2="13.01"/><line x1="15" y1="13" x2="15" y2="13.01"/><path d="M9 17h6"/></svg></span>
+            <span class="wif-tab-label">Property</span>
+          </button>
+          <button type="button" id="wif-tab-delivery" class="wif-tab reveal" role="tab" aria-selected="false" aria-controls="wif-stage" data-sector="delivery">
+            <span class="wif-tab-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M1 3h13v13H1z"/><path d="M14 8h4l3 3v5h-7"/><circle cx="6" cy="19" r="2"/><circle cx="18" cy="19" r="2"/></svg></span>
+            <span class="wif-tab-label">Delivery</span>
+          </button>
+          <button type="button" id="wif-tab-events" class="wif-tab reveal" role="tab" aria-selected="false" aria-controls="wif-stage" data-sector="events">
+            <span class="wif-tab-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><path d="M12 14l1.5 3 3.3.5-2.4 2.3.6 3.3-3-1.6-3 1.6.6-3.3-2.4-2.3 3.3-.5z"/></svg></span>
+            <span class="wif-tab-label">Events</span>
+          </button>
+          <button type="button" id="wif-tab-trades" class="wif-tab reveal" role="tab" aria-selected="false" aria-controls="wif-stage" data-sector="trades">
+            <span class="wif-tab-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></span>
+            <span class="wif-tab-label">Trades</span>
+          </button>
+          <button type="button" id="wif-tab-healthcare" class="wif-tab reveal" role="tab" aria-selected="false" aria-controls="wif-stage" data-sector="healthcare">
+            <span class="wif-tab-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4.8 2.3A.3.3 0 1 0 5 2H4a2 2 0 0 0-2 2v5a6 6 0 0 0 6 6v0a6 6 0 0 0 6-6V4a2 2 0 0 0-2-2h-1a.2.2 0 1 0 .3.3"/><path d="M8 15v1a6 6 0 0 0 6 6v0a6 6 0 0 0 6-6v-4"/><circle cx="20" cy="10" r="2"/></svg></span>
+            <span class="wif-tab-label">Healthcare</span>
+          </button>
+          <button type="button" id="wif-tab-agriculture" class="wif-tab reveal" role="tab" aria-selected="false" aria-controls="wif-stage" data-sector="agriculture">
+            <span class="wif-tab-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 20h10"/><path d="M10 20c5.5-2.5.8-6.4 3-10"/><path d="M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z"/><path d="M14.1 6a7 7 0 0 0-1.1 4c1.9-.1 3.3-.6 4.3-1.4 1-1 1.6-2.3 1.7-4.6-2.7.1-4 1-4.9 2z"/></svg></span>
+            <span class="wif-tab-label">Agriculture</span>
+          </button>
+          <button type="button" id="wif-tab-retail" class="wif-tab reveal" role="tab" aria-selected="false" aria-controls="wif-stage" data-sector="retail">
+            <span class="wif-tab-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg></span>
+            <span class="wif-tab-label">Retail</span>
+          </button>
+          <button type="button" id="wif-tab-tourism" class="wif-tab reveal" role="tab" aria-selected="false" aria-controls="wif-stage" data-sector="tourism">
+            <span class="wif-tab-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span>
+            <span class="wif-tab-label">Tourism</span>
+          </button>
+        </div>
+        <div class="wif-stage reveal" id="wif-stage" role="tabpanel" aria-labelledby="wif-tab-accounting">
+          <div class="wif-carousel">
+            <button type="button" class="wif-arrow wif-arrow-prev" aria-label="Previous panel" disabled>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+            </button>
+            <div class="wif-track">
+              <figure class="wif-panel is-active" data-panel="0">
+                <picture>
+                  <source type="image/webp" srcset="assets/whos-it-for/accounting/panel-1.webp">
+                  <img src="assets/whos-it-for/accounting/panel-1.png" alt="Accounting — The Problem" width="800" height="1000" loading="eager" fetchpriority="high">
+                </picture>
+                <figcaption class="wif-panel-caption">
+                  <p class="wif-panel-label">The Problem</p>
+                  <p class="wif-panel-text">Tax season means clients arriving with shoeboxes of receipts. An accountant spends weeks chasing documents, manually categorising expenses, and rebuilding spreadsheets from scratch. Half the receipts are illegible. Deductions get missed. Deadlines get tight.</p>
+                </figcaption>
+              </figure>
+              <figure class="wif-panel" data-panel="1">
+                <picture>
+                  <source type="image/webp" srcset="assets/whos-it-for/accounting/panel-2.webp">
+                  <img src="assets/whos-it-for/accounting/panel-2.png" alt="Accounting — The Scan" width="800" height="1000" loading="lazy">
+                </picture>
+                <figcaption class="wif-panel-caption">
+                  <p class="wif-panel-label">The Scan</p>
+                  <p class="wif-panel-text">The accountant creates a Client Expenses template in LensReport and adds each client as a contributor. Clients scan receipts as they spend — fuel, meals, supplies — throughout the year, not just at tax time.</p>
+                </figcaption>
+              </figure>
+              <figure class="wif-panel" data-panel="2">
+                <picture>
+                  <source type="image/webp" srcset="assets/whos-it-for/accounting/panel-3.webp">
+                  <img src="assets/whos-it-for/accounting/panel-3.png" alt="Accounting — AI Insight" width="800" height="1000" loading="lazy">
+                </picture>
+                <figcaption class="wif-panel-caption">
+                  <p class="wif-panel-label">AI Insight</p>
+                  <p class="wif-panel-text">By the time the accountant opens the report, every entry is already categorised and timestamped. The AI can answer questions like “What’s this client’s largest expense category?” or “Are there any unusual spikes worth flagging?” — before the accountant even picks up the phone.</p>
+                </figcaption>
+              </figure>
+              <figure class="wif-panel" data-panel="3">
+                <picture>
+                  <source type="image/webp" srcset="assets/whos-it-for/accounting/panel-4.webp">
+                  <img src="assets/whos-it-for/accounting/panel-4.png" alt="Accounting — The Result" width="800" height="1000" loading="lazy">
+                </picture>
+                <figcaption class="wif-panel-caption">
+                  <p class="wif-panel-label">The Result</p>
+                  <p class="wif-panel-text">Every entry is exportable as a clean Excel file with working formulas ready to drop straight into their workflow. Less data entry, fewer missed deductions, and clients who actually stay organised year-round.</p>
+                </figcaption>
+              </figure>
+            </div>
+            <button type="button" class="wif-arrow wif-arrow-next" aria-label="Next panel">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+            </button>
+          </div>
+          <div class="wif-dots" aria-label="Jump to panel">
+            <button type="button" class="wif-dot is-active" aria-label="Panel 1 of 4" data-panel="0"></button>
+            <button type="button" class="wif-dot" aria-label="Panel 2 of 4" data-panel="1"></button>
+            <button type="button" class="wif-dot" aria-label="Panel 3 of 4" data-panel="2"></button>
+            <button type="button" class="wif-dot" aria-label="Panel 4 of 4" data-panel="3"></button>
+          </div>
         </div>
       </div>
     </section>
@@ -1360,6 +1544,213 @@
         if (!dlg.open) return;
         if (e.key === 'ArrowLeft') show(idx - 1);
         else if (e.key === 'ArrowRight') show(idx + 1);
+      });
+    })();
+
+    // === Who's it for — industry storyboards ===
+    (function() {
+      var WIF = [
+        { id: 'accounting', label: 'Accounting', panels: [
+          { caption: 'The Problem', story: 'Tax season means clients arriving with shoeboxes of receipts. An accountant spends weeks chasing documents, manually categorising expenses, and rebuilding spreadsheets from scratch. Half the receipts are illegible. Deductions get missed. Deadlines get tight.' },
+          { caption: 'The Scan', story: 'The accountant creates a Client Expenses template in LensReport and adds each client as a contributor. Clients scan receipts as they spend — fuel, meals, supplies — throughout the year, not just at tax time.' },
+          { caption: 'AI Insight', story: 'By the time the accountant opens the report, every entry is already categorised and timestamped. The AI can answer questions like "What’s this client’s largest expense category?" or "Are there any unusual spikes worth flagging?" — before the accountant even picks up the phone.' },
+          { caption: 'The Result', story: 'Every entry is exportable as a clean Excel file with working formulas ready to drop straight into their workflow. Less data entry, fewer missed deductions, and clients who actually stay organised year-round.' }
+        ]},
+        { id: 'construction', label: 'Construction', panels: [
+          { caption: 'The Problem', story: 'Running multiple job sites means constant paperwork — plant and equipment hire invoices coming in from every direction. Site managers hold onto documents that get misplaced, lost, or fade before they ever reach the office.' },
+          { caption: 'The Scan', story: 'The owner purchases a Team subscription and creates a Plant & Equipment Hire Log report using the built-in template. Site managers are added as contributors at no extra cost. Every time a hire invoice arrives on site, the manager scans it instantly.' },
+          { caption: 'Real-Time View', story: 'The data populates the report in real time, and the owner gets a notification the moment it lands — across every job site simultaneously, with zero manual data entry.' },
+          { caption: 'The Result', story: 'By end of week the hire log is complete across every job site. The owner can chat directly with the AI: "Which site had the highest hire costs this month?" or "Are any equipment categories trending up?" Business intelligence from a phone.' }
+        ]},
+        { id: 'property', label: 'Property', panels: [
+          { caption: 'The Problem', story: 'A property manager overseeing 15 rentals juggles maintenance invoices, contractor receipts, and repair bills across every property. Receipts come in via text, email, and paper. Tracking what was spent on which property — and proving it at tax time — is a constant headache.' },
+          { caption: 'The Scan', story: 'The property manager creates a Maintenance & Expenses report per property and adds trusted contractors as contributors. When a plumber completes a job, they scan the invoice on the spot.' },
+          { caption: 'Real-Time View', story: 'The entry lands instantly in the correct property’s report, tagged and logged. No chasing contractors. No WhatsApp threads. No missing documentation.' },
+          { caption: 'The Result', story: 'At year end, every property has a complete, accurate expense record. The AI surfaces insights like "Which property had the highest maintenance spend this quarter?" Tax preparation takes hours instead of weeks.' }
+        ]},
+        { id: 'delivery', label: 'Delivery', panels: [
+          { caption: 'The Problem', story: 'A courier company runs 12 drivers across the city. Fuel receipts, toll charges, and parking costs come in daily — or they’re supposed to. In reality, receipts pile up in gloveboxes, expenses get forgotten, and the weekly reconciliation is a guessing game.' },
+          { caption: 'The Scan', story: 'The owner creates a Weekly Driver Expenses report and adds all drivers as contributors. Every time a driver fills up or pays a toll, they scan the receipt immediately — right at the pump.' },
+          { caption: 'Real-Time View', story: 'Costs flow into the report in real time, broken down by driver and expense type. The owner sees every entry the moment it lands, with a notification for each scan.' },
+          { caption: 'The Result', story: 'Complete expense visibility across every driver, every day. The AI can answer "Who had the highest fuel spend this week?" or "Which route is generating the most toll costs?" — giving the owner data to make smarter operational decisions.' }
+        ]},
+        { id: 'events', label: 'Events', panels: [
+          { caption: 'The Problem', story: 'An events company running weddings and corporate functions deals with dozens of vendor invoices per event — catering, florals, AV hire, staffing. Costs are tracked across spreadsheets, WhatsApp messages, and memory. Reconciling a single event after the fact takes an entire day.' },
+          { caption: 'The Scan', story: 'The events coordinator creates a per-event report using the Vendor Expenses template and adds the team as contributors. As each vendor delivers and invoices, the relevant team member scans it on site.' },
+          { caption: 'Real-Time View', story: 'Every cost is captured against the correct event before the night is even over. The coordinator watches the budget update live from their phone while managing the event floor.' },
+          { caption: 'The Result', story: 'After the event, the AI can answer "Did we come in under budget?" or "Which vendor category is consistently over estimate?" — helping the business quote more accurately and profitably next time.' }
+        ]},
+        { id: 'trades', label: 'Trades', panels: [
+          { caption: 'The Problem', story: 'An electrical contractor takes on commercial fitout jobs worth $50,000–$200,000. Materials are purchased across multiple suppliers throughout each job. Without accurate tracking, markups get missed, invoices get double-counted, and job profitability is only known months later — if ever.' },
+          { caption: 'The Scan', story: 'The owner creates a Job Cost Sheet per project using LensReport’s template, adding the site foreman as a contributor. Every materials purchase gets scanned at the trade counter the moment it’s made.' },
+          { caption: 'Real-Time View', story: 'Labour entries are added at end of shift. The job cost report builds itself in real time. The owner sees material spend accumulate against the budget from anywhere.' },
+          { caption: 'The Result', story: 'The AI can answer "Are we on budget for the fitout on Queen Street?" or "Which material category is running over on this job?" — giving the owner the information to act before it becomes a loss. Live job costing. Markups applied correctly. Profitability known in real time.' }
+        ]},
+        { id: 'healthcare', label: 'Healthcare', panels: [
+          { caption: 'The Problem', story: 'A physiotherapy group running four clinics purchases medical supplies, equipment, and consumables constantly. Each clinic manager sends photos of invoices over WhatsApp and someone at head office manually consolidates everything into a monthly supplies report. Items get missed. Budgets blow out quietly.' },
+          { caption: 'The Scan', story: 'The practice manager creates a Clinic Supplies & Expenses report for each location and adds clinic managers as contributors. Every supply invoice gets scanned at the point of purchase.' },
+          { caption: 'Real-Time View', story: 'Head office sees every expense across all four clinics in real time, consolidated into one report without a single phone call or WhatsApp thread. The moment a scan happens at any clinic, it appears.' },
+          { caption: 'The Result', story: 'The AI can answer "Which clinic is spending the most on consumables?" or "Are we approaching budget cap at any location this month?" Complete multi-clinic visibility, no month-end surprises, and a supplies budget that actually gets enforced.' }
+        ]},
+        { id: 'agriculture', label: 'Agriculture', panels: [
+          { caption: 'The Problem', story: 'A farm running seasonal cropping across multiple paddocks deals with a constant flow of invoices — fuel, fertiliser, chemical inputs, contractor hire, and machinery repairs. Costs tied to specific paddocks are nearly impossible to track when receipts are reconciled once a quarter.' },
+          { caption: 'The Scan', story: 'The farmer creates a Seasonal Input Costs report per paddock and adds the farm manager and contractors as contributors. Fuel deliveries, spray runs, and contractor invoices get scanned immediately — tagged to the correct paddock and season.' },
+          { caption: 'Real-Time View', story: 'The data builds a complete cost-per-hectare picture automatically. Every scan lands in the right paddock, the right season, the right category — no manual sorting required.' },
+          { caption: 'The Result', story: 'The AI can answer "What did it cost to grow canola on the northern paddock this season?" or "Are input costs up compared to last season?" — turning raw receipts into genuine farm business intelligence.' }
+        ]},
+        { id: 'retail', label: 'Retail', panels: [
+          { caption: 'The Problem', story: 'A franchise owner running three retail outlets has store managers placing daily stock orders, paying for repairs, and handling petty cash across all locations. Expense reporting is inconsistent — some stores email photos, others wait until end of week, and reconciling it all takes half of every Monday morning.' },
+          { caption: 'The Scan', story: 'The owner creates an Operational Expenses report per store and adds each store manager as a contributor. Every purchase — stock top-ups, cleaning supplies, equipment repairs — gets scanned the moment it happens.' },
+          { caption: 'Real-Time View', story: 'The owner sees a live feed of spending across all three stores from a single screen. Every scan at every location appears instantly, broken down by store and category.' },
+          { caption: 'The Result', story: 'The AI can answer "Which store had the highest unplanned expenses this week?" or "Is petty cash usage trending up across any location?" — flagging issues before they compound. Real-time spend visibility, consistent reporting, early warning on drifting costs.' }
+        ]},
+        { id: 'tourism', label: 'Tourism', panels: [
+          { caption: 'The Problem', story: 'A tour operator running multi-day regional tours deals with a stream of operational expenses on the road — fuel, accommodation, attraction entry fees, meal allowances, and vehicle maintenance. Tour guides hand in a bundled receipt pile at the end of the trip. Matching expenses to specific tours after the fact is time-consuming and inaccurate.' },
+          { caption: 'The Scan', story: 'The operations manager creates a per-tour Operational Expenses report and adds tour guides as contributors. Every expense is scanned on the road the moment it occurs — tagged to the correct tour, day, and category.' },
+          { caption: 'Real-Time View', story: 'By the time the coach pulls back into the depot, the expense report for that tour is already complete. No bundle of receipts. No post-trip reconciliation session.' },
+          { caption: 'The Result', story: 'The AI can answer "What was the total cost to run the Outback Discovery tour this month?" or "Which tour is generating the best margin after expenses?" — giving the operator clear data on which products are actually profitable.' }
+        ]}
+      ];
+
+      var byId = {};
+      WIF.forEach(function(s) { byId[s.id] = s; });
+
+      var tabs       = document.querySelectorAll('.wif-tab');
+      var stage      = document.querySelector('.wif-stage');
+      var panels     = document.querySelectorAll('.wif-panel');
+      var imgs       = document.querySelectorAll('.wif-panel img');
+      var sources    = document.querySelectorAll('.wif-panel source');
+      var panelLabels = document.querySelectorAll('.wif-panel-label');
+      var panelTexts  = document.querySelectorAll('.wif-panel-text');
+      var dots       = document.querySelectorAll('.wif-dot');
+      var prevBtn    = document.querySelector('.wif-arrow-prev');
+      var nextBtn    = document.querySelector('.wif-arrow-next');
+      var section    = document.getElementById('whos-it-for');
+
+      if (!tabs.length || !stage || !section) return; // section absent → bail safely
+
+      var state       = { sector: 'accounting', panel: 0, transitioning: false };
+      var prefetched  = { accounting: true };
+      var inView      = false;
+      var hoverTimers = new WeakMap();
+      var FADE_MS     = 200;
+
+      function path(sector, n, ext) {
+        return 'assets/whos-it-for/' + sector + '/panel-' + n + '.' + ext;
+      }
+
+      function prefetchSector(id) {
+        if (prefetched[id]) return;
+        prefetched[id] = true;
+        for (var i = 1; i <= 4; i++) {
+          var im = new Image();
+          im.src = path(id, i, 'webp');
+        }
+      }
+
+      function updatePanelImages(sectorId) {
+        var s = byId[sectorId];
+        for (var i = 0; i < 4; i++) {
+          sources[i].setAttribute('srcset', path(sectorId, i + 1, 'webp'));
+          imgs[i].setAttribute('src', path(sectorId, i + 1, 'png'));
+          imgs[i].setAttribute('alt', s.label + ' — ' + s.panels[i].caption);
+          panelLabels[i].textContent = s.panels[i].caption;
+          panelTexts[i].textContent  = s.panels[i].story;
+        }
+      }
+
+      function setActivePanel(idx) {
+        var lastIdx = panels.length - 1;
+        for (var i = 0; i < panels.length; i++) {
+          panels[i].classList.toggle('is-active', i === idx);
+          // Tablet 2-up: if active is the last panel, also show the panel before it
+          panels[i].classList.toggle('is-pair-prev', idx === lastIdx && i === lastIdx - 1);
+        }
+        for (var d = 0; d < dots.length; d++) {
+          dots[d].classList.toggle('is-active', d === idx);
+        }
+        prevBtn.disabled = idx === 0;
+        nextBtn.disabled = idx === lastIdx;
+      }
+
+      function switchSector(id) {
+        if (id === state.sector || state.transitioning || !byId[id]) return;
+        state.transitioning = true;
+        stage.classList.add('is-fading');
+
+        window.setTimeout(function() {
+          state.sector = id;
+          state.panel  = 0;
+          updatePanelImages(id);
+          setActivePanel(0);
+          for (var t = 0; t < tabs.length; t++) {
+            tabs[t].setAttribute('aria-selected', tabs[t].dataset.sector === id ? 'true' : 'false');
+          }
+          stage.setAttribute('aria-labelledby', 'wif-tab-' + id);
+          stage.classList.remove('is-fading');
+          state.transitioning = false;
+        }, FADE_MS);
+      }
+
+      function goToPanel(idx) {
+        if (idx < 0 || idx >= panels.length || idx === state.panel) return;
+        state.panel = idx;
+        setActivePanel(idx);
+      }
+
+      // Tab clicks
+      for (var t = 0; t < tabs.length; t++) {
+        (function(btn) {
+          btn.addEventListener('click', function() { switchSector(btn.dataset.sector); });
+          btn.addEventListener('mouseenter', function() {
+            var id = btn.dataset.sector;
+            var timer = window.setTimeout(function() { prefetchSector(id); }, 200);
+            hoverTimers.set(btn, timer);
+          });
+          btn.addEventListener('mouseleave', function() {
+            var timer = hoverTimers.get(btn);
+            if (timer) { window.clearTimeout(timer); hoverTimers.delete(btn); }
+          });
+        })(tabs[t]);
+      }
+
+      // Arrows
+      prevBtn.addEventListener('click', function() { goToPanel(state.panel - 1); });
+      nextBtn.addEventListener('click', function() { goToPanel(state.panel + 1); });
+
+      // Dots
+      for (var d = 0; d < dots.length; d++) {
+        (function(dotEl) {
+          dotEl.addEventListener('click', function() { goToPanel(parseInt(dotEl.dataset.panel, 10)); });
+        })(dots[d]);
+      }
+
+      // Touch swipe on the stage
+      var touchStartX = 0;
+      stage.addEventListener('touchstart', function(e) {
+        touchStartX = e.changedTouches[0].clientX;
+      }, { passive: true });
+      stage.addEventListener('touchend', function(e) {
+        var delta = touchStartX - e.changedTouches[0].clientX;
+        if (Math.abs(delta) < 40) return;
+        if (delta > 0) goToPanel(state.panel + 1);
+        else           goToPanel(state.panel - 1);
+      });
+
+      // Keyboard arrows when section is on-screen (any-pixel threshold)
+      if ('IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function(entries) {
+          entries.forEach(function(e) { inView = e.isIntersecting; });
+        }, { threshold: 0, rootMargin: '0px' });
+        io.observe(section);
+      } else {
+        inView = true;
+      }
+      document.addEventListener('keydown', function(e) {
+        if (!inView) return;
+        if (document.activeElement && /input|textarea|select/i.test(document.activeElement.tagName)) return;
+        if (e.key === 'ArrowLeft')  goToPanel(state.panel - 1);
+        if (e.key === 'ArrowRight') goToPanel(state.panel + 1);
       });
     })();
   </script>
