@@ -675,20 +675,23 @@
     .ai-mockup .ai-screen::before { content: ''; position: absolute; top: 8px; left: 50%; transform: translateX(-50%); width: 48px; height: 16px; background: #0A0F1A; border-radius: 999px; z-index: 2; pointer-events: none; }
     .ai-mockup .ai-status { display: flex; align-items: center; justify-content: space-between; padding: 16px 22px 6px; font-size: 10px; font-weight: 700; color: var(--text); position: relative; z-index: 1; }
     .ai-mockup .ai-status .ai-icons { display: flex; align-items: center; gap: 4px; opacity: 0.65; letter-spacing: 1px; font-size: 9px; }
-    /* === AI Insights animation loop ===
-       Master timeline: 6.0 s, infinite. Every keyframed child shares animation-duration: 6s.
-       Lottie blob.json plays on its own 4 s autoplay loop (mounted via inline JS at end of file).
-       prefers-reduced-motion override at the bottom pins Scene 6 (answer) as a static frame. */
-    .ai-mockup .ai-stage { position: absolute; inset: 0; overflow: hidden; animation: ai-master-fade 6s linear infinite; z-index: 1; }
+    /* === AI Insights animation: one-shot, 14 s, replayable ===
+       All keyframed children share animation-duration: 14s and run once with `forwards` fill so they hold their final
+       state. The rainbow ring on the AI action button is the only INFINITE animation (it's an idle visual identity).
+       Lottie blob.json plays on its own 4 s autoplay loop. The replay button below the phone restarts everything via
+       getAnimations().forEach(cancel + play) + lottie.goToAndPlay(0, true). prefers-reduced-motion override pins the
+       answer state as a static motionless final frame. */
+    .ai-mockup-column { display: flex; flex-direction: column; align-items: center; gap: 18px; }
+    .ai-mockup .ai-stage { position: absolute; inset: 0; overflow: hidden; animation: ai-master-fade 14s linear 1 forwards; z-index: 1; }
     .ai-mockup.is-paused .ai-stage,
     .ai-mockup.is-paused .ai-stage *,
     .ai-mockup.is-paused .ai-stage *::before,
     .ai-mockup.is-paused .ai-stage *::after { animation-play-state: paused !important; }
-    @keyframes ai-master-fade { 0% { opacity: 0; } 1.67% { opacity: 1; } 98.33% { opacity: 1; } 100% { opacity: 0; } }
+    @keyframes ai-master-fade { 0% { opacity: 0; } 3% { opacity: 1; } 100% { opacity: 1; } }
 
-    /* ---- Scene 1: Report sheet (entries list, 0.0-1.6 s) ---- */
-    .ai-mockup .ai-stage-report { position: absolute; inset: 0; background: #F4F5F7; padding: 8px 10px 10px; display: flex; flex-direction: column; gap: 6px; font-family: 'Inter', sans-serif; animation: scene-report 6s linear infinite; z-index: 1; }
-    @keyframes scene-report { 0%, 26.67% { opacity: 1; } 28.33%, 100% { opacity: 0; } }
+    /* ---- Scene 1: Sales Invoice Log report sheet (visible 0-2.4 s, fades 2.5-3.1 s) ---- */
+    .ai-mockup .ai-stage-report { position: absolute; inset: 0; background: #F4F5F7; padding: 8px 10px 10px; display: flex; flex-direction: column; gap: 6px; font-family: 'Inter', sans-serif; animation: scene-report 14s linear 1 forwards; z-index: 1; }
+    @keyframes scene-report { 0%, 18% { opacity: 1; } 22%, 100% { opacity: 0; } }
     .ai-mockup .rs-topbar { display: flex; align-items: center; gap: 5px; padding: 2px 0; }
     .ai-mockup .rs-back { font-size: 16px; color: var(--text); width: 14px; flex-shrink: 0; line-height: 1; }
     .ai-mockup .rs-title { flex: 1; min-width: 0; }
@@ -715,8 +718,6 @@
     .ai-mockup .rs-banner-title { font-size: 10px; font-weight: 700; color: var(--green-dark); line-height: 1.2; }
     .ai-mockup .rs-banner-sub { font-size: 8px; color: var(--text-secondary); margin-top: 1px; line-height: 1.2; }
     .ai-mockup .rs-banner-chev { font-size: 12px; color: var(--green-dark); flex-shrink: 0; line-height: 1; }
-    .ai-mockup .rs-banner-ripple { position: absolute; left: 50%; top: 50%; width: 240px; height: 240px; border-radius: 50%; background: radial-gradient(circle, rgba(76,175,125,0.35) 0%, rgba(76,175,125,0) 60%); transform: translate(-50%, -50%) scale(0); opacity: 0; pointer-events: none; animation: ai-tap-ripple 6s linear infinite; }
-    @keyframes ai-tap-ripple { 0%, 11.67% { transform: translate(-50%, -50%) scale(0); opacity: 0; } 13.33% { transform: translate(-50%, -50%) scale(0); opacity: 0.9; } 16.67% { transform: translate(-50%, -50%) scale(1); opacity: 0; } 100% { transform: translate(-50%, -50%) scale(1); opacity: 0; } }
     .ai-mockup .rs-entry { background: #FFF; border: 1px solid var(--border); border-left: 3px solid #F5C84A; border-radius: 8px; padding: 5px 8px; display: flex; align-items: center; gap: 7px; }
     .ai-mockup .rs-thumb { width: 26px; height: 26px; background: linear-gradient(135deg, #ECEEF1 0%, #DDE0E5 100%); border-radius: 4px; flex-shrink: 0; position: relative; }
     .ai-mockup .rs-thumb::before { content: ''; position: absolute; inset: 5px; background: rgba(0,0,0,0.06); border-radius: 2px; }
@@ -725,25 +726,40 @@
     .ai-mockup .rs-entry-meta { font-size: 7.5px; color: var(--text-muted); margin-top: 1px; line-height: 1.2; }
     .ai-mockup .rs-entry-amount { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 11px; font-weight: 700; color: var(--text); flex-shrink: 0; }
 
-    /* ---- Scene 2: Sheet rises (.ai-sheet animates translateY 100% -> 0%, 1.0-1.6s) ---- */
-    .ai-mockup .ai-sheet { position: absolute; inset: 0; flex: none; display: flex; flex-direction: column; background: linear-gradient(180deg, #EBF7F0 0%, #FFFFFF 32%, #FFFFFF 100%); border-radius: 22px 22px 0 0; padding: 7px 11px 9px; gap: 6px; overflow: hidden; box-shadow: inset 0 0 0 1px rgba(76,175,125,0.08), 0 -10px 28px rgba(14,23,42,0.14); transform: translateY(100%); animation: sheet-rise 6s cubic-bezier(0.16, 1, 0.3, 1) infinite; z-index: 2; margin: 0; }
-    @keyframes sheet-rise { 0%, 13.33% { transform: translateY(100%); } 26.67% { transform: translateY(0); } 100% { transform: translateY(0); } }
+    /* ---- Action stack (right side of report sheet): piggy / rainbow AI / chart icons + green FAB.
+         Rainbow AI button has an infinite conic-gradient ring spin (idle visual identity, not part of the master 14s loop).
+         The AI button is the tap target — the ripple emanates from it at 16-18% of the master timeline (~2.4 s in). */
+    .ai-mockup .rs-actions { position: absolute; right: 10px; bottom: 14px; display: flex; flex-direction: column; gap: 7px; align-items: center; z-index: 4; }
+    .ai-mockup .rs-action-btn { width: 26px; height: 26px; border-radius: 50%; background: #FFF; border: 1.5px solid rgba(76,175,125,0.18); display: flex; align-items: center; justify-content: center; color: var(--green-dark); box-shadow: 0 2px 6px rgba(0,0,0,0.10); flex-shrink: 0; padding: 0; position: relative; }
+    .ai-mockup .rs-action-btn.ai-rainbow-btn { background: #FFF; border: none; cursor: default; overflow: visible; }
+    .ai-mockup .ai-rainbow-btn::before { content: ''; position: absolute; inset: 0; border-radius: 50%; background: conic-gradient(from 0deg, #FF6B6B, #BF5AF2, #5E5CE6, #30D5C8, #FFB340, #FF6B6B); animation: rainbow-spin 3s linear infinite; }
+    @keyframes rainbow-spin { to { transform: rotate(360deg); } }
+    .ai-mockup .ai-rainbow-btn .rainbow-ring { display: none; } /* unused */
+    .ai-mockup .ai-rainbow-btn .ring-mask { position: absolute; inset: 2.5px; background: #FFF; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 8.5px; font-weight: 800; color: var(--green-dark); letter-spacing: 0.2px; z-index: 1; }
+    .ai-mockup .ai-rainbow-btn .ai-tap-ripple { position: absolute; left: 50%; top: 50%; width: 90px; height: 90px; border-radius: 50%; background: radial-gradient(circle, rgba(76,175,125,0.5) 0%, rgba(76,175,125,0) 65%); transform: translate(-50%, -50%) scale(0); opacity: 0; pointer-events: none; z-index: 2; animation: ai-tap-ripple 14s linear 1 forwards; }
+    @keyframes ai-tap-ripple { 0%, 14% { transform: translate(-50%, -50%) scale(0); opacity: 0; } 16% { transform: translate(-50%, -50%) scale(0); opacity: 0.9; } 18% { transform: translate(-50%, -50%) scale(1); opacity: 0; } 100% { transform: translate(-50%, -50%) scale(1); opacity: 0; } }
+    .ai-mockup .rs-fab { width: 32px; height: 32px; border-radius: 50%; background: var(--green); color: #FFF; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 600; box-shadow: 0 4px 12px rgba(76,175,125,0.4); margin-top: 2px; flex-shrink: 0; line-height: 1; }
+
+    /* ---- Scene 2: Sheet rises 2.5-3.1 s (translateY 100% -> 0% with cubic-bezier ease-out) ---- */
+    .ai-mockup .ai-sheet { position: absolute; inset: 0; flex: none; display: flex; flex-direction: column; background: linear-gradient(180deg, #EBF7F0 0%, #FFFFFF 32%, #FFFFFF 100%); border-radius: 22px 22px 0 0; padding: 7px 11px 9px; gap: 6px; overflow: hidden; box-shadow: inset 0 0 0 1px rgba(76,175,125,0.08), 0 -10px 28px rgba(14,23,42,0.14); transform: translateY(100%); animation: sheet-rise 14s cubic-bezier(0.16, 1, 0.3, 1) 1 forwards; z-index: 2; margin: 0; }
+    @keyframes sheet-rise { 0%, 18% { transform: translateY(100%); } 22%, 100% { transform: translateY(0); } }
 
     .ai-mockup .ai-grabber { width: 28px; height: 3px; background: var(--text-muted); border-radius: 2px; margin: 0 auto; opacity: 0.4; flex-shrink: 0; }
     .ai-mockup .ai-sheet-header { padding: 2px 2px 5px; border-bottom: 1px solid rgba(76,175,125,0.12); position: relative; flex-shrink: 0; }
     .ai-mockup .ai-sheet-header h4 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 13px; font-weight: 700; color: var(--text); letter-spacing: -0.3px; line-height: 1.2; }
     .ai-mockup .ai-sheet-header .ai-meta { font-size: 9px; color: var(--text-muted); margin-top: 2px; font-family: 'DM Mono', monospace; }
     .ai-mockup .ai-sheet-header .close-x { position: absolute; right: 0; top: 1px; font-size: 14px; color: var(--text-muted); line-height: 1; }
-    .ai-mockup .ai-sheet-body { position: relative; flex: 1; min-height: 0; overflow: hidden; }
-    .ai-mockup .ai-sheet-body > * { position: absolute; inset: 0; display: flex; flex-direction: column; gap: 6px; }
-    /* Explicit z-index in timeline order so the later scene always paints over the earlier during crossfades, regardless of GPU compositing layer assignment. */
+    /* ai-sheet-body reserves space at the bottom for the absolutely-positioned ask bar (which sits above the keyboard at z 10). */
+    .ai-mockup .ai-sheet-body { position: relative; flex: 1; min-height: 0; overflow: hidden; padding-bottom: 38px; }
+    .ai-mockup .ai-sheet-body > * { position: absolute; inset: 0 0 38px 0; display: flex; flex-direction: column; gap: 6px; }
+    /* Explicit z-index in timeline order so the later scene always paints over the earlier during crossfades. */
     .ai-mockup .body-dashboard { z-index: 1; }
     .ai-mockup .body-loading   { z-index: 2; }
     .ai-mockup .body-answer    { z-index: 3; }
 
-    /* ---- Scene 3+4: Dashboard cards (visible 1.7-3.4 s; ask bar focuses + typewriter runs 2.4-3.4 s) ---- */
-    .ai-mockup .body-dashboard { animation: scene-dashboard 6s linear infinite; overflow: hidden; }
-    @keyframes scene-dashboard { 0%, 25% { opacity: 0; } 28.33%, 53.33% { opacity: 1; } 56.67%, 100% { opacity: 0; } }
+    /* ---- Scene 3: Dashboard cards (visible 3.4-9.0 s; covers the ask focus + typing + held-question scenes too) ---- */
+    .ai-mockup .body-dashboard { animation: scene-dashboard 14s linear 1 forwards; overflow: hidden; }
+    @keyframes scene-dashboard { 0%, 22% { opacity: 0; } 24%, 64% { opacity: 1; } 67%, 100% { opacity: 0; } }
     .ai-mockup .body-dashboard .card,
     .ai-mockup .body-dashboard .card-wide { background: #FFF; border: 1px solid var(--border); border-radius: 10px; padding: 7px 9px; }
     .ai-mockup .body-dashboard .ct { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 10.5px; font-weight: 700; color: var(--text); margin-bottom: 4px; line-height: 1.2; }
@@ -770,49 +786,79 @@
     .ai-mockup .body-dashboard .bar-row .label { width: 70px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 500; }
     .ai-mockup .body-dashboard .bar-row .bar { flex: 1; height: 5px; background: var(--green-pale); border-radius: 3px; overflow: hidden; }
     .ai-mockup .body-dashboard .bar-row .fill { display: block; height: 100%; background: var(--green); border-radius: 3px; }
-    .ai-mockup .body-dashboard .bar-row .num { width: 12px; text-align: right; font-family: 'DM Mono', monospace; font-size: 8.5px; color: var(--text-muted); }
+    .ai-mockup .body-dashboard .bar-row .num { min-width: 28px; text-align: right; font-family: 'DM Mono', monospace; font-size: 8.5px; color: var(--text-muted); flex-shrink: 0; }
     .ai-mockup .body-dashboard .qhead { font-size: 8.5px; color: var(--text-secondary); font-family: 'DM Mono', monospace; text-transform: uppercase; letter-spacing: 0.6px; padding: 2px 0 0 2px; }
 
-    /* ---- Scene 5: Loading (blob lottie + caption, 3.4-5.0 s) ---- */
-    .ai-mockup .body-loading { align-items: center; justify-content: center; gap: 10px !important; animation: scene-loading 6s linear infinite; }
-    @keyframes scene-loading { 0%, 53.33% { opacity: 0; } 56.67%, 81.67% { opacity: 1; } 85%, 100% { opacity: 0; } }
+    /* ---- Scene 5: Loading (blob lottie + caption, visible 9.4-11.8 s) ---- */
+    .ai-mockup .body-loading { align-items: center; justify-content: center; gap: 10px !important; animation: scene-loading 14s linear 1 forwards; }
+    @keyframes scene-loading { 0%, 64% { opacity: 0; } 68%, 84% { opacity: 1; } 86%, 100% { opacity: 0; } }
     .ai-mockup .ai-blob-canvas { width: 140px; height: 140px; filter: drop-shadow(0 4px 18px rgba(76,175,125,0.18)); }
     .ai-mockup .body-loading .loading-caption { font-size: 11px; color: var(--text-muted); font-style: italic; }
 
-    /* ---- Scene 6: Answer card (5.2-5.9 s) ---- */
-    .ai-mockup .body-answer { animation: scene-answer 6s linear infinite; padding-bottom: 2px; }
-    @keyframes scene-answer { 0%, 81.67% { opacity: 0; } 85% { opacity: 1; } 100% { opacity: 1; } }
+    /* ---- Scene 6: Answer card (visible 12.0 s onwards, holds at end of one-shot) ---- */
+    .ai-mockup .body-answer { animation: scene-answer 14s linear 1 forwards; padding-bottom: 2px; }
+    @keyframes scene-answer { 0%, 84% { opacity: 0; } 88%, 100% { opacity: 1; } }
     .ai-mockup .body-answer .you-asked-tag { font-size: 8px; font-weight: 700; letter-spacing: 1.2px; color: var(--text-muted); text-transform: uppercase; }
     .ai-mockup .body-answer .answered-question { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 11.5px; font-weight: 700; color: var(--text); line-height: 1.3; margin-top: 2px; }
     .ai-mockup .body-answer .narrative-callout { background: var(--green-pale); border: 1px solid rgba(76,175,125,0.25); border-radius: 11px; padding: 7px 9px; display: flex; gap: 6px; font-size: 9.5px; line-height: 1.4; color: var(--text); }
     .ai-mockup .body-answer .sparkle-icon { color: var(--green-dark); flex-shrink: 0; font-size: 11px; line-height: 1.4; }
+    /* Switch-chart pill is on its own row above the chart so it never overlaps the trend lines or the +12% delta pill. */
     .ai-mockup .body-answer .switch-chart-row { display: flex; justify-content: flex-end; }
     .ai-mockup .body-answer .switch-chart-pill { background: var(--green-pale); color: var(--green-dark); font-size: 8.5px; font-weight: 600; padding: 3px 9px; border-radius: 999px; }
     .ai-mockup .body-answer .answer-chart { background: #FFF; border: 1px solid var(--border); border-radius: 10px; padding: 8px 10px; position: relative; }
     .ai-mockup .body-answer .trend-svg { width: 100%; height: 60px; display: block; overflow: visible; }
-    .ai-mockup .body-answer .trend-svg .prior-period { stroke-dasharray: 2 3; opacity: 0; animation: prior-fade 6s linear infinite; }
-    .ai-mockup .body-answer .trend-svg .this-period { stroke-dasharray: 280; stroke-dashoffset: 280; animation: trend-draw 6s linear infinite; }
-    .ai-mockup .body-answer .trend-svg .this-tip { opacity: 0; animation: tip-fade 6s linear infinite; }
-    @keyframes prior-fade { 0%, 86.67% { opacity: 0; } 91.67% { opacity: 0.55; } 100% { opacity: 0.55; } }
-    @keyframes trend-draw { 0%, 86.67% { stroke-dashoffset: 280; } 95% { stroke-dashoffset: 0; } 100% { stroke-dashoffset: 0; } }
-    @keyframes tip-fade { 0%, 93.33% { opacity: 0; } 96.67% { opacity: 1; } 100% { opacity: 1; } }
-    .ai-mockup .body-answer .delta-pill { position: absolute; top: 7px; right: 8px; background: var(--green); color: #FFF; font-size: 9px; font-weight: 700; padding: 3px 8px; border-radius: 999px; opacity: 0; animation: delta-pop 6s cubic-bezier(0.34, 1.56, 0.64, 1) infinite; }
-    @keyframes delta-pop { 0%, 91.67% { opacity: 0; transform: scale(0.6); } 95%, 100% { opacity: 1; transform: scale(1); } }
+    .ai-mockup .body-answer .trend-svg .prior-period { stroke-dasharray: 2 3; opacity: 0; animation: prior-fade 14s linear 1 forwards; }
+    .ai-mockup .body-answer .trend-svg .this-period { stroke-dasharray: 280; stroke-dashoffset: 280; animation: trend-draw 14s linear 1 forwards; }
+    .ai-mockup .body-answer .trend-svg .this-tip { opacity: 0; animation: tip-fade 14s linear 1 forwards; }
+    @keyframes prior-fade { 0%, 88% { opacity: 0; } 92%, 100% { opacity: 0.55; } }
+    @keyframes trend-draw { 0%, 88% { stroke-dashoffset: 280; } 96%, 100% { stroke-dashoffset: 0; } }
+    @keyframes tip-fade { 0%, 95% { opacity: 0; } 97%, 100% { opacity: 1; } }
+    .ai-mockup .body-answer .delta-pill { position: absolute; top: 7px; right: 8px; background: var(--green); color: #FFF; font-size: 9px; font-weight: 700; padding: 3px 8px; border-radius: 999px; opacity: 0; animation: delta-pop 14s cubic-bezier(0.34, 1.56, 0.64, 1) 1 forwards; }
+    @keyframes delta-pop { 0%, 93% { opacity: 0; transform: scale(0.6); } 96%, 100% { opacity: 1; transform: scale(1); } }
     .ai-mockup .body-answer .start-conv-btn { margin-top: auto; background: var(--green); color: #FFF; font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600; padding: 9px 12px; border: none; border-radius: 12px; display: flex; align-items: center; justify-content: center; gap: 6px; width: 100%; box-shadow: 0 2px 8px rgba(76,175,125,0.25); }
     .ai-mockup .body-answer .btn-icon { font-size: 12px; }
 
-    /* ---- Ask bar (always at bottom of sheet; focuses 2.4-3.4 s; hides during answer scene) ---- */
-    .ai-mockup .ai-ask { position: relative; margin-top: auto; background: #FFF; border: 1px solid var(--border); border-radius: 999px; padding: 6px 7px 6px 13px; display: flex; align-items: center; gap: 8px; font-size: 10px; color: var(--text-muted); flex-shrink: 0; animation: ask-focus-loop 6s linear infinite, ask-visibility 6s linear infinite; }
-    @keyframes ask-focus-loop { 0%, 33.33% { box-shadow: 0 0 0 0 rgba(76,175,125,0); border-color: var(--border); } 40%, 56.67% { box-shadow: 0 0 0 3px rgba(76,175,125,0.18); border-color: var(--green); } 60%, 100% { box-shadow: 0 0 0 0 rgba(76,175,125,0); border-color: var(--border); } }
-    @keyframes ask-visibility { 0%, 81.67% { opacity: 1; } 85%, 100% { opacity: 0; } }
-    .ai-mockup .ai-ask::before { content: 'Ask anything about your data\2026'; position: absolute; left: 13px; color: var(--text-muted); font-size: 10px; pointer-events: none; animation: placeholder-fade 6s linear infinite; white-space: nowrap; }
-    @keyframes placeholder-fade { 0%, 36.67% { opacity: 1; } 40%, 100% { opacity: 0; } }
-    .ai-mockup .ai-ask .typing-text { flex: 1; min-width: 0; overflow: hidden; white-space: nowrap; color: var(--text); font-size: 10px; line-height: 14px; clip-path: inset(0 100% 0 0); animation: ai-typing 6s steps(50, end) infinite; }
-    @keyframes ai-typing { 0%, 40% { clip-path: inset(0 100% 0 0); } 56.67%, 100% { clip-path: inset(0 0% 0 0); } }
-    .ai-mockup .ai-ask .send { width: 22px; height: 22px; border-radius: 50%; background: var(--green-pale); display: flex; align-items: center; justify-content: center; color: var(--green-dark); font-size: 12px; margin-left: auto; flex-shrink: 0; font-weight: 700; animation: send-activate 6s linear infinite; }
-    @keyframes send-activate { 0%, 40% { background: var(--green-pale); color: var(--green-dark); transform: scale(1); } 43.33% { background: var(--green); color: #FFF; transform: scale(1.12); } 46.67%, 100% { background: var(--green); color: #FFF; transform: scale(1); } }
+    /* ---- iOS keyboard (rises 5.0-5.6 s, holds 5.6-9.0 s, falls 9.0-9.4 s) ---- */
+    .ai-mockup .ai-keyboard { position: absolute; left: 0; right: 0; bottom: 0; height: 152px; background: #D1D4DB; padding: 4px 3px 6px; display: flex; flex-direction: column; gap: 3px; z-index: 5; transform: translateY(100%); animation: kb-rise-fall 14s cubic-bezier(0.32, 0.72, 0, 1) 1 forwards; }
+    @keyframes kb-rise-fall { 0%, 35% { transform: translateY(100%); } 40%, 64% { transform: translateY(0); } 67%, 100% { transform: translateY(100%); } }
+    .ai-mockup .ai-kb-suggestion-bar { display: flex; padding: 2px 0; height: 18px; border-bottom: 1px solid rgba(0,0,0,0.08); flex-shrink: 0; }
+    .ai-mockup .ai-kb-suggestion { flex: 1; text-align: center; font-size: 8.5px; line-height: 14px; color: var(--text); border-right: 1px solid rgba(0,0,0,0.1); }
+    .ai-mockup .ai-kb-suggestion:last-child { border-right: none; }
+    .ai-mockup .ai-kb-row { display: grid; grid-template-columns: repeat(10, 1fr); gap: 2.5px; height: 28px; padding: 0 1px; flex-shrink: 0; }
+    .ai-mockup .ai-kb-row.r2 { grid-template-columns: 0.5fr repeat(9, 1fr) 0.5fr; }
+    .ai-mockup .ai-kb-row.r2::before { content: ''; }
+    .ai-mockup .ai-kb-row.r2::after { content: ''; }
+    .ai-mockup .ai-kb-row.r3 { grid-template-columns: 1.4fr repeat(7, 1fr) 1.4fr; }
+    .ai-mockup .ai-kb-row.r-spc { grid-template-columns: 1.4fr 5.5fr 1.4fr; }
+    .ai-mockup .ai-kb-row > .key { background: #FFF; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 9.5px; color: var(--text); font-weight: 500; box-shadow: 0 1px 0 rgba(0,0,0,0.18); height: 100%; }
+    .ai-mockup .ai-kb-row .key.modifier { background: #B5BAC1; color: var(--text); font-size: 10px; }
+    .ai-mockup .ai-kb-row .key.modifier.mini { font-size: 8px; }
+    .ai-mockup .ai-kb-row .key.spacebar { font-size: 8.5px; color: var(--text-muted); text-transform: lowercase; letter-spacing: 0.5px; }
 
-    /* ---- prefers-reduced-motion: pin Scene 6 (answer) as a static, motionless final frame ---- */
+    /* ---- Ask bar: positioned absolutely at the bottom of the sheet so it stacks (z 10) above the keyboard (z 5).
+         Visible 3.1-12.0 s. Lifts 152 px when keyboard rises (5.0-5.6 s) and drops back at 9.0-9.4 s. ---- */
+    .ai-mockup .ai-ask { position: absolute; left: 11px; right: 11px; bottom: 9px; background: #FFF; border: 1px solid var(--border); border-radius: 999px; padding: 6px 7px 6px 13px; display: flex; align-items: center; gap: 8px; font-size: 10px; color: var(--text-muted); z-index: 10; overflow: hidden; animation: ask-visibility 14s linear 1 forwards, ask-focus-loop 14s linear 1 forwards, ask-lift 14s cubic-bezier(0.32, 0.72, 0, 1) 1 forwards; }
+    @keyframes ask-visibility { 0%, 22% { opacity: 0; } 24%, 84% { opacity: 1; } 88%, 100% { opacity: 0; } }
+    @keyframes ask-focus-loop { 0%, 33% { box-shadow: 0 0 0 0 rgba(76,175,125,0); border-color: var(--border); } 36%, 64% { box-shadow: 0 0 0 3px rgba(76,175,125,0.18); border-color: var(--green); } 67%, 100% { box-shadow: 0 0 0 0 rgba(76,175,125,0); border-color: var(--border); } }
+    @keyframes ask-lift { 0%, 35% { transform: translateY(0); } 40%, 64% { transform: translateY(-152px); } 67%, 100% { transform: translateY(0); } }
+    .ai-mockup .ai-ask::before { content: 'Ask anything about your data\2026'; position: absolute; left: 13px; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 10px; pointer-events: none; animation: placeholder-fade 14s linear 1 forwards; white-space: nowrap; }
+    @keyframes placeholder-fade { 0%, 33% { opacity: 1; } 36%, 100% { opacity: 0; } }
+    .ai-mockup .ai-ask .typing-text { flex: 1; min-width: 0; overflow: hidden; white-space: nowrap; color: var(--text); font-size: 10px; line-height: 14px; clip-path: inset(0 100% 0 0); animation: ai-typing 14s steps(50, end) 1 forwards; }
+    @keyframes ai-typing { 0%, 40% { clip-path: inset(0 100% 0 0); } 60%, 100% { clip-path: inset(0 0% 0 0); } }
+    .ai-mockup .ai-ask .send { width: 22px; height: 22px; border-radius: 50%; background: var(--green-pale); display: flex; align-items: center; justify-content: center; color: var(--green-dark); font-size: 12px; margin-left: auto; flex-shrink: 0; font-weight: 700; animation: send-activate 14s linear 1 forwards; }
+    @keyframes send-activate { 0%, 40% { background: var(--green-pale); color: var(--green-dark); transform: scale(1); } 42% { background: var(--green); color: #FFF; transform: scale(1.12); } 44%, 100% { background: var(--green); color: #FFF; transform: scale(1); } }
+
+    /* ---- Replay button (below the phone in the section column). Hidden until 96% (~13.4 s), then fades in.
+         Click handler in JS resets all CSS animations + Lottie via getAnimations()/cancel/play + lottie.goToAndPlay(0, true). */
+    .ai-replay-btn { background: var(--green); color: #FFF; font-family: 'Inter', sans-serif; font-size: 12.5px; font-weight: 600; padding: 9px 18px; border: none; border-radius: 999px; display: inline-flex; align-items: center; gap: 7px; cursor: pointer; box-shadow: 0 2px 8px rgba(76,175,125,0.25); opacity: 0; visibility: hidden; animation: ai-replay-fade-in 14s linear 1 forwards; transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease; }
+    .ai-replay-btn:hover { background: var(--green-dark); transform: translateY(-1px); box-shadow: 0 4px 14px rgba(76,175,125,0.35); }
+    .ai-replay-btn:active { transform: translateY(0); }
+    .ai-replay-btn:focus-visible { outline: 2px solid var(--green-dark); outline-offset: 2px; }
+    @keyframes ai-replay-fade-in { 0%, 95% { opacity: 0; visibility: hidden; } 96% { visibility: visible; opacity: 0; } 100% { opacity: 1; visibility: visible; } }
+
+    /* ---- prefers-reduced-motion: pin Scene 6 (answer) as a static, motionless final frame.
+         Replay button is shown as a static-visible pill so the user can still trigger it (it does nothing under reduced
+         motion since the JS short-circuits if the media query is set). ---- */
     @media (prefers-reduced-motion: reduce) {
       .ai-mockup .ai-stage,
       .ai-mockup .ai-stage *,
@@ -821,7 +867,8 @@
       .ai-mockup .ai-stage-report,
       .ai-mockup .body-dashboard,
       .ai-mockup .body-loading,
-      .ai-mockup .ai-ask { display: none !important; }
+      .ai-mockup .ai-ask,
+      .ai-mockup .ai-keyboard { display: none !important; }
       .ai-mockup .ai-stage { opacity: 1; }
       .ai-mockup .ai-sheet { transform: translateY(0) !important; }
       .ai-mockup .body-answer { opacity: 1 !important; }
@@ -829,6 +876,7 @@
       .ai-mockup .body-answer .trend-svg .this-period { stroke-dashoffset: 0 !important; }
       .ai-mockup .body-answer .trend-svg .this-tip { opacity: 1 !important; }
       .ai-mockup .body-answer .delta-pill { opacity: 1 !important; transform: scale(1) !important; }
+      .ai-replay-btn { opacity: 1 !important; visibility: visible !important; animation: none !important; }
     }
 
 
@@ -1350,19 +1398,21 @@
           <p>Then type a question in plain English: "how much did I sell to Acme Corp?", "which day brought the most sales?", "show me invoices flagged for follow-up". LensReport's AI reads your entries, finds the matches (loose customer names, partial spellings and typos all welcome), and answers with the actual numbers and the actual line-item detail — not a hallucination. Every answer is grounded in your data, sourced when it matters, and gated behind a "start another conversation" button so context never drifts.</p>
           <p>Available across all paid plans. Same daily limits everywhere. Owners pay for AI on their shared reports — contributors just use it.</p>
         </div>
-        <div class="reveal" style="display: flex; justify-content: center;">
-          <div class="ai-mockup" role="img" aria-label="LensReport AI Insights flow animation: report sheet opens, AI banner is tapped, the AI Insights modal rises showing daily trend, spending split, weekly pattern and frequent vendor cards, the user types &quot;Am I trending up or down compared to last period?&quot;, a green blob loader plays while the answer is prepared, then a sparkline shows this period vs the prior period with a +12% delta and a Start another conversation button.">
+        <div class="reveal ai-mockup-column">
+          <div class="ai-mockup" role="img" aria-label="LensReport AI Insights flow animation, 14 seconds, played once: a Sales Invoice Log report sheet opens with sample customer entries, the rainbow-ringed AI button on the right is tapped, the AI Insights modal rises showing daily sales trend, sales split donut, advisor outliers and top customers, the keyboard rises, the user types &quot;Am I trending up or down compared to last period?&quot;, a green blob loader plays while the answer is prepared, then a sparkline shows this period vs the prior period with a +12% delta and a Start another conversation button. A Replay button below the phone restarts the demo.">
             <div class="ai-screen">
               <div class="ai-status"><span>9:41</span><span class="ai-icons">●●●●</span></div>
               <div class="ai-stage">
 
-                <!-- Scene 1: Report sheet (entries list) — visible 0.0–1.6s -->
+                <!-- Scene 1: Sales Invoice Log report sheet — visible 0.0–2.4s.
+                     Sample data with sales context (customers, invoice numbers, terms). The action stack on the right
+                     includes the rainbow-ringed AI button which receives the tap ripple at ~2.4s. -->
                 <div class="ai-stage-report" aria-hidden="true">
                   <div class="rs-topbar">
                     <span class="rs-back">‹</span>
                     <div class="rs-title">
-                      <div class="rs-name">Personal/Family E…</div>
-                      <div class="rs-meta">17 entries<span class="rs-avatar a">S</span><span class="rs-avatar b">C</span></div>
+                      <div class="rs-name">Sales Invoice Log</div>
+                      <div class="rs-meta">4 entries<span class="rs-avatar a">S</span></div>
                     </div>
                     <span class="rs-icon">⌕</span>
                     <span class="rs-icon">⤤</span>
@@ -1374,9 +1424,9 @@
                   </div>
                   <div class="rs-sort">↕ Sort: <strong>Highest Amount</strong> ⌄</div>
                   <div class="rs-stats">
-                    <div class="rs-stat"><span class="rs-stat-label">Total</span><span class="rs-stat-val">$705.73</span></div>
-                    <div class="rs-stat"><span class="rs-stat-label">Average</span><span class="rs-stat-val">$41.51</span></div>
-                    <div class="rs-stat"><span class="rs-stat-label">Entries</span><span class="rs-stat-val plain">17</span></div>
+                    <div class="rs-stat"><span class="rs-stat-label">Total</span><span class="rs-stat-val">$7,749.00</span></div>
+                    <div class="rs-stat"><span class="rs-stat-label">Average</span><span class="rs-stat-val">$1,937.25</span></div>
+                    <div class="rs-stat"><span class="rs-stat-label">Entries</span><span class="rs-stat-val plain">4</span></div>
                   </div>
                   <div class="rs-banner">
                     <span class="rs-banner-spark">✨</span>
@@ -1385,102 +1435,102 @@
                       <div class="rs-banner-sub">Tap to see charts, KPIs, and smart breakdowns</div>
                     </div>
                     <span class="rs-banner-chev">›</span>
-                    <span class="rs-banner-ripple"></span>
                   </div>
                   <div class="rs-entry">
                     <div class="rs-thumb"></div>
                     <div class="rs-entry-body">
-                      <div class="rs-entry-vendor">Cost U Less</div>
-                      <div class="rs-entry-meta">Apr 29, 2026 · Cloud · Shweth</div>
+                      <div class="rs-entry-vendor">Acme Corp · INV-2026-001</div>
+                      <div class="rs-entry-meta">Apr 22, 2026 · Net 30 · Paid</div>
                     </div>
-                    <div class="rs-entry-amount">$145.56</div>
+                    <div class="rs-entry-amount">$3,420.00</div>
                   </div>
                   <div class="rs-entry">
                     <div class="rs-thumb"></div>
                     <div class="rs-entry-body">
-                      <div class="rs-entry-vendor">An Pho Pte Ltd</div>
-                      <div class="rs-entry-meta">Apr 25, 2026 · Cloud · Shweth</div>
+                      <div class="rs-entry-vendor">Contoso Ltd · INV-2026-002</div>
+                      <div class="rs-entry-meta">Apr 18, 2026 · Net 15 · Sent</div>
                     </div>
-                    <div class="rs-entry-amount">$107.11</div>
+                    <div class="rs-entry-amount">$2,150.00</div>
                   </div>
                   <div class="rs-entry">
                     <div class="rs-thumb"></div>
                     <div class="rs-entry-body">
-                      <div class="rs-entry-vendor">EXTRA PTE LIMITED</div>
-                      <div class="rs-entry-meta">Apr 25, 2026 · Cloud · Shweth</div>
+                      <div class="rs-entry-vendor">Northwind · INV-2026-003</div>
+                      <div class="rs-entry-meta">Apr 15, 2026 · Net 30 · Overdue</div>
                     </div>
-                    <div class="rs-entry-amount">$52.90</div>
+                    <div class="rs-entry-amount">$1,850.00</div>
+                  </div>
+
+                  <!-- Action stack: piggy / rainbow AI / chart icons + green FAB. The AI button is the tap target. -->
+                  <div class="rs-actions">
+                    <span class="rs-action-btn"><svg viewBox="0 0 16 16" width="11" height="11" fill="currentColor" aria-hidden="true"><path d="M11.5 5c-.4 0-.8.1-1.2.3-.6-1-1.7-1.7-2.9-1.7-1.9 0-3.5 1.6-3.5 3.5 0 .8.3 1.6.8 2.2L4 10.7v1.8h2v-1l1-1c.5.3 1 .4 1.6.4.6 0 1.1-.1 1.6-.4l1 1v1h2v-1.8l-.7-1.4c.5-.6.8-1.4.8-2.2C13.3 6.5 12.5 5 11.5 5zM7.4 7.5c-.3 0-.6-.3-.6-.6s.3-.6.6-.6.6.3.6.6-.3.6-.6.6z"/></svg></span>
+                    <button class="rs-action-btn ai-rainbow-btn" type="button" aria-hidden="true" tabindex="-1">
+                      <span class="rainbow-ring"></span>
+                      <span class="ring-mask">AI</span>
+                      <span class="ai-tap-ripple"></span>
+                    </button>
+                    <span class="rs-action-btn"><svg viewBox="0 0 16 16" width="10" height="10" fill="currentColor" aria-hidden="true"><rect x="2" y="9" width="2.5" height="5"/><rect x="6.7" y="6" width="2.5" height="8"/><rect x="11.5" y="3" width="2.5" height="11"/></svg></span>
+                    <span class="rs-fab">+</span>
                   </div>
                 </div>
 
-                <!-- Scene 2-6: AI Insights sheet (rises from below at 1.0–1.6s, then body content swaps) -->
+                <!-- Scenes 3-6: AI Insights sheet rises 2.4-3.0s, body content swaps in dashboard / loading / answer. -->
                 <div class="ai-sheet">
                   <div class="ai-grabber"></div>
                   <div class="ai-sheet-header">
                     <h4>Let's read your report</h4>
-                    <div class="ai-meta">17 entries · Apr 20 – Apr 30 · $705.73</div>
+                    <div class="ai-meta">4 invoices · Apr 1 – Apr 30 · $7,749.00</div>
                     <span class="close-x">×</span>
                   </div>
                   <div class="ai-sheet-body">
 
-                    <!-- Scene 3+4: Dashboard cards (visible 1.7–3.4s; ask bar typewriter runs 2.4–3.4s) -->
+                    <!-- Scene 3: Sales-themed dashboard (visible 3.0-5.0s). Cards: daily sales trend, sales split donut + advisor, top customers. -->
                     <div class="body-dashboard">
                       <div class="card-wide">
-                        <div class="ct">Daily trend</div>
+                        <div class="ct">Daily sales trend</div>
                         <svg class="sparkline-mini" viewBox="0 0 200 30" preserveAspectRatio="none" aria-hidden="true">
-                          <polyline points="0,22 25,16 50,18 75,12 100,16 125,8 150,5 175,14 200,18" stroke="#4CAF7D" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-                          <circle cx="150" cy="5" r="2.5" fill="#4CAF7D"/>
+                          <polyline points="0,22 25,18 50,20 75,14 100,16 125,10 150,6 175,12 200,16" stroke="#4CAF7D" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                          <circle cx="150" cy="6" r="2.5" fill="#4CAF7D"/>
                         </svg>
-                        <div class="trend-peak">Peak on Apr 29</div>
+                        <div class="trend-peak">Peak on Apr 22 · $3,420</div>
                       </div>
                       <div class="ai-row">
                         <div class="card">
-                          <div class="ct">Spending split</div>
+                          <div class="ct">Sales split</div>
                           <div class="donut-row">
                             <span class="donut" aria-hidden="true"></span>
-                            <span class="legend">58% Dining<br>21% Groceri…</span>
+                            <span class="legend">65% Hardware<br>35% Services</span>
                           </div>
                         </div>
                         <div class="card">
                           <span class="badge">Advisor</span>
                           <span class="big">1 found</span>
-                          <span class="sub-line">Possible outliers worth a look</span>
+                          <span class="sub-line">Northwind invoice is overdue</span>
                         </div>
                       </div>
                       <div class="card-wide">
-                        <div class="ct">Weekly pattern</div>
-                        <div class="weekday-row">
-                          <div class="wd"><div class="wd-bar h1"></div><span>Mon</span></div>
-                          <div class="wd"><div class="wd-bar h2"></div><span>Tue</span></div>
-                          <div class="wd"><div class="wd-bar h-peak"></div><span>Wed</span></div>
-                          <div class="wd"><div class="wd-bar h1"></div><span>Thu</span></div>
-                          <div class="wd"><div class="wd-bar h0"></div><span>Fri</span></div>
-                          <div class="wd"><div class="wd-bar h2"></div><span>Sat</span></div>
-                          <div class="wd"><div class="wd-bar h0"></div><span>Sun</span></div>
-                        </div>
-                      </div>
-                      <div class="card-wide">
-                        <div class="ct">Most frequent vendor</div>
-                        <div class="bar-row"><span class="label">McDonalds</span><span class="bar"><span class="fill" style="width:100%;"></span></span><span class="num">2</span></div>
-                        <div class="bar-row"><span class="label">Fresh Choice…</span><span class="bar"><span class="fill" style="width:100%;"></span></span><span class="num">2</span></div>
-                        <div class="bar-row"><span class="label">True Mart</span><span class="bar"><span class="fill" style="width:50%;"></span></span><span class="num">1</span></div>
+                        <div class="ct">Top customers</div>
+                        <div class="bar-row"><span class="label">Acme Corp</span><span class="bar"><span class="fill" style="width:100%;"></span></span><span class="num">$3.4k</span></div>
+                        <div class="bar-row"><span class="label">Contoso Ltd</span><span class="bar"><span class="fill" style="width:63%;"></span></span><span class="num">$2.2k</span></div>
+                        <div class="bar-row"><span class="label">Northwind</span><span class="bar"><span class="fill" style="width:54%;"></span></span><span class="num">$1.9k</span></div>
+                        <div class="bar-row"><span class="label">Fabrikam</span><span class="bar"><span class="fill" style="width:9%;"></span></span><span class="num">$329</span></div>
                       </div>
                       <div class="qhead">More questions</div>
                     </div>
 
-                    <!-- Scene 5: Loading state (blob lottie + caption, visible 3.6–5.0s) -->
+                    <!-- Scene 5: Loading (blob lottie + caption, visible 9.4-11.6s). -->
                     <div class="body-loading" aria-hidden="true">
                       <div class="ai-blob-canvas"></div>
                       <div class="loading-caption">Lining up angles…</div>
                     </div>
 
-                    <!-- Scene 6: Answer card (visible 5.2–5.9s) -->
+                    <!-- Scene 6: Answer (visible 11.8s onwards, holds at end of one-shot). -->
                     <div class="body-answer">
                       <div class="you-asked-tag">You asked</div>
                       <div class="answered-question">Am I trending up or down compared to last period?</div>
                       <div class="narrative-callout">
                         <span class="sparkle-icon">✦</span>
-                        <span>Your sales are trending up — $24,580 this period, +12% on the prior 30 days.</span>
+                        <span>Your sales are trending up — $7,749 this period, +12% on the prior 30 days.</span>
                       </div>
                       <div class="switch-chart-row">
                         <span class="switch-chart-pill">⇄ Switch chart</span>
@@ -1498,7 +1548,29 @@
 
                   </div>
 
-                  <!-- Ask bar: visible 0.0–5.0s; placeholder shows initially, typewriter runs 2.4–3.4s -->
+                  <!-- iOS-style keyboard rising during typing scene 5.0-9.4s. Stylized QWERTY with letters at small font. -->
+                  <div class="ai-keyboard" aria-hidden="true">
+                    <div class="ai-kb-suggestion-bar">
+                      <span class="ai-kb-suggestion">Trending</span>
+                      <span class="ai-kb-suggestion">trending</span>
+                      <span class="ai-kb-suggestion">trends</span>
+                    </div>
+                    <div class="ai-kb-row r1">
+                      <span class="key">Q</span><span class="key">W</span><span class="key">E</span><span class="key">R</span><span class="key">T</span><span class="key">Y</span><span class="key">U</span><span class="key">I</span><span class="key">O</span><span class="key">P</span>
+                    </div>
+                    <div class="ai-kb-row r2">
+                      <span class="key">A</span><span class="key">S</span><span class="key">D</span><span class="key">F</span><span class="key">G</span><span class="key">H</span><span class="key">J</span><span class="key">K</span><span class="key">L</span>
+                    </div>
+                    <div class="ai-kb-row r3">
+                      <span class="key modifier">⇧</span><span class="key">Z</span><span class="key">X</span><span class="key">C</span><span class="key">V</span><span class="key">B</span><span class="key">N</span><span class="key">M</span><span class="key modifier">⌫</span>
+                    </div>
+                    <div class="ai-kb-row r-spc">
+                      <span class="key modifier mini">123</span><span class="key spacebar">space</span><span class="key modifier mini">return</span>
+                    </div>
+                  </div>
+
+                  <!-- Ask bar: stays at top of stacking inside the sheet so it sits above the keyboard.
+                       Lifts ~190px when the keyboard rises, drops back when keyboard falls, fades out when answer reveals. -->
                   <div class="ai-ask">
                     <span class="typing-text">Am I trending up or down compared to last period?</span>
                     <span class="send">↑</span>
@@ -1508,6 +1580,7 @@
               </div>
             </div>
           </div>
+          <button class="ai-replay-btn" type="button" onclick="replayAiInsightsAnimation()" aria-label="Replay the AI Insights demo animation"><span aria-hidden="true">↻</span> Replay animation</button>
         </div>
       </div>
     </section>
@@ -1671,36 +1744,84 @@
     }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-    /* AI Insights animation: mount the blob Lottie and pause everything when the mockup is off-screen.
-       blob.json is a verbatim copy of LensReport/assets/lottie/blob.json (re-sync on app update).
-       lottie_light.min.js is vendored from unpkg.com/lottie-web@5.12.2 (loaded just below). */
-    (function initAiInsightsLoop() {
+    /* AI Insights one-shot animation:
+       - All CSS animations are paused on page load and started when the mockup scrolls into view (via IntersectionObserver).
+       - The blob Lottie is mounted from the vendored lottie_light.min.js (loaded above with `defer`) and stored on
+         window.__aiBlobAnim so the replay handler can goToAndPlay(0, true).
+       - replayAiInsightsAnimation() (exposed below + called by the Replay button's onclick) cancels every CSS animation
+         in the mockup + the replay button, plays them again from frame 0, and restarts the Lottie.
+       blob.json is a verbatim copy of LensReport/assets/lottie/blob.json (re-sync on app update). */
+    (function initAiInsightsAnimation() {
       var mockup = document.querySelector('.ai-mockup');
       var canvas = mockup && mockup.querySelector('.ai-blob-canvas');
+      var btn = document.querySelector('.ai-replay-btn');
       if (!mockup || !canvas) return;
       var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if (reduced) return; // CSS pins Scene 6 as a static frame; no Lottie playback.
-      function mount() {
+      if (reduced) return; // CSS pins Scene 6 as a static frame; no Lottie playback, no animation start.
+
+      function pauseAllAnims() {
+        try { mockup.getAnimations({ subtree: true }).forEach(function (a) { a.pause(); }); } catch (_) {}
+        try { if (btn) btn.getAnimations().forEach(function (a) { a.pause(); }); } catch (_) {}
+        if (window.__aiBlobAnim) { try { window.__aiBlobAnim.pause(); } catch (_) {} }
+      }
+      function playAllAnims() {
+        try { mockup.getAnimations({ subtree: true }).forEach(function (a) { a.play(); }); } catch (_) {}
+        try { if (btn) btn.getAnimations().forEach(function (a) { a.play(); }); } catch (_) {}
+        if (window.__aiBlobAnim) { try { window.__aiBlobAnim.play(); } catch (_) {} }
+      }
+
+      function mountLottie() {
         if (!window.lottie || canvas.dataset.mounted === 'true') return;
         canvas.dataset.mounted = 'true';
-        var anim = window.lottie.loadAnimation({
-          container: canvas, renderer: 'svg', loop: true, autoplay: false,
+        window.__aiBlobAnim = window.lottie.loadAnimation({
+          container: canvas, renderer: 'svg', loop: true, autoplay: true,
           path: 'assets/lottie/blob.json'
         });
+      }
+
+      // Pause animations on load until the section scrolls into view.
+      pauseAllAnims();
+
+      function startWhenVisible() {
+        mountLottie();
+        var hasPlayed = false;
         var io = new IntersectionObserver(function (entries) {
           entries.forEach(function (entry) {
-            if (entry.isIntersecting) { mockup.classList.remove('is-paused'); anim.play(); }
-            else { mockup.classList.add('is-paused'); anim.pause(); }
+            if (entry.isIntersecting && !hasPlayed) {
+              hasPlayed = true;
+              playAllAnims();
+              io.unobserve(mockup); // one-shot — don't pause again on scroll-away
+            }
           });
         }, { threshold: 0.2 });
         io.observe(mockup);
       }
-      if (window.lottie) { mount(); }
+
+      if (window.lottie) { startWhenVisible(); }
       else {
-        var poll = setInterval(function () { if (window.lottie) { clearInterval(poll); mount(); } }, 60);
+        var poll = setInterval(function () {
+          if (window.lottie) { clearInterval(poll); startWhenVisible(); }
+        }, 60);
         setTimeout(function () { clearInterval(poll); }, 6000);
       }
     })();
+
+    window.replayAiInsightsAnimation = function () {
+      var mockup = document.querySelector('.ai-mockup');
+      var btn = document.querySelector('.ai-replay-btn');
+      if (!mockup) return;
+      var anims = mockup.getAnimations({ subtree: true });
+      if (btn) {
+        var btnAnims = btn.getAnimations();
+        for (var i = 0; i < btnAnims.length; i++) anims.push(btnAnims[i]);
+      }
+      anims.forEach(function (a) {
+        try { a.cancel(); a.play(); } catch (_) {}
+      });
+      if (window.__aiBlobAnim) {
+        try { window.__aiBlobAnim.goToAndPlay(0, true); } catch (_) {}
+      }
+    };
 
     document.querySelectorAll('a[href^="#"]').forEach(link => {
       link.addEventListener('click', e => {
