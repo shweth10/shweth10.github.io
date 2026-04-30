@@ -166,13 +166,13 @@
     /* ====== Stage ====== */
     .stage { --phone-scale: 1; position: relative; z-index: 2; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: clamp(12px, 3vw, 72px); max-width: 1160px; margin: 0 auto; padding: 0 clamp(12px, 3vw, 56px) clamp(48px, 8vw, 80px); align-items: center; }
     /* Phone wrapper sizes itself to the scaled phone so the grid column collapses cleanly; phone inside is absolutely positioned at 220x440 intrinsic and transform-scaled. */
-    .stage-phone-wrap { position: relative; flex-shrink: 0; width: calc(220px * var(--phone-scale)); height: calc(440px * var(--phone-scale)); }
+    .stage-phone-wrap { position: relative; flex-shrink: 0; width: calc(220px * var(--phone-scale)); height: calc(477px * var(--phone-scale)); }
     .stage-sheet-wrap { position: relative; min-width: 0; }
 
     /* ====== Phone ====== */
-    .phone { position: absolute; top: 0; left: 0; width: 220px; height: 440px; background: #1A2332; border-radius: 34px; padding: 10px; box-shadow: 0 30px 70px rgba(14,23,42,0.22), 0 0 0 1px rgba(14,23,42,0.08), inset 0 0 0 2px rgba(255,255,255,0.08); transform: scale(var(--phone-scale)); transform-origin: top left; }
-    .phone-notch { position: absolute; top: 14px; left: 50%; transform: translateX(-50%); width: 60px; height: 18px; background: #0B0D12; border-radius: 100px; z-index: 2; }
-    .phone-screen { width: 100%; height: 100%; border-radius: 24px; background: #0B0D12; position: relative; overflow: hidden; }
+    .phone { position: absolute; top: 0; left: 0; width: 220px; height: 477px; aspect-ratio: 9 / 19.5; flex-shrink: 0; background: linear-gradient(135deg, #2A3548 0%, #14202E 50%, #2A3548 100%); border-radius: 36px; padding: 5px; box-shadow: 0 30px 70px rgba(14,23,42,0.22), 0 0 0 1px rgba(14,23,42,0.08), inset 0 0 0 1px rgba(255,255,255,0.06); transform: scale(var(--phone-scale)); transform-origin: top left; }
+    .phone-notch { position: absolute; top: 9px; left: 50%; transform: translateX(-50%); width: 38px; height: 12px; background: #0A0F1A; border-radius: 100px; z-index: 2; }
+    .phone-screen { width: 100%; height: 100%; border-radius: 31px; background: #0B0D12; position: relative; overflow: hidden; }
     .scanner { position: absolute; inset: 0; background: radial-gradient(ellipse at center, #1a2332 0%, #0B0D12 70%); }
     .template-chip { position: absolute; top: 14px; left: 50%; transform: translateX(-50%); background: rgba(94,201,143,0.15); border: 1px solid rgba(94,201,143,0.35); padding: 3px 10px; border-radius: 100px; font-family: 'DM Mono', monospace; font-size: 8px; color: #5EC98F; white-space: nowrap; z-index: 3; }
     .receipt { position: absolute; top: 68px; left: 50%; transform: translateX(-50%) rotate(-2deg); width: 130px; height: 180px; background: #F5F2EC; border-radius: 3px; box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 2px 6px rgba(0,0,0,0.3); padding: 14px 12px; font-family: 'Courier New', monospace; font-size: 7px; color: #3a3530; line-height: 1.4; z-index: 1; }
@@ -186,8 +186,8 @@
     .bracket { position: absolute; width: 14px; height: 14px; border: 2px solid #5EC98F; z-index: 2; }
     .bracket.tl { top: 60px; left: 28px; border-right: none; border-bottom: none; }
     .bracket.tr { top: 60px; right: 28px; border-left: none; border-bottom: none; }
-    .bracket.bl { bottom: 112px; left: 28px; border-right: none; border-top: none; }
-    .bracket.br { bottom: 112px; right: 28px; border-left: none; border-top: none; }
+    .bracket.bl { bottom: 159px; left: 28px; border-right: none; border-top: none; }
+    .bracket.br { bottom: 159px; right: 28px; border-left: none; border-top: none; }
     .capture-btn { position: absolute; bottom: 22px; left: 50%; transform: translateX(-50%); width: 44px; height: 44px; border-radius: 50%; background: #fff; border: 3px solid rgba(255,255,255,0.4); box-shadow: 0 0 0 2px #0B0D12 inset; }
     .process-btn { position: absolute; bottom: 78px; left: 50%; transform: translateX(-50%); background: #4CAF7D; color: #fff; font-size: 9px; font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 700; padding: 6px 14px; border-radius: 100px; box-shadow: 0 6px 20px rgba(76,175,125,0.5); white-space: nowrap; }
     .process-btn::before { content: '✨ '; }
