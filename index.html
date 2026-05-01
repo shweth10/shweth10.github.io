@@ -511,6 +511,51 @@
     @media (max-width: 900px) { .steps-grid { grid-template-columns: 1fr; } }
 
 
+    /* === PROBLEM SECTION (compact 4-card grid, mirrors WIF panel pattern) === */
+    .problem-section { padding: 80px 0 64px; background: var(--bg); position: relative; }
+    .problem-inner { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+    .problem-header { text-align: center; max-width: 760px; margin: 0 auto 48px; }
+    .problem-header .section-label { margin-bottom: 14px; }
+    .problem-header h2 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: clamp(28px, 4vw, 40px); font-weight: 800; letter-spacing: -0.8px; line-height: 1.12; margin-bottom: 18px; color: var(--text); }
+    .problem-header h2 .h-break { display: block; color: var(--text-secondary); font-weight: 700; }
+    .problem-header > p { font-size: 16px; color: var(--text-secondary); line-height: 1.7; max-width: 640px; margin: 0 auto; }
+
+    .problem-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; align-items: start; }
+    .problem-card { margin: 0; display: flex; flex-direction: column; }
+    .problem-card .pc-img { aspect-ratio: 4 / 5; border-radius: var(--radius); border: 1px solid var(--border); background: var(--green-pale); overflow: hidden; display: flex; align-items: center; justify-content: center; transition: transform 0.3s ease, box-shadow 0.3s ease; }
+    .problem-card:hover .pc-img { transform: translateY(-3px); box-shadow: var(--shadow-md); }
+    .problem-card.coral-bg .pc-img { background: rgba(240,133,106,0.10); }
+    .problem-card .pc-img img { width: 100%; height: 100%; object-fit: contain; padding: 18px; display: block; }
+    .problem-card .pc-caption { padding: 18px 4px 0; text-align: center; }
+    .problem-card .pc-label { font-family: 'DM Mono', monospace; font-size: 0.7rem; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--green-dark); margin-bottom: 8px; }
+    .problem-card .pc-label.coral { color: var(--coral); }
+    .problem-card h3 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1rem; font-weight: 700; line-height: 1.32; color: var(--text); margin: 0 0 10px 0; letter-spacing: -0.2px; }
+    .problem-card .pc-body { font-size: 0.85rem; line-height: 1.6; color: var(--text-secondary); text-align: left; }
+    .problem-card .pc-body p { margin: 0 0 8px 0; }
+    .problem-card .pc-body p:last-child { margin: 0; }
+
+    /* Citation links — accessible blue, distinct from brand sage */
+    .problem-section a[href^="http"] { color: #2563EB; text-decoration: underline; text-decoration-thickness: 1.5px; text-underline-offset: 2px; transition: color 0.15s ease; }
+    .problem-section a[href^="http"]:hover,
+    .problem-section a[href^="http"]:focus-visible { color: #1E4FB8; text-decoration-thickness: 2px; }
+    .problem-section a[href^="http"]:focus-visible { outline: 2px solid #2563EB; outline-offset: 3px; border-radius: 2px; }
+
+    /* Closing statement — quiet italic line below the grid */
+    .problem-closing { max-width: 760px; margin: 48px auto 0; text-align: center; }
+    .problem-closing p { font-size: 0.95rem; line-height: 1.65; color: var(--text-secondary); font-style: italic; }
+
+    @media (max-width: 899px) {
+      .problem-grid { grid-template-columns: repeat(2, 1fr); gap: 28px; }
+    }
+    @media (max-width: 599px) {
+      .problem-section { padding: 64px 0 56px; }
+      .problem-header { margin-bottom: 36px; }
+      .problem-grid { grid-template-columns: 1fr; gap: 36px; max-width: 460px; margin: 0 auto; }
+      .problem-card .pc-body { font-size: 0.92rem; }
+      .problem-closing { margin-top: 40px; }
+    }
+
+
     /* === FEATURE STORY LAYOUT (reused by Tasks 9, 10, 12, 14) === */
     .feature-story { padding: 100px 0; }
     .feature-story.alt { background: var(--bg-white); }
@@ -697,51 +742,58 @@
       /* Opacity envelope masks the fill snap-back at the iteration boundary.
          Without this the rail snaps from 100% → 0% visibly on every loop. */
       animation: ai-track-fade 17s linear infinite; }
-    .ai-progress-rail { position: relative; height: 3px; background: var(--border); border-radius: 2px; }
+    .ai-progress-rail { position: relative; height: 4px; background: var(--border); border-radius: 2px; }
     .ai-progress-fill { position: absolute; inset: 0; width: 100%; background: var(--green); border-radius: 2px;
       transform: scaleX(0); transform-origin: left center;
       /* transform animation is GPU-composited — no layout reflow per frame.
          Avoids jank on mid-range Android WebView (common entry point from social
          ads). Spec-equivalent visual to animating `width: 0% → 100%`. */
       animation: ai-rail-fill 17s linear infinite; }
+    /* Three-state stepper following Stripe/Linear/Material conventions:
+       FUTURE  — small white-centre disc with grey outline ("not yet visited")
+       PAST    — small solid sage disc ("done")
+       ACTIVE  — bigger concentric ring (white centre + sage ring) with sage halo
+                 ("you are here"). The active state's hard outer ring + halo gives
+                 it visual weight at small phone width where size-only differentiation
+                 wouldn't read. */
     .ai-progress-dot { position: absolute; top: 50%; transform: translate(-50%, -50%);
       width: 8px; height: 8px; border-radius: 50%;
-      background: transparent; border: 1.5px solid var(--border); box-sizing: border-box; }
-    /* Visually balanced spacing (0% / 50% / 100%) — labels read evenly. The fill
-       gives moment-to-moment timing feedback; the dot positions just mark milestones. */
+      background: #FFF; border: 1.5px solid var(--border); box-sizing: border-box; }
+    /* Dots sit at 0 % / 50 % / 100 % of the rail. Active-state halo overhangs
+       track edges by ~10 px which is fully contained by the 24 px section padding. */
     .ai-progress-dot--1 { left: 0%;   animation: ai-dot-1 17s linear infinite; }
     .ai-progress-dot--2 { left: 50%;  animation: ai-dot-2 17s linear infinite; }
     .ai-progress-dot--3 { left: 100%; animation: ai-dot-3 17s linear infinite; }
-    /* 3-column grid + per-child text-align so each label's visual center sits
-       directly under its dot at 0% / 50% / 100%. `justify-content: space-between`
-       would only align label edges (left/right edges of "Data"/"Answer") and would
-       centre "Ask" within its auto-sized flex slot — not aligned to the 50% dot. */
-    .ai-progress-labels { display: grid; grid-template-columns: 1fr 1fr 1fr; }
-    .ai-progress-label { font: 500 10px/1 'Inter', sans-serif; color: var(--text-secondary); }
-    .ai-progress-label:nth-child(1) { text-align: left; }
-    .ai-progress-label:nth-child(2) { text-align: center; }
-    .ai-progress-label:nth-child(3) { text-align: right; }
+    /* Labels positioned absolutely so each label's centre sits directly under
+       its dot's centre. Edge labels overhang track edges by up to 21 px (half of
+       "Answer" width); the 24 px section padding contains the overhang. */
+    .ai-progress-labels { position: relative; height: 12px; }
+    .ai-progress-label { position: absolute; top: 0; transform: translateX(-50%);
+      white-space: nowrap; font: 500 10px/1 'Inter', sans-serif; color: var(--text-secondary); }
+    .ai-progress-label:nth-child(1) { left: 0%; }
+    .ai-progress-label:nth-child(2) { left: 50%; }
+    .ai-progress-label:nth-child(3) { left: 100%; }
     @keyframes ai-rail-fill { 0% { transform: scaleX(0); } 100% { transform: scaleX(1); } }
     /* Mask the loop seam: full opacity 0–97 %, fade out 97–100 %. */
     @keyframes ai-track-fade { 0%, 97% { opacity: 1; } 100% { opacity: 0; } }
     /* Step 1 "Data": ACTIVE 0–30 %, then PAST 30–100 %. */
     @keyframes ai-dot-1 {
-      0%, 30% { background: var(--green); border-color: var(--green); width: 10px; height: 10px; box-shadow: 0 0 0 4px rgba(76, 175, 125, 0.22); }
-      30.1%, 100% { background: var(--green); border-color: var(--green); width: 8px; height: 8px; box-shadow: none; }
+      0%, 30% { background: #FFF; border-color: var(--green); border-width: 2px; width: 12px; height: 12px; box-shadow: 0 0 0 4px rgba(76, 175, 125, 0.25); }
+      30.1%, 100% { background: var(--green); border-color: var(--green); border-width: 0; width: 8px; height: 8px; box-shadow: none; }
     }
     /* Step 2 "Ask": FUTURE 0–30 %, ACTIVE 30–65 %, PAST 65–100 %. */
     @keyframes ai-dot-2 {
-      0%, 29.9% { background: transparent; border-color: var(--border); width: 8px; height: 8px; box-shadow: none; }
-      30%, 65% { background: var(--green); border-color: var(--green); width: 10px; height: 10px; box-shadow: 0 0 0 4px rgba(76, 175, 125, 0.22); }
-      65.1%, 100% { background: var(--green); border-color: var(--green); width: 8px; height: 8px; box-shadow: none; }
+      0%, 29.9% { background: #FFF; border-color: var(--border); border-width: 1.5px; width: 8px; height: 8px; box-shadow: none; }
+      30%, 65% { background: #FFF; border-color: var(--green); border-width: 2px; width: 12px; height: 12px; box-shadow: 0 0 0 4px rgba(76, 175, 125, 0.25); }
+      65.1%, 100% { background: var(--green); border-color: var(--green); border-width: 0; width: 8px; height: 8px; box-shadow: none; }
     }
     /* Step 3 "Answer": FUTURE 0–65 %, ACTIVE 65–98 %, then HOLDS PAST at 100 %.
        Held in past state (not reset to future) so the loop seam reads as
        "all 3 complete" the moment before the next iteration starts. */
     @keyframes ai-dot-3 {
-      0%, 64.9% { background: transparent; border-color: var(--border); width: 8px; height: 8px; box-shadow: none; }
-      65%, 98% { background: var(--green); border-color: var(--green); width: 10px; height: 10px; box-shadow: 0 0 0 4px rgba(76, 175, 125, 0.22); }
-      100% { background: var(--green); border-color: var(--green); width: 8px; height: 8px; box-shadow: none; }
+      0%, 64.9% { background: #FFF; border-color: var(--border); border-width: 1.5px; width: 8px; height: 8px; box-shadow: none; }
+      65%, 98% { background: #FFF; border-color: var(--green); border-width: 2px; width: 12px; height: 12px; box-shadow: 0 0 0 4px rgba(76, 175, 125, 0.25); }
+      100% { background: var(--green); border-color: var(--green); border-width: 0; width: 8px; height: 8px; box-shadow: none; }
     }
     /* Stage starts 36 px below screen top so the status bar (`9:41 ●●●●`) + Dynamic Island always sit cleanly above
        every scene. Without this, Scene 1's solid grey background was painting over the status bar and DI was
@@ -1044,7 +1096,7 @@
       .ai-progress-track { opacity: 1 !important; }
       .ai-progress-fill { transform: scaleX(1) !important; }
       .ai-progress-dot { background: var(--green) !important; border-color: var(--green) !important;
-        width: 8px !important; height: 8px !important; box-shadow: none !important; }
+        border-width: 0 !important; width: 8px !important; height: 8px !important; box-shadow: none !important; }
     }
 
 
@@ -1807,6 +1859,75 @@
           <figure class="app-preview-card reveal" role="listitem" data-caption="3 / 5"><img src="assets/images/app-preview/3.jpg" alt="Three-step flow — grab the document, scan it, the report is auto-filled by AI" loading="lazy" width="621" height="1344"><span class="expand-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></span></figure>
           <figure class="app-preview-card reveal" role="listitem" data-caption="4 / 5"><img src="assets/images/app-preview/4.jpg" alt="Ready-made templates or build your own with Column Studio and smart calculated columns" loading="lazy" width="621" height="1344"><span class="expand-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></span></figure>
           <figure class="app-preview-card reveal" role="listitem" data-caption="5 / 5"><img src="assets/images/app-preview/5.jpg" alt="Share reports with anyone via a PIN-locked web link — no app needed, opens in any browser" loading="lazy" width="621" height="1344"><span class="expand-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></span></figure>
+        </div>
+      </div>
+    </section>
+    <section class="problem-section" id="problem" aria-labelledby="problem-heading">
+      <div class="problem-inner">
+        <header class="problem-header reveal">
+          <p class="section-label">The Problem</p>
+          <h2 id="problem-heading">Documents are created everywhere.<span class="h-break">Most of them go nowhere.</span></h2>
+          <p>Invoices, receipts, expense records, delivery dockets — generated worldwide, every day. And <a href="https://www.athento.com/unstructured-information-the-great-challenge-and-opportunity-for-companies-in-2025/" target="_blank" rel="noopener noreferrer">80–90% of all business data generated today is unstructured</a> — scattered, unorganised, stuffed in pockets, piled on desks, or sitting unread in an email inbox.</p>
+        </header>
+
+        <div class="problem-grid stagger">
+
+          <article class="problem-card reveal">
+            <div class="pc-img">
+              <img src="assets/problem/visual-1-chaos.png" alt="A wooden desk overflowing with crumpled receipts, invoices and delivery dockets, with a phone showing unread notifications at the edge." width="1200" height="1500" loading="lazy" decoding="async">
+            </div>
+            <div class="pc-caption">
+              <p class="pc-label">The Pile</p>
+              <h3>Every business generates documents. Few actually manage them.</h3>
+              <div class="pc-body">
+                <p>Receipts stuffed in pockets. Invoices photographed and forgotten. <a href="https://usesignhouse.com/blog/document-management-industry-stats/" target="_blank" rel="noopener noreferrer">45% of small businesses still rely on paper-based document management</a>, and <a href="https://usesignhouse.com/blog/document-management-industry-stats/" target="_blank" rel="noopener noreferrer">11% have no system at all</a>. The paperwork exists — it just never gets anywhere useful.</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="problem-card coral-bg reveal">
+            <div class="pc-img">
+              <img src="assets/problem/visual-2-consequences.png" alt="A stressed person at a laptop showing tax penalty, missed deduction and overdue alerts, with a thought bubble of warning icons." width="1200" height="1500" loading="lazy" decoding="async">
+            </div>
+            <div class="pc-caption">
+              <p class="pc-label coral">The Cost</p>
+              <h3>When reporting doesn't happen, the consequences stack up fast.</h3>
+              <div class="pc-body">
+                <p>Tax deductions missed. Penalties triggered. <a href="https://usesignhouse.com/blog/document-management-industry-stats/" target="_blank" rel="noopener noreferrer">US businesses waste $8 billion a year on paper documents</a>. <a href="https://www.capellasolutions.com/blog/you-wont-believe-how-much-bad-data-is-costing-you" target="_blank" rel="noopener noreferrer">MIT Sloan estimates $3 trillion lost yearly</a> from decisions made without past report insights — and <a href="https://www.actian.com/blog/data-management/the-costly-consequences-of-poor-data-quality/" target="_blank" rel="noopener noreferrer">Gartner pegs poor data quality at $15M per organisation</a>. <a href="https://www.ibm.com/think/insights/delayed-data-cost" target="_blank" rel="noopener noreferrer">80% of organisations decide on stale data</a>; <a href="https://www.ibm.com/think/insights/delayed-data-cost" target="_blank" rel="noopener noreferrer">85% of data leaders say it cost them money</a>.</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="problem-card reveal">
+            <div class="pc-img">
+              <img src="assets/problem/visual-3-hidden-value.png" alt="A receipt at the centre with six radiating lines connecting it to icons of charts, a tax form, a lightbulb, a calendar, a shield and a coin stack." width="1200" height="1500" loading="lazy" decoding="async">
+            </div>
+            <div class="pc-caption">
+              <p class="pc-label">The Opportunity</p>
+              <h3>Every document contains data. Most of it is never captured.</h3>
+              <div class="pc-body">
+                <p><a href="https://aws.amazon.com/blogs/smb/why-small-and-medium-businesses-are-missing-out-on-the-full-benefits-data-can-provide/" target="_blank" rel="noopener noreferrer">53% of SMBs don't know what insights their own data could provide</a>. Yet <a href="https://enricher.io/blog/the-cost-of-incomplete-data" target="_blank" rel="noopener noreferrer">McKinsey shows companies that leverage data can lift revenue by up to 20%</a>. The data already exists — it just needs somewhere to go.</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="problem-card reveal">
+            <div class="pc-img">
+              <img src="assets/problem/visual-4-solution.png" alt="A confident person holding a phone that displays a clean report table, with an upward-trending arrow and a small bar chart panel beside her." width="1200" height="1500" loading="lazy" decoding="async">
+            </div>
+            <div class="pc-caption">
+              <p class="pc-label">The Shift</p>
+              <h3>Captured. Organised. Reported. Instantly.</h3>
+              <div class="pc-body">
+                <p>LensReport turns every scan into a structured data entry, every entry into a live report, and every report into a decision-ready export — with AI that answers the questions your data has been waiting to answer.</p>
+              </div>
+            </div>
+          </article>
+
+        </div>
+
+        <div class="problem-closing reveal">
+          <p>Every one of those documents contains data that, if properly captured and reported, gives business owners the insight to make better decisions, reduce costs, and stay ahead — while foreseeing future losses before they happen.</p>
         </div>
       </div>
     </section>
