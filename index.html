@@ -544,20 +544,24 @@
     .problem-card .pc-body p { margin: 0 0 8px 0; }
     .problem-card .pc-body p:last-child { margin: 0; }
 
-    /* Bulleted stats — icon + short text + (optional) green link-out icon. */
+    /* Bulleted stats — icon at left + short text. The source link (if any) is
+       a small inline sage chain icon at the end of the sentence — minimal,
+       no chip background. */
     .pc-stats { list-style: none; padding: 0; margin: 14px 0 0 0; display: flex; flex-direction: column; gap: 12px; text-align: left; }
-    .pc-stat { display: grid; grid-template-columns: 26px 1fr auto; gap: 10px; align-items: center; }
+    .pc-stat { display: grid; grid-template-columns: 26px 1fr; gap: 10px; align-items: center; }
     .pc-stat-icon { width: 26px; height: 26px; border-radius: 7px; background: rgba(76, 175, 125, 0.10); color: var(--green-dark); display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
     .pc-stat-icon svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
     /* Coral variant — applied to THE COST card so its stat icons match the eyebrow label. */
     .problem-card.coral-bg .pc-stat-icon { background: rgba(240, 133, 106, 0.12); color: var(--coral); }
     .pc-stat-text { font-size: 0.82rem; line-height: 1.5; color: var(--text-secondary); margin: 0; }
     .pc-stat-text strong { color: var(--text); font-weight: 700; }
-    .pc-stat-link { width: 24px; height: 24px; border-radius: 6px; background: rgba(76, 175, 125, 0.12); color: var(--green-dark); display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; transition: background 0.15s ease, color 0.15s ease, transform 0.15s ease; text-decoration: none; }
-    .pc-stat-link svg { width: 12px; height: 12px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    /* Inline source-link glyph — sits at the end of the sentence text, sage,
+       no chip box. Vertical-align middle so it baseline-rides cleanly. */
+    .pc-stat-link { display: inline-flex; align-items: center; vertical-align: middle; color: var(--green); margin-left: 4px; transition: color 0.15s ease; text-decoration: none; }
+    .pc-stat-link svg { width: 13px; height: 13px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
     .problem-card .pc-stat-link:hover,
-    .problem-card .pc-stat-link:focus-visible { background: var(--green); color: #FFF; transform: translate(1px, -1px); text-decoration: none; }
-    .pc-stat-link:focus-visible { outline: 2px solid var(--green-dark); outline-offset: 2px; }
+    .problem-card .pc-stat-link:focus-visible { color: var(--green-dark); text-decoration: none; }
+    .pc-stat-link:focus-visible { outline: 2px solid var(--green-dark); outline-offset: 2px; border-radius: 2px; }
 
     /* Citation links in the section intro paragraph stay inline-styled
        (sage-dark, underline). The bulleted-stat icon-links above override
@@ -1909,13 +1913,11 @@
               <ul class="pc-stats">
                 <li class="pc-stat">
                   <span class="pc-stat-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></span>
-                  <p class="pc-stat-text"><strong>2.5 trillion documents</strong> created globally each year — most never used</p>
-                  <a class="pc-stat-link" href="https://www.sci-tech-today.com/stats/document-creation-statistics/" target="_blank" rel="noopener noreferrer" aria-label="Source: sci-tech-today.com — global document creation stats"><svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
+                  <p class="pc-stat-text"><strong>2.5 trillion documents</strong> created globally each year — most never used <a class="pc-stat-link" href="https://www.sci-tech-today.com/stats/document-creation-statistics/" target="_blank" rel="noopener noreferrer" aria-label="Source: sci-tech-today.com — global document creation stats"><svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a></p>
                 </li>
                 <li class="pc-stat">
                   <span class="pc-stat-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg></span>
-                  <p class="pc-stat-text"><strong>60-73% of business data</strong> goes unused for analytics</p>
-                  <a class="pc-stat-link" href="https://www.inc.com/jeff-barrett/misusing-data-could-be-costing-your-business-heres-how.html" target="_blank" rel="noopener noreferrer" aria-label="Source: inc.com — unused-business-data stats"><svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
+                  <p class="pc-stat-text"><strong>60-73% of business data</strong> goes unused for analytics <a class="pc-stat-link" href="https://www.inc.com/jeff-barrett/misusing-data-could-be-costing-your-business-heres-how.html" target="_blank" rel="noopener noreferrer" aria-label="Source: inc.com — unused-business-data stats"><svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a></p>
                 </li>
               </ul>
             </div>
@@ -1930,19 +1932,16 @@
               <h3>When reporting doesn't happen, the consequences stack up fast.</h3>
               <ul class="pc-stats">
                 <li class="pc-stat">
-                  <span class="pc-stat-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></span>
-                  <p class="pc-stat-text"><strong>$20.5B bookkeeping market</strong> growing 7% / yr — SMEs make up 70% of clients</p>
-                  <a class="pc-stat-link" href="https://atidiv.com/bookkeeping-industry-statistics-and-trends-report/" target="_blank" rel="noopener noreferrer" aria-label="Source: atidiv.com — bookkeeping industry statistics"><svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
+                  <span class="pc-stat-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><polyline points="23 18 13.5 8.5 8.5 13.5 1 6"/><polyline points="17 18 23 18 23 12"/></svg></span>
+                  <p class="pc-stat-text"><strong>$3 trillion lost yearly</strong> to decisions made without past insights (MIT Sloan) <a class="pc-stat-link" href="https://www.capellasolutions.com/blog/you-wont-believe-how-much-bad-data-is-costing-you" target="_blank" rel="noopener noreferrer" aria-label="Source: capellasolutions.com — MIT Sloan loss estimate"><svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a></p>
                 </li>
                 <li class="pc-stat">
                   <span class="pc-stat-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span>
-                  <p class="pc-stat-text">SMEs spend <strong>10 hours every month</strong> on bookkeeping alone</p>
-                  <a class="pc-stat-link" href="https://worldmetrics.org/bookkeeping-industry-statistics/" target="_blank" rel="noopener noreferrer" aria-label="Source: worldmetrics.org — SME bookkeeping time stats"><svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
+                  <p class="pc-stat-text">SMEs spend <strong>10 hours every month</strong> on bookkeeping alone <a class="pc-stat-link" href="https://worldmetrics.org/bookkeeping-industry-statistics/" target="_blank" rel="noopener noreferrer" aria-label="Source: worldmetrics.org — SME bookkeeping time stats"><svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a></p>
                 </li>
                 <li class="pc-stat">
-                  <span class="pc-stat-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><polyline points="23 18 13.5 8.5 8.5 13.5 1 6"/><polyline points="17 18 23 18 23 12"/></svg></span>
-                  <p class="pc-stat-text"><strong>$3 trillion lost yearly</strong> to decisions made without past insights (MIT Sloan)</p>
-                  <a class="pc-stat-link" href="https://www.capellasolutions.com/blog/you-wont-believe-how-much-bad-data-is-costing-you" target="_blank" rel="noopener noreferrer" aria-label="Source: capellasolutions.com — MIT Sloan loss estimate"><svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
+                  <span class="pc-stat-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></span>
+                  <p class="pc-stat-text"><strong>$20.5B bookkeeping market</strong> growing 7% / yr — SMEs make up 70% of clients <a class="pc-stat-link" href="https://atidiv.com/bookkeeping-industry-statistics-and-trends-report/" target="_blank" rel="noopener noreferrer" aria-label="Source: atidiv.com — bookkeeping industry statistics"><svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a></p>
                 </li>
               </ul>
             </div>
@@ -1958,18 +1957,15 @@
               <ul class="pc-stats">
                 <li class="pc-stat">
                   <span class="pc-stat-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
-                  <p class="pc-stat-text"><strong>53% of SMBs</strong> don't know what insights their data could provide (AWS)</p>
-                  <a class="pc-stat-link" href="https://aws.amazon.com/blogs/smb/why-small-and-medium-businesses-are-missing-out-on-the-full-benefits-data-can-provide/" target="_blank" rel="noopener noreferrer" aria-label="Source: aws.amazon.com — SMB data insight study"><svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
+                  <p class="pc-stat-text"><strong>53% of SMBs</strong> don't know what insights their data could provide (AWS) <a class="pc-stat-link" href="https://aws.amazon.com/blogs/smb/why-small-and-medium-businesses-are-missing-out-on-the-full-benefits-data-can-provide/" target="_blank" rel="noopener noreferrer" aria-label="Source: aws.amazon.com — SMB data insight study"><svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a></p>
                 </li>
                 <li class="pc-stat">
                   <span class="pc-stat-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></span>
-                  <p class="pc-stat-text">Companies that leverage data <strong>lift revenue by up to 20%</strong> (McKinsey)</p>
-                  <a class="pc-stat-link" href="https://enricher.io/blog/the-cost-of-incomplete-data" target="_blank" rel="noopener noreferrer" aria-label="Source: enricher.io — McKinsey revenue uplift study"><svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
+                  <p class="pc-stat-text">Companies that leverage data <strong>lift revenue by up to 20%</strong> (McKinsey) <a class="pc-stat-link" href="https://enricher.io/blog/the-cost-of-incomplete-data" target="_blank" rel="noopener noreferrer" aria-label="Source: enricher.io — McKinsey revenue uplift study"><svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a></p>
                 </li>
                 <li class="pc-stat">
                   <span class="pc-stat-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
-                  <p class="pc-stat-text">Data-driven organisations are <strong>23× more likely to acquire customers</strong></p>
-                  <a class="pc-stat-link" href="https://www.keboola.com/blog/5-stats-that-show-how-data-driven-organizations-outperform-their-competition" target="_blank" rel="noopener noreferrer" aria-label="Source: keboola.com — data-driven organisations outperform stats"><svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
+                  <p class="pc-stat-text">Data-driven organisations are <strong>23× more likely to acquire customers</strong> <a class="pc-stat-link" href="https://www.keboola.com/blog/5-stats-that-show-how-data-driven-organizations-outperform-their-competition" target="_blank" rel="noopener noreferrer" aria-label="Source: keboola.com — data-driven organisations outperform stats"><svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a></p>
                 </li>
               </ul>
             </div>
