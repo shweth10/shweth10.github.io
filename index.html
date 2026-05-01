@@ -673,9 +673,9 @@
     /* Explicit calc-based width/height — aspect-ratio gets overridden by
        the inner flex column's min-content size in this grid layout.
        9:19.5 matches iPhone 14 / Pixel 7-class displays. */
-    .ai-mockup { --w: clamp(260px, 100%, 300px); width: var(--w); height: calc(var(--w) * 19.5 / 9); aspect-ratio: 9 / 19.5; flex-shrink: 0; background: linear-gradient(135deg, #2A3548 0%, #14202E 50%, #2A3548 100%); border-radius: 38px; padding: 4px; box-shadow: var(--shadow-xl), 0 0 0 1px rgba(0,0,0,0.4); overflow: hidden; box-sizing: border-box; position: relative; -webkit-mask-image: -webkit-radial-gradient(white, black); }
-    .ai-mockup::after { content: ''; position: absolute; left: 50%; bottom: 6px; transform: translateX(-50%); width: 96px; height: 3px; background: var(--text-secondary); opacity: 0.45; border-radius: 2px; pointer-events: none; z-index: 3; }
-    .ai-mockup .ai-screen { width: 100%; height: 100%; min-height: 0; background: #FFF; border-radius: 34px; overflow: hidden; display: flex; flex-direction: column; font-family: 'Inter', sans-serif; position: relative; }
+    .ai-mockup { --w: clamp(260px, 100%, 300px); width: var(--w); height: calc(var(--w) * 19.5 / 9); aspect-ratio: 9 / 19.5; flex-shrink: 0; background: linear-gradient(135deg, #2A3548 0%, #14202E 50%, #2A3548 100%); border-radius: 38px; box-shadow: var(--shadow-xl), 0 0 0 1px rgba(0,0,0,0.4); box-sizing: border-box; position: relative; }
+    .ai-mockup::after { content: ''; position: absolute; left: 50%; bottom: 10px; transform: translateX(-50%); width: 96px; height: 3px; background: var(--text-secondary); opacity: 0.45; border-radius: 2px; pointer-events: none; z-index: 3; }
+    .ai-mockup .ai-screen { position: absolute; inset: 4px; background: #FFF; border-radius: 34px; overflow: hidden; display: flex; flex-direction: column; font-family: 'Inter', sans-serif; }
     .ai-mockup .ai-screen::before { content: ''; position: absolute; top: 8px; left: 50%; transform: translateX(-50%); width: 48px; height: 16px; background: #0A0F1A; border-radius: 999px; z-index: 2; pointer-events: none; }
     .ai-mockup .ai-status { display: flex; align-items: center; justify-content: space-between; padding: 16px 22px 6px; font-size: 10px; font-weight: 700; color: var(--text); position: relative; z-index: 1; }
     .ai-mockup .ai-status .ai-icons { display: flex; align-items: center; gap: 4px; opacity: 0.65; letter-spacing: 1px; font-size: 9px; }
