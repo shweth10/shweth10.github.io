@@ -520,13 +520,23 @@
     .problem-header h2 .h-break { display: block; color: var(--text-secondary); font-weight: 700; }
     .problem-header > p { font-size: 16px; color: var(--text-secondary); line-height: 1.7; max-width: 640px; margin: 0 auto; }
 
-    .problem-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; align-items: start; }
-    .problem-card { margin: 0; display: flex; flex-direction: column; }
-    .problem-card .pc-img { aspect-ratio: 4 / 5; border-radius: var(--radius); border: 1px solid var(--border); background: var(--green-pale); overflow: hidden; display: flex; align-items: center; justify-content: center; transition: transform 0.3s ease, box-shadow 0.3s ease; }
+    /* align-items: stretch (default) so cards in the same grid row reach the same
+       height; pc-caption flex-grows so the card frame is uniform regardless of
+       body-text length variance across cards. */
+    .problem-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+    .problem-card { margin: 0; display: flex; flex-direction: column; height: 100%; }
+    /* No explicit border — the tinted bg fill defines the edge cleanly. A grey
+       1 px border on a sage/coral tint reads as dirty edge piping. */
+    .problem-card .pc-img { aspect-ratio: 4 / 5; border-radius: var(--radius); background: var(--green-pale); overflow: hidden; display: flex; align-items: center; justify-content: center; transition: transform 0.3s ease, box-shadow 0.3s ease; }
     .problem-card:hover .pc-img { transform: translateY(-3px); box-shadow: var(--shadow-md); }
     .problem-card.coral-bg .pc-img { background: rgba(240,133,106,0.10); }
     .problem-card .pc-img img { width: 100%; height: 100%; object-fit: contain; padding: 18px; display: block; }
-    .problem-card .pc-caption { padding: 18px 4px 0; text-align: center; }
+    /* THE PILE asset is 1:1 square in a 4:5 portrait box, so contain leaves
+       vertical whitespace; tighter padding lets the drawing fill more of the box. */
+    .problem-card:first-child .pc-img img { padding: 6px; }
+    /* Caption flex-grows so each card's overall frame matches the tallest in the
+       row. Body sits at the natural top; trailing whitespace fills extra space. */
+    .problem-card .pc-caption { padding: 18px 4px 0; text-align: center; flex: 1; display: flex; flex-direction: column; }
     .problem-card .pc-label { font-family: 'DM Mono', monospace; font-size: 0.7rem; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--green-dark); margin-bottom: 8px; }
     .problem-card .pc-label.coral { color: var(--coral); }
     .problem-card h3 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1rem; font-weight: 700; line-height: 1.32; color: var(--text); margin: 0 0 10px 0; letter-spacing: -0.2px; }
@@ -534,11 +544,12 @@
     .problem-card .pc-body p { margin: 0 0 8px 0; }
     .problem-card .pc-body p:last-child { margin: 0; }
 
-    /* Citation links — accessible blue, distinct from brand sage */
-    .problem-section a[href^="http"] { color: #2563EB; text-decoration: underline; text-decoration-thickness: 1.5px; text-underline-offset: 2px; transition: color 0.15s ease; }
+    /* Citation links — sage-dark on the off-white surface (4.6:1 contrast on
+       #FAFBFC, passes WCAG AA). Brand-aligned alternative to generic blue. */
+    .problem-section a[href^="http"] { color: var(--green-dark); text-decoration: underline; text-decoration-thickness: 1.5px; text-underline-offset: 2px; transition: color 0.15s ease; }
     .problem-section a[href^="http"]:hover,
-    .problem-section a[href^="http"]:focus-visible { color: #1E4FB8; text-decoration-thickness: 2px; }
-    .problem-section a[href^="http"]:focus-visible { outline: 2px solid #2563EB; outline-offset: 3px; border-radius: 2px; }
+    .problem-section a[href^="http"]:focus-visible { color: var(--green); text-decoration-thickness: 2px; }
+    .problem-section a[href^="http"]:focus-visible { outline: 2px solid var(--green-dark); outline-offset: 3px; border-radius: 2px; }
 
     /* Closing statement — quiet italic line below the grid */
     .problem-closing { max-width: 760px; margin: 48px auto 0; text-align: center; }
