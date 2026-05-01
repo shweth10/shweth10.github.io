@@ -953,7 +953,7 @@
     @keyframes ask-lift { 0%, 41% { transform: translateY(0); } 45%, 62% { transform: translateY(-152px); } 66%, 100% { transform: translateY(0); } }
     .ai-mockup .ai-ask::before { content: 'Ask anything about your data\2026'; position: absolute; left: 13px; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 10px; pointer-events: none; animation: placeholder-fade 17s linear infinite; white-space: nowrap; }
     @keyframes placeholder-fade { 0%, 41% { opacity: 1; } 45%, 100% { opacity: 0; } }
-    .ai-mockup .ai-ask .typing-text { flex: 1; min-width: 0; overflow: hidden; white-space: nowrap; color: var(--text); font-size: 10px; line-height: 14px; clip-path: inset(0 100% 0 0); animation: ai-typing 17s steps(27, end) infinite; }
+    .ai-mockup .ai-ask .typing-text { flex: 1; min-width: 0; overflow: hidden; white-space: nowrap; color: var(--text); font-size: 10px; line-height: 14px; clip-path: inset(0 100% 0 0); animation: ai-typing 17s steps(24, end) infinite; }
     @keyframes ai-typing { 0%, 45% { clip-path: inset(0 100% 0 0); } 62%, 100% { clip-path: inset(0 0% 0 0); } }
     .ai-mockup .ai-ask .send { width: 22px; height: 22px; border-radius: 50%; background: var(--green-pale); display: flex; align-items: center; justify-content: center; color: var(--green-dark); font-size: 12px; margin-left: auto; flex-shrink: 0; font-weight: 700; animation: send-activate 17s linear infinite; }
     @keyframes send-activate { 0%, 62% { background: var(--green-pale); color: var(--green-dark); transform: scale(1); } 63% { background: var(--green); color: #FFF; transform: scale(1.12); } 65%, 100% { background: var(--green); color: #FFF; transform: scale(1); } }
@@ -1586,50 +1586,51 @@
                       <div class="loading-caption">Lining up angles…</div>
                     </div>
 
-                    <!-- Scene 6: Answer (visible 11.8s onwards, holds at end of one-shot). -->
+                    <!-- Scene 6: Answer (visible 11.8s onwards, holds at end of one-shot).
+                         Numbers are consistent with the demo's Sales Invoice Log: 100 invoices · Apr 1-30 · $148,392.
+                         Top customer Acme Corp $3,420 invoice on Apr 30 = the peak. Northwind $2,640 from Apr 29 is the
+                         overdue invoice flagged by the advisor card. Apr 28-30 sums to $28,120 (≈19 % of $148,392). -->
                     <div class="body-answer">
                       <div class="you-asked-tag">You asked</div>
-                      <div class="answered-question">Show spending trends by day</div>
+                      <div class="answered-question">Show sales trends by day</div>
                       <div class="narrative-callout">
                         <span class="sparkle-icon">✦</span>
-                        <span>Spending varied daily from $12.00 on Apr 20 to a peak of $185.91 on Apr 29, showing notable fluctuations.</span>
+                        <span>Daily sales ranged from $1,200 on Apr 21 to a peak of $10,420 on Apr 30 — $148,392 across 100 invoices in April.</span>
                       </div>
                       <div class="switch-chart-row">
                         <span class="switch-chart-pill">↗ Switch chart</span>
                       </div>
-                      <!-- Chart card with Y-axis ticks (0/50/100/150/200) + X-axis date labels + line+area fill, mirroring the in-app spending-trend chart. -->
+                      <!-- Chart card: 11 daily-sales data points (Apr 20-30). Y-axis 0-12K (3K increments) so the $10,420
+                           peak sits comfortably below the top gridline. y = 60 - (value/12000) * 54 maps cleanly to
+                           the existing viewBox 0 0 200 70 with axes at y=6/20/34/48/60. -->
                       <div class="answer-chart">
                         <svg class="trend-svg" viewBox="0 0 200 70" preserveAspectRatio="none" aria-hidden="true">
-                          <!-- Gridlines + Y-axis ticks (drawn first, sit at the back) -->
                           <line x1="22" y1="6"  x2="200" y2="6"  stroke="#E5E7EB" stroke-width="0.4" stroke-dasharray="1.5 1.5"/>
                           <line x1="22" y1="20" x2="200" y2="20" stroke="#E5E7EB" stroke-width="0.4" stroke-dasharray="1.5 1.5"/>
                           <line x1="22" y1="34" x2="200" y2="34" stroke="#E5E7EB" stroke-width="0.4" stroke-dasharray="1.5 1.5"/>
                           <line x1="22" y1="48" x2="200" y2="48" stroke="#E5E7EB" stroke-width="0.4" stroke-dasharray="1.5 1.5"/>
                           <line x1="22" y1="60" x2="200" y2="60" stroke="#E5E7EB" stroke-width="0.4"/>
-                          <text x="20" y="8"  text-anchor="end">200</text>
-                          <text x="20" y="22" text-anchor="end">150</text>
-                          <text x="20" y="36" text-anchor="end">100</text>
-                          <text x="20" y="50" text-anchor="end">50</text>
+                          <text x="20" y="8"  text-anchor="end">12K</text>
+                          <text x="20" y="22" text-anchor="end">9K</text>
+                          <text x="20" y="36" text-anchor="end">6K</text>
+                          <text x="20" y="50" text-anchor="end">3K</text>
                           <text x="20" y="62" text-anchor="end">0</text>
-                          <!-- Area fill underneath the line -->
-                          <path class="area-fill" d="M 26,52 L 42,58 L 58,49 L 74,46 L 90,52 L 106,38 L 122,44 L 138,28 L 154,24 L 170,12 L 186,40 L 26,60 Z"/>
-                          <!-- Trend line: 11 points covering Apr 20-30. Peaks at Apr 29 (~point 10). -->
-                          <polyline class="this-period" points="26,52 42,58 58,49 74,46 90,52 106,38 122,44 138,28 154,24 170,12 186,40" stroke="#5E5AE6" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-                          <!-- Datapoint dots fade in after the line draws -->
+                          <!-- Daily sales: 4.2K, 1.2K, 4.8K, 3.5K, 5.2K, 6.1K, 3.8K, 7.3K, 8.5K, 9.2K, 10.4K -->
+                          <path class="area-fill" d="M 26,41 L 42,55 L 58,38 L 74,44 L 90,37 L 106,33 L 122,43 L 138,27 L 154,22 L 170,19 L 186,13 L 186,60 L 26,60 Z"/>
+                          <polyline class="this-period" points="26,41 42,55 58,38 74,44 90,37 106,33 122,43 138,27 154,22 170,19 186,13" stroke="#5E5AE6" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
                           <g class="data-pt">
-                            <circle cx="26"  cy="52" r="1.5" fill="#5E5AE6"/>
-                            <circle cx="42"  cy="58" r="1.5" fill="#5E5AE6"/>
-                            <circle cx="58"  cy="49" r="1.5" fill="#5E5AE6"/>
-                            <circle cx="74"  cy="46" r="1.5" fill="#5E5AE6"/>
-                            <circle cx="90"  cy="52" r="1.5" fill="#5E5AE6"/>
-                            <circle cx="106" cy="38" r="1.5" fill="#5E5AE6"/>
-                            <circle cx="122" cy="44" r="1.5" fill="#5E5AE6"/>
-                            <circle cx="138" cy="28" r="1.5" fill="#5E5AE6"/>
-                            <circle cx="154" cy="24" r="1.5" fill="#5E5AE6"/>
-                            <circle cx="170" cy="12" r="1.5" fill="#5E5AE6"/>
-                            <circle cx="186" cy="40" r="1.5" fill="#5E5AE6"/>
+                            <circle cx="26"  cy="41" r="1.5" fill="#5E5AE6"/>
+                            <circle cx="42"  cy="55" r="1.5" fill="#5E5AE6"/>
+                            <circle cx="58"  cy="38" r="1.5" fill="#5E5AE6"/>
+                            <circle cx="74"  cy="44" r="1.5" fill="#5E5AE6"/>
+                            <circle cx="90"  cy="37" r="1.5" fill="#5E5AE6"/>
+                            <circle cx="106" cy="33" r="1.5" fill="#5E5AE6"/>
+                            <circle cx="122" cy="43" r="1.5" fill="#5E5AE6"/>
+                            <circle cx="138" cy="27" r="1.5" fill="#5E5AE6"/>
+                            <circle cx="154" cy="22" r="1.5" fill="#5E5AE6"/>
+                            <circle cx="170" cy="19" r="1.5" fill="#5E5AE6"/>
+                            <circle cx="186" cy="13" r="1.5" fill="#5E5AE6"/>
                           </g>
-                          <!-- X-axis date labels (every other day to avoid overlap on this small SVG) -->
                           <text x="26"  y="68" text-anchor="middle">04-20</text>
                           <text x="58"  y="68" text-anchor="middle">04-22</text>
                           <text x="90"  y="68" text-anchor="middle">04-24</text>
@@ -1642,21 +1643,21 @@
                       <div class="insight-tip">
                         <span class="tip-icon lit">💡</span>
                         <div class="tip-content">
-                          Spending peaked on Apr 29 at $185.91, much higher than the $12.00 low on Apr 20.
+                          Sales peaked on Apr 30 at $10,420 — led by your largest invoice, Acme Corp · $3,420.
                           <div class="tip-pills"><span class="conf-pill high">High confidence</span></div>
                         </div>
                       </div>
                       <div class="insight-tip">
                         <span class="tip-icon up">↗</span>
                         <div class="tip-content">
-                          Overall spending shows upward spikes around Apr 25 and Apr 29.
+                          Strong upward run in the last week — Apr 28-30 totalled $28,120, about 19% of April.
                           <div class="tip-pills"><span class="conf-pill high">High confidence</span></div>
                         </div>
                       </div>
                       <div class="insight-tip">
                         <span class="tip-icon play">▸</span>
                         <div class="tip-content">
-                          Worth reviewing expenses on high-spend days for budget adjustments.
+                          Chase Northwind's $2,640 invoice from Apr 29 — flagged overdue, biggest open balance.
                           <div class="tip-pills"><span class="conf-pill high">High confidence</span><span class="conf-pill minor">Minor</span></div>
                         </div>
                       </div>
@@ -1698,7 +1699,7 @@
                   <!-- Ask bar: stays at top of stacking inside the sheet so it sits above the keyboard.
                        Lifts ~190px when the keyboard rises, drops back when keyboard falls, fades out when answer reveals. -->
                   <div class="ai-ask">
-                    <span class="typing-text">show spending trends by day</span>
+                    <span class="typing-text">show sales trends by day</span>
                     <span class="send">↑</span>
                   </div>
                 </div>
