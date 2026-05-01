@@ -1157,6 +1157,10 @@
     .browser-frame .bf-body .pin-inputs { display: flex; gap: 6px; justify-content: center; margin-bottom: 14px; }
     .browser-frame .bf-body .pin-inputs .pi { width: 26px; height: 32px; border: 1.5px solid var(--border); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-family: 'DM Mono', monospace; font-size: 14px; font-weight: 600; color: var(--text); background: #FFF; }
     .browser-frame .bf-body .pin-inputs .pi.filled { border-color: var(--green); background: var(--green-pale); }
+    .browser-frame.viewer { max-width: 460px; }
+    .browser-frame.viewer .bf-body { padding: 0; text-align: left; background: #F7F8FA; }
+    .browser-frame.viewer .bf-body img { display: block; width: 100%; height: auto; }
+    .browser-frame.viewer.share-copy-viewer { margin-top: 32px; max-width: 100%; }
 
     /* === PERSONAS === */
     .personas-section { background: var(--bg-white); }
@@ -1919,6 +1923,10 @@
                   <span class="pc-stat-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg></span>
                   <p class="pc-stat-text"><strong>60-73% of business data</strong> goes unused for analytics <a class="pc-stat-link" href="https://www.inc.com/jeff-barrett/misusing-data-could-be-costing-your-business-heres-how.html" target="_blank" rel="noopener noreferrer" aria-label="Source: inc.com — unused-business-data stats"><svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a></p>
                 </li>
+                <li class="pc-stat">
+                  <span class="pc-stat-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
+                  <p class="pc-stat-text"><strong>More than half of SMBs</strong> around the world don't understand how their data can help their business <a class="pc-stat-link" href="https://aws.amazon.com/blogs/smb/why-small-and-medium-businesses-are-missing-out-on-the-full-benefits-data-can-provide/" target="_blank" rel="noopener noreferrer" aria-label="Source: aws.amazon.com — SMB data insight study"><svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a></p>
+                </li>
               </ul>
             </div>
           </article>
@@ -1955,10 +1963,6 @@
               <p class="pc-label">The Opportunity</p>
               <h3>Every document contains data. Most of it is never captured.</h3>
               <ul class="pc-stats">
-                <li class="pc-stat">
-                  <span class="pc-stat-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
-                  <p class="pc-stat-text"><strong>53% of SMBs</strong> don't know what insights their data could provide (AWS) <a class="pc-stat-link" href="https://aws.amazon.com/blogs/smb/why-small-and-medium-businesses-are-missing-out-on-the-full-benefits-data-can-provide/" target="_blank" rel="noopener noreferrer" aria-label="Source: aws.amazon.com — SMB data insight study"><svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a></p>
-                </li>
                 <li class="pc-stat">
                   <span class="pc-stat-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></span>
                   <p class="pc-stat-text">Companies that leverage data <strong>lift revenue by up to 20%</strong> (McKinsey) <a class="pc-stat-link" href="https://enricher.io/blog/the-cost-of-incomplete-data" target="_blank" rel="noopener noreferrer" aria-label="Source: enricher.io — McKinsey revenue uplift study"><svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a></p>
@@ -2135,6 +2139,15 @@
           <h2 id="sharing-heading">Send a link, not a file.</h2>
           <p>Generate a secure web link for any report. Your accountant, client, or auditor opens it in any browser — no app install, no sign-up, no friction.</p>
           <p>Lock it with a six-digit PIN. Set an expiry. Revoke with one tap. Every view lands in your audit trail. Your data stays yours.</p>
+          <div class="browser-frame viewer share-copy-viewer">
+            <div class="bf-chrome">
+              <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+              <div class="url">lensreport.app/s/xJ7kf2m9</div>
+            </div>
+            <div class="bf-body">
+              <img src="assets/images/share-link-viewer.png" alt="Unlocked shared report viewer showing a Personal/Family Expense Tracker with totals, exports, and a searchable entry table" loading="lazy" width="1873" height="992">
+            </div>
+          </div>
         </div>
         <div class="share-mock-wrap reveal">
           <div class="share-dialog">
