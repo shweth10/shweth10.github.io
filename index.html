@@ -693,6 +693,10 @@
     .ai-mockup.is-paused .ai-stage *,
     .ai-mockup.is-paused .ai-stage *::before,
     .ai-mockup.is-paused .ai-stage *::after { animation-play-state: paused !important; }
+    /* Exception: rainbow ring on the AI button is the "live AI" brand identity — keep it spinning even when the
+       rest of the demo is paused (scrolled out of view, between iterations, etc.) so the user always associates
+       the AI button with motion, not a still gradient. */
+    .ai-mockup.is-paused .ai-rainbow-btn::before { animation-play-state: running !important; }
     /* Master envelope: fades stage 0-2 % at start (so the transition between iterations reads as a quick cut, not a
        hard jump). Hold opacity 1 from 2-98 %, fade out 98-100 % so the answer page softly disappears before the
        next iteration's Scene 1 rises in. */
@@ -755,20 +759,52 @@
     @keyframes rs-grid-fade { 0%, 5.5% { opacity: 0; } 7%, 13% { opacity: 1; } 14.5%, 100% { opacity: 0; } }
     .ai-mockup .rs-entries-scroll { position: absolute; left: 0; right: 0; top: 0; display: flex; flex-direction: column; gap: 5px; will-change: transform; animation: rs-scroll 15.5s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
     @keyframes rs-scroll { 0% { transform: translateY(0); } 19% { transform: translateY(-220px); } 21%, 100% { transform: translateY(-220px); } }
-    /* Grid pane: spreadsheet-style table with header row + data rows. Tighter font + zebra striping evokes a real
-       grid view (vs the cards view's fluffy padded rows). */
-    .ai-mockup .rs-grid-head { display: grid; grid-template-columns: 1.55fr 0.75fr 0.85fr 0.75fr; background: #F4F5F7; padding: 5px 8px; font-size: 7px; font-weight: 700; color: var(--text-muted); letter-spacing: 0.4px; border-bottom: 1px solid var(--border); flex-shrink: 0; }
-    .ai-mockup .rs-grid-row { display: grid; grid-template-columns: 1.55fr 0.75fr 0.85fr 0.75fr; padding: 5px 8px; font-size: 8px; border-bottom: 1px solid var(--border); align-items: center; }
-    .ai-mockup .rs-grid-row:nth-child(even) { background: #FAFBFC; }
-    .ai-mockup .rs-grid-row:last-child { border-bottom: none; }
-    .ai-mockup .rs-grid-row .gv { font-weight: 600; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding-right: 4px; }
-    .ai-mockup .rs-grid-row .gd { color: var(--text-secondary); font-size: 7.5px; }
-    .ai-mockup .rs-grid-row .ga { font-family: 'DM Mono', monospace; font-weight: 600; color: var(--text); font-size: 7.5px; }
-    .ai-mockup .rs-grid-row .gs { font-size: 6.5px; font-weight: 600; padding: 1px 5px; border-radius: 999px; align-self: center; justify-self: start; line-height: 1.4; }
-    .ai-mockup .rs-grid-row .gs.paid { background: rgba(76,175,125,0.14); color: var(--green-dark); }
-    .ai-mockup .rs-grid-row .gs.sent { background: rgba(94,90,230,0.12); color: #5E5AE6; }
-    .ai-mockup .rs-grid-row .gs.overdue { background: rgba(245,200,74,0.20); color: #B0680E; }
-    .ai-mockup .rs-grid-row .gs.draft { background: rgba(0,0,0,0.06); color: var(--text-muted); }
+    /* Grid pane redesigned to mirror the actual app's ReportGrid widget (lib/presentation/screens/report_sheet/
+       widgets/report_grid.dart): solid sage-green (#4CAF7D) header with white DM-Mono labels, white-tinted
+       column dividers, checkbox + # row-number columns on the left. Data rows alternate #F4FAF6 / #F7F8FA per the
+       app's tableAltRow / inputCellBg constants. The table is wider than the phone viewport (470 px vs ~272 px)
+       so it scrolls horizontally during the grid visibility window — animation rs-grid-hscroll translates the
+       inner table -200 px during 9-13 % of the cycle. */
+    .ai-mockup .rs-grid-table { position: absolute; top: 0; left: 0; width: 470px; will-change: transform; animation: rs-grid-hscroll 15.5s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+    @keyframes rs-grid-hscroll { 0%, 9% { transform: translateX(0); } 12%, 13% { transform: translateX(-200px); } 15%, 100% { transform: translateX(0); } }
+    .ai-mockup .rs-grid-head { display: flex; background: #4CAF7D; height: 24px; flex-shrink: 0; }
+    .ai-mockup .rs-grid-row { display: flex; height: 24px; flex-shrink: 0; }
+    .ai-mockup .rs-grid-row:nth-child(odd) { background: #F7F8FA; }
+    .ai-mockup .rs-grid-row:nth-child(even) { background: #F4FAF6; }
+    .ai-mockup .rs-grid-head > *,
+    .ai-mockup .rs-grid-row > * { padding: 0 6px; display: flex; align-items: center; font-family: 'DM Mono', monospace; font-size: 8px; box-sizing: border-box; }
+    .ai-mockup .rs-grid-head > * { color: #FFF; font-weight: 700; border-right: 0.5px solid rgba(255,255,255,0.24); border-bottom: 1px solid rgba(255,255,255,0.24); }
+    .ai-mockup .rs-grid-head > *:last-child { border-right: none; }
+    .ai-mockup .rs-grid-row > * { color: #2A4D8F; border-right: 0.5px solid rgba(0,0,0,0.06); border-bottom: 0.5px solid rgba(0,0,0,0.06); }
+    .ai-mockup .rs-grid-row > *:last-child { border-right: none; }
+    /* Per-column widths summing to 470 px: chk 22 + # 26 + Date 80 + Merchant 105 + Description 100 + Amount 60
+       + Tax 45 + Total 60 + Status 70 — total 568. Trim final two so total = 470. */
+    .ai-mockup .rs-grid-head .gh-chk,
+    .ai-mockup .rs-grid-row .gd-chk { width: 22px; padding: 0; justify-content: center; }
+    .ai-mockup .rs-grid-head .gh-num,
+    .ai-mockup .rs-grid-row .gd-num { width: 26px; padding: 0; justify-content: center; gap: 3px; }
+    .ai-mockup .rs-grid-head .gh-date,
+    .ai-mockup .rs-grid-row .gd-date { width: 80px; }
+    .ai-mockup .rs-grid-head .gh-merchant,
+    .ai-mockup .rs-grid-row .gd-merchant { width: 105px; }
+    .ai-mockup .rs-grid-head .gh-desc,
+    .ai-mockup .rs-grid-row .gd-desc { width: 100px; }
+    .ai-mockup .rs-grid-head .gh-amt,
+    .ai-mockup .rs-grid-row .gd-amt { width: 65px; justify-content: flex-end; }
+    .ai-mockup .rs-grid-head .gh-tax,
+    .ai-mockup .rs-grid-row .gd-tax { width: 50px; justify-content: flex-end; }
+    .ai-mockup .rs-grid-head .gh-total,
+    .ai-mockup .rs-grid-row .gd-total { width: 70px; justify-content: flex-end; }
+    /* Required-column asterisk in header */
+    .ai-mockup .rs-grid-head .req { color: #FFE5A8; font-size: 8px; margin-left: 1px; }
+    /* Mini empty checkbox icon — bordered square, transparent fill */
+    .ai-mockup .rs-grid-head .gh-chk-mark,
+    .ai-mockup .rs-grid-row .gd-chk-mark { width: 9px; height: 9px; border: 1px solid currentColor; border-radius: 1.5px; display: inline-block; }
+    /* Yellow status dot under the row number */
+    .ai-mockup .rs-grid-row .gd-num .dot { width: 4px; height: 4px; border-radius: 50%; background: #F5C84A; flex-shrink: 0; }
+    /* Truncated text columns */
+    .ai-mockup .rs-grid-row .gd-merchant,
+    .ai-mockup .rs-grid-row .gd-desc { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: block; line-height: 24px; }
 
     /* ---- Action stack (right side of report sheet): piggy / rainbow AI / chart icons + green FAB.
          Rainbow AI button has an infinite conic-gradient ring spin (idle visual identity, not part of the master 14s loop).
@@ -1111,6 +1147,10 @@
       .wif-arrow { width: 36px; height: 36px; }
     }
 
+    /* Inline highlights inside .wif-panel-text */
+    .wif-pop  { color: var(--green-dark); font-weight: inherit; }
+    .wif-pain { color: inherit; font-weight: 600; }
+
     @media (prefers-reduced-motion: reduce) {
       .wif-stage { transition: none; }
       .wif-tab, .wif-arrow, .wif-dot, .wif-panel img { transition: none; }
@@ -1308,7 +1348,7 @@
         <div class="section-header">
           <p class="section-label reveal">Who's it for</p>
           <h2 class="section-title reveal" id="wif-heading">Built for your industry.</h2>
-          <p class="section-subtitle reveal">Pick yours and see exactly how a LensReport workflow plays out — receipt to report.</p>
+          <p class="section-subtitle reveal">Pick yours and see how a LensReport workflow plays out — from receipt to auto-calculated report.</p>
         </div>
         <div class="wif-picker stagger" role="tablist" aria-label="Select your industry">
           <button type="button" id="wif-tab-accounting" class="wif-tab reveal" role="tab" aria-selected="true" aria-controls="wif-stage" data-sector="accounting">
@@ -1365,7 +1405,7 @@
                 </picture>
                 <figcaption class="wif-panel-caption">
                   <p class="wif-panel-label">The Problem</p>
-                  <p class="wif-panel-text">Tax season means clients arriving with shoeboxes of receipts. An accountant spends weeks chasing documents, manually categorising expenses, and rebuilding spreadsheets from scratch. Half the receipts are illegible. Deductions get missed. Deadlines get tight.</p>
+                  <p class="wif-panel-text">Tax season. Clients turn up with <strong class="wif-pain">shoeboxes</strong> of receipts. The accountant spends weeks chasing documents, retyping spreadsheets, and finding deductions buried under illegible paper.</p>
                 </figcaption>
               </figure>
               <figure class="wif-panel" data-panel="1">
@@ -1375,7 +1415,7 @@
                 </picture>
                 <figcaption class="wif-panel-caption">
                   <p class="wif-panel-label">The Scan</p>
-                  <p class="wif-panel-text">The accountant creates a Client Expenses template in LensReport and adds each client as a contributor. Clients scan receipts as they spend — fuel, meals, supplies — throughout the year, not just at tax time.</p>
+                  <p class="wif-panel-text">The accountant builds a <span class="wif-pop">Client Business Expense Report</span> and adds each client as a contributor. Clients scan receipts as they spend — fuel, meals, supplies — all year, not just March.</p>
                 </figcaption>
               </figure>
               <figure class="wif-panel" data-panel="2">
@@ -1385,7 +1425,7 @@
                 </picture>
                 <figcaption class="wif-panel-caption">
                   <p class="wif-panel-label">AI Insight</p>
-                  <p class="wif-panel-text">By the time the accountant opens the report, every entry is already categorised and timestamped. The AI can answer questions like “What’s this client’s largest expense category?” or “Are there any unusual spikes worth flagging?” — before the accountant even picks up the phone.</p>
+                  <p class="wif-panel-text">Every entry lands categorised and timestamped. By the time the accountant opens the file, the <span class="wif-pop">AI</span> is already answering <em>"largest category?"</em> and <em>"any spikes worth flagging?"</em></p>
                 </figcaption>
               </figure>
               <figure class="wif-panel" data-panel="3">
@@ -1395,7 +1435,7 @@
                 </picture>
                 <figcaption class="wif-panel-caption">
                   <p class="wif-panel-label">The Result</p>
-                  <p class="wif-panel-text">Every entry is exportable as a clean Excel file with working formulas ready to drop straight into their workflow. Less data entry, fewer missed deductions, and clients who actually stay organised year-round.</p>
+                  <p class="wif-panel-text">An Excel export with <span class="wif-pop">auto-calculated columns</span> drops straight into the accountant's workflow. Less retyping, fewer missed deductions, and <strong class="wif-pain">no more March panic</strong>.</p>
                 </figcaption>
               </figure>
             </div>
@@ -1574,27 +1614,36 @@
                     </div><!-- /.rs-entries-scroll -->
                     </div><!-- /.rs-cards-pane -->
 
-                    <!-- Grid pane: compact spreadsheet view shown 1.2-2.2 s of the loop. Status pills colour-code
-                         payment state (paid green / sent purple / overdue amber / draft grey). -->
+                    <!-- Grid pane: visually mirrors the app's ReportGrid widget — sage-green header with white
+                         DM-Mono labels (incl. Date* / Merchant* required indicators), checkbox + # row-number
+                         columns, blue cell text, zebra-striped rows. The .rs-grid-table is 470 px wide so the
+                         user sees only the leftmost ~272 px at first; the rs-grid-hscroll keyframe slides it
+                         left during 9-13 % of the cycle, revealing Amount / Tax / Total columns from the right. -->
                     <div class="rs-grid-pane" aria-hidden="true">
-                      <div class="rs-grid-head">
-                        <span>VENDOR</span>
-                        <span>DATE</span>
-                        <span>AMT</span>
-                        <span>STATUS</span>
+                      <div class="rs-grid-table">
+                        <div class="rs-grid-head">
+                          <span class="gh-chk"><span class="gh-chk-mark"></span></span>
+                          <span class="gh-num">#</span>
+                          <span class="gh-date">Date<span class="req">*</span></span>
+                          <span class="gh-merchant">Merchant<span class="req">*</span></span>
+                          <span class="gh-desc">Description</span>
+                          <span class="gh-amt">Amount</span>
+                          <span class="gh-tax">Tax 15%</span>
+                          <span class="gh-total">Total</span>
+                        </div>
+                        <div class="rs-grid-row"><span class="gd-chk"><span class="gd-chk-mark"></span></span><span class="gd-num">1<span class="dot"></span></span><span class="gd-date">Apr 30, 2026</span><span class="gd-merchant">Acme Corp</span><span class="gd-desc">Hardware kit</span><span class="gd-amt">$3,420</span><span class="gd-tax">$513.00</span><span class="gd-total">$3,933.00</span></div>
+                        <div class="rs-grid-row"><span class="gd-chk"><span class="gd-chk-mark"></span></span><span class="gd-num">2<span class="dot"></span></span><span class="gd-date">Apr 29, 2026</span><span class="gd-merchant">Contoso Ltd</span><span class="gd-desc">Services pkg</span><span class="gd-amt">$2,950</span><span class="gd-tax">$442.50</span><span class="gd-total">$3,392.50</span></div>
+                        <div class="rs-grid-row"><span class="gd-chk"><span class="gd-chk-mark"></span></span><span class="gd-num">3<span class="dot"></span></span><span class="gd-date">Apr 29, 2026</span><span class="gd-merchant">Northwind</span><span class="gd-desc">Bulk order</span><span class="gd-amt">$2,640</span><span class="gd-tax">$396.00</span><span class="gd-total">$3,036.00</span></div>
+                        <div class="rs-grid-row"><span class="gd-chk"><span class="gd-chk-mark"></span></span><span class="gd-num">4<span class="dot"></span></span><span class="gd-date">Apr 28, 2026</span><span class="gd-merchant">Initech</span><span class="gd-desc">License renewal</span><span class="gd-amt">$2,420</span><span class="gd-tax">$363.00</span><span class="gd-total">$2,783.00</span></div>
+                        <div class="rs-grid-row"><span class="gd-chk"><span class="gd-chk-mark"></span></span><span class="gd-num">5<span class="dot"></span></span><span class="gd-date">Apr 28, 2026</span><span class="gd-merchant">Globex</span><span class="gd-desc">Hardware</span><span class="gd-amt">$2,290</span><span class="gd-tax">$343.50</span><span class="gd-total">$2,633.50</span></div>
+                        <div class="rs-grid-row"><span class="gd-chk"><span class="gd-chk-mark"></span></span><span class="gd-num">6<span class="dot"></span></span><span class="gd-date">Apr 27, 2026</span><span class="gd-merchant">Fabrikam</span><span class="gd-desc">Consult hours</span><span class="gd-amt">$2,180</span><span class="gd-tax">$327.00</span><span class="gd-total">$2,507.00</span></div>
+                        <div class="rs-grid-row"><span class="gd-chk"><span class="gd-chk-mark"></span></span><span class="gd-num">7<span class="dot"></span></span><span class="gd-date">Apr 27, 2026</span><span class="gd-merchant">Stark Ind.</span><span class="gd-desc">Equipment</span><span class="gd-amt">$2,080</span><span class="gd-tax">$312.00</span><span class="gd-total">$2,392.00</span></div>
+                        <div class="rs-grid-row"><span class="gd-chk"><span class="gd-chk-mark"></span></span><span class="gd-num">8<span class="dot"></span></span><span class="gd-date">Apr 26, 2026</span><span class="gd-merchant">Wayne Ent.</span><span class="gd-desc">Maintenance</span><span class="gd-amt">$1,995</span><span class="gd-tax">$299.25</span><span class="gd-total">$2,294.25</span></div>
+                        <div class="rs-grid-row"><span class="gd-chk"><span class="gd-chk-mark"></span></span><span class="gd-num">9<span class="dot"></span></span><span class="gd-date">Apr 25, 2026</span><span class="gd-merchant">Wonka Ind.</span><span class="gd-desc">Logistics</span><span class="gd-amt">$1,787</span><span class="gd-tax">$268.05</span><span class="gd-total">$2,055.05</span></div>
+                        <div class="rs-grid-row"><span class="gd-chk"><span class="gd-chk-mark"></span></span><span class="gd-num">10<span class="dot"></span></span><span class="gd-date">Apr 24, 2026</span><span class="gd-merchant">Soylent Co.</span><span class="gd-desc">Subscription</span><span class="gd-amt">$1,810</span><span class="gd-tax">$271.50</span><span class="gd-total">$2,081.50</span></div>
+                        <div class="rs-grid-row"><span class="gd-chk"><span class="gd-chk-mark"></span></span><span class="gd-num">11<span class="dot"></span></span><span class="gd-date">Apr 23, 2026</span><span class="gd-merchant">Cyberdyne</span><span class="gd-desc">Robotics kit</span><span class="gd-amt">$1,753</span><span class="gd-tax">$262.95</span><span class="gd-total">$2,015.95</span></div>
+                        <div class="rs-grid-row"><span class="gd-chk"><span class="gd-chk-mark"></span></span><span class="gd-num">12<span class="dot"></span></span><span class="gd-date">Apr 22, 2026</span><span class="gd-merchant">Tyrell Corp</span><span class="gd-desc">Manufacturing</span><span class="gd-amt">$1,776</span><span class="gd-tax">$266.40</span><span class="gd-total">$2,042.40</span></div>
                       </div>
-                      <div class="rs-grid-row"><span class="gv">Acme Corp</span><span class="gd">Apr 30</span><span class="ga">$3,420</span><span class="gs paid">Paid</span></div>
-                      <div class="rs-grid-row"><span class="gv">Contoso Ltd</span><span class="gd">Apr 29</span><span class="ga">$2,950</span><span class="gs sent">Sent</span></div>
-                      <div class="rs-grid-row"><span class="gv">Northwind</span><span class="gd">Apr 29</span><span class="ga">$2,640</span><span class="gs overdue">Overdue</span></div>
-                      <div class="rs-grid-row"><span class="gv">Initech</span><span class="gd">Apr 28</span><span class="ga">$2,420</span><span class="gs sent">Sent</span></div>
-                      <div class="rs-grid-row"><span class="gv">Globex</span><span class="gd">Apr 28</span><span class="ga">$2,290</span><span class="gs paid">Paid</span></div>
-                      <div class="rs-grid-row"><span class="gv">Fabrikam</span><span class="gd">Apr 27</span><span class="ga">$2,180</span><span class="gs sent">Sent</span></div>
-                      <div class="rs-grid-row"><span class="gv">Stark Ind.</span><span class="gd">Apr 27</span><span class="ga">$2,080</span><span class="gs paid">Paid</span></div>
-                      <div class="rs-grid-row"><span class="gv">Wayne Ent.</span><span class="gd">Apr 26</span><span class="ga">$1,995</span><span class="gs sent">Sent</span></div>
-                      <div class="rs-grid-row"><span class="gv">Wonka Ind.</span><span class="gd">Apr 25</span><span class="ga">$1,787</span><span class="gs draft">Draft</span></div>
-                      <div class="rs-grid-row"><span class="gv">Soylent Co.</span><span class="gd">Apr 24</span><span class="ga">$1,810</span><span class="gs overdue">Overdue</span></div>
-                      <div class="rs-grid-row"><span class="gv">Cyberdyne</span><span class="gd">Apr 23</span><span class="ga">$1,753</span><span class="gs sent">Sent</span></div>
-                      <div class="rs-grid-row"><span class="gv">Tyrell Corp</span><span class="gd">Apr 22</span><span class="ga">$1,776</span><span class="gs paid">Paid</span></div>
                     </div>
                   </div><!-- /.rs-views-area -->
 
@@ -2109,28 +2158,28 @@
     (function() {
       var WIF = [
         { id: 'accounting', label: 'Accounting', panels: [
-          { caption: 'The Problem', story: 'Tax season means clients arriving with shoeboxes of receipts. An accountant spends weeks chasing documents, manually categorising expenses, and rebuilding spreadsheets from scratch. Half the receipts are illegible. Deductions get missed. Deadlines get tight.' },
-          { caption: 'The Scan', story: 'The accountant creates a Client Expenses template in LensReport and adds each client as a contributor. Clients scan receipts as they spend — fuel, meals, supplies — throughout the year, not just at tax time.' },
-          { caption: 'AI Insight', story: 'By the time the accountant opens the report, every entry is already categorised and timestamped. The AI can answer questions like "What’s this client’s largest expense category?" or "Are there any unusual spikes worth flagging?" — before the accountant even picks up the phone.' },
-          { caption: 'The Result', story: 'Every entry is exportable as a clean Excel file with working formulas ready to drop straight into their workflow. Less data entry, fewer missed deductions, and clients who actually stay organised year-round.' }
+          { caption: 'The Problem', story: 'Tax season. Clients turn up with <strong class="wif-pain">shoeboxes</strong> of receipts. The accountant spends weeks chasing documents, retyping spreadsheets, and finding deductions buried under illegible paper.' },
+          { caption: 'The Scan', story: 'The accountant builds a <span class="wif-pop">Client Business Expense Report</span> and adds each client as a contributor. Clients scan receipts as they spend — fuel, meals, supplies — all year, not just March.' },
+          { caption: 'AI Insight', story: 'Every entry lands categorised and timestamped. By the time the accountant opens the file, the <span class="wif-pop">AI</span> is already answering *"largest category?"* and *"any spikes worth flagging?"*' },
+          { caption: 'The Result', story: 'An Excel export with <span class="wif-pop">auto-calculated columns</span> drops straight into the accountant\'s workflow. Less retyping, fewer missed deductions, and <strong class="wif-pain">no more March panic</strong>.' }
         ]},
         { id: 'construction', label: 'Construction', panels: [
-          { caption: 'The Problem', story: 'Running multiple job sites means constant paperwork — plant and equipment hire invoices coming in from every direction. Site managers hold onto documents that get misplaced, lost, or fade before they ever reach the office.' },
-          { caption: 'The Scan', story: 'The owner purchases a Team subscription and creates a Plant & Equipment Hire Log report using the built-in template. Site managers are added as contributors at no extra cost. Every time a hire invoice arrives on site, the manager scans it instantly.' },
-          { caption: 'Real-Time View', story: 'The data populates the report in real time, and the owner gets a notification the moment it lands — across every job site simultaneously, with zero manual data entry.' },
-          { caption: 'The Result', story: 'By end of week the hire log is complete across every job site. The owner can chat directly with the AI: "Which site had the highest hire costs this month?" or "Are any equipment categories trending up?" Business intelligence from a phone.' }
+          { caption: 'The Problem', story: 'Running multiple job sites means constant paperwork. Plant and equipment hire invoices arrive from every direction, sit in site offices, and <strong class="wif-pain">get misplaced, lost, or fade</strong> before reaching head office.' },
+          { caption: 'The Scan', story: 'The owner spins up a <span class="wif-pop">Plant & Equipment Hire Log</span> from the built-in template and adds site managers as contributors at no extra cost. Every invoice gets scanned the moment it lands.' },
+          { caption: 'Real-Time View', story: 'The hire log populates in <span class="wif-pop">real time</span> — a notification per scan, every job site simultaneously, zero manual data entry from the office desk.' },
+          { caption: 'The Result', story: 'By Friday the hire log is complete across every site. The <span class="wif-pop">AI</span> answers *"highest-cost site this month?"* and *"any equipment trending up?"* — <strong class="wif-pain">business intelligence from a phone</strong>.' }
         ]},
         { id: 'property', label: 'Property', panels: [
-          { caption: 'The Problem', story: 'A property manager overseeing 15 rentals juggles maintenance invoices, contractor receipts, and repair bills across every property. Receipts come in via text, email, and paper. Tracking what was spent on which property — and proving it at tax time — is a constant headache.' },
-          { caption: 'The Scan', story: 'The property manager creates a Maintenance & Expenses report per property and adds trusted contractors as contributors. When a plumber completes a job, they scan the invoice on the spot.' },
-          { caption: 'Real-Time View', story: 'The entry lands instantly in the correct property’s report, tagged and logged. No chasing contractors. No WhatsApp threads. No missing documentation.' },
-          { caption: 'The Result', story: 'At year end, every property has a complete, accurate expense record. The AI surfaces insights like "Which property had the highest maintenance spend this quarter?" Tax preparation takes hours instead of weeks.' }
+          { caption: 'The Problem', story: 'A property manager overseeing 15 rentals juggles maintenance invoices and contractor bills. Receipts arrive via text, email, paper. Proving <strong class="wif-pain">what was spent on which property</strong> at tax time becomes a yearly headache.' },
+          { caption: 'The Scan', story: 'The manager creates a <span class="wif-pop">Maintenance & Repair Log</span> per property and adds trusted contractors as contributors. When a plumber finishes a job, they scan the invoice on the spot.' },
+          { caption: 'Real-Time View', story: 'Every entry lands <span class="wif-pop">instantly</span> against the correct property, tagged and logged. No chasing contractors, no WhatsApp threads, <strong class="wif-pain">nothing missing</strong>.' },
+          { caption: 'The Result', story: 'Year-end, every property carries a complete maintenance record. The <span class="wif-pop">AI</span> answers *"highest-spend property this quarter?"* — and tax prep takes <strong class="wif-pain">hours instead of weeks</strong>.' }
         ]},
         { id: 'delivery', label: 'Delivery', panels: [
-          { caption: 'The Problem', story: 'A courier company runs 12 drivers across the city. Fuel receipts, toll charges, and parking costs come in daily — or they’re supposed to. In reality, receipts pile up in gloveboxes, expenses get forgotten, and the weekly reconciliation is a guessing game.' },
-          { caption: 'The Scan', story: 'The owner creates a Weekly Driver Expenses report and adds all drivers as contributors. Every time a driver fills up or pays a toll, they scan the receipt immediately — right at the pump.' },
-          { caption: 'Real-Time View', story: 'Costs flow into the report in real time, broken down by driver and expense type. The owner sees every entry the moment it lands, with a notification for each scan.' },
-          { caption: 'The Result', story: 'Complete expense visibility across every driver, every day. The AI can answer "Who had the highest fuel spend this week?" or "Which route is generating the most toll costs?" — giving the owner data to make smarter operational decisions.' }
+          { caption: 'The Problem', story: 'A courier company runs 12 drivers across the city. Fuel, tolls, parking — meant to come in daily. In reality receipts pile up in gloveboxes and weekly reconciliation becomes <strong class="wif-pain">a guessing game</strong>.' },
+          { caption: 'The Scan', story: 'The owner creates a <span class="wif-pop">Driver Operations Report</span> and adds every driver as a contributor. Each fill-up, toll, or parking ticket gets scanned the moment it happens — right at the pump.' },
+          { caption: 'Real-Time View', story: 'Costs flow into the report in <span class="wif-pop">real time</span>, broken down by driver and category. The owner sees every entry the moment it lands, notification per scan.' },
+          { caption: 'The Result', story: 'Complete operational visibility across every driver, every day. The <span class="wif-pop">AI</span> answers *"highest fuel-spend this week?"* and *"which route is racking up the most tolls?"* — <strong class="wif-pain">sharper operational calls</strong>.' }
         ]},
         { id: 'events', label: 'Events', panels: [
           { caption: 'The Problem', story: 'An events company running weddings and corporate functions deals with dozens of vendor invoices per event — catering, florals, AV hire, staffing. Costs are tracked across spreadsheets, WhatsApp messages, and memory. Reconciling a single event after the fact takes an entire day.' },
