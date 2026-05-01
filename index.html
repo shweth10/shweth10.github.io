@@ -525,11 +525,11 @@
        body-text length variance across cards. */
     .problem-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
     .problem-card { margin: 0; display: flex; flex-direction: column; height: 100%; }
-    /* No explicit border — the tinted bg fill defines the edge cleanly. A grey
-       1 px border on a sage/coral tint reads as dirty edge piping. */
-    .problem-card .pc-img { aspect-ratio: 4 / 5; border-radius: var(--radius); background: var(--green-pale); overflow: hidden; display: flex; align-items: center; justify-content: center; transition: transform 0.3s ease, box-shadow 0.3s ease; }
-    .problem-card:hover .pc-img { transform: translateY(-3px); box-shadow: var(--shadow-md); }
-    .problem-card.coral-bg .pc-img { background: rgba(240,133,106,0.10); }
+    /* White cards with a soft drop shadow — no colored fill, no border line.
+       The shadow alone provides edge definition + lifted feel. Coral/sage is
+       still conveyed via the eyebrow label colour, not the card background. */
+    .problem-card .pc-img { aspect-ratio: 4 / 5; border-radius: var(--radius); background: var(--bg-white); box-shadow: var(--shadow-md); overflow: hidden; display: flex; align-items: center; justify-content: center; transition: transform 0.3s ease, box-shadow 0.3s ease; }
+    .problem-card:hover .pc-img { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
     .problem-card .pc-img img { width: 100%; height: 100%; object-fit: contain; padding: 18px; display: block; }
     /* THE PILE asset is 1:1 square in a 4:5 portrait box, so contain leaves
        vertical whitespace; tighter padding lets the drawing fill more of the box. */
