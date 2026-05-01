@@ -1151,6 +1151,16 @@
     .wif-pop  { color: var(--green-dark); font-weight: inherit; }
     .wif-pain { color: inherit; font-weight: 600; }
 
+    /* AI Insights feature cards */
+    .ai-cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-top: 28px; }
+    .ai-card { padding: 20px; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); transition: border-color 0.2s ease, transform 0.2s ease; }
+    .ai-card:hover { border-color: var(--green-light); transform: translateY(-2px); }
+    .ai-card-icon { width: 32px; height: 32px; color: var(--green-dark); margin-bottom: 12px; display: inline-flex; align-items: center; justify-content: center; }
+    .ai-card-icon svg { width: 100%; height: 100%; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .ai-card-label { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.95rem; font-weight: 700; color: var(--text); margin: 0 0 6px 0; }
+    .ai-card-text { font-size: 0.88rem; line-height: 1.5; color: var(--text-secondary); margin: 0; }
+    @media (max-width: 599px) { .ai-cards { grid-template-columns: 1fr; gap: 12px; margin-top: 20px; } }
+
     @media (prefers-reduced-motion: reduce) {
       .wif-stage { transition: none; }
       .wif-tab, .wif-arrow, .wif-dot, .wif-panel img { transition: none; }
@@ -1327,10 +1337,30 @@
       <div class="story-grid">
         <div class="story-copy reveal">
           <p class="section-label">AI Insights</p>
-          <h2 id="ai-insights-heading">Ask anything. Get the answer from your own data.</h2>
-          <p>Open the AI button on any report — a sales log, an expense ledger, an inventory count — and an adaptive dashboard greets you on the spot: top customers, sales split by category, biggest invoice, daily trend and outliers worth a second look. No taps, no wait, no setup.</p>
-          <p>Then type a question in plain English: "how much did I sell to Acme Corp?", "which day brought the most sales?", "show me invoices flagged for follow-up". LensReport's AI reads your entries, finds the matches (loose customer names, partial spellings and typos all welcome), and answers with the actual numbers and the actual line-item detail — not a hallucination. Every answer is grounded in your data, sourced when it matters, and gated behind a "start another conversation" button so context never drifts.</p>
-          <p>Available across all paid plans. Same daily limits everywhere. Owners pay for AI on their shared reports — contributors just use it.</p>
+          <h2 id="ai-insights-heading">Your data, answered.</h2>
+          <p>Open the AI button on any report and <strong class="wif-pain">the work shows up</strong> — auto-built charts, anomalies surfaced, savings spotted, every question answered with <span class="wif-pop">real line-items</span>.</p>
+          <div class="ai-cards">
+            <div class="ai-card">
+              <span class="ai-card-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span>
+              <p class="ai-card-label">Plain-English Q&amp;A</p>
+              <p class="ai-card-text">Ask in your own words — typos welcome. Every answer comes with <span class="wif-pop">real line-items</span>.</p>
+            </div>
+            <div class="ai-card">
+              <span class="ai-card-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></span>
+              <p class="ai-card-label">Adaptive dashboard</p>
+              <p class="ai-card-text">Auto-built charts, top categories, daily trends — <span class="wif-pop">the moment</span> you open the report.</p>
+            </div>
+            <div class="ai-card">
+              <span class="ai-card-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
+              <p class="ai-card-label">Spots anomalies</p>
+              <p class="ai-card-text">Outliers and unusual entries flagged <strong class="wif-pain">before they pile up</strong>.</p>
+            </div>
+            <div class="ai-card">
+              <span class="ai-card-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></span>
+              <p class="ai-card-label">Suggests savings</p>
+              <p class="ai-card-text">Points out where spend is <strong class="wif-pain">drifting</strong> — and where you might cut next.</p>
+            </div>
+          </div>
         </div>
         <div class="reveal ai-mockup-column">
           <div class="ai-mockup is-paused" role="img" aria-label="LensReport AI Insights flow animation: a Sales Invoice Log report sheet opens with 100 sample customer entries that scroll, the rainbow-ringed AI button is tapped, the AI Insights modal rises showing biggest sale, period revenue, sales split, advisor outliers, top customers and suggested questions, the keyboard rises, the user types 'show spending trends by day', a blob loader plays, then an answer reveals with a daily-spending chart, three insight tips with confidence pills, a helpful-feedback row and a Start another conversation button. The animation loops every 15.5 seconds and starts only when the section scrolls into view.">
