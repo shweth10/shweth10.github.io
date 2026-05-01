@@ -807,6 +807,14 @@
     .ai-mockup .body-dashboard .bar-row .fill { display: block; height: 100%; background: var(--green); border-radius: 3px; }
     .ai-mockup .body-dashboard .bar-row .num { width: 34px; min-width: 34px; text-align: right; font-family: 'DM Mono', monospace; font-size: 8.5px; color: var(--text-muted); flex-shrink: 0; }
     .ai-mockup .body-dashboard .qhead { font-size: 8.5px; color: var(--text-secondary); font-family: 'DM Mono', monospace; text-transform: uppercase; letter-spacing: 0.6px; padding: 2px 0 0 2px; }
+    /* Suggested-question chip rail rendered below the "More questions" heading in the dashboard scene.
+       First chip text mirrors the typewriter + answer headline so the eye reads it as "the one the user is about to ask". */
+    .ai-mockup .body-dashboard .qchip-rail { display: flex; flex-direction: column; gap: 5px; }
+    .ai-mockup .body-dashboard .qchip-mini { background: #FFF; border: 1px solid var(--border); border-radius: 9px; padding: 6px 9px; display: flex; align-items: center; gap: 7px; font-size: 9px; color: var(--text); line-height: 1.25; }
+    .ai-mockup .body-dashboard .qchip-icon { width: 16px; height: 16px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 700; flex-shrink: 0; }
+    .ai-mockup .body-dashboard .qchip-icon.up { background: var(--green-pale); color: var(--green-dark); }
+    .ai-mockup .body-dashboard .qchip-icon.dol { background: rgba(94,90,230,0.12); color: #5E5AE6; }
+    .ai-mockup .body-dashboard .qchip-icon.warn { background: rgba(245,200,74,0.18); color: #B0680E; }
 
     /* ---- Scene 5: Loading (blob lottie + caption, visible 9.6-12.0 s) ---- */
     .ai-mockup .body-loading { align-items: center; justify-content: center; gap: 10px !important; animation: scene-loading 15.5s linear infinite; }
@@ -1559,15 +1567,22 @@
                   </div>
                   <div class="ai-sheet-body">
 
-                    <!-- Scene 3: Sales-themed dashboard (visible 3.0-5.0s). Cards: daily sales trend, sales split donut + advisor, top customers. -->
+                    <!-- Scene 3: Sales-themed dashboard (visible 4.0-9.4s). Cards: biggest sale stat (replaces the
+                         trend chart so it's not repetitive vs the answer scene's daily-trend chart), sales split
+                         donut + advisor flag, top customers, suggested-question chips. -->
                     <div class="body-dashboard">
-                      <div class="card-wide">
-                        <div class="ct">Daily sales trend</div>
-                        <svg class="sparkline-mini" viewBox="0 0 200 30" preserveAspectRatio="none" aria-hidden="true">
-                          <polyline points="0,22 25,18 50,20 75,14 100,16 125,10 150,6 175,12 200,16" stroke="#4CAF7D" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-                          <circle cx="150" cy="6" r="2.5" fill="#4CAF7D"/>
-                        </svg>
-                        <div class="trend-peak">Peak on Apr 22 · $3,420</div>
+                      <!-- Top stat row: Biggest sale (left) + Period revenue (right). -->
+                      <div class="ai-row">
+                        <div class="card">
+                          <span class="badge">Biggest sale</span>
+                          <span class="big">$3,420</span>
+                          <span class="sub-line">Acme Corp · Apr 30</span>
+                        </div>
+                        <div class="card">
+                          <span class="badge">Period revenue</span>
+                          <span class="big">$148K</span>
+                          <span class="sub-line">100 invoices · 30 days</span>
+                        </div>
                       </div>
                       <div class="ai-row">
                         <div class="card">
@@ -1591,6 +1606,13 @@
                         <div class="bar-row"><span class="label">Initech</span><span class="bar"><span class="fill" style="width:42%;"></span></span><span class="num">$1.4k</span></div>
                       </div>
                       <div class="qhead">More questions</div>
+                      <!-- Suggested-question chip rail. The first chip is the one the user "types" in the next scene
+                           (matches the typewriter text + answer headline). -->
+                      <div class="qchip-rail">
+                        <div class="qchip-mini"><span class="qchip-icon up">↗</span><span>Show spending trends by day</span></div>
+                        <div class="qchip-mini"><span class="qchip-icon dol">$</span><span>Who are my top customers?</span></div>
+                        <div class="qchip-mini"><span class="qchip-icon warn">⚠</span><span>Show overdue invoices</span></div>
+                      </div>
                     </div>
 
                     <!-- Scene 5: Loading (blob lottie + caption, visible 9.4-11.6s). -->
