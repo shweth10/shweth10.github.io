@@ -688,6 +688,61 @@
        4-s timeline. Rainbow ring on the AI button has its own 3-s infinite spin (idle identity, decoupled from
        the loop). prefers-reduced-motion pins the answer state as a static motionless final frame. */
     .ai-mockup-column { display: flex; flex-direction: column; align-items: center; gap: 18px; }
+    /* === AI INSIGHTS — 3-step progress indicator below the phone =================
+       Sibling of .ai-mockup inside .ai-mockup-column. Shares the master 17 s clock
+       so iteration boundaries stay frame-aligned with every other animation in the
+       section. Pure CSS — no new JS, reuses the existing IntersectionObserver pause
+       path via a `~` sibling-selector extension. */
+    .ai-progress-track { width: clamp(260px, 100%, 300px); display: flex; flex-direction: column; gap: 7px;
+      /* Opacity envelope masks the fill snap-back at the iteration boundary.
+         Without this the rail snaps from 100% → 0% visibly on every loop. */
+      animation: ai-track-fade 17s linear infinite; }
+    .ai-progress-rail { position: relative; height: 3px; background: var(--border); border-radius: 2px; }
+    .ai-progress-fill { position: absolute; inset: 0; width: 100%; background: var(--green); border-radius: 2px;
+      transform: scaleX(0); transform-origin: left center;
+      /* transform animation is GPU-composited — no layout reflow per frame.
+         Avoids jank on mid-range Android WebView (common entry point from social
+         ads). Spec-equivalent visual to animating `width: 0% → 100%`. */
+      animation: ai-rail-fill 17s linear infinite; }
+    .ai-progress-dot { position: absolute; top: 50%; transform: translate(-50%, -50%);
+      width: 8px; height: 8px; border-radius: 50%;
+      background: transparent; border: 1.5px solid var(--border); box-sizing: border-box; }
+    /* Visually balanced spacing (0% / 50% / 100%) — labels read evenly. The fill
+       gives moment-to-moment timing feedback; the dot positions just mark milestones. */
+    .ai-progress-dot--1 { left: 0%;   animation: ai-dot-1 17s linear infinite; }
+    .ai-progress-dot--2 { left: 50%;  animation: ai-dot-2 17s linear infinite; }
+    .ai-progress-dot--3 { left: 100%; animation: ai-dot-3 17s linear infinite; }
+    /* 3-column grid + per-child text-align so each label's visual center sits
+       directly under its dot at 0% / 50% / 100%. `justify-content: space-between`
+       would only align label edges (left/right edges of "Data"/"Answer") and would
+       centre "Ask" within its auto-sized flex slot — not aligned to the 50% dot. */
+    .ai-progress-labels { display: grid; grid-template-columns: 1fr 1fr 1fr; }
+    .ai-progress-label { font: 500 10px/1 'Inter', sans-serif; color: var(--text-secondary); }
+    .ai-progress-label:nth-child(1) { text-align: left; }
+    .ai-progress-label:nth-child(2) { text-align: center; }
+    .ai-progress-label:nth-child(3) { text-align: right; }
+    @keyframes ai-rail-fill { 0% { transform: scaleX(0); } 100% { transform: scaleX(1); } }
+    /* Mask the loop seam: full opacity 0–97 %, fade out 97–100 %. */
+    @keyframes ai-track-fade { 0%, 97% { opacity: 1; } 100% { opacity: 0; } }
+    /* Step 1 "Data": ACTIVE 0–30 %, then PAST 30–100 %. */
+    @keyframes ai-dot-1 {
+      0%, 30% { background: var(--green); border-color: var(--green); width: 10px; height: 10px; box-shadow: 0 0 0 4px rgba(76, 175, 125, 0.22); }
+      30.1%, 100% { background: var(--green); border-color: var(--green); width: 8px; height: 8px; box-shadow: none; }
+    }
+    /* Step 2 "Ask": FUTURE 0–30 %, ACTIVE 30–65 %, PAST 65–100 %. */
+    @keyframes ai-dot-2 {
+      0%, 29.9% { background: transparent; border-color: var(--border); width: 8px; height: 8px; box-shadow: none; }
+      30%, 65% { background: var(--green); border-color: var(--green); width: 10px; height: 10px; box-shadow: 0 0 0 4px rgba(76, 175, 125, 0.22); }
+      65.1%, 100% { background: var(--green); border-color: var(--green); width: 8px; height: 8px; box-shadow: none; }
+    }
+    /* Step 3 "Answer": FUTURE 0–65 %, ACTIVE 65–98 %, then HOLDS PAST at 100 %.
+       Held in past state (not reset to future) so the loop seam reads as
+       "all 3 complete" the moment before the next iteration starts. */
+    @keyframes ai-dot-3 {
+      0%, 64.9% { background: transparent; border-color: var(--border); width: 8px; height: 8px; box-shadow: none; }
+      65%, 98% { background: var(--green); border-color: var(--green); width: 10px; height: 10px; box-shadow: 0 0 0 4px rgba(76, 175, 125, 0.22); }
+      100% { background: var(--green); border-color: var(--green); width: 8px; height: 8px; box-shadow: none; }
+    }
     /* Stage starts 36 px below screen top so the status bar (`9:41 ●●●●`) + Dynamic Island always sit cleanly above
        every scene. Without this, Scene 1's solid grey background was painting over the status bar and DI was
        overlapping the "Sales Invoice Log" title. The 36 px clear band matches a real iOS app's safe-area below
@@ -696,7 +751,10 @@
     .ai-mockup.is-paused .ai-stage,
     .ai-mockup.is-paused .ai-stage *,
     .ai-mockup.is-paused .ai-stage *::before,
-    .ai-mockup.is-paused .ai-stage *::after { animation-play-state: paused !important; }
+    .ai-mockup.is-paused .ai-stage *::after,
+    .ai-mockup.is-paused ~ .ai-progress-track,
+    .ai-mockup.is-paused ~ .ai-progress-track .ai-progress-fill,
+    .ai-mockup.is-paused ~ .ai-progress-track .ai-progress-dot { animation-play-state: paused !important; }
     /* Exception: rainbow ring on the AI button is the "live AI" brand identity — keep it spinning even when the
        rest of the demo is paused (scrolled out of view, between iterations, etc.) so the user always associates
        the AI button with motion, not a still gradient. */
@@ -979,6 +1037,14 @@
       .ai-mockup .body-answer .trend-svg .area-fill { opacity: 1 !important; }
       .ai-mockup .body-answer .trend-svg .this-period { stroke-dashoffset: 0 !important; }
       .ai-mockup .body-answer .trend-svg .data-pt { opacity: 1 !important; }
+      /* Progress indicator: pin at "demo finished" — rail full, all 3 dots solid past, opacity 1. */
+      .ai-progress-track,
+      .ai-progress-fill,
+      .ai-progress-dot { animation: none !important; }
+      .ai-progress-track { opacity: 1 !important; }
+      .ai-progress-fill { transform: scaleX(1) !important; }
+      .ai-progress-dot { background: var(--green) !important; border-color: var(--green) !important;
+        width: 8px !important; height: 8px !important; box-shadow: none !important; }
     }
 
 
@@ -1709,6 +1775,20 @@
                 </div>
 
               </div>
+            </div>
+          </div>
+          <!-- 3-step progress indicator — decorative; loops with the 17 s master timeline. -->
+          <div class="ai-progress-track" aria-hidden="true">
+            <div class="ai-progress-rail">
+              <div class="ai-progress-fill"></div>
+              <div class="ai-progress-dot ai-progress-dot--1"></div>
+              <div class="ai-progress-dot ai-progress-dot--2"></div>
+              <div class="ai-progress-dot ai-progress-dot--3"></div>
+            </div>
+            <div class="ai-progress-labels">
+              <span class="ai-progress-label">Data</span>
+              <span class="ai-progress-label">Ask</span>
+              <span class="ai-progress-label">Answer</span>
             </div>
           </div>
         </div>
