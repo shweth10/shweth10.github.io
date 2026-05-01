@@ -3,6 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Disable iOS Safari auto-linking of phone numbers / dates / addresses / emails site-wide.
+       Fixes a mobile-only underline that Safari was rendering under "your data…" in the AI demo
+       placeholder because of how it heuristically matches text patterns. -->
+  <meta name="format-detection" content="telephone=no,date=no,address=no,email=no">
   <title>LensReport — Pick a report. Scan. Done.</title>
   <meta name="description" content="Template-first AI that fills your report row by row. Ask your data anything in plain English — vendor breakdowns, biggest purchases, what's on a specific receipt. Export to PDF, Excel with real formulas, or a PIN-locked web link.">
   <meta property="og:title" content="LensReport — Scan, ask, and export.">
@@ -951,7 +955,7 @@
     @keyframes ask-visibility { 0%, 32% { opacity: 0; } 33%, 80% { opacity: 1; } 82%, 100% { opacity: 0; } }
     @keyframes ask-focus-loop { 0%, 41% { box-shadow: 0 6px 20px rgba(14, 23, 42, 0.08), 0 1px 3px rgba(14, 23, 42, 0.05), 0 0 0 0 rgba(76,175,125,0); border-color: rgba(0, 0, 0, 0.06); } 45%, 62% { box-shadow: 0 6px 20px rgba(14, 23, 42, 0.08), 0 1px 3px rgba(14, 23, 42, 0.05), 0 0 0 3px rgba(76,175,125,0.22); border-color: rgba(76, 175, 125, 0.6); } 66%, 100% { box-shadow: 0 6px 20px rgba(14, 23, 42, 0.08), 0 1px 3px rgba(14, 23, 42, 0.05), 0 0 0 0 rgba(76,175,125,0); border-color: rgba(0, 0, 0, 0.06); } }
     @keyframes ask-lift { 0%, 41% { transform: translateY(0); } 45%, 62% { transform: translateY(-152px); } 66%, 100% { transform: translateY(0); } }
-    .ai-mockup .ai-ask::before { content: 'Ask anything about your data\2026'; position: absolute; left: 13px; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 10px; pointer-events: none; animation: placeholder-fade 17s linear infinite; white-space: nowrap; }
+    .ai-mockup .ai-ask::before { content: 'Ask anything about your data\2026'; position: absolute; left: 13px; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 10px; pointer-events: none; animation: placeholder-fade 17s linear infinite; white-space: nowrap; text-decoration: none; -webkit-text-decoration: none; }
     @keyframes placeholder-fade { 0%, 41% { opacity: 1; } 45%, 100% { opacity: 0; } }
     .ai-mockup .ai-ask .typing-text { flex: 1; min-width: 0; overflow: hidden; white-space: nowrap; color: var(--text); font-size: 10px; line-height: 14px; clip-path: inset(0 100% 0 0); animation: ai-typing 17s steps(24, end) infinite; }
     @keyframes ai-typing { 0%, 45% { clip-path: inset(0 100% 0 0); } 62%, 100% { clip-path: inset(0 0% 0 0); } }
