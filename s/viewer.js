@@ -1,4 +1,4 @@
-// Firebase Functions Gen 2 — per-function Cloud Run URLs. Project hash is
+// Firebase Functions Gen 2, per-function Cloud Run URLs. Project hash is
 // stable unless the function is deleted and recreated; if share-viewer ever
 // breaks with a CORS/404 on load, re-check the deployed URL here.
 const GET_SHARED_REPORT_URL = 'https://getsharedreport-zpzuagqvoq-uc.a.run.app';
@@ -51,7 +51,7 @@ async function loadReport() {
     const json = await res.json();
     if (json && json.pinRequired) {
       // PIN-protected shares are not yet supported in this viewer.
-      // Server returns {pinRequired: true} with 200 — show a clear message.
+      // Server returns {pinRequired: true} with 200, show a clear message.
       showError('pin_required');
       return;
     }
@@ -322,7 +322,7 @@ function computeDashboardFromEntries(data) {
       }));
   }
 
-  // Daily Spending (bar chart) — group amounts by date
+  // Daily Spending (bar chart), group amounts by date
   let charts = [];
   if (dateCol) {
     const dailyTotals = {};
@@ -348,7 +348,7 @@ function computeDashboardFromEntries(data) {
       });
     }
 
-    // Monthly Trend (line chart) — only if 2+ months
+    // Monthly Trend (line chart), only if 2+ months
     const monthlyTotals = {};
     entries.forEach(e => {
       const dateRaw = e.fields ? e.fields[dateCol] : null;
@@ -373,7 +373,7 @@ function computeDashboardFromEntries(data) {
     }
   }
 
-  // Top Merchants — group by category field, include transaction count
+  // Top Merchants, group by category field, include transaction count
   let topMerchants = [];
   if (catCol && total > 0) {
     const merchantData = {};

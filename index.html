@@ -7,16 +7,16 @@
        Fixes a mobile-only underline that Safari was rendering under "your data…" in the AI demo
        placeholder because of how it heuristically matches text patterns. -->
   <meta name="format-detection" content="telephone=no,date=no,address=no,email=no">
-  <title>LensReport — Pick a report. Scan. Done.</title>
-  <meta name="description" content="Template-first AI that fills your report row by row. Ask your data anything in plain English — vendor breakdowns, biggest purchases, what's on a specific receipt. Export to PDF, Excel with real formulas, or a PIN-locked web link.">
-  <meta property="og:title" content="LensReport — Scan, ask, and export.">
-  <meta property="og:description" content="Template-first AI fills your report row by row. AI Insights answers free-text questions about your own data — grounded, sourced, no hallucinations. Export to PDF, Excel with real formulas, or a PIN-locked web link.">
+  <title>LensReport, Pick a report. Scan. Done.</title>
+  <meta name="description" content="Template-first AI that fills your report row by row. Ask your data anything in plain English, vendor breakdowns, biggest purchases, what's on a specific receipt. Export to PDF, Excel with real formulas, or a PIN-locked web link.">
+  <meta property="og:title" content="LensReport, Scan, ask, and export.">
+  <meta property="og:description" content="Template-first AI fills your report row by row. AI Insights answers free-text questions about your own data, grounded, sourced, no hallucinations. Export to PDF, Excel with real formulas, or a PIN-locked web link.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://lensreport.app/">
   <meta property="og:image" content="https://lensreport.app/assets/images/onboarding_01_scan_invoice.png">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="LensReport — Scan, ask, and export.">
-  <meta name="twitter:description" content="Template-first AI fills your report row by row. AI Insights answers free-text questions about your own data — no hallucinations. Real Excel formulas in every export.">
+  <meta name="twitter:title" content="LensReport, Scan, ask, and export.">
+  <meta name="twitter:description" content="Template-first AI fills your report row by row. AI Insights answers free-text questions about your own data, no hallucinations. Real Excel formulas in every export.">
   <meta name="twitter:image" content="https://lensreport.app/assets/images/onboarding_01_scan_invoice.png">
   <meta name="theme-color" content="#4CAF7D">
   <link rel="canonical" href="https://lensreport.app/">
@@ -262,7 +262,7 @@
     }
     .chip.link svg { fill: #FFFFFF; }
 
-    /* ====== Rows grid — 6 columns: idx, vendor, date, amount, vat, source ====== */
+    /* ====== Rows grid, 6 columns: idx, vendor, date, amount, vat, source ====== */
     .sheet-head, .row-s-grid, .row-new-grid {
       display: grid;
       grid-template-columns: 30px minmax(0, 1.25fr) 0.7fr 0.8fr 0.8fr 52px;
@@ -350,10 +350,10 @@
       mix-blend-mode: multiply;
     }
 
-    /* Cell fills — static filled state: opacity 1 */
+    /* Cell fills, static filled state: opacity 1 */
     .row-new-grid .fill { display: inline-block; opacity: 1; position: relative; z-index: 3; }
 
-    /* Thumbnail for active row — static filled state: visible */
+    /* Thumbnail for active row, static filled state: visible */
     .row-new-grid .thumb-wrap.active { opacity: 1; transform: scale(1); }
 
     /* ===== Label (outside overflow clip) ===== */
@@ -411,7 +411,7 @@
     @keyframes lbl-a { 0%, 38% { opacity: 1; } 42%, 100% { opacity: 0; } }
     @keyframes lbl-b { 0%, 38% { opacity: 0; } 44%, 98% { opacity: 1; } 100% { opacity: 0; } }
 
-    /* === HERO ANIMATIONS — only for users who haven't requested reduced motion === */
+    /* === HERO ANIMATIONS, only for users who haven't requested reduced motion === */
     @media (prefers-reduced-motion: no-preference) {
       .h-badge .dot { animation: softpulse 1.4s infinite; }
       .scan-line { animation: scan-sweep var(--t) cubic-bezier(0.4, 0, 0.6, 1) infinite; }
@@ -477,7 +477,7 @@
       .sheet-chrome .title { font-size: 9px; }
       .sheet-chrome .d { width: 8px; height: 8px; }
       .sheet-share { padding: 6px 10px; gap: 5px; }
-      /* Pitch section — CTA stacks */
+      /* Pitch section, CTA stacks */
       .pitch { padding-top: clamp(88px, 16vw, 104px); padding-bottom: 24px; }
       .h-cta { flex-direction: column; align-items: stretch; max-width: 260px; margin: 0 auto; }
       .h-store { justify-content: center; }
@@ -525,7 +525,7 @@
        body-text length variance across cards. */
     .problem-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
     .problem-card { margin: 0; display: flex; flex-direction: column; height: 100%; }
-    /* White cards with a soft drop shadow — no colored fill, no border line.
+    /* White cards with a soft drop shadow, no colored fill, no border line.
        The shadow alone provides edge definition + lifted feel. Coral/sage is
        still conveyed via the eyebrow label colour, not the card background. */
     .problem-card .pc-img { aspect-ratio: 4 / 5; border-radius: var(--radius); background: var(--bg-white); box-shadow: var(--shadow-md); overflow: hidden; display: flex; align-items: center; justify-content: center; transition: transform 0.3s ease, box-shadow 0.3s ease; }
@@ -544,18 +544,18 @@
     .problem-card .pc-body p { margin: 0 0 8px 0; }
     .problem-card .pc-body p:last-child { margin: 0; }
 
-    /* Bulleted stats — icon at left + short text. The source link (if any) is
-       a small inline sage chain icon at the end of the sentence — minimal,
+    /* Bulleted stats, icon at left + short text. The source link (if any) is
+       a small inline sage chain icon at the end of the sentence, minimal,
        no chip background. */
     .pc-stats { list-style: none; padding: 0; margin: 14px 0 0 0; display: flex; flex-direction: column; gap: 12px; text-align: left; }
     .pc-stat { display: grid; grid-template-columns: 26px 1fr; gap: 10px; align-items: center; }
     .pc-stat-icon { width: 26px; height: 26px; border-radius: 7px; background: rgba(76, 175, 125, 0.10); color: var(--green-dark); display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
     .pc-stat-icon svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
-    /* Coral variant — applied to THE COST card so its stat icons match the eyebrow label. */
+    /* Coral variant, applied to THE COST card so its stat icons match the eyebrow label. */
     .problem-card.coral-bg .pc-stat-icon { background: rgba(240, 133, 106, 0.12); color: var(--coral); }
     .pc-stat-text { font-size: 0.82rem; line-height: 1.5; color: var(--text-secondary); margin: 0; }
     .pc-stat-text strong { color: var(--text); font-weight: 700; }
-    /* Inline source-link glyph — sits at the end of the sentence text, sage,
+    /* Inline source-link glyph, sits at the end of the sentence text, sage,
        no chip box. Vertical-align middle so it baseline-rides cleanly. */
     .pc-stat-link { display: inline-flex; align-items: center; vertical-align: middle; color: var(--green); margin-left: 4px; transition: color 0.15s ease; text-decoration: none; }
     .pc-stat-link svg { width: 13px; height: 13px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
@@ -571,7 +571,7 @@
     .problem-section a[href^="http"]:not(.pc-stat-link):focus-visible { color: var(--green); text-decoration-thickness: 2px; }
     .problem-section a[href^="http"]:not(.pc-stat-link):focus-visible { outline: 2px solid var(--green-dark); outline-offset: 3px; border-radius: 2px; }
 
-    /* Closing statement — quiet italic line below the grid */
+    /* Closing statement, quiet italic line below the grid */
     .problem-closing { max-width: 760px; margin: 48px auto 0; text-align: center; }
     .problem-closing p { font-size: 0.95rem; line-height: 1.65; color: var(--text-secondary); font-style: italic; }
 
@@ -745,8 +745,8 @@
     .sc-footer .label { color: var(--green-dark); }
 
 
-    /* === AI INSIGHTS MOCKUP — modern phone aspect ratio (9:19.5) === */
-    /* Explicit calc-based width/height — aspect-ratio gets overridden by
+    /* === AI INSIGHTS MOCKUP, modern phone aspect ratio (9:19.5) === */
+    /* Explicit calc-based width/height, aspect-ratio gets overridden by
        the inner flex column's min-content size in this grid layout.
        9:19.5 matches iPhone 14 / Pixel 7-class displays. */
     .ai-mockup { --w: clamp(260px, 100%, 300px); width: var(--w); height: calc(var(--w) * 19.5 / 9); aspect-ratio: 9 / 19.5; flex-shrink: 0; background: linear-gradient(135deg, #2A3548 0%, #14202E 50%, #2A3548 100%); border-radius: 38px; box-shadow: var(--shadow-xl), 0 0 0 1px rgba(0,0,0,0.4); box-sizing: border-box; position: relative; }
@@ -764,10 +764,10 @@
        4-s timeline. Rainbow ring on the AI button has its own 3-s infinite spin (idle identity, decoupled from
        the loop). prefers-reduced-motion pins the answer state as a static motionless final frame. */
     .ai-mockup-column { display: flex; flex-direction: column; align-items: center; gap: 18px; }
-    /* === AI INSIGHTS — 3-step progress indicator below the phone =================
+    /* === AI INSIGHTS, 3-step progress indicator below the phone =================
        Sibling of .ai-mockup inside .ai-mockup-column. Shares the master 17 s clock
        so iteration boundaries stay frame-aligned with every other animation in the
-       section. Pure CSS — no new JS, reuses the existing IntersectionObserver pause
+       section. Pure CSS, no new JS, reuses the existing IntersectionObserver pause
        path via a `~` sibling-selector extension. */
     .ai-progress-track { width: clamp(260px, 100%, 300px); display: flex; flex-direction: column; gap: 7px;
       /* Opacity envelope masks the fill snap-back at the iteration boundary.
@@ -776,14 +776,14 @@
     .ai-progress-rail { position: relative; height: 4px; background: var(--border); border-radius: 2px; }
     .ai-progress-fill { position: absolute; inset: 0; width: 100%; background: var(--green); border-radius: 2px;
       transform: scaleX(0); transform-origin: left center;
-      /* transform animation is GPU-composited — no layout reflow per frame.
+      /* transform animation is GPU-composited, no layout reflow per frame.
          Avoids jank on mid-range Android WebView (common entry point from social
          ads). Spec-equivalent visual to animating `width: 0% → 100%`. */
       animation: ai-rail-fill 17s linear infinite; }
     /* Three-state stepper following Stripe/Linear/Material conventions:
-       FUTURE  — small white-centre disc with grey outline ("not yet visited")
-       PAST    — small solid sage disc ("done")
-       ACTIVE  — bigger concentric ring (white centre + sage ring) with sage halo
+       FUTURE , small white-centre disc with grey outline ("not yet visited")
+       PAST   , small solid sage disc ("done")
+       ACTIVE , bigger concentric ring (white centre + sage ring) with sage halo
                  ("you are here"). The active state's hard outer ring + halo gives
                  it visual weight at small phone width where size-only differentiation
                  wouldn't read. */
@@ -838,7 +838,7 @@
     .ai-mockup.is-paused ~ .ai-progress-track,
     .ai-mockup.is-paused ~ .ai-progress-track .ai-progress-fill,
     .ai-mockup.is-paused ~ .ai-progress-track .ai-progress-dot { animation-play-state: paused !important; }
-    /* Exception: rainbow ring on the AI button is the "live AI" brand identity — keep it spinning even when the
+    /* Exception: rainbow ring on the AI button is the "live AI" brand identity, keep it spinning even when the
        rest of the demo is paused (scrolled out of view, between iterations, etc.) so the user always associates
        the AI button with motion, not a still gradient. */
     .ai-mockup.is-paused .ai-rainbow-btn::before { animation-play-state: running !important; }
@@ -861,7 +861,7 @@
     .ai-mockup .rs-avatar.b { background: #F0856A; }
     .ai-mockup .rs-icon { font-size: 10px; color: var(--text-secondary); width: 12px; text-align: center; flex-shrink: 0; }
     /* Cards/Grid segmented control: a sliding white pill underlay (rs-tab-pill) animates between the two tab
-       positions during Scene 1 — 0-1.0s on Cards, 1.2-2.2s on Grid, 2.4-3.0s back on Cards — synchronised with
+       positions during Scene 1, 0-1.0s on Cards, 1.2-2.2s on Grid, 2.4-3.0s back on Cards, synchronised with
        the .rs-cards-pane ↔ .rs-grid-pane crossfade below. */
     .ai-mockup .rs-tabs { display: flex; background: #ECEEF1; border-radius: 8px; padding: 2px; gap: 2px; position: relative; }
     .ai-mockup .rs-tab-pill { position: absolute; top: 2px; bottom: 2px; width: calc(50% - 3px); left: 2px; background: #FFF; border-radius: 6px; box-shadow: 0 1px 2px rgba(0,0,0,0.06); animation: rs-tab-pill-slide 17s cubic-bezier(0.4, 0, 0.6, 1) infinite; z-index: 0; }
@@ -908,7 +908,7 @@
        widgets/report_grid.dart): solid sage-green (#4CAF7D) header with white DM-Mono labels, white-tinted
        column dividers, checkbox + # row-number columns on the left. Data rows alternate #F4FAF6 / #F7F8FA per the
        app's tableAltRow / inputCellBg constants. The table is wider than the phone viewport (470 px vs ~272 px)
-       so it scrolls horizontally during the grid visibility window — animation rs-grid-hscroll translates the
+       so it scrolls horizontally during the grid visibility window, animation rs-grid-hscroll translates the
        inner table -200 px during 9-13 % of the cycle. */
     .ai-mockup .rs-grid-table { position: absolute; top: 0; left: 0; width: 470px; will-change: transform; animation: rs-grid-hscroll 17s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
     @keyframes rs-grid-hscroll { 0%, 13% { transform: translateX(0); } 24% { transform: translateX(-200px); } 25%, 100% { transform: translateX(0); } }
@@ -923,7 +923,7 @@
     .ai-mockup .rs-grid-row > * { color: #2A4D8F; border-right: 0.5px solid rgba(0,0,0,0.06); border-bottom: 0.5px solid rgba(0,0,0,0.06); }
     .ai-mockup .rs-grid-row > *:last-child { border-right: none; }
     /* Per-column widths summing to 470 px: chk 22 + # 26 + Date 80 + Merchant 105 + Description 100 + Amount 60
-       + Tax 45 + Total 60 + Status 70 — total 568. Trim final two so total = 470. */
+       + Tax 45 + Total 60 + Status 70, total 568. Trim final two so total = 470. */
     .ai-mockup .rs-grid-head .gh-chk,
     .ai-mockup .rs-grid-row .gd-chk { width: 22px; padding: 0; justify-content: center; }
     .ai-mockup .rs-grid-head .gh-num,
@@ -942,7 +942,7 @@
     .ai-mockup .rs-grid-row .gd-total { width: 70px; justify-content: flex-end; }
     /* Required-column asterisk in header */
     .ai-mockup .rs-grid-head .req { color: #FFE5A8; font-size: 8px; margin-left: 1px; }
-    /* Mini empty checkbox icon — bordered square, transparent fill */
+    /* Mini empty checkbox icon, bordered square, transparent fill */
     .ai-mockup .rs-grid-head .gh-chk-mark,
     .ai-mockup .rs-grid-row .gd-chk-mark { width: 9px; height: 9px; border: 1px solid currentColor; border-radius: 1.5px; display: inline-block; }
     /* Yellow status dot under the row number */
@@ -953,7 +953,7 @@
 
     /* ---- Action stack (right side of report sheet): piggy / rainbow AI / chart icons + green FAB.
          Rainbow AI button has an infinite conic-gradient ring spin (idle visual identity, not part of the master 14s loop).
-         The AI button is the tap target — the ripple emanates from it at 16-18% of the master timeline (~2.4 s in). */
+         The AI button is the tap target, the ripple emanates from it at 16-18% of the master timeline (~2.4 s in). */
     .ai-mockup .rs-actions { position: absolute; right: 10px; bottom: 14px; display: flex; flex-direction: column; gap: 7px; align-items: center; z-index: 4; }
     .ai-mockup .rs-action-btn { width: 26px; height: 26px; border-radius: 50%; background: #FFF; border: 1.5px solid rgba(76,175,125,0.18); display: flex; align-items: center; justify-content: center; color: var(--green-dark); box-shadow: 0 2px 6px rgba(0,0,0,0.10); flex-shrink: 0; padding: 0; position: relative; }
     .ai-mockup .rs-action-btn.ai-rainbow-btn { background: #FFF; border: none; cursor: default; overflow: visible; }
@@ -976,7 +976,7 @@
     .ai-mockup .ai-sheet-header .close-x { position: absolute; right: 0; top: 1px; font-size: 14px; color: var(--text-muted); line-height: 1; }
     /* ai-sheet-body reserves space at the bottom for the absolutely-positioned ask bar (which sits above the keyboard at z 10).
        Inset-bottom (54 px) > pill-height (32 px) + pill-bottom (9 px) so dashboard content always ends with breathing
-       room above the frosted pill — no content visually disappears behind it. */
+       room above the frosted pill, no content visually disappears behind it. */
     .ai-mockup .ai-sheet-body { position: relative; flex: 1; min-height: 0; overflow: hidden; padding-bottom: 54px; }
     .ai-mockup .ai-sheet-body > * { position: absolute; inset: 0 0 54px 0; display: flex; flex-direction: column; gap: 6px; }
     /* Explicit z-index in timeline order so the later scene always paints over the earlier during crossfades. */
@@ -1089,7 +1089,7 @@
 
     /* ---- Ask bar: Apple iOS frosted-glass pill (Spotlight / Messages aesthetic).
          backdrop-filter blur(20 px) + saturate(1.8) so dashboard content under the pill is softly translucent.
-         Translucent white fill + hairline border + soft layered shadow — no hard fill, no opaque white block.
+         Translucent white fill + hairline border + soft layered shadow, no hard fill, no opaque white block.
          Positioned absolutely at the bottom of the sheet so it stacks (z 10) above the keyboard (z 5).
          Visible 3.1-12.0 s. Lifts 152 px when keyboard rises (5.0-5.6 s) and drops back at 9.0-9.4 s. ---- */
     .ai-mockup .ai-ask { position: absolute; left: 11px; right: 11px; bottom: 9px; background: rgba(255, 255, 255, 0.72); -webkit-backdrop-filter: blur(20px) saturate(1.8); backdrop-filter: blur(20px) saturate(1.8); border: 0.5px solid rgba(0, 0, 0, 0.06); border-radius: 22px; padding: 8px 8px 8px 14px; display: flex; align-items: center; gap: 8px; font-size: 10.5px; color: var(--text-muted); z-index: 10; overflow: hidden; box-shadow: 0 6px 20px rgba(14, 23, 42, 0.08), 0 1px 3px rgba(14, 23, 42, 0.05); animation: ask-visibility 17s linear infinite, ask-focus-loop 17s linear infinite, ask-lift 17s cubic-bezier(0.32, 0.72, 0, 1) infinite; }
@@ -1120,7 +1120,7 @@
       .ai-mockup .body-answer .trend-svg .area-fill { opacity: 1 !important; }
       .ai-mockup .body-answer .trend-svg .this-period { stroke-dashoffset: 0 !important; }
       .ai-mockup .body-answer .trend-svg .data-pt { opacity: 1 !important; }
-      /* Progress indicator: pin at "demo finished" — rail full, all 3 dots solid past, opacity 1. */
+      /* Progress indicator: pin at "demo finished", rail full, all 3 dots solid past, opacity 1. */
       .ai-progress-track,
       .ai-progress-fill,
       .ai-progress-dot { animation: none !important; }
@@ -1160,7 +1160,34 @@
     .browser-frame.viewer { max-width: 460px; }
     .browser-frame.viewer .bf-body { padding: 0; text-align: left; background: #F7F8FA; }
     .browser-frame.viewer .bf-body img { display: block; width: 100%; height: auto; }
-    .browser-frame.viewer.share-copy-viewer { margin-top: 32px; max-width: 100%; }
+
+    /* === SECURE WEB SHARING, hero screenshot + mini detail row === */
+    .share-grid { grid-template-columns: 1.45fr 1fr; gap: 56px; max-width: 1200px; }
+    .share-stage { width: 100%; max-width: 680px; margin: 0 auto; }
+    .share-stage-hero.browser-frame.viewer { width: 100%; max-width: 680px; border-radius: 14px; box-shadow: var(--shadow-xl), 0 0 0 1px var(--border); }
+    .share-stage-hero .bf-chrome { padding: 12px 16px; }
+    .share-mini-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 32px; max-width: 480px; align-items: stretch; }
+    .share-stage-mini { box-shadow: 0 8px 24px -10px rgba(15, 23, 42, 0.18), 0 0 0 1px var(--border); }
+    .share-stage-mini.share-dialog { width: 100%; max-width: none; padding: 12px 14px; }
+    .share-stage-mini.share-dialog h4 { font-size: 11px; margin-bottom: 9px; gap: 6px; }
+    .share-stage-mini.share-dialog .url-box { font-size: 9px; padding: 6px 9px; margin-bottom: 8px; border-radius: 7px; }
+    .share-stage-mini.share-dialog .pin-row { padding: 7px 9px; margin-bottom: 7px; gap: 6px; border-radius: 7px; }
+    .share-stage-mini.share-dialog .pin-label { font-size: 8px; letter-spacing: 0.4px; }
+    .share-stage-mini.share-dialog .pin-code { font-size: 12px; letter-spacing: 2px; }
+    .share-stage-mini.share-dialog .share-row { font-size: 9px; }
+    .share-stage-mini.browser-frame { width: 100%; max-width: none; border-radius: 10px; }
+    .share-stage-mini.browser-frame .bf-chrome { padding: 7px 10px; }
+    .share-stage-mini.browser-frame .bf-chrome .dot { width: 6px; height: 6px; }
+    .share-stage-mini.browser-frame .bf-chrome .url { font-size: 8px; padding: 2px 7px; margin-left: 7px; }
+    .share-stage-mini.browser-frame .bf-body { padding: 14px 10px 16px; }
+    .share-stage-mini.browser-frame .bf-body .lock-icon { width: 28px; height: 28px; margin-bottom: 8px; border-radius: 7px; }
+    .share-stage-mini.browser-frame .bf-body .lock-icon svg { width: 14px; height: 14px; }
+    .share-stage-mini.browser-frame .bf-body h5 { font-size: 11px; margin-bottom: 10px; }
+    .share-stage-mini.browser-frame .pin-inputs { gap: 3px; margin-bottom: 0; }
+    .share-stage-mini.browser-frame .pin-inputs .pi { width: 18px; height: 22px; font-size: 10px; border-width: 1px; }
+    @media (max-width: 540px) {
+      .share-mini-row { grid-template-columns: 1fr; gap: 12px; max-width: 320px; }
+    }
 
     /* === PERSONAS === */
     .personas-section { background: var(--bg-white); }
@@ -1331,7 +1358,7 @@
     "name": "LensReport",
     "applicationCategory": "BusinessApplication",
     "operatingSystem": "iOS, Android",
-    "description": "Template-first AI that fills your report row by row. Scan receipts, invoices and forms with your phone — export to PDF, Excel with real formulas, or a PIN-locked web link. Collaborate with your field team in real time.",
+    "description": "Template-first AI that fills your report row by row. Scan receipts, invoices and forms with your phone, export to PDF, Excel with real formulas, or a PIN-locked web link. Collaborate with your field team in real time.",
     "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
     "publisher": { "@type": "Organization", "name": "LensReport", "url": "https://lensreport.app", "email": "info@lensreport.app" }
   }
@@ -1377,7 +1404,7 @@
         <div class="h-badge"><span class="dot"></span>LAUNCHING ON iOS &amp; ANDROID</div>
         <p class="sr-only">Animation: a phone scans a fuel receipt. A new row appears in a spreadsheet with the vendor, date, amount and calculated VAT extracted by AI.</p>
         <h1 class="h-headline" id="hero-heading">Pick a report.<br><span class="green">Scan.</span> Done.</h1>
-        <p class="h-sub">Template-first AI fills your report, row by row. Then <strong>ask your own data anything</strong> — "how much did I sell to Acme Corp?", "what's my biggest invoice this month?" — and get grounded answers, not guesses. Export as PDF, Excel or CSV, or share a PIN-locked web link your accountant opens in any browser.</p>
+        <p class="h-sub">Template-first AI fills your report, row by row. Then <strong>ask your own data anything</strong>, "how much did I sell to Acme Corp?", "what's my biggest invoice this month?", and get grounded answers, not guesses. Export as PDF, Excel or CSV, or share a PIN-locked web link your accountant opens in any browser.</p>
         <div class="h-cta">
           <span class="h-store" role="img" aria-label="Coming soon on the App Store">
             <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
@@ -1497,17 +1524,17 @@
         <div class="story-copy reveal">
           <p class="section-label">AI Insights</p>
           <h2 id="ai-insights-heading">Your data, answered.</h2>
-          <p>Open the AI button on any report and <strong class="wif-pain">the work shows up</strong> — auto-built charts, anomalies surfaced, savings spotted, every question answered with <span class="wif-pop">real line-items</span>.</p>
+          <p>Open the AI button on any report and <strong class="wif-pain">the work shows up</strong>, auto-built charts, anomalies surfaced, savings spotted, every question answered with <span class="wif-pop">real line-items</span>.</p>
           <div class="ai-cards">
             <div class="ai-card">
               <span class="ai-card-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span>
               <p class="ai-card-label">Plain-English Q&amp;A</p>
-              <p class="ai-card-text">Ask in your own words — typos welcome. Every answer comes with <span class="wif-pop">real line-items</span>.</p>
+              <p class="ai-card-text">Ask in your own words, typos welcome. Every answer comes with <span class="wif-pop">real line-items</span>.</p>
             </div>
             <div class="ai-card">
               <span class="ai-card-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></span>
               <p class="ai-card-label">Adaptive dashboard</p>
-              <p class="ai-card-text">Auto-built charts, top categories, daily trends — <span class="wif-pop">the moment</span> you open the report.</p>
+              <p class="ai-card-text">Auto-built charts, top categories, daily trends, <span class="wif-pop">the moment</span> you open the report.</p>
             </div>
             <div class="ai-card">
               <span class="ai-card-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
@@ -1517,7 +1544,7 @@
             <div class="ai-card">
               <span class="ai-card-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></span>
               <p class="ai-card-label">Suggests savings</p>
-              <p class="ai-card-text">Points out where spend is <strong class="wif-pain">drifting</strong> — and where you might cut next.</p>
+              <p class="ai-card-text">Points out where spend is <strong class="wif-pain">drifting</strong>, and where you might cut next.</p>
             </div>
           </div>
         </div>
@@ -1527,7 +1554,7 @@
               <div class="ai-status"><span>9:41</span><span class="ai-icons">●●●●</span></div>
               <div class="ai-stage">
 
-                <!-- Scene 1: Sales Invoice Log report sheet — visible 0.0–2.4s.
+                <!-- Scene 1: Sales Invoice Log report sheet, visible 0.0–2.4s.
                      Sample data with sales context (customers, invoice numbers, terms). The action stack on the right
                      includes the rainbow-ringed AI button which receives the tap ripple at ~2.4s. -->
                 <div class="ai-stage-report" aria-hidden="true">
@@ -1563,7 +1590,7 @@
                   <!-- Views area hosts BOTH a Cards pane (existing 100-entry scroll) and a Grid pane (spreadsheet
                        view) as overlapping absolute children that crossfade during Scene 1: cards 0-1.0 s, grid
                        1.2-2.2 s, cards 2.4-3.0 s. The Cards/Grid tab pill above slides in sync. The 100 invoices
-                       are populated by inline JS at end of <body> — first 8 rendered server-side for SEO / no-JS
+                       are populated by inline JS at end of <body>, first 8 rendered server-side for SEO / no-JS
                        clients; JS appends the remaining 92. Each pane's overflow:hidden clips its own content. -->
                   <div class="rs-views-area">
                     <div class="rs-cards-pane">
@@ -1635,7 +1662,7 @@
                     </div><!-- /.rs-entries-scroll -->
                     </div><!-- /.rs-cards-pane -->
 
-                    <!-- Grid pane: visually mirrors the app's ReportGrid widget — sage-green header with white
+                    <!-- Grid pane: visually mirrors the app's ReportGrid widget, sage-green header with white
                          DM-Mono labels (incl. Date* / Merchant* required indicators), checkbox + # row-number
                          columns, blue cell text, zebra-striped rows. The .rs-grid-table is 470 px wide so the
                          user sees only the leftmost ~272 px at first; the rs-grid-hscroll keyframe slides it
@@ -1754,7 +1781,7 @@
                       <div class="answered-question">Show sales trends by day</div>
                       <div class="narrative-callout">
                         <span class="sparkle-icon">✦</span>
-                        <span>Daily sales ranged from $1,200 on Apr 21 to a peak of $10,420 on Apr 30 — $148,392 across 100 invoices in April.</span>
+                        <span>Daily sales ranged from $1,200 on Apr 21 to a peak of $10,420 on Apr 30, $148,392 across 100 invoices in April.</span>
                       </div>
                       <div class="switch-chart-row">
                         <span class="switch-chart-pill">↗ Switch chart</span>
@@ -1802,21 +1829,21 @@
                       <div class="insight-tip">
                         <span class="tip-icon lit">💡</span>
                         <div class="tip-content">
-                          Sales peaked on Apr 30 at $10,420 — led by your largest invoice, Acme Corp · $3,420.
+                          Sales peaked on Apr 30 at $10,420, led by your largest invoice, Acme Corp · $3,420.
                           <div class="tip-pills"><span class="conf-pill high">High confidence</span></div>
                         </div>
                       </div>
                       <div class="insight-tip">
                         <span class="tip-icon up">↗</span>
                         <div class="tip-content">
-                          Strong upward run in the last week — Apr 28-30 totalled $28,120, about 19% of April.
+                          Strong upward run in the last week, Apr 28-30 totalled $28,120, about 19% of April.
                           <div class="tip-pills"><span class="conf-pill high">High confidence</span></div>
                         </div>
                       </div>
                       <div class="insight-tip">
                         <span class="tip-icon play">▸</span>
                         <div class="tip-content">
-                          Chase Northwind's $2,640 invoice from Apr 29 — flagged overdue, biggest open balance.
+                          Chase Northwind's $2,640 invoice from Apr 29, flagged overdue, biggest open balance.
                           <div class="tip-pills"><span class="conf-pill high">High confidence</span><span class="conf-pill minor">Minor</span></div>
                         </div>
                       </div>
@@ -1866,7 +1893,7 @@
               </div>
             </div>
           </div>
-          <!-- 3-step progress indicator — decorative; loops with the 17 s master timeline. -->
+          <!-- 3-step progress indicator, decorative; loops with the 17 s master timeline. -->
           <div class="ai-progress-track" aria-hidden="true">
             <div class="ai-progress-rail">
               <div class="ai-progress-fill"></div>
@@ -1891,11 +1918,11 @@
       </div>
       <div class="app-preview-track-wrap">
         <div class="app-preview-track stagger" role="list">
-          <figure class="app-preview-card reveal" role="listitem" data-caption="1 / 5"><img src="assets/images/app-preview/1.jpg" alt="Your team scans in the field, reports land instantly on your phone — one plan, whole team included" loading="lazy" width="621" height="1344"><span class="expand-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></span></figure>
-          <figure class="app-preview-card reveal" role="listitem" data-caption="2 / 5"><img src="assets/images/app-preview/2.jpg" alt="Pick a report template, scan, done — LensReport category browser with Finance, Tax, Travel and Personal tiles" loading="lazy" width="621" height="1344"><span class="expand-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></span></figure>
-          <figure class="app-preview-card reveal" role="listitem" data-caption="3 / 5"><img src="assets/images/app-preview/3.jpg" alt="Three-step flow — grab the document, scan it, the report is auto-filled by AI" loading="lazy" width="621" height="1344"><span class="expand-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></span></figure>
+          <figure class="app-preview-card reveal" role="listitem" data-caption="1 / 5"><img src="assets/images/app-preview/1.jpg" alt="Your team scans in the field, reports land instantly on your phone, one plan, whole team included" loading="lazy" width="621" height="1344"><span class="expand-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></span></figure>
+          <figure class="app-preview-card reveal" role="listitem" data-caption="2 / 5"><img src="assets/images/app-preview/2.jpg" alt="Pick a report template, scan, done, LensReport category browser with Finance, Tax, Travel and Personal tiles" loading="lazy" width="621" height="1344"><span class="expand-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></span></figure>
+          <figure class="app-preview-card reveal" role="listitem" data-caption="3 / 5"><img src="assets/images/app-preview/3.jpg" alt="Three-step flow, grab the document, scan it, the report is auto-filled by AI" loading="lazy" width="621" height="1344"><span class="expand-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></span></figure>
           <figure class="app-preview-card reveal" role="listitem" data-caption="4 / 5"><img src="assets/images/app-preview/4.jpg" alt="Ready-made templates or build your own with Column Studio and smart calculated columns" loading="lazy" width="621" height="1344"><span class="expand-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></span></figure>
-          <figure class="app-preview-card reveal" role="listitem" data-caption="5 / 5"><img src="assets/images/app-preview/5.jpg" alt="Share reports with anyone via a PIN-locked web link — no app needed, opens in any browser" loading="lazy" width="621" height="1344"><span class="expand-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></span></figure>
+          <figure class="app-preview-card reveal" role="listitem" data-caption="5 / 5"><img src="assets/images/app-preview/5.jpg" alt="Share reports with anyone via a PIN-locked web link, no app needed, opens in any browser" loading="lazy" width="621" height="1344"><span class="expand-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></span></figure>
         </div>
       </div>
     </section>
@@ -1904,7 +1931,7 @@
         <header class="problem-header reveal">
           <p class="section-label">The Problem</p>
           <h2 id="problem-heading">Documents are created everywhere.<span class="h-break">Most of them go nowhere.</span></h2>
-          <p>Invoices, receipts, expense records, delivery dockets — generated worldwide, every day. And <a href="https://www.athento.com/unstructured-information-the-great-challenge-and-opportunity-for-companies-in-2025/" target="_blank" rel="noopener noreferrer">80–90% of all business data generated today is unstructured</a> — scattered, unorganised, stuffed in pockets, piled on desks, or sitting unread in an email inbox.</p>
+          <p>Invoices, receipts, expense records, delivery dockets, generated worldwide, every day. And <a href="https://www.athento.com/unstructured-information-the-great-challenge-and-opportunity-for-companies-in-2025/" target="_blank" rel="noopener noreferrer">80–90% of all business data generated today is unstructured</a>, scattered, unorganised, stuffed in pockets, piled on desks, or sitting unread in an email inbox.</p>
         </header>
 
         <div class="problem-grid stagger">
@@ -1919,15 +1946,15 @@
               <ul class="pc-stats">
                 <li class="pc-stat">
                   <span class="pc-stat-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></span>
-                  <p class="pc-stat-text"><strong>2.5 trillion documents</strong> created globally each year — most never used <a class="pc-stat-link" href="https://www.sci-tech-today.com/stats/document-creation-statistics/" target="_blank" rel="noopener noreferrer" aria-label="Source: sci-tech-today.com — global document creation stats"><svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a></p>
+                  <p class="pc-stat-text"><strong>2.5 trillion documents</strong> created globally each year, most never used <a class="pc-stat-link" href="https://www.sci-tech-today.com/stats/document-creation-statistics/" target="_blank" rel="noopener noreferrer" aria-label="Source: sci-tech-today.com, global document creation stats"><svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a></p>
                 </li>
                 <li class="pc-stat">
                   <span class="pc-stat-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg></span>
-                  <p class="pc-stat-text"><strong>60-73% of business data</strong> goes unused for analytics <a class="pc-stat-link" href="https://www.inc.com/jeff-barrett/misusing-data-could-be-costing-your-business-heres-how.html" target="_blank" rel="noopener noreferrer" aria-label="Source: inc.com — unused-business-data stats"><svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a></p>
+                  <p class="pc-stat-text"><strong>60-73% of business data</strong> goes unused for analytics <a class="pc-stat-link" href="https://www.inc.com/jeff-barrett/misusing-data-could-be-costing-your-business-heres-how.html" target="_blank" rel="noopener noreferrer" aria-label="Source: inc.com, unused-business-data stats"><svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a></p>
                 </li>
                 <li class="pc-stat">
                   <span class="pc-stat-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
-                  <p class="pc-stat-text"><strong>More than half of SMBs</strong> around the world don't understand how their data can help their business <a class="pc-stat-link" href="https://aws.amazon.com/blogs/smb/why-small-and-medium-businesses-are-missing-out-on-the-full-benefits-data-can-provide/" target="_blank" rel="noopener noreferrer" aria-label="Source: aws.amazon.com — SMB data insight study"><svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a></p>
+                  <p class="pc-stat-text"><strong>More than half of SMBs</strong> around the world don't understand how their data can help their business <a class="pc-stat-link" href="https://aws.amazon.com/blogs/smb/why-small-and-medium-businesses-are-missing-out-on-the-full-benefits-data-can-provide/" target="_blank" rel="noopener noreferrer" aria-label="Source: aws.amazon.com, SMB data insight study"><svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a></p>
                 </li>
               </ul>
             </div>
@@ -1943,15 +1970,15 @@
               <ul class="pc-stats">
                 <li class="pc-stat">
                   <span class="pc-stat-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><polyline points="23 18 13.5 8.5 8.5 13.5 1 6"/><polyline points="17 18 23 18 23 12"/></svg></span>
-                  <p class="pc-stat-text"><strong>$3 trillion lost yearly</strong> to decisions made without past insights (MIT Sloan) <a class="pc-stat-link" href="https://www.capellasolutions.com/blog/you-wont-believe-how-much-bad-data-is-costing-you" target="_blank" rel="noopener noreferrer" aria-label="Source: capellasolutions.com — MIT Sloan loss estimate"><svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a></p>
+                  <p class="pc-stat-text"><strong>$3 trillion lost yearly</strong> to decisions made without past insights (MIT Sloan) <a class="pc-stat-link" href="https://www.capellasolutions.com/blog/you-wont-believe-how-much-bad-data-is-costing-you" target="_blank" rel="noopener noreferrer" aria-label="Source: capellasolutions.com, MIT Sloan loss estimate"><svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a></p>
                 </li>
                 <li class="pc-stat">
                   <span class="pc-stat-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span>
-                  <p class="pc-stat-text">SMEs spend <strong>10 hours every month</strong> on bookkeeping alone <a class="pc-stat-link" href="https://worldmetrics.org/bookkeeping-industry-statistics/" target="_blank" rel="noopener noreferrer" aria-label="Source: worldmetrics.org — SME bookkeeping time stats"><svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a></p>
+                  <p class="pc-stat-text">SMEs spend <strong>10 hours every month</strong> on bookkeeping alone <a class="pc-stat-link" href="https://worldmetrics.org/bookkeeping-industry-statistics/" target="_blank" rel="noopener noreferrer" aria-label="Source: worldmetrics.org, SME bookkeeping time stats"><svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a></p>
                 </li>
                 <li class="pc-stat">
                   <span class="pc-stat-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></span>
-                  <p class="pc-stat-text"><strong>$20.5B bookkeeping market</strong> growing 7% / yr — SMEs make up 70% of clients <a class="pc-stat-link" href="https://atidiv.com/bookkeeping-industry-statistics-and-trends-report/" target="_blank" rel="noopener noreferrer" aria-label="Source: atidiv.com — bookkeeping industry statistics"><svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a></p>
+                  <p class="pc-stat-text"><strong>$20.5B bookkeeping market</strong> growing 7% / yr, SMEs make up 70% of clients <a class="pc-stat-link" href="https://atidiv.com/bookkeeping-industry-statistics-and-trends-report/" target="_blank" rel="noopener noreferrer" aria-label="Source: atidiv.com, bookkeeping industry statistics"><svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a></p>
                 </li>
               </ul>
             </div>
@@ -1967,15 +1994,15 @@
               <ul class="pc-stats">
                 <li class="pc-stat">
                   <span class="pc-stat-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></span>
-                  <p class="pc-stat-text"><strong>80% of businesses</strong> that adopted real-time analytics grew their revenue — generating $2.6 trillion in value globally <a class="pc-stat-link" href="https://www.pragmaticinstitute.com/resources/articles/data/datas-impact-on-revenue-turning-data-insights-into-profits/" target="_blank" rel="noopener noreferrer" aria-label="Source: pragmaticinstitute.com — real-time analytics revenue impact"><svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a></p>
+                  <p class="pc-stat-text"><strong>80% of businesses</strong> that adopted real-time analytics grew their revenue, generating $2.6 trillion in value globally <a class="pc-stat-link" href="https://www.pragmaticinstitute.com/resources/articles/data/datas-impact-on-revenue-turning-data-insights-into-profits/" target="_blank" rel="noopener noreferrer" aria-label="Source: pragmaticinstitute.com, real-time analytics revenue impact"><svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a></p>
                 </li>
                 <li class="pc-stat">
                   <span class="pc-stat-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></span>
-                  <p class="pc-stat-text">Companies that leverage data <strong>lift revenue by up to 20%</strong> (McKinsey) <a class="pc-stat-link" href="https://enricher.io/blog/the-cost-of-incomplete-data" target="_blank" rel="noopener noreferrer" aria-label="Source: enricher.io — McKinsey revenue uplift study"><svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a></p>
+                  <p class="pc-stat-text">Companies that leverage data <strong>lift revenue by up to 20%</strong> (McKinsey) <a class="pc-stat-link" href="https://enricher.io/blog/the-cost-of-incomplete-data" target="_blank" rel="noopener noreferrer" aria-label="Source: enricher.io, McKinsey revenue uplift study"><svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a></p>
                 </li>
                 <li class="pc-stat">
                   <span class="pc-stat-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
-                  <p class="pc-stat-text">Data-driven organisations are <strong>23× more likely to acquire customers</strong> <a class="pc-stat-link" href="https://www.keboola.com/blog/5-stats-that-show-how-data-driven-organizations-outperform-their-competition" target="_blank" rel="noopener noreferrer" aria-label="Source: keboola.com — data-driven organisations outperform stats"><svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a></p>
+                  <p class="pc-stat-text">Data-driven organisations are <strong>23× more likely to acquire customers</strong> <a class="pc-stat-link" href="https://www.keboola.com/blog/5-stats-that-show-how-data-driven-organizations-outperform-their-competition" target="_blank" rel="noopener noreferrer" aria-label="Source: keboola.com, data-driven organisations outperform stats"><svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></a></p>
                 </li>
               </ul>
             </div>
@@ -2012,7 +2039,7 @@
         </div>
 
         <div class="problem-closing reveal">
-          <p>Every one of those documents contains data that, if properly captured and reported, gives business owners the insight to make better decisions, reduce costs, and stay ahead — while foreseeing future losses before they happen.</p>
+          <p>Every one of those documents contains data that, if properly captured and reported, gives business owners the insight to make better decisions, reduce costs, and stay ahead, while foreseeing future losses before they happen.</p>
         </div>
       </div>
     </section>
@@ -2021,7 +2048,7 @@
         <div class="section-header">
           <p class="section-label reveal">Who's it for</p>
           <h2 class="section-title reveal" id="wif-heading">Built for your industry.</h2>
-          <p class="section-subtitle reveal">Pick yours and see how a LensReport workflow plays out — from receipt to auto-calculated report.</p>
+          <p class="section-subtitle reveal">Pick yours and see how a LensReport workflow plays out, from receipt to auto-calculated report.</p>
         </div>
         <div class="wif-picker stagger" role="tablist" aria-label="Select your industry">
           <button type="button" id="wif-tab-accounting" class="wif-tab reveal" role="tab" aria-selected="true" aria-controls="wif-stage" data-sector="accounting">
@@ -2074,7 +2101,7 @@
               <figure class="wif-panel is-active" data-panel="0">
                 <picture>
                   <source type="image/webp" srcset="assets/whos-it-for/accounting/panel-1.webp">
-                  <img src="assets/whos-it-for/accounting/panel-1.png" alt="Accounting — The Problem" width="800" height="1000" loading="eager" fetchpriority="high">
+                  <img src="assets/whos-it-for/accounting/panel-1.png" alt="Accounting, The Problem" width="800" height="1000" loading="eager" fetchpriority="high">
                 </picture>
                 <figcaption class="wif-panel-caption">
                   <p class="wif-panel-label">The Problem</p>
@@ -2084,17 +2111,17 @@
               <figure class="wif-panel" data-panel="1">
                 <picture>
                   <source type="image/webp" srcset="assets/whos-it-for/accounting/panel-2.webp">
-                  <img src="assets/whos-it-for/accounting/panel-2.png" alt="Accounting — The Scan" width="800" height="1000" loading="lazy">
+                  <img src="assets/whos-it-for/accounting/panel-2.png" alt="Accounting, The Scan" width="800" height="1000" loading="lazy">
                 </picture>
                 <figcaption class="wif-panel-caption">
                   <p class="wif-panel-label">The Scan</p>
-                  <p class="wif-panel-text">The accountant builds a <span class="wif-pop">Client Business Expense Report</span> and adds each client as a contributor. Clients scan receipts as they spend — fuel, meals, supplies — all year, not just March.</p>
+                  <p class="wif-panel-text">The accountant builds a <span class="wif-pop">Client Business Expense Report</span> and adds each client as a contributor. Clients scan receipts as they spend, fuel, meals, supplies, all year, not just March.</p>
                 </figcaption>
               </figure>
               <figure class="wif-panel" data-panel="2">
                 <picture>
                   <source type="image/webp" srcset="assets/whos-it-for/accounting/panel-3.webp">
-                  <img src="assets/whos-it-for/accounting/panel-3.png" alt="Accounting — AI Insight" width="800" height="1000" loading="lazy">
+                  <img src="assets/whos-it-for/accounting/panel-3.png" alt="Accounting, AI Insight" width="800" height="1000" loading="lazy">
                 </picture>
                 <figcaption class="wif-panel-caption">
                   <p class="wif-panel-label">AI Insight</p>
@@ -2104,7 +2131,7 @@
               <figure class="wif-panel" data-panel="3">
                 <picture>
                   <source type="image/webp" srcset="assets/whos-it-for/accounting/panel-4.webp">
-                  <img src="assets/whos-it-for/accounting/panel-4.png" alt="Accounting — The Result" width="800" height="1000" loading="lazy">
+                  <img src="assets/whos-it-for/accounting/panel-4.png" alt="Accounting, The Result" width="800" height="1000" loading="lazy">
                 </picture>
                 <figcaption class="wif-panel-caption">
                   <p class="wif-panel-label">The Result</p>
@@ -2130,7 +2157,7 @@
         <div class="story-copy reveal">
           <p class="section-label">Team collaboration</p>
           <h2 id="collab-heading">Your team scans in the field. You get the report.</h2>
-          <p>Invite your field staff with a link — they join free, no subscription, scanning against your shared quota pool. Push notifications land the moment a contributor adds an entry. Team activity view shows who added what, and when.</p>
+          <p>Invite your field staff with a link, they join free, no subscription, scanning against your shared quota pool. Push notifications land the moment a contributor adds an entry. Team activity view shows who added what, and when.</p>
           <p>One plan covers everyone. No per-seat fees. Real-time sync when online; offline captures queue locally and land the moment connectivity returns.</p>
         </div>
         <div class="story-visual reveal">
@@ -2139,42 +2166,43 @@
       </div>
     </section>
     <section class="feature-story" aria-labelledby="sharing-heading">
-      <div class="story-grid reverse">
+      <div class="story-grid reverse share-grid">
         <div class="story-copy reveal">
           <p class="section-label">Secure web sharing</p>
           <h2 id="sharing-heading">Send a link, not a file.</h2>
-          <p>Generate a secure web link for any report. Your accountant, client, or auditor opens it in any browser — no app install, no sign-up, no friction.</p>
+          <p>Generate a secure web link for any report. Your accountant, client, or auditor opens it in any browser, no app install, no sign-up, no friction.</p>
           <p>Lock it with a six-digit PIN. Set an expiry. Revoke with one tap. Every view lands in your audit trail. Your data stays yours.</p>
-          <div class="browser-frame viewer share-copy-viewer">
+          <div class="share-mini-row" aria-hidden="true">
+            <div class="share-dialog share-stage-mini">
+              <h4><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>Share report</h4>
+              <div class="url-box">lensreport.app/s/xJ7kf2m9</div>
+              <div class="pin-row">
+                <span class="pin-label">PIN enabled</span>
+                <span class="pin-code">483 · 210</span>
+              </div>
+              <div class="share-row"><span>Expires in 7 days</span><span class="green">✓ Revoke</span></div>
+            </div>
+            <div class="browser-frame share-stage-mini">
+              <div class="bf-chrome">
+                <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+                <div class="url">lensreport.app/s/xJ7kf2m9</div>
+              </div>
+              <div class="bf-body">
+                <div class="lock-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+                <h5>Enter the PIN</h5>
+                <div class="pin-inputs"><div class="pi filled">4</div><div class="pi filled">8</div><div class="pi filled">3</div><div class="pi">•</div><div class="pi">•</div><div class="pi">•</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="share-stage reveal">
+          <div class="browser-frame viewer share-stage-hero">
             <div class="bf-chrome">
               <div class="dot"></div><div class="dot"></div><div class="dot"></div>
               <div class="url">lensreport.app/s/xJ7kf2m9</div>
             </div>
             <div class="bf-body">
               <img src="assets/images/share-link-viewer.png" alt="Unlocked shared report viewer showing a Personal/Family Expense Tracker with totals, exports, and a searchable entry table" loading="lazy" width="1873" height="992">
-            </div>
-          </div>
-        </div>
-        <div class="share-mock-wrap reveal">
-          <div class="share-dialog">
-            <h4><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>Share report</h4>
-            <div class="url-box">lensreport.app/s/xJ7kf2m9</div>
-            <div class="pin-row">
-              <span class="pin-label">PIN enabled</span>
-              <span class="pin-code">483 · 210</span>
-            </div>
-            <div class="share-row"><span>Expires in 7 days</span><span class="green">✓ Revoke anytime</span></div>
-          </div>
-          <div class="browser-frame">
-            <div class="bf-chrome">
-              <div class="dot"></div><div class="dot"></div><div class="dot"></div>
-              <div class="url">lensreport.app/s/xJ7kf2m9</div>
-            </div>
-            <div class="bf-body">
-              <div class="lock-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
-              <h5>Enter the PIN to view this report</h5>
-              <p>Shared by Shweth Maharaj</p>
-              <div class="pin-inputs"><div class="pi filled">4</div><div class="pi filled">8</div><div class="pi filled">3</div><div class="pi">•</div><div class="pi">•</div><div class="pi">•</div></div>
             </div>
           </div>
         </div>
@@ -2185,7 +2213,7 @@
         <div class="section-header">
           <p class="section-label reveal">Templates</p>
           <h2 class="section-title reveal" id="templates-heading">Every report your business runs on.</h2>
-          <p class="section-subtitle reveal">Pre-built templates for expenses, tax, travel, construction, medical, operations — or design your own with custom columns.</p>
+          <p class="section-subtitle reveal">Pre-built templates for expenses, tax, travel, construction, medical, operations, or design your own with custom columns.</p>
         </div>
         <div class="templates-grid stagger">
           <div class="template-category reveal"><div class="cat-accent" style="background:#C49A8A"></div><div class="cat-content"><div class="cat-header"><span class="cat-name">Finance &amp; Expense</span></div><div class="cat-templates"><span class="cat-tag">General Expense</span><span class="cat-tag">Credit Card</span><span class="cat-tag">Petty Cash</span><span class="cat-tag">Purchase Invoice</span><span class="cat-tag">Freelance Invoice</span></div></div></div>
@@ -2200,7 +2228,7 @@
         </div>
       </div>
     </section>
-    <dialog id="appPreviewLightbox" class="preview-lightbox" aria-label="App preview — fullscreen viewer">
+    <dialog id="appPreviewLightbox" class="preview-lightbox" aria-label="App preview, fullscreen viewer">
       <button type="button" class="preview-lightbox-btn preview-lightbox-close" aria-label="Close fullscreen preview">
         <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </button>
@@ -2233,7 +2261,7 @@
   </footer>
 
   <!-- Lottie player for the AI Insights blob loader.
-       Vendored locally from https://unpkg.com/lottie-web@5.12.2/build/player/lottie_light.min.js — keep at this exact version; re-vendor manually on bumps. -->
+       Vendored locally from https://unpkg.com/lottie-web@5.12.2/build/player/lottie_light.min.js, keep at this exact version; re-vendor manually on bumps. -->
   <script src="assets/vendor/lottie_light.min.js" defer></script>
 
   <script>
@@ -2258,11 +2286,11 @@
     /* AI Insights infinite-loop animation:
        - The .ai-mockup element ships with the `is-paused` class set in the HTML so every CSS animation is blocked
          from initial render via animation-play-state: paused !important. The animation is therefore truly idle
-         (currentTime stays at 0) until the user scrolls the section into view — at which point IntersectionObserver
+         (currentTime stays at 0) until the user scrolls the section into view, at which point IntersectionObserver
          removes `is-paused`, the master 15.5-s loop starts from frame 0, and the Lottie blob mounts + plays.
        - The Lottie blob (assets/lottie/blob.json, copied from LensReport/assets/lottie/blob.json) plays on its own 4-s
          autoplay loop independently of the master 15.5-s CSS cycle.
-       - The CSS cycle runs `infinite` so there's no replay button — the answer scene holds for 3 s, then the master
+       - The CSS cycle runs `infinite` so there's no replay button, the answer scene holds for 3 s, then the master
          envelope fades the stage out + Scene 1 rises back in for the next iteration.
        - On first scroll into view we ALSO populate the entries list with 92 additional invoices (8 are server-rendered
          for SEO / no-JS clients), giving the slow-scroll a 100-deep stack to traverse. */
@@ -2277,7 +2305,7 @@
       function populateEntries() {
         if (!entriesList || entriesList.dataset.populated === 'true') return;
         entriesList.dataset.populated = 'true';
-        // Deterministic generator — same vendor pool every load, sums are illustrative not arithmetic-real.
+        // Deterministic generator, same vendor pool every load, sums are illustrative not arithmetic-real.
         var vendors = ['Wonka Industries','Soylent Corp','Cyberdyne','Tyrell Corp','Massive Dynamic','Pied Piper','Hooli','Vandelay Imports','Sirius Cybernetics','Rekall','Aperture Science','Black Mesa','Weyland-Yutani','Oscorp','LexCorp','Umbrella','Veridian Dynamics','Buy n Large','Gringotts','Wayne Tech','Stark Solutions','Yoyodyne','Daily Planet','Spacely Sprockets','Cogswell Cogs','Krusty Krab','Planet Express','Cheers','Gekko & Co','Trask Industries','Hyperion','Genco Pura','Bluth Company','Dinoco','Mom Corp','Globo Gym','Initrode','Massive Software','Pendant Publishing','Greendale Co','Roxxon Energy','Multiplex Industries','Whyphy','Ollivanders','MomCorp','Quark Industries','Sunshine Express','Galactic Empire','Rebel Alliance','Gilded Truffle','Buzznoz Holdings','Klein Industries','Ferrous Frothworks','Maple Leaf','Oceanic Air','Gravimetric','Wakanda Mining','Boyle Logistics','Tanner & Co','Brick Mason Group','Solis Energy','Aurora Trading','Quantum Forge','Lazarus Labs','Helix Robotics','Xanadu Studios','Nimbus Cloud','Voltaic Lab','Flux Capacitor','Halcyon Holdings','Kinetic Forge','Meridian Trade','Orbit Logistics','Polaris Mining','Quasar Foods','Radiant Glass','Solstice Co','Thalassa Marine','Umbral Dye','Vortex Tools','Wendigo Foods','Xerolux','Yggdrasil','Zenith Holdings','Atlas Rentals','Borealis Foods','Cipher Tech','Drift Logistics','Echo Audio'];
         var statuses = ['Paid','Sent','Overdue','Draft'];
         var terms = ['Net 15','Net 30','Net 7','Net 60'];
@@ -2308,7 +2336,7 @@
         entriesList.insertAdjacentHTML('beforeend', html);
       }
 
-      // Mount the Lottie blob lazily — only after first IO trigger so we don't pay its parse cost on page load
+      // Mount the Lottie blob lazily, only after first IO trigger so we don't pay its parse cost on page load
       // for users who never scroll to this section.
       function mountLottie() {
         if (!window.lottie || canvas.dataset.mounted === 'true') return;
@@ -2322,7 +2350,7 @@
       populateEntries();
 
       // The mockup ships with class="ai-mockup is-paused" so all CSS animations are blocked at initial render.
-      // First time the section enters the viewport we drop the class — animations begin from frame 0 because their
+      // First time the section enters the viewport we drop the class, animations begin from frame 0 because their
       // currentTime never advanced while paused. Subsequent scroll-out/scroll-in toggles preserve currentTime so the
       // demo resumes seamlessly mid-cycle on re-entry.
       function startWhenVisible() {
@@ -2402,68 +2430,68 @@
       });
     })();
 
-    // === Who's it for — industry storyboards ===
+    // === Who's it for, industry storyboards ===
     (function() {
       var WIF = [
         { id: 'accounting', label: 'Accounting', panels: [
           { caption: 'The Problem', story: 'Tax season. Clients turn up with <strong class="wif-pain">shoeboxes</strong> of receipts. The accountant spends weeks chasing documents, retyping spreadsheets, and finding deductions buried under illegible paper.' },
-          { caption: 'The Scan', story: 'The accountant builds a <span class="wif-pop">Client Business Expense Report</span> and adds each client as a contributor. Clients scan receipts as they spend — fuel, meals, supplies — all year, not just March.' },
+          { caption: 'The Scan', story: 'The accountant builds a <span class="wif-pop">Client Business Expense Report</span> and adds each client as a contributor. Clients scan receipts as they spend, fuel, meals, supplies, all year, not just March.' },
           { caption: 'AI Insight', story: 'Every entry lands categorised and timestamped. By the time the accountant opens the file, the <span class="wif-pop">AI</span> is already answering *"largest category?"* and *"any spikes worth flagging?"*' },
           { caption: 'The Result', story: 'An Excel export with <span class="wif-pop">auto-calculated columns</span> drops straight into the accountant\'s workflow. Less retyping, fewer missed deductions, and <strong class="wif-pain">no more March panic</strong>.' }
         ]},
         { id: 'construction', label: 'Construction', panels: [
           { caption: 'The Problem', story: 'Running multiple job sites means constant paperwork. Plant and equipment hire invoices arrive from every direction, sit in site offices, and <strong class="wif-pain">get misplaced, lost, or fade</strong> before reaching head office.' },
           { caption: 'The Scan', story: 'The owner spins up a <span class="wif-pop">Plant & Equipment Hire Log</span> from the built-in template and adds site managers as contributors at no extra cost. Every invoice gets scanned the moment it lands.' },
-          { caption: 'Real-Time View', story: 'The hire log populates in <span class="wif-pop">real time</span> — a notification per scan, every job site simultaneously, zero manual data entry from the office desk.' },
-          { caption: 'The Result', story: 'By Friday the hire log is complete across every site. The <span class="wif-pop">AI</span> answers *"highest-cost site this month?"* and *"any equipment trending up?"* — <strong class="wif-pain">business intelligence from a phone</strong>.' }
+          { caption: 'Real-Time View', story: 'The hire log populates in <span class="wif-pop">real time</span>, a notification per scan, every job site simultaneously, zero manual data entry from the office desk.' },
+          { caption: 'The Result', story: 'By Friday the hire log is complete across every site. The <span class="wif-pop">AI</span> answers *"highest-cost site this month?"* and *"any equipment trending up?"*, <strong class="wif-pain">business intelligence from a phone</strong>.' }
         ]},
         { id: 'property', label: 'Property', panels: [
           { caption: 'The Problem', story: 'A property manager overseeing 15 rentals juggles maintenance invoices and contractor bills. Receipts arrive via text, email, paper. Proving <strong class="wif-pain">what was spent on which property</strong> at tax time becomes a yearly headache.' },
           { caption: 'The Scan', story: 'The manager creates a <span class="wif-pop">Maintenance & Repair Log</span> per property and adds trusted contractors as contributors. When a plumber finishes a job, they scan the invoice on the spot.' },
           { caption: 'Real-Time View', story: 'Every entry lands <span class="wif-pop">instantly</span> against the correct property, tagged and logged. No chasing contractors, no WhatsApp threads, <strong class="wif-pain">nothing missing</strong>.' },
-          { caption: 'The Result', story: 'Year-end, every property carries a complete maintenance record. The <span class="wif-pop">AI</span> answers *"highest-spend property this quarter?"* — and tax prep takes <strong class="wif-pain">hours instead of weeks</strong>.' }
+          { caption: 'The Result', story: 'Year-end, every property carries a complete maintenance record. The <span class="wif-pop">AI</span> answers *"highest-spend property this quarter?"*, and tax prep takes <strong class="wif-pain">hours instead of weeks</strong>.' }
         ]},
         { id: 'delivery', label: 'Delivery', panels: [
-          { caption: 'The Problem', story: 'A courier company runs 12 drivers across the city. Fuel, tolls, parking — meant to come in daily. In reality receipts pile up in gloveboxes and weekly reconciliation becomes <strong class="wif-pain">a guessing game</strong>.' },
-          { caption: 'The Scan', story: 'The owner creates a <span class="wif-pop">Driver Operations Report</span> and adds every driver as a contributor. Each fill-up, toll, or parking ticket gets scanned the moment it happens — right at the pump.' },
+          { caption: 'The Problem', story: 'A courier company runs 12 drivers across the city. Fuel, tolls, parking, meant to come in daily. In reality receipts pile up in gloveboxes and weekly reconciliation becomes <strong class="wif-pain">a guessing game</strong>.' },
+          { caption: 'The Scan', story: 'The owner creates a <span class="wif-pop">Driver Operations Report</span> and adds every driver as a contributor. Each fill-up, toll, or parking ticket gets scanned the moment it happens, right at the pump.' },
           { caption: 'Real-Time View', story: 'Costs flow into the report in <span class="wif-pop">real time</span>, broken down by driver and category. The owner sees every entry the moment it lands, notification per scan.' },
-          { caption: 'The Result', story: 'Complete operational visibility across every driver, every day. The <span class="wif-pop">AI</span> answers *"highest fuel-spend this week?"* and *"which route is racking up the most tolls?"* — <strong class="wif-pain">sharper operational calls</strong>.' }
+          { caption: 'The Result', story: 'Complete operational visibility across every driver, every day. The <span class="wif-pop">AI</span> answers *"highest fuel-spend this week?"* and *"which route is racking up the most tolls?"*, <strong class="wif-pain">sharper operational calls</strong>.' }
         ]},
         { id: 'events', label: 'Events', panels: [
-          { caption: 'The Problem', story: 'An events company runs weddings and corporate functions — dozens of vendor invoices per event across catering, florals, AV, staffing. Costs scatter across spreadsheets, WhatsApp, and <strong class="wif-pain">memory</strong>.' },
-          { caption: 'The Scan', story: 'The coordinator creates an <span class="wif-pop">Event Budget Tracker</span> per event — variance <span class="wif-pop">auto-calculated</span> against vendor budgets. Each vendor invoice gets scanned by the team on site as deliveries arrive.' },
+          { caption: 'The Problem', story: 'An events company runs weddings and corporate functions, dozens of vendor invoices per event across catering, florals, AV, staffing. Costs scatter across spreadsheets, WhatsApp, and <strong class="wif-pain">memory</strong>.' },
+          { caption: 'The Scan', story: 'The coordinator creates an <span class="wif-pop">Event Budget Tracker</span> per event, variance <span class="wif-pop">auto-calculated</span> against vendor budgets. Each vendor invoice gets scanned by the team on site as deliveries arrive.' },
           { caption: 'Real-Time View', story: 'Every cost lands against the correct event before the night is over. The coordinator watches the budget update <span class="wif-pop">live</span> from their phone while running the floor.' },
-          { caption: 'The Result', story: 'After the event, the <span class="wif-pop">AI</span> answers *"did we come in under budget?"* and *"which vendor category overruns most?"* — quoting the next job <strong class="wif-pain">more profitably</strong>.' }
+          { caption: 'The Result', story: 'After the event, the <span class="wif-pop">AI</span> answers *"did we come in under budget?"* and *"which vendor category overruns most?"*, quoting the next job <strong class="wif-pain">more profitably</strong>.' }
         ]},
         { id: 'trades', label: 'Trades', panels: [
           { caption: 'The Problem', story: 'An electrical contractor takes on commercial fitouts worth $50,000–$200,000 each. Materials buy across multiple suppliers throughout the job; without tracking, markups get missed and profitability is <strong class="wif-pain">months late or invisible</strong>.' },
-          { caption: 'The Scan', story: 'The owner creates a <span class="wif-pop">Job Cost & Markup Sheet</span> per project — markup <span class="wif-pop">auto-calculated</span> against cost. The site foreman is added as a contributor; every supplier purchase gets scanned at the trade counter.' },
+          { caption: 'The Scan', story: 'The owner creates a <span class="wif-pop">Job Cost & Markup Sheet</span> per project, markup <span class="wif-pop">auto-calculated</span> against cost. The site foreman is added as a contributor; every supplier purchase gets scanned at the trade counter.' },
           { caption: 'Real-Time View', story: 'Labour entries added at end of shift. The job cost sheet builds itself in <span class="wif-pop">real time</span>. The owner watches material spend stack against budget from anywhere.' },
-          { caption: 'The Result', story: 'The <span class="wif-pop">AI</span> answers *"on budget for the Queen Street fitout?"* and *"which materials are running over?"* — letting the owner act <strong class="wif-pain">before a job becomes a loss</strong>.' }
+          { caption: 'The Result', story: 'The <span class="wif-pop">AI</span> answers *"on budget for the Queen Street fitout?"* and *"which materials are running over?"*, letting the owner act <strong class="wif-pain">before a job becomes a loss</strong>.' }
         ]},
         { id: 'healthcare', label: 'Healthcare', panels: [
           { caption: 'The Problem', story: 'A practice manager running four clinics buys supplies and consumables constantly. Clinic managers WhatsApp invoice photos; head office consolidates manually each month. Items get missed. <strong class="wif-pain">Budgets blow out quietly</strong>.' },
-          { caption: 'The Scan', story: 'The manager creates a <span class="wif-pop">Multi-Clinic Supply Log</span> per location — budget headroom <span class="wif-pop">auto-calculated</span> per clinic. Clinic managers are added as contributors; every supply invoice gets scanned at point of purchase.' },
-          { caption: 'Real-Time View', story: 'Head office sees every order across all four clinics in <span class="wif-pop">real time</span>, consolidated into one view. No phone calls, no WhatsApp threads — the moment a scan happens, it appears.' },
-          { caption: 'The Result', story: 'The <span class="wif-pop">AI</span> answers *"highest-spend clinic this month?"* and *"any clinic approaching its budget cap?"* — full multi-clinic visibility, and a supply budget that <strong class="wif-pain">actually gets enforced</strong>.' }
+          { caption: 'The Scan', story: 'The manager creates a <span class="wif-pop">Multi-Clinic Supply Log</span> per location, budget headroom <span class="wif-pop">auto-calculated</span> per clinic. Clinic managers are added as contributors; every supply invoice gets scanned at point of purchase.' },
+          { caption: 'Real-Time View', story: 'Head office sees every order across all four clinics in <span class="wif-pop">real time</span>, consolidated into one view. No phone calls, no WhatsApp threads, the moment a scan happens, it appears.' },
+          { caption: 'The Result', story: 'The <span class="wif-pop">AI</span> answers *"highest-spend clinic this month?"* and *"any clinic approaching its budget cap?"*, full multi-clinic visibility, and a supply budget that <strong class="wif-pain">actually gets enforced</strong>.' }
         ]},
         { id: 'agriculture', label: 'Agriculture', panels: [
-          { caption: 'The Problem', story: 'A farm cropping across multiple paddocks faces a constant flow of invoices — fuel, fertiliser, chemicals, contractor hire, machinery repairs. Tying costs to a specific paddock once a quarter is <strong class="wif-pain">nearly impossible</strong>.' },
-          { caption: 'The Scan', story: 'The farmer creates a <span class="wif-pop">Cost-per-Hectare Report</span> per paddock — costs <span class="wif-pop">auto-divided across hectares</span>. Fuel deliveries, spray runs, and contractor invoices all get scanned and tagged to the right paddock and season.' },
-          { caption: 'Real-Time View', story: 'The data builds a complete cost-per-hectare picture <span class="wif-pop">automatically</span>. Every scan lands in the right paddock, the right season, the right category — no manual sorting.' },
-          { caption: 'The Result', story: 'The <span class="wif-pop">AI</span> answers *"cost to grow canola on the north paddock this season?"* and *"inputs up vs last season?"* — raw receipts becoming <strong class="wif-pain">genuine farm intelligence</strong>.' }
+          { caption: 'The Problem', story: 'A farm cropping across multiple paddocks faces a constant flow of invoices, fuel, fertiliser, chemicals, contractor hire, machinery repairs. Tying costs to a specific paddock once a quarter is <strong class="wif-pain">nearly impossible</strong>.' },
+          { caption: 'The Scan', story: 'The farmer creates a <span class="wif-pop">Cost-per-Hectare Report</span> per paddock, costs <span class="wif-pop">auto-divided across hectares</span>. Fuel deliveries, spray runs, and contractor invoices all get scanned and tagged to the right paddock and season.' },
+          { caption: 'Real-Time View', story: 'The data builds a complete cost-per-hectare picture <span class="wif-pop">automatically</span>. Every scan lands in the right paddock, the right season, the right category, no manual sorting.' },
+          { caption: 'The Result', story: 'The <span class="wif-pop">AI</span> answers *"cost to grow canola on the north paddock this season?"* and *"inputs up vs last season?"*, raw receipts becoming <strong class="wif-pain">genuine farm intelligence</strong>.' }
         ]},
         { id: 'retail', label: 'Retail', panels: [
-          { caption: 'The Problem', story: 'A franchise owner runs three outlets — store managers placing daily stock orders, paying for repairs, handling petty cash. Reporting is <strong class="wif-pain">inconsistent</strong>: some stores email photos, others wait until Friday.' },
-          { caption: 'The Scan', story: 'The owner creates a <span class="wif-pop">Multi-Store Operations Report</span> per store and adds every store manager as a contributor. Every purchase — stock top-ups, supplies, repairs — gets scanned the moment it happens.' },
+          { caption: 'The Problem', story: 'A franchise owner runs three outlets, store managers placing daily stock orders, paying for repairs, handling petty cash. Reporting is <strong class="wif-pain">inconsistent</strong>: some stores email photos, others wait until Friday.' },
+          { caption: 'The Scan', story: 'The owner creates a <span class="wif-pop">Multi-Store Operations Report</span> per store and adds every store manager as a contributor. Every purchase, stock top-ups, supplies, repairs, gets scanned the moment it happens.' },
           { caption: 'Real-Time View', story: 'The owner sees a <span class="wif-pop">live feed</span> of spending across all three stores from a single screen. Every scan at every location appears instantly, broken down by store and category.' },
-          { caption: 'The Result', story: 'The <span class="wif-pop">AI</span> answers *"highest unplanned spend this week?"* and *"is petty cash trending up anywhere?"* — flagging drift <strong class="wif-pain">before it compounds</strong> across the network.' }
+          { caption: 'The Result', story: 'The <span class="wif-pop">AI</span> answers *"highest unplanned spend this week?"* and *"is petty cash trending up anywhere?"*, flagging drift <strong class="wif-pain">before it compounds</strong> across the network.' }
         ]},
         { id: 'tourism', label: 'Tourism', panels: [
-          { caption: 'The Problem', story: 'A tour operator runs multi-day regional tours — fuel, accommodation, attraction fees, meal allowances on the road. Guides hand in a bundle of receipts at the end. Matching them to a tour later is <strong class="wif-pain">slow and inaccurate</strong>.' },
-          { caption: 'The Scan', story: 'The operations manager creates a per-tour <span class="wif-pop">Tour Margin Report</span> — margin <span class="wif-pop">auto-calculated</span> against revenue. Tour guides are added as contributors; every cost is scanned on the road, tagged to tour, day, and category.' },
+          { caption: 'The Problem', story: 'A tour operator runs multi-day regional tours, fuel, accommodation, attraction fees, meal allowances on the road. Guides hand in a bundle of receipts at the end. Matching them to a tour later is <strong class="wif-pain">slow and inaccurate</strong>.' },
+          { caption: 'The Scan', story: 'The operations manager creates a per-tour <span class="wif-pop">Tour Margin Report</span>, margin <span class="wif-pop">auto-calculated</span> against revenue. Tour guides are added as contributors; every cost is scanned on the road, tagged to tour, day, and category.' },
           { caption: 'Real-Time View', story: 'By the time the coach pulls into the depot, that tour\'s report is <span class="wif-pop">already complete</span>. No bundle of receipts. No post-trip reconciliation session.' },
-          { caption: 'The Result', story: 'The <span class="wif-pop">AI</span> answers *"total cost for the Outback Discovery tour this month?"* and *"best-margin tour after costs?"* — clear data on which products are <strong class="wif-pain">actually profitable</strong>.' }
+          { caption: 'The Result', story: 'The <span class="wif-pop">AI</span> answers *"total cost for the Outback Discovery tour this month?"* and *"best-margin tour after costs?"*, clear data on which products are <strong class="wif-pain">actually profitable</strong>.' }
         ]}
       ];
 
@@ -2474,7 +2502,7 @@
       //   <span class="wif-pop">…</span>     → green pop
       //   <strong class="wif-pain">…</strong> → bold-black pain anchor
       //   *…*                                 → italic AI quote
-      // Every chunk of text flows through createTextNode/textContent — never innerHTML.
+      // Every chunk of text flows through createTextNode/textContent, never innerHTML.
       // Stray HTML in the data renders as literal characters; zero XSS surface.
       var STORY_TOKEN_RE = /<span class="wif-pop">([^<]+)<\/span>|<strong class="wif-pain">([^<]+)<\/strong>|\*([^*]+)\*/g;
 
@@ -2546,7 +2574,7 @@
         for (var i = 0; i < 4; i++) {
           sources[i].setAttribute('srcset', path(sectorId, i + 1, 'webp'));
           imgs[i].setAttribute('src', path(sectorId, i + 1, 'png'));
-          imgs[i].setAttribute('alt', s.label + ' — ' + s.panels[i].caption);
+          imgs[i].setAttribute('alt', s.label + ', ' + s.panels[i].caption);
           panelLabels[i].textContent = s.panels[i].caption;
           renderStory(panelTexts[i], s.panels[i].story);
         }
