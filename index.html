@@ -1434,7 +1434,7 @@
           <p>Available across all paid plans. Same daily limits everywhere. Owners pay for AI on their shared reports — contributors just use it.</p>
         </div>
         <div class="reveal ai-mockup-column">
-          <div class="ai-mockup" role="img" aria-label="LensReport AI Insights flow animation, 14 seconds, played once: a Sales Invoice Log report sheet opens with sample customer entries, the rainbow-ringed AI button on the right is tapped, the AI Insights modal rises showing daily sales trend, sales split donut, advisor outliers and top customers, the keyboard rises, the user types &quot;Am I trending up or down compared to last period?&quot;, a green blob loader plays while the answer is prepared, then a sparkline shows this period vs the prior period with a +12% delta and a Start another conversation button. A Replay button below the phone restarts the demo.">
+          <div class="ai-mockup is-paused" role="img" aria-label="LensReport AI Insights flow animation: a Sales Invoice Log report sheet opens with 100 sample customer entries that scroll, the rainbow-ringed AI button is tapped, the AI Insights modal rises showing biggest sale, period revenue, sales split, advisor outliers, top customers and suggested questions, the keyboard rises, the user types 'show spending trends by day', a blob loader plays, then an answer reveals with a daily-spending chart, three insight tips with confidence pills, a helpful-feedback row and a Start another conversation button. The animation loops every 15.5 seconds and starts only when the section scrolls into view.">
             <div class="ai-screen">
               <div class="ai-status"><span>9:41</span><span class="ai-icons">●●●●</span></div>
               <div class="ai-stage">
@@ -1609,7 +1609,7 @@
                       <!-- Suggested-question chip rail. The first chip is the one the user "types" in the next scene
                            (matches the typewriter text + answer headline). -->
                       <div class="qchip-rail">
-                        <div class="qchip-mini"><span class="qchip-icon up">↗</span><span>Show spending trends by day</span></div>
+                        <div class="qchip-mini"><span class="qchip-icon up">⇄</span><span>Compare paid vs unpaid invoices</span></div>
                         <div class="qchip-mini"><span class="qchip-icon dol">$</span><span>Who are my top customers?</span></div>
                         <div class="qchip-mini"><span class="qchip-icon warn">⚠</span><span>Show overdue invoices</span></div>
                       </div>
@@ -1905,7 +1905,10 @@
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
     /* AI Insights infinite-loop animation:
-       - All CSS animations are paused on page load and started when the mockup scrolls into view (IntersectionObserver).
+       - The .ai-mockup element ships with the `is-paused` class set in the HTML so every CSS animation is blocked
+         from initial render via animation-play-state: paused !important. The animation is therefore truly idle
+         (currentTime stays at 0) until the user scrolls the section into view — at which point IntersectionObserver
+         removes `is-paused`, the master 15.5-s loop starts from frame 0, and the Lottie blob mounts + plays.
        - The Lottie blob (assets/lottie/blob.json, copied from LensReport/assets/lottie/blob.json) plays on its own 4-s
          autoplay loop independently of the master 15.5-s CSS cycle.
        - The CSS cycle runs `infinite` so there's no replay button — the answer scene holds for 3 s, then the master
@@ -1918,7 +1921,7 @@
       var entriesList = document.getElementById('rs-entries-list');
       if (!mockup || !canvas) return;
       var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if (reduced) { populateEntries(); return; } // Pin Scene 6 static under reduced-motion; still flesh out the list.
+      if (reduced) { populateEntries(); mockup.classList.remove('is-paused'); return; } // Pin Scene 6 static under reduced-motion; CSS overrides handle it.
 
       function populateEntries() {
         if (!entriesList || entriesList.dataset.populated === 'true') return;
@@ -1954,15 +1957,8 @@
         entriesList.insertAdjacentHTML('beforeend', html);
       }
 
-      function pauseAllAnims() {
-        try { mockup.getAnimations({ subtree: true }).forEach(function (a) { a.pause(); }); } catch (_) {}
-        if (window.__aiBlobAnim) { try { window.__aiBlobAnim.pause(); } catch (_) {} }
-      }
-      function playAllAnims() {
-        try { mockup.getAnimations({ subtree: true }).forEach(function (a) { a.play(); }); } catch (_) {}
-        if (window.__aiBlobAnim) { try { window.__aiBlobAnim.play(); } catch (_) {} }
-      }
-
+      // Mount the Lottie blob lazily — only after first IO trigger so we don't pay its parse cost on page load
+      // for users who never scroll to this section.
       function mountLottie() {
         if (!window.lottie || canvas.dataset.mounted === 'true') return;
         canvas.dataset.mounted = 'true';
@@ -1972,16 +1968,24 @@
         });
       }
 
-      // Pause animations on load until the section scrolls into view.
-      pauseAllAnims();
       populateEntries();
 
+      // The mockup ships with class="ai-mockup is-paused" so all CSS animations are blocked at initial render.
+      // First time the section enters the viewport we drop the class — animations begin from frame 0 because their
+      // currentTime never advanced while paused. Subsequent scroll-out/scroll-in toggles preserve currentTime so the
+      // demo resumes seamlessly mid-cycle on re-entry.
       function startWhenVisible() {
-        mountLottie();
+        var firstEntry = true;
         var io = new IntersectionObserver(function (entries) {
           entries.forEach(function (entry) {
-            if (entry.isIntersecting) { mockup.classList.remove('is-paused'); playAllAnims(); }
-            else { mockup.classList.add('is-paused'); pauseAllAnims(); }
+            if (entry.isIntersecting) {
+              if (firstEntry) { firstEntry = false; mountLottie(); }
+              mockup.classList.remove('is-paused');
+              if (window.__aiBlobAnim) { try { window.__aiBlobAnim.play(); } catch (_) {} }
+            } else {
+              mockup.classList.add('is-paused');
+              if (window.__aiBlobAnim) { try { window.__aiBlobAnim.pause(); } catch (_) {} }
+            }
           });
         }, { threshold: 0.2 });
         io.observe(mockup);
@@ -1992,7 +1996,8 @@
         var poll = setInterval(function () {
           if (window.lottie) { clearInterval(poll); startWhenVisible(); }
         }, 60);
-        setTimeout(function () { clearInterval(poll); }, 6000);
+        // If lottie never loads, still set up the observer so CSS animations can play (just no blob).
+        setTimeout(function () { clearInterval(poll); if (!window.__aiInsightsObsAttached) { window.__aiInsightsObsAttached = true; startWhenVisible(); } }, 6000);
       }
     })();
 
