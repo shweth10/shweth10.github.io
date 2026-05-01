@@ -544,12 +544,28 @@
     .problem-card .pc-body p { margin: 0 0 8px 0; }
     .problem-card .pc-body p:last-child { margin: 0; }
 
-    /* Citation links — sage-dark on the off-white surface (4.6:1 contrast on
-       #FAFBFC, passes WCAG AA). Brand-aligned alternative to generic blue. */
-    .problem-section a[href^="http"] { color: var(--green-dark); text-decoration: underline; text-decoration-thickness: 1.5px; text-underline-offset: 2px; transition: color 0.15s ease; }
-    .problem-section a[href^="http"]:hover,
-    .problem-section a[href^="http"]:focus-visible { color: var(--green); text-decoration-thickness: 2px; }
-    .problem-section a[href^="http"]:focus-visible { outline: 2px solid var(--green-dark); outline-offset: 3px; border-radius: 2px; }
+    /* Bulleted stats — icon + short text + (optional) green link-out icon. */
+    .pc-stats { list-style: none; padding: 0; margin: 14px 0 0 0; display: flex; flex-direction: column; gap: 12px; text-align: left; }
+    .pc-stat { display: grid; grid-template-columns: 26px 1fr auto; gap: 10px; align-items: center; }
+    .pc-stat-icon { width: 26px; height: 26px; border-radius: 7px; background: rgba(76, 175, 125, 0.10); color: var(--green-dark); display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .pc-stat-icon svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+    /* Coral variant — applied to THE COST card so its stat icons match the eyebrow label. */
+    .problem-card.coral-bg .pc-stat-icon { background: rgba(240, 133, 106, 0.12); color: var(--coral); }
+    .pc-stat-text { font-size: 0.82rem; line-height: 1.5; color: var(--text-secondary); margin: 0; }
+    .pc-stat-text strong { color: var(--text); font-weight: 700; }
+    .pc-stat-link { width: 24px; height: 24px; border-radius: 6px; background: rgba(76, 175, 125, 0.12); color: var(--green-dark); display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; transition: background 0.15s ease, color 0.15s ease, transform 0.15s ease; text-decoration: none; }
+    .pc-stat-link svg { width: 12px; height: 12px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .problem-card .pc-stat-link:hover,
+    .problem-card .pc-stat-link:focus-visible { background: var(--green); color: #FFF; transform: translate(1px, -1px); text-decoration: none; }
+    .pc-stat-link:focus-visible { outline: 2px solid var(--green-dark); outline-offset: 2px; }
+
+    /* Citation links in the section intro paragraph stay inline-styled
+       (sage-dark, underline). The bulleted-stat icon-links above override
+       that via higher specificity selectors. */
+    .problem-section a[href^="http"]:not(.pc-stat-link) { color: var(--green-dark); text-decoration: underline; text-decoration-thickness: 1.5px; text-underline-offset: 2px; transition: color 0.15s ease; }
+    .problem-section a[href^="http"]:not(.pc-stat-link):hover,
+    .problem-section a[href^="http"]:not(.pc-stat-link):focus-visible { color: var(--green); text-decoration-thickness: 2px; }
+    .problem-section a[href^="http"]:not(.pc-stat-link):focus-visible { outline: 2px solid var(--green-dark); outline-offset: 3px; border-radius: 2px; }
 
     /* Closing statement — quiet italic line below the grid */
     .problem-closing { max-width: 760px; margin: 48px auto 0; text-align: center; }
@@ -1890,9 +1906,18 @@
             <div class="pc-caption">
               <p class="pc-label">The Pile</p>
               <h3>Every business generates documents. Few actually manage them.</h3>
-              <div class="pc-body">
-                <p>Receipts stuffed in pockets. Invoices photographed and forgotten. <a href="https://usesignhouse.com/blog/document-management-industry-stats/" target="_blank" rel="noopener noreferrer">45% of small businesses still rely on paper-based document management</a>, and <a href="https://usesignhouse.com/blog/document-management-industry-stats/" target="_blank" rel="noopener noreferrer">11% have no system at all</a>. The paperwork exists — it just never gets anywhere useful.</p>
-              </div>
+              <ul class="pc-stats">
+                <li class="pc-stat">
+                  <span class="pc-stat-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></span>
+                  <p class="pc-stat-text"><strong>45% of small businesses</strong> still on paper-based docs</p>
+                  <a class="pc-stat-link" href="https://usesignhouse.com/blog/document-management-industry-stats/" target="_blank" rel="noopener noreferrer" aria-label="Source: usesignhouse.com — paper-based document stats"><svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
+                </li>
+                <li class="pc-stat">
+                  <span class="pc-stat-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg></span>
+                  <p class="pc-stat-text"><strong>11% have no system</strong> at all</p>
+                  <a class="pc-stat-link" href="https://usesignhouse.com/blog/document-management-industry-stats/" target="_blank" rel="noopener noreferrer" aria-label="Source: usesignhouse.com — no-system stats"><svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
+                </li>
+              </ul>
             </div>
           </article>
 
@@ -1903,9 +1928,28 @@
             <div class="pc-caption">
               <p class="pc-label coral">The Cost</p>
               <h3>When reporting doesn't happen, the consequences stack up fast.</h3>
-              <div class="pc-body">
-                <p>Tax deductions missed. Penalties triggered. <a href="https://usesignhouse.com/blog/document-management-industry-stats/" target="_blank" rel="noopener noreferrer">US businesses waste $8 billion a year on paper documents</a>. <a href="https://www.capellasolutions.com/blog/you-wont-believe-how-much-bad-data-is-costing-you" target="_blank" rel="noopener noreferrer">MIT Sloan estimates $3 trillion lost yearly</a> from decisions made without past report insights — and <a href="https://www.actian.com/blog/data-management/the-costly-consequences-of-poor-data-quality/" target="_blank" rel="noopener noreferrer">Gartner pegs poor data quality at $15M per organisation</a>. <a href="https://www.ibm.com/think/insights/delayed-data-cost" target="_blank" rel="noopener noreferrer">80% of organisations decide on stale data</a>; <a href="https://www.ibm.com/think/insights/delayed-data-cost" target="_blank" rel="noopener noreferrer">85% of data leaders say it cost them money</a>.</p>
-              </div>
+              <ul class="pc-stats">
+                <li class="pc-stat">
+                  <span class="pc-stat-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></span>
+                  <p class="pc-stat-text"><strong>$8 billion / year</strong> wasted on paper documents (US)</p>
+                  <a class="pc-stat-link" href="https://usesignhouse.com/blog/document-management-industry-stats/" target="_blank" rel="noopener noreferrer" aria-label="Source: usesignhouse.com — paper document waste"><svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
+                </li>
+                <li class="pc-stat">
+                  <span class="pc-stat-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><polyline points="23 18 13.5 8.5 8.5 13.5 1 6"/><polyline points="17 18 23 18 23 12"/></svg></span>
+                  <p class="pc-stat-text"><strong>$3 trillion lost yearly</strong> to decisions made without past insights (MIT Sloan)</p>
+                  <a class="pc-stat-link" href="https://www.capellasolutions.com/blog/you-wont-believe-how-much-bad-data-is-costing-you" target="_blank" rel="noopener noreferrer" aria-label="Source: capellasolutions.com — MIT Sloan loss estimate"><svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
+                </li>
+                <li class="pc-stat">
+                  <span class="pc-stat-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
+                  <p class="pc-stat-text"><strong>$15M per organisation</strong> lost to poor data quality (Gartner)</p>
+                  <a class="pc-stat-link" href="https://www.actian.com/blog/data-management/the-costly-consequences-of-poor-data-quality/" target="_blank" rel="noopener noreferrer" aria-label="Source: actian.com — Gartner poor-data-quality cost"><svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
+                </li>
+                <li class="pc-stat">
+                  <span class="pc-stat-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></span>
+                  <p class="pc-stat-text"><strong>80% decide on stale data</strong>; 85% say it cost them money (IBM)</p>
+                  <a class="pc-stat-link" href="https://www.ibm.com/think/insights/delayed-data-cost" target="_blank" rel="noopener noreferrer" aria-label="Source: ibm.com — delayed-data cost report"><svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
+                </li>
+              </ul>
             </div>
           </article>
 
@@ -1916,9 +1960,18 @@
             <div class="pc-caption">
               <p class="pc-label">The Opportunity</p>
               <h3>Every document contains data. Most of it is never captured.</h3>
-              <div class="pc-body">
-                <p><a href="https://aws.amazon.com/blogs/smb/why-small-and-medium-businesses-are-missing-out-on-the-full-benefits-data-can-provide/" target="_blank" rel="noopener noreferrer">53% of SMBs don't know what insights their own data could provide</a>. Yet <a href="https://enricher.io/blog/the-cost-of-incomplete-data" target="_blank" rel="noopener noreferrer">McKinsey shows companies that leverage data can lift revenue by up to 20%</a>. The data already exists — it just needs somewhere to go.</p>
-              </div>
+              <ul class="pc-stats">
+                <li class="pc-stat">
+                  <span class="pc-stat-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
+                  <p class="pc-stat-text"><strong>53% of SMBs</strong> don't know what insights their data could provide (AWS)</p>
+                  <a class="pc-stat-link" href="https://aws.amazon.com/blogs/smb/why-small-and-medium-businesses-are-missing-out-on-the-full-benefits-data-can-provide/" target="_blank" rel="noopener noreferrer" aria-label="Source: aws.amazon.com — SMB data insight study"><svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
+                </li>
+                <li class="pc-stat">
+                  <span class="pc-stat-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></span>
+                  <p class="pc-stat-text">Companies that leverage data <strong>lift revenue by up to 20%</strong> (McKinsey)</p>
+                  <a class="pc-stat-link" href="https://enricher.io/blog/the-cost-of-incomplete-data" target="_blank" rel="noopener noreferrer" aria-label="Source: enricher.io — McKinsey revenue uplift study"><svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></a>
+                </li>
+              </ul>
             </div>
           </article>
 
@@ -1929,9 +1982,24 @@
             <div class="pc-caption">
               <p class="pc-label">The Shift</p>
               <h3>Captured. Organised. Reported. Instantly.</h3>
-              <div class="pc-body">
-                <p>LensReport turns every scan into a structured data entry, every entry into a live report, and every report into a decision-ready export — with AI that answers the questions your data has been waiting to answer.</p>
-              </div>
+              <ul class="pc-stats">
+                <li class="pc-stat">
+                  <span class="pc-stat-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></span>
+                  <p class="pc-stat-text">Every scan → <strong>structured data entry</strong></p>
+                </li>
+                <li class="pc-stat">
+                  <span class="pc-stat-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></span>
+                  <p class="pc-stat-text">Every entry → <strong>live report</strong></p>
+                </li>
+                <li class="pc-stat">
+                  <span class="pc-stat-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></span>
+                  <p class="pc-stat-text">Every report → <strong>decision-ready export</strong></p>
+                </li>
+                <li class="pc-stat">
+                  <span class="pc-stat-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2l1.5 5.5L19 9l-5.5 1.5L12 16l-1.5-5.5L5 9l5.5-1.5L12 2z"/></svg></span>
+                  <p class="pc-stat-text"><strong>AI answers</strong> the questions your data has waited for</p>
+                </li>
+              </ul>
             </div>
           </article>
 
