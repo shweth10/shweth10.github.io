@@ -711,9 +711,17 @@
     .ai-mockup .rs-avatar.a { background: #E5B35A; }
     .ai-mockup .rs-avatar.b { background: #F0856A; }
     .ai-mockup .rs-icon { font-size: 10px; color: var(--text-secondary); width: 12px; text-align: center; flex-shrink: 0; }
-    .ai-mockup .rs-tabs { display: flex; background: #ECEEF1; border-radius: 8px; padding: 2px; gap: 2px; }
-    .ai-mockup .rs-tab { flex: 1; text-align: center; font-size: 9px; font-weight: 600; color: var(--text-muted); padding: 4px 0; border-radius: 6px; }
-    .ai-mockup .rs-tab.active { background: #FFF; color: var(--text); box-shadow: 0 1px 2px rgba(0,0,0,0.06); }
+    /* Cards/Grid segmented control: a sliding white pill underlay (rs-tab-pill) animates between the two tab
+       positions during Scene 1 — 0-1.0s on Cards, 1.2-2.2s on Grid, 2.4-3.0s back on Cards — synchronised with
+       the .rs-cards-pane ↔ .rs-grid-pane crossfade below. */
+    .ai-mockup .rs-tabs { display: flex; background: #ECEEF1; border-radius: 8px; padding: 2px; gap: 2px; position: relative; }
+    .ai-mockup .rs-tab-pill { position: absolute; top: 2px; bottom: 2px; width: calc(50% - 3px); left: 2px; background: #FFF; border-radius: 6px; box-shadow: 0 1px 2px rgba(0,0,0,0.06); animation: rs-tab-pill-slide 15.5s cubic-bezier(0.4, 0, 0.6, 1) infinite; z-index: 0; }
+    @keyframes rs-tab-pill-slide { 0%, 5.5% { left: 2px; } 7.5%, 13% { left: calc(50% + 1px); } 15%, 19% { left: 2px; } 21%, 100% { left: 2px; } }
+    .ai-mockup .rs-tab { flex: 1; text-align: center; font-size: 9px; font-weight: 600; padding: 4px 0; border-radius: 6px; position: relative; z-index: 1; color: var(--text-muted); }
+    .ai-mockup .rs-tab-cards { animation: rs-tab-c-color 15.5s linear infinite; }
+    .ai-mockup .rs-tab-grid { animation: rs-tab-g-color 15.5s linear infinite; }
+    @keyframes rs-tab-c-color { 0%, 5.5% { color: var(--text); } 7.5%, 13% { color: var(--text-muted); } 15%, 100% { color: var(--text); } }
+    @keyframes rs-tab-g-color { 0%, 5.5% { color: var(--text-muted); } 7.5%, 13% { color: var(--text); } 15%, 100% { color: var(--text-muted); } }
     .ai-mockup .rs-sort { font-size: 9px; color: var(--text-secondary); padding: 0 2px; }
     .ai-mockup .rs-sort strong { color: var(--green-dark); font-weight: 600; }
     .ai-mockup .rs-stats { display: grid; grid-template-columns: 1fr 1fr 1fr; background: #FFF; border: 1px solid var(--border); border-radius: 9px; overflow: hidden; }
@@ -736,12 +744,31 @@
     .ai-mockup .rs-entry-vendor { font-size: 9px; font-weight: 700; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; line-height: 1.25; }
     .ai-mockup .rs-entry-meta { font-size: 7px; color: var(--text-muted); margin-top: 1px; line-height: 1.2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .ai-mockup .rs-entry-amount { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 10.5px; font-weight: 700; color: var(--text); flex-shrink: 0; padding-right: 38px; }
-    /* Entries viewport: takes remaining flex space, clips overflow so the scroll-up animation can't bleed back over the
-       sort row + AI banner above. The inner .rs-entries-scroll holds 100 entries and translates upward inside this
-       clipping window during Scene 1's visible window so the eye reads "100 entries deep". */
-    .ai-mockup .rs-entries-viewport { flex: 1; min-height: 0; overflow: hidden; position: relative; }
+    /* Views area: takes remaining flex space and hosts BOTH the Cards pane and the Grid pane as overlapping
+       absolute children that crossfade during Scene 1. Each pane has its own overflow:hidden so the cards
+       scroll-up animation can't bleed back over the chrome above, and the grid table can't spill past its rounded
+       corners. */
+    .ai-mockup .rs-views-area { flex: 1; min-height: 0; position: relative; }
+    .ai-mockup .rs-cards-pane { position: absolute; inset: 0; overflow: hidden; animation: rs-cards-fade 15.5s linear infinite; }
+    .ai-mockup .rs-grid-pane { position: absolute; inset: 0; overflow: hidden; opacity: 0; background: #FFF; border: 1px solid var(--border); border-radius: 9px; animation: rs-grid-fade 15.5s linear infinite; display: flex; flex-direction: column; }
+    @keyframes rs-cards-fade { 0%, 5% { opacity: 1; } 7%, 13% { opacity: 0; } 15%, 19% { opacity: 1; } 21%, 100% { opacity: 0; } }
+    @keyframes rs-grid-fade { 0%, 5.5% { opacity: 0; } 7%, 13% { opacity: 1; } 14.5%, 100% { opacity: 0; } }
     .ai-mockup .rs-entries-scroll { position: absolute; left: 0; right: 0; top: 0; display: flex; flex-direction: column; gap: 5px; will-change: transform; animation: rs-scroll 15.5s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
     @keyframes rs-scroll { 0% { transform: translateY(0); } 19% { transform: translateY(-220px); } 21%, 100% { transform: translateY(-220px); } }
+    /* Grid pane: spreadsheet-style table with header row + data rows. Tighter font + zebra striping evokes a real
+       grid view (vs the cards view's fluffy padded rows). */
+    .ai-mockup .rs-grid-head { display: grid; grid-template-columns: 1.55fr 0.75fr 0.85fr 0.75fr; background: #F4F5F7; padding: 5px 8px; font-size: 7px; font-weight: 700; color: var(--text-muted); letter-spacing: 0.4px; border-bottom: 1px solid var(--border); flex-shrink: 0; }
+    .ai-mockup .rs-grid-row { display: grid; grid-template-columns: 1.55fr 0.75fr 0.85fr 0.75fr; padding: 5px 8px; font-size: 8px; border-bottom: 1px solid var(--border); align-items: center; }
+    .ai-mockup .rs-grid-row:nth-child(even) { background: #FAFBFC; }
+    .ai-mockup .rs-grid-row:last-child { border-bottom: none; }
+    .ai-mockup .rs-grid-row .gv { font-weight: 600; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding-right: 4px; }
+    .ai-mockup .rs-grid-row .gd { color: var(--text-secondary); font-size: 7.5px; }
+    .ai-mockup .rs-grid-row .ga { font-family: 'DM Mono', monospace; font-weight: 600; color: var(--text); font-size: 7.5px; }
+    .ai-mockup .rs-grid-row .gs { font-size: 6.5px; font-weight: 600; padding: 1px 5px; border-radius: 999px; align-self: center; justify-self: start; line-height: 1.4; }
+    .ai-mockup .rs-grid-row .gs.paid { background: rgba(76,175,125,0.14); color: var(--green-dark); }
+    .ai-mockup .rs-grid-row .gs.sent { background: rgba(94,90,230,0.12); color: #5E5AE6; }
+    .ai-mockup .rs-grid-row .gs.overdue { background: rgba(245,200,74,0.20); color: #B0680E; }
+    .ai-mockup .rs-grid-row .gs.draft { background: rgba(0,0,0,0.06); color: var(--text-muted); }
 
     /* ---- Action stack (right side of report sheet): piggy / rainbow AI / chart icons + green FAB.
          Rainbow AI button has an infinite conic-gradient ring spin (idle visual identity, not part of the master 14s loop).
@@ -749,7 +776,7 @@
     .ai-mockup .rs-actions { position: absolute; right: 10px; bottom: 14px; display: flex; flex-direction: column; gap: 7px; align-items: center; z-index: 4; }
     .ai-mockup .rs-action-btn { width: 26px; height: 26px; border-radius: 50%; background: #FFF; border: 1.5px solid rgba(76,175,125,0.18); display: flex; align-items: center; justify-content: center; color: var(--green-dark); box-shadow: 0 2px 6px rgba(0,0,0,0.10); flex-shrink: 0; padding: 0; position: relative; }
     .ai-mockup .rs-action-btn.ai-rainbow-btn { background: #FFF; border: none; cursor: default; overflow: visible; }
-    .ai-mockup .ai-rainbow-btn::before { content: ''; position: absolute; inset: 0; border-radius: 50%; background: conic-gradient(from 0deg, #FF6B6B, #BF5AF2, #5E5CE6, #30D5C8, #FFB340, #FF6B6B); animation: rainbow-spin 3s linear infinite; }
+    .ai-mockup .ai-rainbow-btn::before { content: ''; position: absolute; inset: 0; border-radius: 50%; background: conic-gradient(from 0deg, #FF6B6B, #BF5AF2, #5E5CE6, #30D5C8, #FFB340, #FF6B6B); animation: rainbow-spin 1.2s linear infinite; }
     @keyframes rainbow-spin { to { transform: rotate(360deg); } }
     .ai-mockup .ai-rainbow-btn .rainbow-ring { display: none; } /* unused */
     .ai-mockup .ai-rainbow-btn .ring-mask { position: absolute; inset: 2.5px; background: #FFF; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 8.5px; font-weight: 800; color: var(--green-dark); letter-spacing: 0.2px; z-index: 1; }
@@ -1454,8 +1481,9 @@
                     <span class="rs-icon">⇪</span>
                   </div>
                   <div class="rs-tabs">
-                    <span class="rs-tab active">Cards</span>
-                    <span class="rs-tab">Grid</span>
+                    <span class="rs-tab-pill" aria-hidden="true"></span>
+                    <span class="rs-tab rs-tab-cards">Cards</span>
+                    <span class="rs-tab rs-tab-grid">Grid</span>
                   </div>
                   <div class="rs-sort">↕ Sort: <strong>Highest Amount</strong> ⌄</div>
                   <div class="rs-stats">
@@ -1471,12 +1499,14 @@
                     </div>
                     <span class="rs-banner-chev">›</span>
                   </div>
-                  <!-- 100 invoices populated by inline JS at end of <body> on load. The first 8 are rendered server-side
-                       so SEO / no-JS clients still see content; the JS then appends the remaining 92 to the inner
-                       .rs-entries-scroll wrapper. The viewport (overflow: hidden) clips the scroll-up animation so the
-                       entries can't bleed back over the sort row + AI banner above. -->
-                  <div class="rs-entries-viewport">
-                    <div class="rs-entries-scroll" id="rs-entries-list">
+                  <!-- Views area hosts BOTH a Cards pane (existing 100-entry scroll) and a Grid pane (spreadsheet
+                       view) as overlapping absolute children that crossfade during Scene 1: cards 0-1.0 s, grid
+                       1.2-2.2 s, cards 2.4-3.0 s. The Cards/Grid tab pill above slides in sync. The 100 invoices
+                       are populated by inline JS at end of <body> — first 8 rendered server-side for SEO / no-JS
+                       clients; JS appends the remaining 92. Each pane's overflow:hidden clips its own content. -->
+                  <div class="rs-views-area">
+                    <div class="rs-cards-pane">
+                      <div class="rs-entries-scroll" id="rs-entries-list">
                     <div class="rs-entry">
                       <div class="rs-thumb"></div>
                       <div class="rs-entry-body">
@@ -1542,7 +1572,31 @@
                       <div class="rs-entry-amount">$1,995.00</div>
                     </div>
                     </div><!-- /.rs-entries-scroll -->
-                  </div><!-- /.rs-entries-viewport -->
+                    </div><!-- /.rs-cards-pane -->
+
+                    <!-- Grid pane: compact spreadsheet view shown 1.2-2.2 s of the loop. Status pills colour-code
+                         payment state (paid green / sent purple / overdue amber / draft grey). -->
+                    <div class="rs-grid-pane" aria-hidden="true">
+                      <div class="rs-grid-head">
+                        <span>VENDOR</span>
+                        <span>DATE</span>
+                        <span>AMT</span>
+                        <span>STATUS</span>
+                      </div>
+                      <div class="rs-grid-row"><span class="gv">Acme Corp</span><span class="gd">Apr 30</span><span class="ga">$3,420</span><span class="gs paid">Paid</span></div>
+                      <div class="rs-grid-row"><span class="gv">Contoso Ltd</span><span class="gd">Apr 29</span><span class="ga">$2,950</span><span class="gs sent">Sent</span></div>
+                      <div class="rs-grid-row"><span class="gv">Northwind</span><span class="gd">Apr 29</span><span class="ga">$2,640</span><span class="gs overdue">Overdue</span></div>
+                      <div class="rs-grid-row"><span class="gv">Initech</span><span class="gd">Apr 28</span><span class="ga">$2,420</span><span class="gs sent">Sent</span></div>
+                      <div class="rs-grid-row"><span class="gv">Globex</span><span class="gd">Apr 28</span><span class="ga">$2,290</span><span class="gs paid">Paid</span></div>
+                      <div class="rs-grid-row"><span class="gv">Fabrikam</span><span class="gd">Apr 27</span><span class="ga">$2,180</span><span class="gs sent">Sent</span></div>
+                      <div class="rs-grid-row"><span class="gv">Stark Ind.</span><span class="gd">Apr 27</span><span class="ga">$2,080</span><span class="gs paid">Paid</span></div>
+                      <div class="rs-grid-row"><span class="gv">Wayne Ent.</span><span class="gd">Apr 26</span><span class="ga">$1,995</span><span class="gs sent">Sent</span></div>
+                      <div class="rs-grid-row"><span class="gv">Wonka Ind.</span><span class="gd">Apr 25</span><span class="ga">$1,787</span><span class="gs draft">Draft</span></div>
+                      <div class="rs-grid-row"><span class="gv">Soylent Co.</span><span class="gd">Apr 24</span><span class="ga">$1,810</span><span class="gs overdue">Overdue</span></div>
+                      <div class="rs-grid-row"><span class="gv">Cyberdyne</span><span class="gd">Apr 23</span><span class="ga">$1,753</span><span class="gs sent">Sent</span></div>
+                      <div class="rs-grid-row"><span class="gv">Tyrell Corp</span><span class="gd">Apr 22</span><span class="ga">$1,776</span><span class="gs paid">Paid</span></div>
+                    </div>
+                  </div><!-- /.rs-views-area -->
 
                   <!-- Action stack: piggy / rainbow AI / chart icons + green FAB. The AI button is the tap target. -->
                   <div class="rs-actions">
