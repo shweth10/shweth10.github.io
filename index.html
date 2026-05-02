@@ -1293,15 +1293,10 @@
     .wif-tab-icon svg { width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
     .wif-tab-label { white-space: nowrap; }
 
-    /* 11th tile: "Build your own" — sits alone in row 3, spanning the middle
-       3 of the 5 grid columns so it reads as wider-than-normal but balanced.
-       Dashed sage border + sparkle icon distinguish it as "extensible" rather
-       than another fixed industry. Non-interactive (cursor: default). */
-    .wif-tab-custom { grid-column: 2 / 5; border-style: dashed !important; border-color: var(--green-light) !important; background: rgba(76, 175, 125, 0.04); color: var(--green-dark); cursor: default; }
-    .wif-tab-custom:hover { transform: none; border-color: var(--green-light) !important; background: rgba(76, 175, 125, 0.06); }
-    .wif-tab-custom .wif-tab-icon { color: var(--green-dark); }
-    .wif-tab-custom .wif-tab-icon svg { fill: currentColor; stroke: none; }
-    .wif-tab-custom .wif-tab-label { font-weight: 700; color: var(--green-dark); }
+    /* Subtle caption below the picker — quietly notes the 10 listed industries
+       aren't a hard cap; users can create custom templates. Greyed out, no
+       chip / icon / border. */
+    .wif-custom-caption { text-align: center; max-width: 540px; margin: -24px auto 32px; font-size: 0.85rem; line-height: 1.5; color: var(--text-muted, var(--text-secondary)); opacity: 0.85; }
 
     .wif-stage { display: flex; flex-direction: column; align-items: center; gap: 20px; opacity: 1; transition: opacity 0.2s ease; }
     .wif-stage.is-fading { opacity: 0; }
@@ -2114,11 +2109,8 @@
             <span class="wif-tab-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span>
             <span class="wif-tab-label">Tourism</span>
           </button>
-          <div class="wif-tab wif-tab-custom reveal" role="presentation" aria-label="Build your own custom template, the possibilities are endless">
-            <span class="wif-tab-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2l1.5 5.5L19 9l-5.5 1.5L12 16l-1.5-5.5L5 9l5.5-1.5L12 2z"/></svg></span>
-            <span class="wif-tab-label">+ Build your own</span>
-          </div>
         </div>
+        <p class="wif-custom-caption reveal">Don't see yours? The possibilities are endless, build your own report template for any industry.</p>
         <div class="wif-stage reveal" id="wif-stage" role="tabpanel" aria-labelledby="wif-tab-accounting">
           <div class="wif-carousel">
             <button type="button" class="wif-arrow wif-arrow-prev" aria-label="Previous panel" disabled>
