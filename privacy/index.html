@@ -100,7 +100,7 @@
 
 <header>
   <h1>Privacy Policy</h1>
-  <p>Effective Date: May 6, 2026 &nbsp;|&nbsp; Last Updated: May 6, 2026 &nbsp;|&nbsp; Version 3.0</p>
+  <p>Effective Date: May 6, 2026 &nbsp;|&nbsp; Last Updated: May 6, 2026 &nbsp;|&nbsp; Version 3.0.1</p>
 </header>
 
 <p>
@@ -121,13 +121,13 @@
   other apps or websites. Your scanned images are sent to OpenAI for AI-powered text extraction
   under a zero-data-retention agreement, and stored in Google Cloud (Firebase). The optional AI
   Insights advisor sends only PII-redacted summaries of your report data to OpenAI to answer
-  your questions. You can delete your account, export all your data, opt out of AI features, or
+  your questions. You can delete your account, export all your data, opt out of AI Insights, or
   revoke any share link at any time from Settings.
 </div>
 
 <h3>What changed in version 3.0 (May 2026)</h3>
 <p>
-  Since version 2.1 we have added three significant data-processing capabilities and we have
+  Since version 2.1 we have added two significant data-processing capabilities and we have
   rewritten the relevant sections to disclose them clearly:
 </p>
 <ul>
@@ -135,9 +135,6 @@
     ask questions about a report and receives answers grounded in your own data. It calls OpenAI
     with PII-redacted summaries and maintains a conversation history scoped to the report. See
     Section 4 (AI Features).</li>
-  <li><strong>AI-assisted onboarding</strong> &mdash; if you describe your industry in free text
-    during onboarding, that description is sent to OpenAI for one-off classification so we can
-    suggest the right templates. See Section 4.4.</li>
   <li><strong>App Check / device integrity</strong> &mdash; we now use Apple App Attest and
     Google Play Integrity to verify that requests are coming from a genuine LensReport install.
     See Section 6 (Data Security).</li>
@@ -171,10 +168,10 @@
   <li><strong>AI Insights questions and feedback</strong> &mdash; if you use the AI Insights
     advisor (Section 4), the text of your question and any thumbs-up / thumbs-down feedback you
     submit are processed and stored as described in that section.</li>
-  <li><strong>Onboarding industry description</strong> (optional) &mdash; if during first-launch
-    onboarding you describe your industry in free text rather than picking from the list, that
-    description is sent to OpenAI for one-time classification (Section 4.4) and the resulting
-    industry tag is stored on your profile.</li>
+  <li><strong>Onboarding industry tag</strong> (optional) &mdash; if during first-launch
+    onboarding you select an industry from the tiled list, the resulting tag is stored on your
+    profile so we can pre-select the most useful templates. No free-text industry input is
+    collected and no AI classification call is made.</li>
 </ul>
 
 <h3>1.2 Information collected automatically</h3>
@@ -190,10 +187,6 @@
     monthly entry limits (the free tier permits 5 entries per calendar month).</li>
   <li><strong>AI usage counts</strong> &mdash; the number of AI Insights queries you have made
     today, used to enforce per-tier daily caps and to power abuse-prevention rate limits.</li>
-  <li><strong>Hashed IP address</strong> (onboarding only) &mdash; when you submit a free-text
-    industry description during onboarding, the request&rsquo;s source IP address is hashed
-    (HMAC-SHA256, first 96 bits only) and stored for up to 24 hours to enforce per-IP rate
-    limits (5/min, 100/day) on that endpoint. The raw IP is never written to our database.</li>
   <li><strong>App Check attestation token</strong> &mdash; a cryptographic token issued by Apple
     App Attest or Google Play Integrity that proves the request came from a genuine, unmodified
     LensReport install. The token is sent with each backend call and discarded after
@@ -229,9 +222,6 @@
   <li><strong>AI Insights advisor (optional).</strong> If you tap the AI Insights button on a
     report, we send a PII-redacted summary of that report&rsquo;s entries plus your question to
     OpenAI to generate an answer grounded in your data. See Section 4 for full detail.</li>
-  <li><strong>Onboarding template suggestion (optional).</strong> If you provide a free-text
-    industry description during onboarding, we send it to OpenAI to classify it into one of our
-    industry categories so we can suggest matching templates. See Section 4.4.</li>
   <li><strong>Account management.</strong> To create and maintain your account, authenticate
     sign-in, and enforce your subscription plan&rsquo;s entry limits and feature
     entitlements.</li>
@@ -254,9 +244,8 @@
     identify bugs, improve performance, and prioritize features.</li>
   <li><strong>Security, integrity, and fraud prevention.</strong> We verify each request with
     App Check (Section 6), maintain server-side rate limits (for share-link PIN guesses, team
-    invitations, AI queries, and onboarding classification), enforce burst-violation lockouts,
-    and keep an internal audit log of account-level and AI-related events to detect and respond
-    to abuse.</li>
+    invitations, and AI queries), enforce burst-violation lockouts, and keep an internal audit
+    log of account-level and AI-related events to detect and respond to abuse.</li>
 </ul>
 
 <h2>3. Who We Share Your Data With (Subprocessors)</h2>
@@ -283,7 +272,7 @@
     </tr>
     <tr>
       <td><strong>OpenAI</strong> (gpt-4.1-mini via the API)</td>
-      <td>(a) Extracts structured fields from the document images you upload. (b) Powers the optional AI Insights advisor &mdash; receives PII-redacted summaries of report data plus your question. (c) Classifies the optional free-text onboarding industry description.</td>
+      <td>(a) Extracts structured fields from the document images you upload. (b) Powers the optional AI Insights advisor &mdash; receives PII-redacted summaries of report data plus your question.</td>
       <td>United States.</td>
     </tr>
     <tr>
@@ -320,8 +309,7 @@
   Under ZDR, OpenAI does <strong>not</strong> retain your submitted images, prompts, completions,
   or extracted data after the request completes, and does <strong>not</strong> use your data to
   train, improve, or fine-tune their models. This applies to <em>all</em> OpenAI calls we make:
-  document-image extraction, AI Insights advisor questions and answers, and onboarding
-  classification.
+  document-image extraction and the AI Insights advisor (questions and answers).
 </p>
 <p>
   If you want to verify this commitment, you can contact us at
@@ -344,8 +332,8 @@
 <p>
   Vendor names, merchant names, and payee names are deliberately preserved because the advisor
   needs them to answer questions like &ldquo;how much did I spend at X?&rdquo;. PII redaction
-  applies only to the AI Insights and onboarding-classification surfaces; the underlying
-  document-image extraction itself necessarily transmits the visible image content under ZDR.
+  applies to the AI Insights surface; the underlying document-image extraction itself
+  necessarily transmits the visible image content under ZDR.
 </p>
 
 <h3>3.3 No sale of data, no profiling for advertising</h3>
@@ -358,7 +346,7 @@
 <h2>4. AI Features</h2>
 
 <p>
-  LensReport offers three optional features that involve calls to OpenAI&rsquo;s API. All three
+  LensReport offers two optional features that involve calls to OpenAI&rsquo;s API. Both
   run under the zero-data-retention agreement described in Section 3.1.
 </p>
 
@@ -466,32 +454,6 @@
   Collaborate screen.
 </p>
 
-<h3>4.4 AI-assisted onboarding industry classification</h3>
-<p>
-  During first-launch onboarding, we ask which industry best describes how you&rsquo;ll use the
-  App so we can pre-select the most useful templates. You can pick from a tiled list of
-  industries (no AI involved) or, if your role doesn&rsquo;t fit a tile, type a short
-  description in your own words. <strong>If &mdash; and only if &mdash; you choose the free-text
-  option, your description is sent to OpenAI for one-time classification.</strong>
-</p>
-<ul>
-  <li>The description is sent under the same ZDR agreement (Section 3.1) and is not retained by
-    OpenAI.</li>
-  <li>The classifier returns a single industry tag plus up to three suggested template IDs; only
-    the industry tag is persisted on your profile.</li>
-  <li>The original free-text string is not stored on our backend after the classification call
-    completes.</li>
-  <li>To prevent abuse of the endpoint, we enforce a per-IP rate limit (5/min, 100/day) by
-    storing only a salted, truncated HMAC-SHA256 hash of the source IP for up to 24 hours. The
-    raw IP is never written to our database.</li>
-  <li>The in-app screen displays a privacy notice next to the input box explicitly disclosing
-    that the description will be sent to OpenAI.</li>
-</ul>
-<p>
-  If you&rsquo;d rather not have your description classified, simply pick an industry from the
-  tiled list (or pick &ldquo;General&rdquo;); no OpenAI call is made.
-</p>
-
 <h2>5. Data Storage and Retention</h2>
 
 <table>
@@ -569,11 +531,6 @@
       <td>Up to 24 hours; auto-cleared when the lockout expires.</td>
     </tr>
     <tr>
-      <td>Onboarding rate-limit hashed-IP records</td>
-      <td>Firestore</td>
-      <td>Up to 24 hours (auto-deleted by Firestore TTL). Only the salted truncated hash is stored, never the raw IP.</td>
-    </tr>
-    <tr>
       <td>Account-level audit log (Section 5.1)</td>
       <td>Firestore (server-only)</td>
       <td>Retained indefinitely, including after account deletion, for security and compliance purposes.</td>
@@ -621,7 +578,7 @@
     to prove the request came from a genuine, unmodified LensReport install rather than a
     reverse-engineered or scripted client. The tokens never carry personal data.</li>
   <li><strong>PII redaction</strong> (Section 3.2) is applied before any text is sent to the AI
-    Insights endpoint or the onboarding classification endpoint.</li>
+    Insights endpoint.</li>
   <li>Sensitive local state &mdash; specifically, the share-link PIN cache so that the link
     owner can re-share the same PIN later &mdash; is stored in the platform secure enclave (iOS
     Keychain / Android EncryptedSharedPreferences), scoped per-user so that a second account on
@@ -637,9 +594,6 @@
   <li>AI Insights enforces per-tier daily caps and a per-minute burst limit. Three burst
     violations within 10 minutes trigger a 15-minute lockout on the offending account
     (Section 4.2).</li>
-  <li>Onboarding free-text classification enforces a per-IP rate limit (5/min, 100/day) using
-    only a salted, truncated HMAC-SHA256 hash of the source IP &mdash; never the raw IP
-    (Section 4.4).</li>
   <li>OpenAI extraction errors are sanitized before being returned to the client: internal error
     details and request IDs stay on our servers, and the client receives only a generic
     &ldquo;extraction failed&rdquo; message with a correlation ID for support.</li>
@@ -840,9 +794,9 @@
   performance of a contract with you under Article 6(1)(b) &mdash; to provide the scanning,
   extraction, AI Insights, collaboration, and export features you asked for; (b) your consent
   under Article 6(1)(a) where applicable &mdash; for optional analytics, push notifications,
-  free-text onboarding classification, and any AI Insights interaction; and (c) our legitimate
-  interests under Article 6(1)(f) &mdash; to keep the account-level and AI audit logs and to
-  enforce security rate limits, App Check verification, and anti-fraud controls.
+  and any AI Insights interaction; and (c) our legitimate interests under Article 6(1)(f)
+  &mdash; to keep the account-level and AI audit logs and to enforce security rate limits,
+  App Check verification, and anti-fraud controls.
 </p>
 
 <h3>10.1 EU representative</h3>
