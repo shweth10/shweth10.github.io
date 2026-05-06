@@ -146,10 +146,14 @@
   <li><strong>Business profile</strong> (paid tiers only) &mdash; business name, logo, address,
     and tax number that you optionally provide so that your exported reports can be branded.
     Stored only in your own account and used only on your exports.</li>
-  <li><strong>Team invitation data</strong> &mdash; if you invite someone to collaborate on a
-    report, we store the recipient&rsquo;s email (hashed for abuse-prevention lookups), the
-    invitation token, and the 6-digit invitation code until the invitation is accepted, rejected,
-    or expires.</li>
+  <li><strong>Team join-request data</strong> &mdash; if you are on a Team or Enterprise plan,
+    you can generate a personal invite code (a short string in the form
+    <code>LENS-XXXXXX</code>) and share it with the people you want to collaborate with. When
+    someone enters your code in their own copy of the App, we create a join-request record
+    containing their user ID, display name, and the email address on their Firebase Auth
+    record, and we send you a notification so you can approve or decline. Pending requests
+    expire after 30 days. We do <em>not</em> collect the recipient&rsquo;s email separately
+    from you, and we do <em>not</em> send an invitation email to anyone on your behalf.</li>
   <li><strong>AI Insights questions and feedback</strong> &mdash; if you use the AI Insights
     advisor (Section 4), the text of your question and any thumbs-up / thumbs-down feedback you
     submit are processed and stored as described in that section.</li>
@@ -210,10 +214,10 @@
   <li><strong>Account management.</strong> To create and maintain your account, authenticate
     sign-in, and enforce your subscription plan&rsquo;s entry limits and feature
     entitlements.</li>
-  <li><strong>Team collaboration.</strong> If you send a team invitation, we store the
-    invitation record, verify the code when the recipient accepts, and associate the resulting
-    contributor with the reports they have access to. Contributor activity (who added which
-    entry) is visible to the report owner.</li>
+  <li><strong>Team collaboration.</strong> If someone enters your invite code, we store the
+    resulting join-request record, notify you, and (after you approve) associate the new
+    contributor with the reports they then have access to. Contributor activity (who added
+    which entry) is visible to the report owner.</li>
   <li><strong>Subscription management.</strong> To process your subscription purchases, renewals,
     and entitlements through the App Store / Google Play and RevenueCat, and to honor any scan
     top-up packs you purchase.</li>
@@ -266,8 +270,8 @@
       <td>United States.</td>
     </tr>
     <tr>
-      <td><strong>Postmark</strong> (by ActiveCampaign)</td>
-      <td>Sends transactional email such as email verification codes, welcome emails, and team invitation notifications. Used only for outbound email &mdash; no other user data is stored on Postmark.</td>
+      <td><strong>Postmark</strong> (by Wildbit)</td>
+      <td>Sends transactional email: email verification codes, welcome emails, join-request notifications to team owners, monthly-quota warnings, and account-deletion warnings. Used only for outbound email &mdash; no other user data is stored on Postmark.</td>
       <td>United States.</td>
     </tr>
     <tr>
@@ -351,11 +355,13 @@
 
 <h3>4.2 AI Insights advisor</h3>
 <p>
-  AI Insights is an optional in-app feature available to paid subscribers (and to free
-  contributors on a paid owner&rsquo;s shared report). It lets you ask questions about a report
-  in natural language and receive answers grounded in your own entries. Some questions are
-  descriptive (&ldquo;what was my biggest purchase last month?&rdquo;); others are advisory
-  (&ldquo;am I spending too much on fuel?&rdquo;). The advisor is informational only and is
+  AI Insights is an optional in-app feature available to paid subscribers on any tier. Free
+  contributors on a paid owner&rsquo;s shared report do <em>not</em> automatically inherit AI
+  Insights access &mdash; they see a paywall when they tap the AI button and must subscribe
+  to use the feature themselves. AI Insights lets you ask questions about a report in natural
+  language and receive answers grounded in your own entries. Some questions are descriptive
+  (&ldquo;what was my biggest purchase last month?&rdquo;); others are advisory (&ldquo;am I
+  spending too much on fuel?&rdquo;). The advisor is informational only and is
   <strong>not a substitute for professional advice</strong>; this is disclosed in-product on
   every advisory answer.
 </p>
@@ -381,30 +387,36 @@
   stored at <code>users/{your-id}/aiAudit/{event}</code>. Each audit row contains the operation
   type, the outcome (success / hard-refused / crisis-redirect / no-match / etc.), a SHA-256
   hash-prefix of your question (never the question text itself), latency, and a timestamp.
-  No document content and no answer text is written to the audit log. This log is retained
-  indefinitely, including after account deletion, for security, compliance, and abuse-prevention
-  purposes (legitimate-interest basis under GDPR Article 6(1)(f)). It is not used for any other
+  No document content and no answer text is written to the audit log. The log is retained for
+  the lifetime of your account and is removed when you delete your account; we keep it only
+  for product / abuse-monitoring purposes during the life of the account, on the
+  legitimate-interest basis under GDPR Article 6(1)(f). It is not used for any other
   purpose.</p>
 <p><strong>Conversation memory.</strong> So that follow-up questions feel coherent
   (&ldquo;and what about last month?&rdquo;), we keep a per-report conversation history at
-  <code>users/{owner-id}/reports/{report-id}/aiConversations/{turn}</code>. Each turn stores the
-  PII-redacted question, the question&rsquo;s identity hash, the resulting outcome, and the
-  question&rsquo;s recency &mdash; never the answer text or document content. <strong>On a
-  shared report, this conversation history is shared between the owner and contributors</strong>:
-  if your teammate asks about Q3 fuel spend yesterday, the AI knows that context when you ask a
-  follow-up today. The history is retained for 12 months from the last turn (Firestore TTL),
-  stored under the owner&rsquo;s namespace, and deleted when the report is deleted or when the
-  owner&rsquo;s account is deleted.</p>
+  <code>users/{owner-id}/reports/{report-id}/aiConversations/{turn}</code>. For most turns we
+  store the PII-redacted question, the question&rsquo;s identity hash, a 1&ndash;2 sentence
+  summary of the answer narrative (used to give the LLM continuity context on follow-ups), the
+  outcome, and the timestamp &mdash; never the full answer body, never any document content.
+  Two exceptions: hard-refused turns (medical / legal / etc.) store only the refusal category,
+  with no question text and no summary; crisis-redirect turns are <em>never</em> stored at all
+  so distress signals do not propagate to anyone else with access to the report.
+  <strong>On a shared report, this conversation history is readable by every collaborator with
+  access to the report</strong>: if your teammate asks about Q3 fuel spend yesterday, the AI
+  knows that context when you ask a follow-up today. The history is retained for 12 months
+  from the last turn (Firestore TTL), stored under the owner&rsquo;s namespace, and deleted
+  when the report is deleted or when the owner&rsquo;s account is deleted.</p>
 <p><strong>Response cache.</strong> To keep AI costs predictable and to make repeat questions
   feel instant, we cache successful answers for up to 24 hours per (report, question, data
   state) tuple at <code>users/{owner-id}/reports/{report-id}/aiCache/{key}</code>. Cached entries
   expire automatically and are deleted when the report is deleted.</p>
-<p><strong>Daily usage caps.</strong> AI Insights is rate-limited per Firebase user account:
-  Free tier: not available. Individual: 30 queries / day. Team / Family: 60 / day. Enterprise:
-  200 / day. Ultra: unlimited. On a shared report, contributor queries draw from the
-  <em>owner&rsquo;s</em> daily cap (the owner pays for the AI). Within those caps, a short-burst
-  limiter (8 queries / minute) prevents accidental script loops. Three burst-limit hits in 10
-  minutes triggers a 15-minute lockout for the affected account.</p>
+<p><strong>Daily usage caps.</strong> AI Insights is rate-limited per Firebase user account.
+  Free users have no AI Insights quota; every paid tier (Individual, Family, Enterprise) gets
+  a flat 30 queries per day. Each user draws from their own counter &mdash; including
+  contributors on a shared report, who must subscribe in their own right to use the feature.
+  Within the daily cap, a short-burst limiter (8 queries per minute) prevents accidental
+  script loops; three burst-limit hits in 10 minutes triggers a 15-minute lockout on the
+  affected account.</p>
 <p><strong>Feedback (optional).</strong> Every answer has a thumbs-up / thumbs-down control. If
   you tap thumbs-down, you can pick a closed-list reason (&ldquo;wrong about my data&rdquo;,
   &ldquo;bad recommendation&rdquo;, &ldquo;felt judgmental&rdquo;, &ldquo;not helpful&rdquo;,
@@ -412,13 +424,16 @@
   selection, and a timestamp &mdash; no free-text comment is collected and no question or answer
   text is included. Feedback is stored at <code>users/{your-id}/aiFeedback/{event}</code> and is
   used to improve prompts and detect regressions.</p>
-<p><strong>Crisis and refusal handling.</strong> If your free-text question matches our
-  hard-refusal categories (medical, legal, investment-advice, certain destructive operations),
-  the request is rejected before we call OpenAI &mdash; <em>no</em> tokens are sent. If the
-  question matches our crisis-detector keyword bag (mental-health distress, financial crisis,
-  domestic harm, etc.), we return a card pointing to the appropriate local support resources
-  (suicide-prevention hotline, financial-counselling service, etc.) instead of any AI-generated
-  answer. The crisis card never reaches OpenAI and is never stored beyond the audit log entry.</p>
+<p><strong>Crisis and refusal handling.</strong> If your free-text question matches one of our
+  hard-refusal categories (medical / clinical, legal advice, specific investment advice,
+  tax-filing decisions, drastic operational actions, attempts to extract another user&rsquo;s
+  personal data, or prompt-injection attempts), the request is rejected before we call OpenAI
+  &mdash; <em>no</em> tokens are sent. If the question matches our crisis-detector keyword bag
+  (mental-health distress, financial distress, threats of harm to others), we return a card
+  pointing to the appropriate local support resources (suicide-prevention hotline,
+  financial-counselling service, etc.) instead of any AI-generated answer. The crisis card
+  never reaches OpenAI and the crisis turn is not added to the report&rsquo;s conversation
+  history; only the audit-log entry exists.</p>
 <p><strong>Cost monitoring.</strong> We run an automated daily summary that aggregates AI usage
   across <em>all</em> users to detect abuse and runaway cost. The summary contains only counts
   and totals (e.g. &ldquo;1,200 calls today, $3.40 spend&rdquo;) &mdash; no per-user or per-query
@@ -431,12 +446,14 @@
   you never tap it, no AI Insights data is processed or stored. To remove an existing
   conversation history, delete the report (which deletes all associated AI conversation,
   context, and cache rows under the owner&rsquo;s namespace) or delete your account (which
-  deletes the same data plus your AI feedback rows).
+  deletes the same data plus your AI audit log and AI feedback rows).
 </p>
 <p>
-  AI Insights is not available on the free tier. Contributors on a shared paid-tier report
-  inherit access from the owner; the owner can revoke contributor access at any time from the
-  Collaborate screen.
+  AI Insights is not available on the free tier. Each user who wants to use the feature must
+  hold a paid subscription in their own right; the owner of a shared report does not pay for a
+  contributor&rsquo;s AI usage. Owners can remove a contributor from a team at any time from
+  the Collaborate screen, which also revokes the contributor&rsquo;s read access to the
+  conversation history on every report they previously had access to.
 </p>
 
 <h2>5. Data Storage and Retention</h2>
@@ -492,8 +509,8 @@
     </tr>
     <tr>
       <td>AI Insights audit log (Section 4.2)</td>
-      <td>Firestore (server-only)</td>
-      <td>Retained indefinitely, including after account deletion. Contains only operation type, outcome, question hash-prefix, latency, and timestamp.</td>
+      <td>Firestore (server-only, under your account)</td>
+      <td>For the lifetime of your account; deleted when you delete your account. Contains only operation type, outcome, question hash-prefix, latency, and timestamp.</td>
     </tr>
     <tr>
       <td>AI Insights conversation history</td>
@@ -574,8 +591,12 @@
   <li>Share-link PINs are hashed with bcrypt (cost factor 12) and enforce per-token rate
     limiting: after 5 incorrect PIN attempts, the link is locked for 15 minutes. Share-link
     expiry is capped at 30 days to bound any attacker&rsquo;s total guess budget.</li>
-  <li>Team invitations are rate-limited both per inviter (max 5 per hour) and per target email
-    (max 3 pending invitations to the same address in any 24-hour window) to prevent spam.</li>
+  <li>Team join requests are rate-limited per requesting user (maximum 10 join-request
+    submissions in any 24-hour window) to prevent code-guessing and bulk join attempts. Invite
+    codes themselves use a 6-character Crockford base-32 alphabet (~1 billion combinations);
+    requesters who try invalid codes receive a generic &ldquo;try again later&rdquo; response
+    rather than a code-not-found error so the rate limit cannot be used to enumerate valid
+    codes.</li>
   <li>AI Insights enforces per-tier daily caps and a per-minute burst limit. Three burst
     violations within 10 minutes trigger a 15-minute lockout on the offending account
     (Section 4.2).</li>
@@ -605,15 +626,15 @@
   <li>Every team membership and share link you created.</li>
   <li>Your scan and entry quota history and any outstanding top-up balance.</li>
   <li>Your Firebase Auth record (email, display name, social sign-in links).</li>
-  <li>Any pending team invitations you had sent.</li>
-  <li>Your AI Insights conversation history, response cache, and feedback rows.</li>
+  <li>Any pending team join-requests addressed to you and your personal invite code.</li>
+  <li>Your AI Insights conversation history, response cache, audit log, and feedback rows.</li>
 </ul>
 <p>
   Some data is retained for legitimate-interest reasons even after deletion: the server-side
-  audit logs described in Sections 4.2 and 5.1 (which contain only action type, hashes,
-  timestamp, and anonymized identifier &mdash; no scan content, no question text, no answer
-  text), and subscription records held by the App Store / Google Play / RevenueCat for legal
-  and tax compliance.
+  account-level audit log described in Section 5.1 (which contains only action type, timestamp,
+  and an anonymized identifier &mdash; no scan content, no question text, no answer text), and
+  subscription records held by the App Store / Google Play / RevenueCat for legal and tax
+  compliance.
 </p>
 <p>
   <strong>Reminder:</strong> deleting your LensReport account does not automatically cancel any
@@ -675,15 +696,18 @@
 
 <h2>8. Team Collaboration</h2>
 <p>
-  On paid plans that support team collaboration, you can invite other people as contributors to
-  specific reports. Contributors sign in with their own accounts but their scans deduct from the
-  inviting owner&rsquo;s shared scan quota pool rather than from a separate quota. The same
-  applies to AI Insights queries on a shared report (Section 4.2).
+  Team and Enterprise subscribers can generate a personal invite code (in the form
+  <code>LENS-XXXXXX</code>) and share it with the people they want to collaborate with.
+  Anyone who knows your code can submit a join request from inside the App; you then approve
+  or decline it. Approved contributors sign in with their own accounts and consume <em>their
+  own</em> scan / entry / AI quota &mdash; we do not operate a shared-pool model.
 </p>
 <ul>
-  <li>When you send an invitation, the recipient&rsquo;s email address is stored with the
-    invitation record. A hashed form of the email is also stored to enforce the anti-spam
-    throttle described in Section 6.</li>
+  <li>When someone submits a join request using your code, we store their user ID, display
+    name, and Firebase Auth email on the join-request record so you can see who is asking. We
+    do <em>not</em> ask you for the recipient&rsquo;s email and we do <em>not</em> send any
+    email on your behalf.</li>
+  <li>Pending join requests expire after 30 days if you do not respond.</li>
   <li>When a contributor adds an entry to one of your reports, their user ID and display name
     are attached to that entry so that you can see who added what, and you may receive a push
     notification.</li>
@@ -691,8 +715,8 @@
     see each other&rsquo;s email addresses unless the report owner chooses to share them.</li>
   <li>Team activity (per-contributor scan counts, recent activity, quota consumption) is
     visible to the report owner on the Team Activity dashboard.</li>
-  <li>AI Insights conversation history on a shared report is shared between owner and
-    contributors so that follow-up questions retain context (Section 4.2).</li>
+  <li>AI Insights conversation history on a shared report is readable by every collaborator
+    with access to the report, so follow-up questions retain context (Section 4.2).</li>
 </ul>
 
 <h2>9. Public Share Links</h2>
@@ -765,7 +789,7 @@
     </tr>
     <tr>
       <td><strong>Right to withdraw consent</strong></td>
-      <td>For analytics: toggle analytics off in <strong>Settings &rarr; Privacy</strong>. For AI processing: avoid the AI Insights feature and use manual entry instead of scanning. For all processing: delete your account.</td>
+      <td>For AI Insights: do not tap the AI button on a report; existing conversation history can be removed by deleting the report or your account. For document-image extraction: use the manual-entry option instead of scanning. For all processing including analytics: delete your account, which stops further data collection. (We do not currently offer a granular in-app analytics opt-out toggle.)</td>
     </tr>
     <tr>
       <td><strong>Right to lodge a complaint</strong></td>
