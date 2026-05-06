@@ -78,6 +78,13 @@
       margin: 16px 0;
       font-size: 15px;
     }
+    .callout-warn {
+      background: #fff8ec;
+      border-left: 4px solid #d39a1f;
+      padding: 14px 18px;
+      margin: 16px 0;
+      font-size: 15px;
+    }
     footer {
       margin-top: 60px;
       padding-top: 20px;
@@ -93,7 +100,7 @@
 
 <header>
   <h1>Privacy Policy</h1>
-  <p>Effective Date: April 12, 2026 &nbsp;|&nbsp; Last Updated: April 13, 2026 &nbsp;|&nbsp; Version 2.1</p>
+  <p>Effective Date: May 6, 2026 &nbsp;|&nbsp; Last Updated: May 6, 2026 &nbsp;|&nbsp; Version 3.0</p>
 </header>
 
 <p>
@@ -110,11 +117,31 @@
 <div class="callout">
   <strong>At a glance:</strong> We collect only what we need to run the service &mdash; your
   document images, the data extracted from them, your account details, and your subscription
-  status. We do not sell your data, we do not run ads, and we do not track you across other apps
-  or websites. Your scanned images are sent to OpenAI for AI-powered text extraction and stored
-  in Google Cloud (Firebase). You can delete your account, export all your data, or revoke any
-  share link at any time from Settings.
+  status. We do not sell your data, we do not run advertising, and we do not track you across
+  other apps or websites. Your scanned images are sent to OpenAI for AI-powered text extraction
+  under a zero-data-retention agreement, and stored in Google Cloud (Firebase). The optional AI
+  Insights advisor sends only PII-redacted summaries of your report data to OpenAI to answer
+  your questions. You can delete your account, export all your data, opt out of AI features, or
+  revoke any share link at any time from Settings.
 </div>
+
+<h3>What changed in version 3.0 (May 2026)</h3>
+<p>
+  Since version 2.1 we have added three significant data-processing capabilities and we have
+  rewritten the relevant sections to disclose them clearly:
+</p>
+<ul>
+  <li><strong>AI Insights advisor</strong> &mdash; an in-app conversational feature that lets you
+    ask questions about a report and receives answers grounded in your own data. It calls OpenAI
+    with PII-redacted summaries and maintains a conversation history scoped to the report. See
+    Section 4 (AI Features).</li>
+  <li><strong>AI-assisted onboarding</strong> &mdash; if you describe your industry in free text
+    during onboarding, that description is sent to OpenAI for one-off classification so we can
+    suggest the right templates. See Section 4.4.</li>
+  <li><strong>App Check / device integrity</strong> &mdash; we now use Apple App Attest and
+    Google Play Integrity to verify that requests are coming from a genuine LensReport install.
+    See Section 6 (Data Security).</li>
+</ul>
 
 <h2>1. Information We Collect</h2>
 
@@ -141,6 +168,13 @@
     report, we store the recipient&rsquo;s email (hashed for abuse-prevention lookups), the
     invitation token, and the 6-digit invitation code until the invitation is accepted, rejected,
     or expires.</li>
+  <li><strong>AI Insights questions and feedback</strong> &mdash; if you use the AI Insights
+    advisor (Section 4), the text of your question and any thumbs-up / thumbs-down feedback you
+    submit are processed and stored as described in that section.</li>
+  <li><strong>Onboarding industry description</strong> (optional) &mdash; if during first-launch
+    onboarding you describe your industry in free text rather than picking from the list, that
+    description is sent to OpenAI for one-time classification (Section 4.4) and the resulting
+    industry tag is stored on your profile.</li>
 </ul>
 
 <h3>1.2 Information collected automatically</h3>
@@ -151,9 +185,19 @@
     you to enable them after a deliberate action, never on first launch), we register a Firebase
     Cloud Messaging token with our backend so we can notify you when a teammate adds an entry to
     one of your reports.</li>
-  <li><strong>Scan usage counts and quota history</strong> &mdash; the number of scans you
-    perform each billing period, broken down by team member for shared plans. Used to enforce
-    your plan&rsquo;s scan limits.</li>
+  <li><strong>Scan and entry usage counts</strong> &mdash; the number of entries you create each
+    billing period, broken down by team member for shared plans. Used to enforce your plan&rsquo;s
+    monthly entry limits (the free tier permits 5 entries per calendar month).</li>
+  <li><strong>AI usage counts</strong> &mdash; the number of AI Insights queries you have made
+    today, used to enforce per-tier daily caps and to power abuse-prevention rate limits.</li>
+  <li><strong>Hashed IP address</strong> (onboarding only) &mdash; when you submit a free-text
+    industry description during onboarding, the request&rsquo;s source IP address is hashed
+    (HMAC-SHA256, first 96 bits only) and stored for up to 24 hours to enforce per-IP rate
+    limits (5/min, 100/day) on that endpoint. The raw IP is never written to our database.</li>
+  <li><strong>App Check attestation token</strong> &mdash; a cryptographic token issued by Apple
+    App Attest or Google Play Integrity that proves the request came from a genuine, unmodified
+    LensReport install. The token is sent with each backend call and discarded after
+    verification.</li>
   <li><strong>Crash data</strong> &mdash; collected via Firebase Crashlytics to diagnose and fix
     app crashes. Includes device model, OS version, and stack traces. No document content is
     included in crash reports.</li>
@@ -167,11 +211,13 @@
 <h3>1.3 Information we do <em>not</em> collect</h3>
 <ul>
   <li>We do <strong>not</strong> use Apple&rsquo;s App Tracking Transparency (ATT) framework or
-    any cross-app tracking technologies.</li>
+    any cross-app tracking technologies. We do not request the IDFA.</li>
   <li>We do <strong>not</strong> include any advertising SDKs or ad networks.</li>
-  <li>We do <strong>not</strong> collect location, contacts, calendar, microphone audio,
-    biometric identifiers, or advertising IDs.</li>
+  <li>We do <strong>not</strong> collect your precise or coarse location, contacts, calendar,
+    microphone audio, biometric identifiers, health data, financial-account credentials, or
+    advertising IDs.</li>
   <li>We do <strong>not</strong> perform cross-app or cross-site tracking of any kind.</li>
+  <li>We do <strong>not</strong> read or process your message inboxes, SMS, or email.</li>
 </ul>
 
 <h2>2. How We Use Your Information</h2>
@@ -180,8 +226,15 @@
   <li><strong>AI-powered data extraction.</strong> Your scanned document images are sent to our
     Firebase backend, which calls the OpenAI API to extract structured fields (vendor name,
     amounts, dates, etc.). The extracted values are written to your report in Firestore.</li>
+  <li><strong>AI Insights advisor (optional).</strong> If you tap the AI Insights button on a
+    report, we send a PII-redacted summary of that report&rsquo;s entries plus your question to
+    OpenAI to generate an answer grounded in your data. See Section 4 for full detail.</li>
+  <li><strong>Onboarding template suggestion (optional).</strong> If you provide a free-text
+    industry description during onboarding, we send it to OpenAI to classify it into one of our
+    industry categories so we can suggest matching templates. See Section 4.4.</li>
   <li><strong>Account management.</strong> To create and maintain your account, authenticate
-    sign-in, and enforce your subscription plan&rsquo;s scan limits and feature entitlements.</li>
+    sign-in, and enforce your subscription plan&rsquo;s entry limits and feature
+    entitlements.</li>
   <li><strong>Team collaboration.</strong> If you send a team invitation, we store the
     invitation record, verify the code when the recipient accepts, and associate the resulting
     contributor with the reports they have access to. Contributor activity (who added which
@@ -191,16 +244,19 @@
     top-up packs you purchase.</li>
   <li><strong>Push notifications.</strong> To notify report owners in real time when a teammate
     adds an entry to one of their reports or when their monthly quota is exhausted. Notifications
-    are only sent if you grant permission, which we request contextually, not on first launch.</li>
+    are only sent if you grant permission, which we request contextually, not on first
+    launch.</li>
   <li><strong>Share links.</strong> If you create a public share link for a report, we store a
     snapshot of the report&rsquo;s verified entries so that the link recipient can view it
     without installing the App. You control whether the link is PIN-protected and when it
     expires.</li>
   <li><strong>Service improvement.</strong> Anonymized crash data and usage analytics help us
     identify bugs, improve performance, and prioritize features.</li>
-  <li><strong>Security and fraud prevention.</strong> We maintain server-side rate limits (for
-    share-link PIN guesses, team invitations, and extraction calls) and an internal audit log of
-    account-level events to detect and respond to abuse.</li>
+  <li><strong>Security, integrity, and fraud prevention.</strong> We verify each request with
+    App Check (Section 6), maintain server-side rate limits (for share-link PIN guesses, team
+    invitations, AI queries, and onboarding classification), enforce burst-violation lockouts,
+    and keep an internal audit log of account-level and AI-related events to detect and respond
+    to abuse.</li>
 </ul>
 
 <h2>3. Who We Share Your Data With (Subprocessors)</h2>
@@ -221,24 +277,34 @@
   </thead>
   <tbody>
     <tr>
-      <td><strong>Google Firebase</strong><br>(Auth, Firestore, Cloud Storage, Cloud Functions, Cloud Messaging, Crashlytics, Analytics)</td>
-      <td>Primary backend: stores your account, reports, entries, and uploaded images; handles sign-in; delivers push notifications; collects crash and analytics data.</td>
-      <td>US multi-region (primary), with calls routed to EU or Asia-Pacific regions where applicable</td>
+      <td><strong>Google Firebase</strong><br>(Auth, Firestore, Cloud Storage, Cloud Functions, Cloud Messaging, Crashlytics, Analytics, Remote Config, App Check)</td>
+      <td>Primary backend: stores your account, reports, entries, and uploaded images; handles sign-in; delivers push notifications; collects crash and analytics data; verifies App Check tokens.</td>
+      <td>US multi-region (primary), with calls routed to EU or Asia-Pacific regions where applicable.</td>
     </tr>
     <tr>
       <td><strong>OpenAI</strong> (gpt-4.1-mini via the API)</td>
-      <td>Extracts structured fields (vendor name, date, amounts, line items) from the document images you upload.</td>
-      <td>United States</td>
+      <td>(a) Extracts structured fields from the document images you upload. (b) Powers the optional AI Insights advisor &mdash; receives PII-redacted summaries of report data plus your question. (c) Classifies the optional free-text onboarding industry description.</td>
+      <td>United States.</td>
     </tr>
     <tr>
       <td><strong>RevenueCat</strong></td>
       <td>Processes in-app subscription events forwarded from the App Store and Google Play, maintains entitlement state, and powers restore-purchases.</td>
-      <td>United States</td>
+      <td>United States.</td>
     </tr>
     <tr>
       <td><strong>Postmark</strong> (by ActiveCampaign)</td>
       <td>Sends transactional email such as email verification codes, welcome emails, and team invitation notifications. Used only for outbound email &mdash; no other user data is stored on Postmark.</td>
-      <td>United States</td>
+      <td>United States.</td>
+    </tr>
+    <tr>
+      <td><strong>Apple App Attest / DeviceCheck</strong></td>
+      <td>Issues attestation tokens that prove your iOS request came from a genuine, unmodified LensReport install. Apple does not see your scan content.</td>
+      <td>Per Apple&rsquo;s infrastructure; tokens never carry personal data.</td>
+    </tr>
+    <tr>
+      <td><strong>Google Play Integrity</strong></td>
+      <td>Same role as App Attest, for Android requests.</td>
+      <td>Per Google&rsquo;s infrastructure; tokens never carry personal data.</td>
     </tr>
     <tr>
       <td><strong>Apple</strong> and <strong>Google</strong> (as payment processors)</td>
@@ -251,27 +317,182 @@
 <h3>3.1 OpenAI zero data retention</h3>
 <p>
   We use OpenAI&rsquo;s API with zero data retention (ZDR) enabled for LensReport&rsquo;s account.
-  Under ZDR, OpenAI does <strong>not</strong> retain your submitted images or extracted data
-  after the request completes, and does <strong>not</strong> use your data to train, improve, or
-  fine-tune their models. If you want to verify this commitment, you can contact us at
-  <a href="mailto:info@lensreport.app">info@lensreport.app</a> and we will confirm our
-  current ZDR status.
+  Under ZDR, OpenAI does <strong>not</strong> retain your submitted images, prompts, completions,
+  or extracted data after the request completes, and does <strong>not</strong> use your data to
+  train, improve, or fine-tune their models. This applies to <em>all</em> OpenAI calls we make:
+  document-image extraction, AI Insights advisor questions and answers, and onboarding
+  classification.
 </p>
 <p>
-  Even with ZDR in place, we recommend redacting any exceptionally sensitive fields (for example,
-  full card numbers, national identifiers, or passwords) from a document <em>before</em> scanning
-  it. You can always use the App&rsquo;s manual-entry feature instead of scanning if you prefer
-  not to send an image to OpenAI at all.
+  If you want to verify this commitment, you can contact us at
+  <a href="mailto:info@lensreport.app">info@lensreport.app</a> and we will confirm our current
+  ZDR status.
 </p>
 
-<h3>3.2 No sale of data</h3>
+<h3>3.2 PII redaction before AI Insights calls</h3>
+<p>
+  Before the AI Insights advisor (Section 4) sends any text to OpenAI, our backend automatically
+  redacts the following categories from notes, descriptions, and your typed question:
+</p>
+<ul>
+  <li>Email addresses (replaced with placeholders such as <code>[email-1]</code>);</li>
+  <li>Phone numbers in any common locale format;</li>
+  <li>Government identifier patterns (national IDs, tax IDs, social security numbers);</li>
+  <li>Credit card numbers that pass the Luhn check;</li>
+  <li>IBAN-style bank account numbers.</li>
+</ul>
+<p>
+  Vendor names, merchant names, and payee names are deliberately preserved because the advisor
+  needs them to answer questions like &ldquo;how much did I spend at X?&rdquo;. PII redaction
+  applies only to the AI Insights and onboarding-classification surfaces; the underlying
+  document-image extraction itself necessarily transmits the visible image content under ZDR.
+</p>
+
+<h3>3.3 No sale of data, no profiling for advertising</h3>
 <p>
   We do <strong>not</strong> sell, rent, lease, or trade your personal information to any third
-  party, and we do not share your data with any third party for their own marketing, advertising,
-  or profiling purposes.
+  party. We do not share your data with any third party for their own marketing, advertising,
+  profiling, or behavioral-advertising purposes.
 </p>
 
-<h2>4. Data Storage and Retention</h2>
+<h2>4. AI Features</h2>
+
+<p>
+  LensReport offers three optional features that involve calls to OpenAI&rsquo;s API. All three
+  run under the zero-data-retention agreement described in Section 3.1.
+</p>
+
+<h3>4.1 AI-powered document extraction</h3>
+<p>
+  This feature is the core of the App. When you scan or import a document, the image is uploaded
+  to Firebase Cloud Storage, then forwarded to OpenAI to identify the vendor name, date, amounts,
+  line items, and other fields appropriate to the template you chose. The extracted values are
+  written to your report in Firestore. The image is retained alongside the entry until you delete
+  it; the OpenAI request and response are not retained by OpenAI per ZDR.
+</p>
+<p>
+  If you would prefer not to send any image to OpenAI, you can use the App&rsquo;s manual-entry
+  feature to type the values directly &mdash; this still creates a normal entry, just without the
+  AI extraction step.
+</p>
+
+<h3>4.2 AI Insights advisor</h3>
+<p>
+  AI Insights is an optional in-app feature available to paid subscribers (and to free
+  contributors on a paid owner&rsquo;s shared report). It lets you ask questions about a report
+  in natural language and receive answers grounded in your own entries. Some questions are
+  descriptive (&ldquo;what was my biggest purchase last month?&rdquo;); others are advisory
+  (&ldquo;am I spending too much on fuel?&rdquo;). The advisor is informational only and is
+  <strong>not a substitute for professional advice</strong>; this is disclosed in-product on
+  every advisory answer.
+</p>
+<p><strong>What we send to OpenAI for an AI Insights query:</strong></p>
+<ul>
+  <li>Your question text, after PII redaction (Section 3.2);</li>
+  <li>A structured summary of the relevant entries from the current report (vendor, date, amount,
+    category, and similar already-extracted fields), with PII redacted from any free-text
+    description or notes columns;</li>
+  <li>The display name of the column (e.g. &ldquo;Vendor&rdquo;, &ldquo;Amount&rdquo;) and your
+    preferred currency and language &mdash; so the answer can be formatted correctly;</li>
+  <li>For follow-up questions, the last few question/answer turns from the same report&rsquo;s
+    conversation history (see &ldquo;Conversation memory&rdquo; below).</li>
+</ul>
+<p><strong>What we do NOT send to OpenAI for an AI Insights query:</strong></p>
+<ul>
+  <li>Your scanned images (only the structured fields extracted from them);</li>
+  <li>PII tokens that the redactor caught (they leave our backend as opaque placeholders);</li>
+  <li>Other reports you own &mdash; each query is scoped to one report;</li>
+  <li>Your account email, display name, or device identifier.</li>
+</ul>
+<p><strong>Audit log.</strong> Every AI Insights call is recorded in an append-only audit log
+  stored at <code>users/{your-id}/aiAudit/{event}</code>. Each audit row contains the operation
+  type, the outcome (success / hard-refused / crisis-redirect / no-match / etc.), a SHA-256
+  hash-prefix of your question (never the question text itself), latency, and a timestamp.
+  No document content and no answer text is written to the audit log. This log is retained
+  indefinitely, including after account deletion, for security, compliance, and abuse-prevention
+  purposes (legitimate-interest basis under GDPR Article 6(1)(f)). It is not used for any other
+  purpose.</p>
+<p><strong>Conversation memory.</strong> So that follow-up questions feel coherent
+  (&ldquo;and what about last month?&rdquo;), we keep a per-report conversation history at
+  <code>users/{owner-id}/reports/{report-id}/aiConversations/{turn}</code>. Each turn stores the
+  PII-redacted question, the question&rsquo;s identity hash, the resulting outcome, and the
+  question&rsquo;s recency &mdash; never the answer text or document content. <strong>On a
+  shared report, this conversation history is shared between the owner and contributors</strong>:
+  if your teammate asks about Q3 fuel spend yesterday, the AI knows that context when you ask a
+  follow-up today. The history is retained for 12 months from the last turn (Firestore TTL),
+  stored under the owner&rsquo;s namespace, and deleted when the report is deleted or when the
+  owner&rsquo;s account is deleted.</p>
+<p><strong>Response cache.</strong> To keep AI costs predictable and to make repeat questions
+  feel instant, we cache successful answers for up to 24 hours per (report, question, data
+  state) tuple at <code>users/{owner-id}/reports/{report-id}/aiCache/{key}</code>. Cached entries
+  expire automatically and are deleted when the report is deleted.</p>
+<p><strong>Daily usage caps.</strong> AI Insights is rate-limited per Firebase user account:
+  Free tier: not available. Individual: 30 queries / day. Team / Family: 60 / day. Enterprise:
+  200 / day. Ultra: unlimited. On a shared report, contributor queries draw from the
+  <em>owner&rsquo;s</em> daily cap (the owner pays for the AI). Within those caps, a short-burst
+  limiter (8 queries / minute) prevents accidental script loops. Three burst-limit hits in 10
+  minutes triggers a 15-minute lockout for the affected account.</p>
+<p><strong>Feedback (optional).</strong> Every answer has a thumbs-up / thumbs-down control. If
+  you tap thumbs-down, you can pick a closed-list reason (&ldquo;wrong about my data&rdquo;,
+  &ldquo;bad recommendation&rdquo;, &ldquo;felt judgmental&rdquo;, &ldquo;not helpful&rdquo;,
+  &ldquo;other&rdquo;). The feedback row stores only the question identity hash, your reason
+  selection, and a timestamp &mdash; no free-text comment is collected and no question or answer
+  text is included. Feedback is stored at <code>users/{your-id}/aiFeedback/{event}</code> and is
+  used to improve prompts and detect regressions.</p>
+<p><strong>Crisis and refusal handling.</strong> If your free-text question matches our
+  hard-refusal categories (medical, legal, investment-advice, certain destructive operations),
+  the request is rejected before we call OpenAI &mdash; <em>no</em> tokens are sent. If the
+  question matches our crisis-detector keyword bag (mental-health distress, financial crisis,
+  domestic harm, etc.), we return a card pointing to the appropriate local support resources
+  (suicide-prevention hotline, financial-counselling service, etc.) instead of any AI-generated
+  answer. The crisis card never reaches OpenAI and is never stored beyond the audit log entry.</p>
+<p><strong>Cost monitoring.</strong> We run an automated daily summary that aggregates AI usage
+  across <em>all</em> users to detect abuse and runaway cost. The summary contains only counts
+  and totals (e.g. &ldquo;1,200 calls today, $3.40 spend&rdquo;) &mdash; no per-user or per-query
+  detail is included. If the daily total exceeds an internal threshold, an email alert is sent
+  to our operations address.</p>
+
+<h3>4.3 Opting out of AI Insights</h3>
+<p>
+  AI Insights is opt-in by definition: it only runs when you tap the AI button on a report. If
+  you never tap it, no AI Insights data is processed or stored. To remove an existing
+  conversation history, delete the report (which deletes all associated AI conversation,
+  context, and cache rows under the owner&rsquo;s namespace) or delete your account (which
+  deletes the same data plus your AI feedback rows).
+</p>
+<p>
+  AI Insights is not available on the free tier. Contributors on a shared paid-tier report
+  inherit access from the owner; the owner can revoke contributor access at any time from the
+  Collaborate screen.
+</p>
+
+<h3>4.4 AI-assisted onboarding industry classification</h3>
+<p>
+  During first-launch onboarding, we ask which industry best describes how you&rsquo;ll use the
+  App so we can pre-select the most useful templates. You can pick from a tiled list of
+  industries (no AI involved) or, if your role doesn&rsquo;t fit a tile, type a short
+  description in your own words. <strong>If &mdash; and only if &mdash; you choose the free-text
+  option, your description is sent to OpenAI for one-time classification.</strong>
+</p>
+<ul>
+  <li>The description is sent under the same ZDR agreement (Section 3.1) and is not retained by
+    OpenAI.</li>
+  <li>The classifier returns a single industry tag plus up to three suggested template IDs; only
+    the industry tag is persisted on your profile.</li>
+  <li>The original free-text string is not stored on our backend after the classification call
+    completes.</li>
+  <li>To prevent abuse of the endpoint, we enforce a per-IP rate limit (5/min, 100/day) by
+    storing only a salted, truncated HMAC-SHA256 hash of the source IP for up to 24 hours. The
+    raw IP is never written to our database.</li>
+  <li>The in-app screen displays a privacy notice next to the input box explicitly disclosing
+    that the description will be sent to OpenAI.</li>
+</ul>
+<p>
+  If you&rsquo;d rather not have your description classified, simply pick an industry from the
+  tiled list (or pick &ldquo;General&rdquo;); no OpenAI call is made.
+</p>
+
+<h2>5. Data Storage and Retention</h2>
 
 <table>
   <thead>
@@ -293,12 +514,12 @@
       <td>For the lifetime of your account. Deleting a report deletes all its entries. Deleting your account deletes everything.</td>
     </tr>
     <tr>
-      <td>Account profile (email, display name, subscription state)</td>
+      <td>Account profile (email, display name, subscription state, onboarding industry tag)</td>
       <td>Firebase Authentication + Firestore</td>
       <td>For the lifetime of your account.</td>
     </tr>
     <tr>
-      <td>Scan usage counts (per billing period)</td>
+      <td>Entry usage counts (per billing period)</td>
       <td>Firestore</td>
       <td>For the lifetime of your account.</td>
     </tr>
@@ -310,10 +531,10 @@
     <tr>
       <td>Share link snapshots</td>
       <td>Firebase Cloud Storage</td>
-      <td>Until the share link&rsquo;s expiry (you choose 1 hour / 24 hours / 7 days / 30 days, up to 1 year), or until you revoke the link. Revoking the link deletes the snapshot immediately.</td>
+      <td>Until the share link&rsquo;s expiry (you choose 1 hour / 24 hours / 7 days / 30 days), or until you revoke the link. Revoking the link deletes the snapshot immediately.</td>
     </tr>
     <tr>
-      <td>Data export bundles (Section 6.3)</td>
+      <td>Data export bundles (Section 7.3)</td>
       <td>Firebase Cloud Storage</td>
       <td>The signed download URL is valid for 7 days. After 7 days the file is no longer retrievable via the URL. You can request a new export at any time.</td>
     </tr>
@@ -323,8 +544,38 @@
       <td>Until the invitee accepts, the inviter revokes, or the invitation&rsquo;s expiry date (up to 30 days) passes.</td>
     </tr>
     <tr>
-      <td>Account-level audit log (Section 4.1)</td>
-      <td>Firestore (server-only collection)</td>
+      <td>AI Insights audit log (Section 4.2)</td>
+      <td>Firestore (server-only)</td>
+      <td>Retained indefinitely, including after account deletion. Contains only operation type, outcome, question hash-prefix, latency, and timestamp.</td>
+    </tr>
+    <tr>
+      <td>AI Insights conversation history</td>
+      <td>Firestore (under report owner&rsquo;s namespace)</td>
+      <td>12 months from the last turn (auto-deleted by Firestore TTL), or sooner if the report or owner&rsquo;s account is deleted.</td>
+    </tr>
+    <tr>
+      <td>AI Insights response cache</td>
+      <td>Firestore (under report owner&rsquo;s namespace)</td>
+      <td>Up to 24 hours per cached answer (auto-deleted by Firestore TTL), or sooner if the report or owner&rsquo;s account is deleted.</td>
+    </tr>
+    <tr>
+      <td>AI Insights feedback (thumbs up/down + reason)</td>
+      <td>Firestore</td>
+      <td>For the lifetime of your account.</td>
+    </tr>
+    <tr>
+      <td>AI burst-violation lockout state</td>
+      <td>Firestore</td>
+      <td>Up to 24 hours; auto-cleared when the lockout expires.</td>
+    </tr>
+    <tr>
+      <td>Onboarding rate-limit hashed-IP records</td>
+      <td>Firestore</td>
+      <td>Up to 24 hours (auto-deleted by Firestore TTL). Only the salted truncated hash is stored, never the raw IP.</td>
+    </tr>
+    <tr>
+      <td>Account-level audit log (Section 5.1)</td>
+      <td>Firestore (server-only)</td>
       <td>Retained indefinitely, including after account deletion, for security and compliance purposes.</td>
     </tr>
     <tr>
@@ -340,13 +591,14 @@
   </tbody>
 </table>
 
-<h3>4.1 Account-level audit log retention</h3>
+<h3>5.1 Account-level audit log retention</h3>
 <p>
   LensReport maintains a server-only audit log that records account-level operations: account
   deletion, data export requests, team invitations (created / accepted / rejected), team member
-  removals, and share-link creation and revocation. Each audit entry contains only the actor&rsquo;s
-  anonymized user ID, the action type, and a timestamp. <strong>No document content, no images,
-  and no contents of your reports are ever written to the audit log.</strong>
+  removals, and share-link creation and revocation. Each audit entry contains only the
+  actor&rsquo;s anonymized user ID, the action type, and a timestamp. <strong>No document
+  content, no images, no answer text, and no contents of your reports are ever written to the
+  audit log.</strong>
 </p>
 <p>
   These audit entries are retained indefinitely, even after account deletion, because they
@@ -355,7 +607,7 @@
   the GDPR.
 </p>
 
-<h2>5. Data Security</h2>
+<h2>6. Data Security</h2>
 <p>We implement appropriate technical and organizational measures to protect your data:</p>
 <ul>
   <li>All traffic between the App and our servers is encrypted with TLS 1.2 or higher. Cleartext
@@ -363,32 +615,47 @@
   <li>Document images are uploaded directly to Firebase Cloud Storage, which enforces Firebase
     Security Rules so that only you (or a contributor you have invited to the report that owns
     the entry) can read them.</li>
-  <li>Sensitive local state &mdash; specifically, the share-link PIN cache so that the link owner
-    can re-share the same PIN later &mdash; is stored in the platform secure enclave (iOS
+  <li><strong>App Check device integrity.</strong> Each backend call carries a cryptographic
+    attestation token issued by Apple App Attest (with DeviceCheck fallback) on iOS and Google
+    Play Integrity on Android. Tokens are short-lived and verified server-side; their purpose is
+    to prove the request came from a genuine, unmodified LensReport install rather than a
+    reverse-engineered or scripted client. The tokens never carry personal data.</li>
+  <li><strong>PII redaction</strong> (Section 3.2) is applied before any text is sent to the AI
+    Insights endpoint or the onboarding classification endpoint.</li>
+  <li>Sensitive local state &mdash; specifically, the share-link PIN cache so that the link
+    owner can re-share the same PIN later &mdash; is stored in the platform secure enclave (iOS
     Keychain / Android EncryptedSharedPreferences), scoped per-user so that a second account on
     the same device cannot see another account&rsquo;s cached values.</li>
-  <li>Account deletion requires fresh re-authentication: if your session is older than 5 minutes,
-    the App will prompt you to sign in again before completing the deletion. This protects
-    against a stolen session being used to irreversibly destroy an account.</li>
+  <li>Account deletion requires fresh re-authentication: if your session is older than 5
+    minutes, the App will prompt you to sign in again before completing the deletion. This
+    protects against a stolen session being used to irreversibly destroy an account.</li>
   <li>Share-link PINs are hashed with bcrypt (cost factor 12) and enforce per-token rate
-    limiting: after 5 incorrect PIN attempts, the link is locked for 15 minutes.</li>
+    limiting: after 5 incorrect PIN attempts, the link is locked for 15 minutes. Share-link
+    expiry is capped at 30 days to bound any attacker&rsquo;s total guess budget.</li>
   <li>Team invitations are rate-limited both per inviter (max 5 per hour) and per target email
     (max 3 pending invitations to the same address in any 24-hour window) to prevent spam.</li>
+  <li>AI Insights enforces per-tier daily caps and a per-minute burst limit. Three burst
+    violations within 10 minutes trigger a 15-minute lockout on the offending account
+    (Section 4.2).</li>
+  <li>Onboarding free-text classification enforces a per-IP rate limit (5/min, 100/day) using
+    only a salted, truncated HMAC-SHA256 hash of the source IP &mdash; never the raw IP
+    (Section 4.4).</li>
   <li>OpenAI extraction errors are sanitized before being returned to the client: internal error
     details and request IDs stay on our servers, and the client receives only a generic
     &ldquo;extraction failed&rdquo; message with a correlation ID for support.</li>
   <li>Firebase Security Rules enforce access control at the database level, preventing anyone
     except the report owner (and explicitly-invited contributors) from reading or writing your
-    reports and entries.</li>
+    reports and entries. Audit, feedback, conversation, and cache collections are server-only:
+    clients have no read or write access to them.</li>
 </ul>
 <p>
   No method of transmission or storage is 100% secure. While we strive to use commercially
   reasonable means to protect your data, we cannot guarantee absolute security.
 </p>
 
-<h2>6. Your Rights and Choices</h2>
+<h2>7. Your Rights and Choices</h2>
 
-<h3>6.1 Delete your account</h3>
+<h3>7.1 Delete your account</h3>
 <p>
   You can delete your account at any time from <strong>Settings &rarr; Delete Account</strong>.
   Deletion is a two-step confirmation flow and requires fresh re-authentication. Once
@@ -397,15 +664,17 @@
 <ul>
   <li>Every report, entry, scanned image, and Business Profile asset in your account.</li>
   <li>Every team membership and share link you created.</li>
-  <li>Your scan-quota history and any outstanding top-up balance.</li>
+  <li>Your scan and entry quota history and any outstanding top-up balance.</li>
   <li>Your Firebase Auth record (email, display name, social sign-in links).</li>
   <li>Any pending team invitations you had sent.</li>
+  <li>Your AI Insights conversation history, response cache, and feedback rows.</li>
 </ul>
 <p>
   Some data is retained for legitimate-interest reasons even after deletion: the server-side
-  audit log described in Section 4.1 (which contains only action type, timestamp, and anonymized
-  identifier &mdash; no scan content), and subscription records held by the App Store / Google
-  Play / RevenueCat for legal and tax compliance.
+  audit logs described in Sections 4.2 and 5.1 (which contain only action type, hashes,
+  timestamp, and anonymized identifier &mdash; no scan content, no question text, no answer
+  text), and subscription records held by the App Store / Google Play / RevenueCat for legal
+  and tax compliance.
 </p>
 <p>
   <strong>Reminder:</strong> deleting your LensReport account does not automatically cancel any
@@ -413,16 +682,16 @@
   through your iOS Settings or Google Play Store.
 </p>
 
-<h3>6.2 Anonymous use</h3>
+<h3>7.2 Anonymous use</h3>
 <p>
   You may use LensReport with anonymous authentication &mdash; no name, no email, no social
-  account required. Most features that do not involve collaboration or export are available
-  anonymously. Creating a real account (by adding email, Google, or Apple sign-in) is required
-  only when you want to subscribe, export a report, collaborate, or back up your data to the
-  cloud.
+  account required. Most features that do not involve collaboration, AI Insights, or export are
+  available anonymously. Creating a real account (by adding email, Google, or Apple sign-in) is
+  required only when you want to subscribe, export a report, use AI Insights, collaborate, or
+  back up your data to the cloud.
 </p>
 
-<h3>6.3 Export all your data (data portability)</h3>
+<h3>7.3 Export all your data (data portability)</h3>
 <p>
   You have the right to receive your personal data in a structured, machine-readable format.
   LensReport offers two complementary export paths:
@@ -431,51 +700,63 @@
   <li><strong>Individual report export</strong> &mdash; in any report, tap the upload icon to
     export that report as PDF, Excel, or CSV. Excel exports preserve live formulas (Smart
     Columns), not hard-coded values.</li>
-  <li><strong>Full account export (GDPR Article 20)</strong> &mdash; from <strong>Settings &rarr;
-    Export my data</strong>, you can request a full JSON bundle containing your profile, every
-    report, every entry, quota history, team memberships, invitations, and active share tokens,
-    together with short-lived signed URLs to download each scanned image. The JSON is delivered
-    via a signed Cloud Storage link valid for 7 days. You can request a fresh export at any
-    time.</li>
+  <li><strong>Full account export (GDPR Article 20)</strong> &mdash; from <strong>Settings
+    &rarr; Export my data</strong>, you can request a full JSON bundle containing your profile,
+    every report, every entry, quota history, team memberships, invitations, and active share
+    tokens, together with short-lived signed URLs to download each scanned image. The JSON is
+    delivered via a signed Cloud Storage link valid for 7 days. You can request a fresh export
+    at any time.</li>
 </ul>
 
-<h3>6.4 Manage share links</h3>
+<h3>7.4 Manage share links</h3>
 <p>
-  Every share link you create is listed under <strong>Settings &rarr; Manage Shared Reports</strong>,
-  where you can revoke any link immediately. Revoking a link deletes its Cloud Storage snapshot
-  and prevents further views.
+  Every share link you create is listed under <strong>Settings &rarr; Manage Shared
+  Reports</strong>, where you can revoke any link immediately. Revoking a link deletes its
+  Cloud Storage snapshot and prevents further views.
 </p>
 
-<h3>6.5 Leave or remove from a team</h3>
+<h3>7.5 Leave or remove from a team</h3>
 <p>
   Report owners can remove a contributor from a team at any time via the Collaborate screen.
   Removal takes effect immediately: the contributor loses access to all shared reports and a
   30-day cooldown applies before they can rejoin the same team. If you are a contributor and
   want to leave a team you no longer wish to be part of, email us at
-  <a href="mailto:info@lensreport.app">info@lensreport.app</a> and we will process the
-  request within 5 business days.
+  <a href="mailto:info@lensreport.app">info@lensreport.app</a> and we will process the request
+  within 5 business days.
 </p>
 
-<h2>7. Team Collaboration</h2>
+<h3>7.6 Opt out of AI Insights</h3>
+<p>
+  AI Insights is opt-in by use: it only runs when you tap the AI button on a report. To clear
+  any conversation history that has built up, delete the report (which removes all associated
+  conversation, context, and cache rows under the owner&rsquo;s namespace) or delete your
+  account (which removes the same data plus your AI feedback rows). The audit log entries
+  remain per Section 4.2.
+</p>
+
+<h2>8. Team Collaboration</h2>
 <p>
   On paid plans that support team collaboration, you can invite other people as contributors to
   specific reports. Contributors sign in with their own accounts but their scans deduct from the
-  inviting owner&rsquo;s shared scan quota pool rather than from a separate quota.
+  inviting owner&rsquo;s shared scan quota pool rather than from a separate quota. The same
+  applies to AI Insights queries on a shared report (Section 4.2).
 </p>
 <ul>
   <li>When you send an invitation, the recipient&rsquo;s email address is stored with the
     invitation record. A hashed form of the email is also stored to enforce the anti-spam
-    throttle described in Section 5.</li>
+    throttle described in Section 6.</li>
   <li>When a contributor adds an entry to one of your reports, their user ID and display name
     are attached to that entry so that you can see who added what, and you may receive a push
     notification.</li>
   <li>Contributors see each other&rsquo;s display names within the shared report. They do not
     see each other&rsquo;s email addresses unless the report owner chooses to share them.</li>
-  <li>Team activity (per-contributor scan counts, recent activity, quota consumption) is visible
-    to the report owner on the Team Activity dashboard.</li>
+  <li>Team activity (per-contributor scan counts, recent activity, quota consumption) is
+    visible to the report owner on the Team Activity dashboard.</li>
+  <li>AI Insights conversation history on a shared report is shared between owner and
+    contributors so that follow-up questions retain context (Section 4.2).</li>
 </ul>
 
-<h2>8. Public Share Links</h2>
+<h2>9. Public Share Links</h2>
 <p>
   LensReport lets owners of a paid plan generate a public share link for a report. The link
   points to a read-only snapshot of the report&rsquo;s verified entries hosted at
@@ -487,20 +768,20 @@
     identifiers, per-entry timestamps, verification status, and duplicate-detection fingerprints
     are stripped before the snapshot is written.</li>
   <li>You choose the link&rsquo;s expiry from the following options: 1 hour, 24 hours, 7 days,
-    30 days, or up to 1 year. Expired links stop working automatically.</li>
-  <li>You can revoke any share link at any time; revocation deletes the snapshot and invalidates
-    the URL immediately.</li>
+    or 30 days. Expired links stop working automatically.</li>
+  <li>You can revoke any share link at any time; revocation deletes the snapshot and
+    invalidates the URL immediately.</li>
   <li>The number of times a share link has been viewed is visible to you in the App.</li>
   <li>PIN-protected links enforce a 5-attempts-per-15-minutes lockout per link to prevent brute
     forcing.</li>
 </ul>
-<p>
-  Anything you place in a report can be seen by anyone you hand the share link to (and the PIN,
-  if one is set). Do not create a public share link for a report that contains information you
-  are not comfortable sharing.
-</p>
+<div class="callout-warn">
+  <strong>Heads up:</strong> anything you place in a report can be seen by anyone you hand the
+  share link to (and the PIN, if one is set). Do not create a public share link for a report
+  that contains information you are not comfortable sharing.
+</div>
 
-<h2>9. Rights for Users in the European Economic Area, United Kingdom, and Switzerland (GDPR)</h2>
+<h2>10. Rights for Users in the European Economic Area, United Kingdom, and Switzerland (GDPR)</h2>
 <p>
   If you are located in the European Economic Area (EEA), the United Kingdom, or Switzerland,
   you have the following rights under the General Data Protection Regulation (GDPR) and related
@@ -525,7 +806,7 @@
     </tr>
     <tr>
       <td><strong>Right to erasure (&ldquo;right to be forgotten&rdquo;)</strong> (Art. 17)</td>
-      <td>Use <strong>Settings &rarr; Delete Account</strong>. See Section 6.1 for the exact scope of deletion.</td>
+      <td>Use <strong>Settings &rarr; Delete Account</strong>. See Section 7.1 for the exact scope of deletion.</td>
     </tr>
     <tr>
       <td><strong>Right to restrict processing</strong> (Art. 18)</td>
@@ -533,15 +814,19 @@
     </tr>
     <tr>
       <td><strong>Right to data portability</strong> (Art. 20)</td>
-      <td>Use <strong>Settings &rarr; Export my data</strong>. See Section 6.3.</td>
+      <td>Use <strong>Settings &rarr; Export my data</strong>. See Section 7.3.</td>
     </tr>
     <tr>
       <td><strong>Right to object</strong> (Art. 21)</td>
-      <td>Email <a href="mailto:info@lensreport.app">info@lensreport.app</a>.</td>
+      <td>Email <a href="mailto:info@lensreport.app">info@lensreport.app</a>. You can object to AI Insights processing by simply not using the feature, or by deleting reports whose conversation history you want erased.</td>
+    </tr>
+    <tr>
+      <td><strong>Rights related to automated decision-making</strong> (Art. 22)</td>
+      <td>The AI Insights advisor produces informational output, not legal or similarly significant decisions; we do not use AI to make decisions about your account, billing, or eligibility. You always remain in control of any action you take based on AI output.</td>
     </tr>
     <tr>
       <td><strong>Right to withdraw consent</strong></td>
-      <td>For analytics: toggle analytics off in <strong>Settings &rarr; Privacy</strong>. For AI processing: use manual entry instead of scanning. For all processing: delete your account.</td>
+      <td>For analytics: toggle analytics off in <strong>Settings &rarr; Privacy</strong>. For AI processing: avoid the AI Insights feature and use manual entry instead of scanning. For all processing: delete your account.</td>
     </tr>
     <tr>
       <td><strong>Right to lodge a complaint</strong></td>
@@ -551,24 +836,25 @@
 </table>
 
 <p>
-  <strong>Legal bases for processing.</strong> We process your data based on (a) the performance
-  of a contract with you under Article 6(1)(b) &mdash; to provide the scanning, extraction,
-  collaboration, and export features you asked for; (b) your consent under Article 6(1)(a) where
-  applicable &mdash; for optional analytics and push notifications; and (c) our legitimate
-  interests under Article 6(1)(f) &mdash; to keep the account-level audit log and to enforce
-  security rate limits and anti-fraud controls.
+  <strong>Legal bases for processing.</strong> We process your data based on (a) the
+  performance of a contract with you under Article 6(1)(b) &mdash; to provide the scanning,
+  extraction, AI Insights, collaboration, and export features you asked for; (b) your consent
+  under Article 6(1)(a) where applicable &mdash; for optional analytics, push notifications,
+  free-text onboarding classification, and any AI Insights interaction; and (c) our legitimate
+  interests under Article 6(1)(f) &mdash; to keep the account-level and AI audit logs and to
+  enforce security rate limits, App Check verification, and anti-fraud controls.
 </p>
 
-<h3>9.1 EU representative</h3>
+<h3>10.1 EU representative</h3>
 <p>
   LensReport is operated from Fiji and does not currently have an appointed representative in
   the European Union under Article 27 of the GDPR. We are working to close this gap. Until
   then, EEA / UK / Swiss users who wish to exercise their rights can contact us directly at
-  <a href="mailto:info@lensreport.app">info@lensreport.app</a>. We will update this
-  section with the representative&rsquo;s name and contact details as soon as one is appointed.
+  <a href="mailto:info@lensreport.app">info@lensreport.app</a>. We will update this section
+  with the representative&rsquo;s name and contact details as soon as one is appointed.
 </p>
 
-<h3>9.2 Response time</h3>
+<h3>10.2 Response time</h3>
 <p>
   We aim to acknowledge every request within 5 business days and to complete it within 30 days,
   in line with the GDPR&rsquo;s one-month response window. Where a request is unusually complex
@@ -576,7 +862,7 @@
   accordance with Article 12(3) GDPR, and we will let you know why.
 </p>
 
-<h2>10. Rights for Users in California (CCPA / CPRA)</h2>
+<h2>11. Rights for Users in California (CCPA / CPRA)</h2>
 <p>
   If you are a California resident, the California Consumer Privacy Act (CCPA) and the
   California Privacy Rights Act (CPRA) give you the following rights:
@@ -584,61 +870,94 @@
 <ul>
   <li><strong>Right to know</strong> &mdash; this Privacy Policy is the disclosure of what we
     collect, why, and who we share it with.</li>
-  <li><strong>Right to delete</strong> &mdash; use <strong>Settings &rarr; Delete Account</strong>
-    in the App, or email <a href="mailto:info@lensreport.app">info@lensreport.app</a>.</li>
+  <li><strong>Right to delete</strong> &mdash; use <strong>Settings &rarr; Delete
+    Account</strong> in the App, or email <a href="mailto:info@lensreport.app">info@lensreport.app</a>.</li>
   <li><strong>Right to correct</strong> &mdash; edit your profile and your reports directly in
     the App.</li>
   <li><strong>Right to opt-out of sale or sharing</strong> &mdash; we do <strong>not</strong>
     sell or share your personal information for cross-context behavioral advertising, so there
     is nothing to opt out of. We also do not use sensitive personal information for any
     purposes outside of providing the service you requested.</li>
+  <li><strong>Right to limit use of sensitive personal information</strong> &mdash; we do not
+    process sensitive personal information for purposes that are outside the consumer&rsquo;s
+    reasonable expectation of the service.</li>
   <li><strong>Right to non-discrimination</strong> &mdash; we will not discriminate against you
     for exercising any of your CCPA rights.</li>
 </ul>
 <p>
   <strong>Categories of personal information we collect.</strong> Identifiers (Firebase UID,
   email address, display name, device installation ID); commercial information (subscription
-  state, purchase history); internet or other electronic network activity information (scan
-  counts, anonymized analytics events, crash reports); and visual information (document images
-  you choose to scan or import).
+  state, purchase history); internet or other electronic network activity information (entry
+  counts, AI usage counts, anonymized analytics events, crash reports); visual information
+  (document images you choose to scan or import); inferences (the industry tag derived from
+  your onboarding choices, used to suggest templates).
 </p>
 <p>
   <strong>Categories of personal information we disclose for a business purpose.</strong>
   Visual information (document images) is disclosed to our OpenAI subprocessor solely to perform
-  AI extraction, and to our Firebase / Google subprocessor solely for storage. Identifiers and
-  commercial information are disclosed to Firebase, RevenueCat, Apple, and Google solely for the
-  purposes described in Section 3.
+  AI extraction, and to our Firebase / Google subprocessor solely for storage. PII-redacted
+  report summaries and your typed AI Insights questions are disclosed to OpenAI solely to
+  generate the requested AI Insights answer. Identifiers and commercial information are
+  disclosed to Firebase, RevenueCat, Apple, and Google solely for the purposes described in
+  Section 3.
 </p>
 
-<h2>11. Children&rsquo;s Privacy</h2>
+<h2>12. Children&rsquo;s Privacy</h2>
 <p>
   LensReport is not directed at children under the age of 13, and we do not knowingly collect
-  personal information from children under 13. If you are a parent or guardian and believe that
-  your child has provided us with personal information, please contact us at
-  <a href="mailto:info@lensreport.app">info@lensreport.app</a> and we will delete it
-  promptly.
+  personal information from children under 13. The App is rated for users aged 4+ on the App
+  Store and is not designed for use by children to record their own personal data. If you are a
+  parent or guardian and believe that your child has provided us with personal information,
+  please contact us at <a href="mailto:info@lensreport.app">info@lensreport.app</a> and we will
+  delete it promptly.
 </p>
 
-<h2>12. International Data Transfers</h2>
+<h2>13. International Data Transfers</h2>
 <p>
   Your data is stored and processed in countries other than your country of residence,
   including the United States (Firebase, OpenAI, RevenueCat, Postmark) and other regions where
-  Firebase operates (EU, Asia-Pacific). When we transfer data to these jurisdictions, we rely on
-  the data-processing and standard-contractual-clauses agreements of our subprocessors to
+  Firebase operates (EU, Asia-Pacific). When we transfer data to these jurisdictions, we rely
+  on the data-processing and standard-contractual-clauses agreements of our subprocessors to
   provide an adequate level of protection as required by applicable data protection laws.
 </p>
 
-<h2>13. Changes to This Privacy Policy</h2>
+<h2>14. Apple App Store and Google Play Store Disclosures</h2>
+<p>
+  This section maps our data practices to the disclosures we make in Apple&rsquo;s App Privacy
+  Nutrition Labels and Google Play&rsquo;s Data Safety form, so you can cross-check.
+</p>
+<ul>
+  <li><strong>Data linked to you:</strong> email address, display name, scanned document
+    images, extracted entries, subscription state, AI Insights questions and feedback,
+    onboarding industry tag.</li>
+  <li><strong>Data not linked to you:</strong> hashed source IP for onboarding rate limiting;
+    anonymized Firebase Analytics events; aggregated AI cost-monitoring counts.</li>
+  <li><strong>Data used to track you across other apps and websites:</strong> none. We do not
+    use the IDFA, do not call <code>requestTrackingAuthorization</code>, and do not include any
+    advertising or attribution SDKs.</li>
+  <li><strong>Required Reasons API declarations.</strong> The iOS Privacy Manifest
+    (<code>PrivacyInfo.xcprivacy</code>) declares only the Required Reasons we actually use:
+    UserDefaults (CA92.1, app preferences), file timestamps and disk space (C617.1 / E174.1,
+    file management), and system boot time (35F9.1, performance measurement). We do not declare
+    or use any tracking-related Required Reasons.</li>
+  <li><strong>Account deletion.</strong> You can delete your account in-app from
+    <strong>Settings &rarr; Delete Account</strong>, satisfying App Store Review Guideline
+    5.1.1(v). See Section 7.1.</li>
+  <li><strong>Sign in with Apple</strong> is offered as an authentication option per App Store
+    Review Guideline 4.8.</li>
+</ul>
+
+<h2>15. Changes to This Privacy Policy</h2>
 <p>
   We may update this Privacy Policy from time to time. When we make material changes, we will
   notify you by posting the updated policy within the App or by other appropriate means, and we
-  will update the &ldquo;Last Updated&rdquo; and &ldquo;Version&rdquo; fields at the top of this
-  page. Continued use of the App after the effective date of the revised policy constitutes your
-  acceptance of the changes. If you do not agree, please stop using the App and delete your
-  account.
+  will update the &ldquo;Last Updated&rdquo; and &ldquo;Version&rdquo; fields at the top of
+  this page. Continued use of the App after the effective date of the revised policy
+  constitutes your acceptance of the changes. If you do not agree, please stop using the App
+  and delete your account.
 </p>
 
-<h2>14. Governing Law</h2>
+<h2>16. Governing Law</h2>
 <p>
   This Privacy Policy is governed by and construed in accordance with the laws of the
   <strong>Republic of Fiji</strong>, without regard to its conflict-of-law provisions. Any
@@ -648,10 +967,10 @@
   country.
 </p>
 
-<h2>15. Contact Us</h2>
+<h2>17. Contact Us</h2>
 <p>
-  For any privacy-related request, including access / deletion / portability requests, questions
-  about this policy, or reports of a suspected data incident, please contact:
+  For any privacy-related request, including access / deletion / portability requests,
+  questions about this policy, or reports of a suspected data incident, please contact:
 </p>
 <p>
   <strong>Email:</strong> <a href="mailto:info@lensreport.app">info@lensreport.app</a>
