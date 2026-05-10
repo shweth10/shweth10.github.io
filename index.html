@@ -156,6 +156,7 @@
     .h-logo { width: 72px; height: 72px; border-radius: 18px; box-shadow: 0 12px 40px rgba(76,175,125,0.32), 0 0 0 1px rgba(76,175,125,0.12); margin: 0 auto 22px; display: block; object-fit: cover; }
     .h-badge { display: inline-flex; align-items: center; gap: 6px; background: #E8F5EE; border: 1px solid rgba(76,175,125,0.25); color: #3A9468; font-family: 'DM Mono', monospace; font-size: 11px; font-weight: 500; padding: 6px 14px; border-radius: 100px; margin-bottom: 22px; }
     .h-badge .dot { width: 5px; height: 5px; border-radius: 50%; background: #4CAF7D; }
+    .h-eyebrow { font-family: 'DM Mono', monospace; font-size: 13px; font-weight: 500; color: var(--green); text-transform: uppercase; letter-spacing: 2px; margin: 0 0 14px; }
     .h-headline { font-family: 'Plus Jakarta Sans', sans-serif; font-size: clamp(32px, 5.8vw, 58px); font-weight: 800; line-height: 1.04; letter-spacing: -1.4px; color: #1A2332; margin: 0 0 20px; }
     .h-headline .green { background: linear-gradient(135deg, #4CAF7D 0%, #5EC98F 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
     .h-sub { color: #6B7280; font-size: clamp(14px, 1.8vw, 16px); line-height: 1.7; max-width: 560px; margin: 0 auto 28px; }
@@ -1497,8 +1498,9 @@
         <img class="h-logo" src="assets/images/app-logo.png" alt="LensReport app icon" width="72" height="72">
         <div class="h-badge"><span class="dot"></span>LAUNCHING ON iOS &amp; ANDROID</div>
         <p class="sr-only">Animation: a phone scans a fuel receipt. A new row appears in a spreadsheet with the vendor, date, amount and calculated VAT extracted by AI.</p>
+        <p class="h-eyebrow">No more manual data entry.</p>
         <h1 class="h-headline" id="hero-heading">Scan.<br><span class="green">AI builds the report.</span><br>Ask it anything.</h1>
-        <p class="h-sub">Point your camera at any invoice, receipt, or document. AI reads it, extracts every field, and drops it into a structured report, instantly. Then <strong>ask your report anything</strong> in plain English. "What's my biggest expense this month?" "Which supplier am I overpaying?" Get answers grounded in your actual data, not guesses. Export as PDF, Excel, or CSV, or share a PIN-locked link your accountant opens in any browser.</p>
+        <p class="h-sub">Point your camera at any invoice, receipt, or document. AI reads it, extracts every field, and drops it into a structured report, instantly. <strong>No typing. No copy-paste. Just point and capture.</strong> Then <strong>ask your report anything</strong> in plain English. "What's my biggest expense this month?" "Which supplier am I overpaying?" Get answers grounded in your actual data, not guesses. Export as PDF, Excel, or CSV, or share a PIN-locked link your accountant opens in any browser.</p>
         <div class="h-cta">
           <span class="h-store" role="img" aria-label="Coming soon on the App Store">
             <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
@@ -1607,6 +1609,7 @@
     </section>
     <section class="trust-strip" aria-label="Key features">
       <div class="trust-inner">
+        <div class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="6" width="20" height="12" rx="2"/><line x1="6" y1="10" x2="6.01" y2="10"/><line x1="10" y1="10" x2="10.01" y2="10"/><line x1="14" y1="10" x2="14.01" y2="10"/><line x1="18" y1="10" x2="18.01" y2="10"/><line x1="7" y1="14" x2="17" y2="14"/><line x1="3" y1="3" x2="21" y2="21"/></svg>Zero typing</div>
         <div class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/><line x1="1" y1="1" x2="23" y2="23"/></svg>Offline-capable</div>
         <div class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Ask anything in plain English</div>
         <div class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="3" x2="9" y2="21"/><line x1="15" y1="3" x2="15" y2="21"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/></svg>Real Excel formulas</div>
@@ -1637,7 +1640,7 @@
             </button>
             <span class="app-demo-badge" aria-hidden="true">30s demo</span>
           </figure>
-          <figure class="app-preview-card reveal" role="listitem" data-caption="1 / 6"><img src="assets/images/app-preview/1.jpg" alt="Your team scans in the field, reports land instantly on your phone, one plan, whole team included" loading="lazy" width="621" height="1344"><span class="expand-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></span></figure>
+          <figure class="app-preview-card reveal" role="listitem" data-caption="1 / 6"><img src="assets/images/app-preview/1.jpg" alt="Your team scans in the field. Reports land instantly. No typing, no spreadsheets, one plan covers everyone." loading="lazy" width="621" height="1344"><span class="expand-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></span></figure>
           <figure class="app-preview-card reveal" role="listitem" data-caption="2 / 6"><img src="assets/images/app-preview/2.jpg" alt="Pick a report template, scan, done, LensReport category browser with Finance, Tax, Travel and Personal tiles" loading="lazy" width="621" height="1344"><span class="expand-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></span></figure>
           <figure class="app-preview-card reveal" role="listitem" data-caption="3 / 6"><img src="assets/images/app-preview/6.jpg" alt="Your AI report analyst, ask anything and get tips, charts and a clean PDF, with a spending breakdown by category and a summary of expenses on screen" loading="lazy" width="621" height="1344"><span class="expand-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></span></figure>
           <figure class="app-preview-card reveal" role="listitem" data-caption="4 / 6"><img src="assets/images/app-preview/3.jpg" alt="Three-step flow, grab the document, scan it, the report is auto-filled by AI" loading="lazy" width="621" height="1344"><span class="expand-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></span></figure>
@@ -2078,6 +2081,7 @@
             <div class="pc-caption">
               <p class="pc-label coral">The Cost</p>
               <h3>When reporting doesn't happen, the consequences stack up fast.</h3>
+              <p class="pc-body">Accountants and bookkeepers spend hours chasing paperwork and doing <strong>manual data entry</strong> &mdash; costing businesses time and money they can't afford to waste.</p>
               <ul class="pc-stats">
                 <li class="pc-stat">
                   <span class="pc-stat-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><polyline points="23 18 13.5 8.5 8.5 13.5 1 6"/><polyline points="17 18 23 18 23 12"/></svg></span>
@@ -2630,25 +2634,25 @@
         { id: 'property', label: 'Property', panels: [
           { caption: 'The Problem', story: 'A property manager overseeing 15 rentals juggles maintenance invoices and contractor bills. Receipts arrive via text, email, paper. Proving <strong class="wif-pain">what was spent on which property</strong> at tax time becomes a yearly headache.' },
           { caption: 'The Scan', story: 'The manager creates a <span class="wif-pop">Maintenance & Repair Log</span> per property and adds trusted contractors as contributors. When a plumber finishes a job, they scan the invoice on the spot.' },
-          { caption: 'Real-Time View', story: 'Every entry lands <span class="wif-pop">instantly</span> against the correct property, tagged and logged. No chasing contractors, no WhatsApp threads, <strong class="wif-pain">nothing missing</strong>.' },
+          { caption: 'Real-Time View', story: 'Every entry lands <span class="wif-pop">instantly</span> against the correct property, tagged and logged. No chasing contractors, no WhatsApp threads, no manual reconciliation, <strong class="wif-pain">nothing missing</strong>.' },
           { caption: 'The Result', story: 'Year-end, every property carries a complete maintenance record. The <span class="wif-pop">AI</span> answers *"highest-spend property this quarter?"*, and tax prep takes <strong class="wif-pain">hours instead of weeks</strong>.' }
         ]},
         { id: 'delivery', label: 'Delivery', panels: [
           { caption: 'The Problem', story: 'A courier company runs 12 drivers across the city. Fuel, tolls, parking, meant to come in daily. In reality receipts pile up in gloveboxes and weekly reconciliation becomes <strong class="wif-pain">a guessing game</strong>.' },
           { caption: 'The Scan', story: 'The owner creates a <span class="wif-pop">Driver Operations Report</span> and adds every driver as a contributor. Each fill-up, toll, or parking ticket gets scanned the moment it happens, right at the pump.' },
-          { caption: 'Real-Time View', story: 'Costs flow into the report in <span class="wif-pop">real time</span>, broken down by driver and category. The owner sees every entry the moment it lands, notification per scan.' },
+          { caption: 'Real-Time View', story: 'Costs flow into the report in <span class="wif-pop">real time</span>, broken down by driver and category. The owner sees every entry the moment it lands, notification per scan, no end-of-day data entry.' },
           { caption: 'The Result', story: 'Complete operational visibility across every driver, every day. The <span class="wif-pop">AI</span> answers *"highest fuel-spend this week?"* and *"which route is racking up the most tolls?"*, <strong class="wif-pain">sharper operational calls</strong>.' }
         ]},
         { id: 'events', label: 'Events', panels: [
           { caption: 'The Problem', story: 'An events company runs weddings and corporate functions, dozens of vendor invoices per event across catering, florals, AV, staffing. Costs scatter across spreadsheets, WhatsApp, and <strong class="wif-pain">memory</strong>.' },
           { caption: 'The Scan', story: 'The coordinator creates an <span class="wif-pop">Event Budget Tracker</span> per event, variance <span class="wif-pop">auto-calculated</span> against vendor budgets. Each vendor invoice gets scanned by the team on site as deliveries arrive.' },
-          { caption: 'Real-Time View', story: 'Every cost lands against the correct event before the night is over. The coordinator watches the budget update <span class="wif-pop">live</span> from their phone while running the floor.' },
+          { caption: 'Real-Time View', story: 'Every cost lands against the correct event before the night is over. The coordinator watches the budget update <span class="wif-pop">live</span> from their phone while running the floor, no manual budget updates, no spreadsheet shuffling.' },
           { caption: 'The Result', story: 'After the event, the <span class="wif-pop">AI</span> answers *"did we come in under budget?"* and *"which vendor category overruns most?"*, quoting the next job <strong class="wif-pain">more profitably</strong>.' }
         ]},
         { id: 'trades', label: 'Trades', panels: [
           { caption: 'The Problem', story: 'An electrical contractor takes on commercial fitouts worth $50,000–$200,000 each. Materials buy across multiple suppliers throughout the job; without tracking, markups get missed and profitability is <strong class="wif-pain">months late or invisible</strong>.' },
           { caption: 'The Scan', story: 'The owner creates a <span class="wif-pop">Job Cost & Markup Sheet</span> per project, markup <span class="wif-pop">auto-calculated</span> against cost. The site foreman is added as a contributor; every supplier purchase gets scanned at the trade counter.' },
-          { caption: 'Real-Time View', story: 'Labour entries added at end of shift. The job cost sheet builds itself in <span class="wif-pop">real time</span>. The owner watches material spend stack against budget from anywhere.' },
+          { caption: 'Real-Time View', story: 'Labour entries added at end of shift. The job cost sheet builds itself in <span class="wif-pop">real time</span>, no spreadsheet maintenance. The owner watches material spend stack against budget from anywhere.' },
           { caption: 'The Result', story: 'The <span class="wif-pop">AI</span> answers *"on budget for the Queen Street fitout?"* and *"which materials are running over?"*, letting the owner act <strong class="wif-pain">before a job becomes a loss</strong>.' }
         ]},
         { id: 'healthcare', label: 'Healthcare', panels: [
@@ -2666,7 +2670,7 @@
         { id: 'retail', label: 'Retail', panels: [
           { caption: 'The Problem', story: 'A franchise owner runs three outlets, store managers placing daily stock orders, paying for repairs, handling petty cash. Reporting is <strong class="wif-pain">inconsistent</strong>: some stores email photos, others wait until Friday.' },
           { caption: 'The Scan', story: 'The owner creates a <span class="wif-pop">Multi-Store Operations Report</span> per store and adds every store manager as a contributor. Every purchase, stock top-ups, supplies, repairs, gets scanned the moment it happens.' },
-          { caption: 'Real-Time View', story: 'The owner sees a <span class="wif-pop">live feed</span> of spending across all three stores from a single screen. Every scan at every location appears instantly, broken down by store and category.' },
+          { caption: 'Real-Time View', story: 'The owner sees a <span class="wif-pop">live feed</span> of spending across all three stores from a single screen. Every scan at every location appears instantly, broken down by store and category, no manual rollup at week\'s end.' },
           { caption: 'The Result', story: 'The <span class="wif-pop">AI</span> answers *"highest unplanned spend this week?"* and *"is petty cash trending up anywhere?"*, flagging drift <strong class="wif-pain">before it compounds</strong> across the network.' }
         ]},
         { id: 'tourism', label: 'Tourism', panels: [
