@@ -156,7 +156,8 @@
     .h-logo { width: 72px; height: 72px; border-radius: 18px; box-shadow: 0 12px 40px rgba(76,175,125,0.32), 0 0 0 1px rgba(76,175,125,0.12); margin: 0 auto 22px; display: block; object-fit: cover; }
     .h-badge { display: inline-flex; align-items: center; gap: 6px; background: #E8F5EE; border: 1px solid rgba(76,175,125,0.25); color: #3A9468; font-family: 'DM Mono', monospace; font-size: 11px; font-weight: 500; padding: 6px 14px; border-radius: 100px; margin-bottom: 22px; }
     .h-badge .dot { width: 5px; height: 5px; border-radius: 50%; background: #4CAF7D; }
-    .h-eyebrow { font-family: 'DM Mono', monospace; font-size: 13px; font-weight: 500; color: var(--green); text-transform: uppercase; letter-spacing: 2px; margin: 0 0 14px; }
+    .h-promise { font-family: 'Plus Jakarta Sans', sans-serif; font-size: clamp(20px, 2.6vw, 28px); font-weight: 700; line-height: 1.25; letter-spacing: -0.4px; color: var(--green); margin: 0 auto 22px; max-width: 560px; display: inline-flex; align-items: baseline; gap: 12px; }
+    .h-promise::before { content: ''; flex: 0 0 28px; height: 3px; align-self: center; background: linear-gradient(90deg, #4CAF7D 0%, #5EC98F 100%); border-radius: 2px; }
     .h-headline { font-family: 'Plus Jakarta Sans', sans-serif; font-size: clamp(32px, 5.8vw, 58px); font-weight: 800; line-height: 1.04; letter-spacing: -1.4px; color: #1A2332; margin: 0 0 20px; }
     .h-headline .green { background: linear-gradient(135deg, #4CAF7D 0%, #5EC98F 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
     .h-sub { color: #6B7280; font-size: clamp(14px, 1.8vw, 16px); line-height: 1.7; max-width: 560px; margin: 0 auto 28px; }
@@ -1498,8 +1499,8 @@
         <img class="h-logo" src="assets/images/app-logo.png" alt="LensReport app icon" width="72" height="72">
         <div class="h-badge"><span class="dot"></span>LAUNCHING ON iOS &amp; ANDROID</div>
         <p class="sr-only">Animation: a phone scans a fuel receipt. A new row appears in a spreadsheet with the vendor, date, amount and calculated VAT extracted by AI.</p>
-        <p class="h-eyebrow">No more manual data entry.</p>
         <h1 class="h-headline" id="hero-heading">Scan.<br><span class="green">AI builds the report.</span><br>Ask it anything.</h1>
+        <p class="h-promise">No more manual data entry.</p>
         <p class="h-sub">Point your camera at any invoice, receipt, or document. AI reads it, extracts every field, and drops it into a structured report, instantly. <strong>No typing. No copy-paste. Just point and capture.</strong> Then <strong>ask your report anything</strong> in plain English. "What's my biggest expense this month?" "Which supplier am I overpaying?" Get answers grounded in your actual data, not guesses. Export as PDF, Excel, or CSV, or share a PIN-locked link your accountant opens in any browser.</p>
         <div class="h-cta">
           <span class="h-store" role="img" aria-label="Coming soon on the App Store">
