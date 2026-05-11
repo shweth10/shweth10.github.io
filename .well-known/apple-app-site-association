@@ -1,0 +1,15 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appID": "5UJQ4R8TGC.com.shweth.lensreport",
+        "paths": [
+          "/invite/*",
+          "/r/*",
+          "/s/*"
+        ]
+      }
+    ]
+  }
+}
