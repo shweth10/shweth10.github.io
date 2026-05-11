@@ -101,7 +101,7 @@ function renderReport(data) {
 function renderReportTable(data) {
   const container = document.getElementById('dataTab');
   const columns = data.columns || [];
-  const entries = data.entries || [];
+  const rawEntries = data.entries || [];
   const currency = data.currency || 'USD';
   const fmt = currencyFormatter(currency);
 
@@ -109,6 +109,35 @@ function renderReportTable(data) {
     container.innerHTML = '<p class="empty-state">No data in this report.</p>';
     return;
   }
+
+  // Default sort: most recent first by the report's primary date column.
+  // Industry-standard convention for financial / expense reports — the
+  // newest entries are usually what readers want to see. Falls back to
+  // the original insertion order when no date column is detected, or
+  // when an entry's date is unparseable (preserved at the tail).
+  let sortDateCol = null;
+  for (const col of columns) {
+    const cName = col.name || col;
+    const cType = (col.type || '').toLowerCase();
+    if (isDateType(cType, cName)) {
+      sortDateCol = cName;
+      break;
+    }
+  }
+  const entries = sortDateCol
+    ? rawEntries
+        .map((entry, originalIndex) => {
+          const raw = entry && entry.fields ? entry.fields[sortDateCol] : null;
+          const t = raw ? new Date(raw).getTime() : NaN;
+          return { entry, originalIndex, t: Number.isFinite(t) ? t : -Infinity };
+        })
+        .sort((a, b) => {
+          // Newest first. Stable on ties via originalIndex.
+          if (b.t !== a.t) return b.t - a.t;
+          return a.originalIndex - b.originalIndex;
+        })
+        .map(x => x.entry)
+    : rawEntries;
 
   const wrapper = document.createElement('div');
   wrapper.className = 'table-scroll';
@@ -128,7 +157,23 @@ function renderReportTable(data) {
     const th = document.createElement('th');
     const colName = col.name || col;
     const colType = (col.type || '').toLowerCase();
-    th.textContent = formatColumnName(colName);
+    const label = formatColumnName(colName);
+    if (sortDateCol && colName === sortDateCol) {
+      // Visual cue that this column is the active sort key (descending).
+      // Span lets us style the arrow separately from the label without
+      // breaking the column's existing right-align rules.
+      th.innerHTML = '';
+      const labelSpan = document.createElement('span');
+      labelSpan.textContent = label;
+      const arrowSpan = document.createElement('span');
+      arrowSpan.className = 'sort-arrow';
+      arrowSpan.textContent = ' ▼';
+      arrowSpan.setAttribute('aria-label', 'sorted descending');
+      th.appendChild(labelSpan);
+      th.appendChild(arrowSpan);
+    } else {
+      th.textContent = label;
+    }
     if (isCurrencyType(colType, colName) || isNumberType(colType)) {
       th.style.textAlign = 'right';
     }
