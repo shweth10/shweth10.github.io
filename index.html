@@ -19,6 +19,9 @@
   <meta name="twitter:description" content="Template-first AI fills your report row by row. AI Insights answers free-text questions about your own data, no hallucinations. Real Excel formulas in every export.">
   <meta name="twitter:image" content="https://lensreport.app/assets/images/onboarding_01_scan_invoice.png">
   <meta name="theme-color" content="#4CAF7D">
+  <!-- Apple Smart App Banner: surfaces a one-tap "View" / "Open in App Store" strip
+       at the top of iOS Safari sessions. Apple-recommended directive for app-launching sites. -->
+  <meta name="apple-itunes-app" content="app-id=6760954658">
   <link rel="canonical" href="https://lensreport.app/">
   <link rel="icon" href="assets/images/app-logo.png" type="image/png">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:;">
@@ -1445,6 +1448,111 @@
       .wif-tab, .wif-arrow, .wif-dot, .wif-panel img { transition: none; }
     }
 
+    /* === Floating App Store QR (desktop only) ===
+       Bottom-right card that desktop visitors can scan with their phone to install.
+       Mobile users tap the hero button directly, so the floater stays hidden below 1024px. */
+    .qr-floater {
+      position: fixed;
+      right: 24px;
+      bottom: 24px;
+      z-index: 50;
+      width: 232px;
+      background: #FFFFFF;
+      border: 1px solid #E5E7EB;
+      border-radius: 16px;
+      box-shadow: 0 18px 44px rgba(14,23,42,0.16), 0 4px 12px rgba(14,23,42,0.06);
+      padding: 18px 18px 14px;
+      text-align: center;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      opacity: 0;
+      transform: translate3d(0, 16px, 0);
+      pointer-events: none;
+      transition:
+        opacity 380ms cubic-bezier(0.16, 1, 0.3, 1),
+        transform 380ms cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .qr-floater[hidden] { display: none; }
+    .qr-floater.is-visible {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+      pointer-events: auto;
+    }
+    .qr-floater__close {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      width: 28px;
+      height: 28px;
+      border: 0;
+      background: transparent;
+      border-radius: 8px;
+      color: #6B7280;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 160ms ease, color 160ms ease;
+    }
+    .qr-floater__close:hover { background: #F3F4F6; color: #1A2332; }
+    .qr-floater__close:focus-visible {
+      outline: 2px solid var(--green);
+      outline-offset: 2px;
+      background: #F3F4F6;
+      color: #1A2332;
+    }
+    .qr-floater__close svg { width: 14px; height: 14px; }
+    .qr-floater__eyebrow {
+      font-family: 'DM Mono', monospace;
+      font-size: 9.5px;
+      font-weight: 500;
+      letter-spacing: 0.9px;
+      color: #3A9468;
+      margin: 2px 0 6px;
+      text-transform: uppercase;
+    }
+    .qr-floater__title {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #1A2332;
+      margin: 0 0 12px;
+      line-height: 1.3;
+      letter-spacing: -0.2px;
+    }
+    .qr-floater__code {
+      display: block;
+      width: 168px;
+      height: 168px;
+      margin: 0 auto 10px;
+      border-radius: 8px;
+    }
+    .qr-floater__caption {
+      font-size: 11px;
+      line-height: 1.45;
+      color: #6B7280;
+      margin: 0;
+    }
+    .qr-floater__link {
+      color: #3A9468;
+      text-decoration: underline;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 2px;
+      font-weight: 600;
+    }
+    .qr-floater__link:hover { color: #2C7C54; }
+    .qr-floater__link:focus-visible { outline: 2px solid var(--green); outline-offset: 2px; border-radius: 2px; }
+    /* Hide entirely below 1024px — mobile/tablet users get the hero button directly. */
+    @media (max-width: 1023.98px) {
+      .qr-floater { display: none !important; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .qr-floater {
+        transition: opacity 120ms linear;
+        transform: none;
+      }
+      .qr-floater.is-visible { transform: none; }
+    }
+
   </style>
   <script type="application/ld+json">
   {
@@ -1454,12 +1562,26 @@
     "applicationCategory": "BusinessApplication",
     "operatingSystem": "iOS, Android",
     "description": "Template-first AI that fills your report row by row. Scan receipts, invoices and forms with your phone, export to PDF, Excel with real formulas, or a PIN-locked web link. Collaborate with your field team in real time.",
-    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+    "installUrl": "https://apps.apple.com/us/app/scan-to-excel-ai-lensreport/id6760954658",
+    "downloadUrl": "https://apps.apple.com/us/app/scan-to-excel-ai-lensreport/id6760954658",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD", "url": "https://apps.apple.com/us/app/scan-to-excel-ai-lensreport/id6760954658" },
     "publisher": { "@type": "Organization", "name": "LensReport", "url": "https://lensreport.app", "email": "info@lensreport.app" }
   }
   </script>
 </head>
 <body>
+  <!-- Floating App Store QR card (desktop only). Hidden by default;
+       a small script reveals it ~4s after load unless the visitor previously dismissed it. -->
+  <aside class="qr-floater" id="qr-floater" role="complementary" aria-label="Get LensReport on iPhone" hidden>
+    <button type="button" class="qr-floater__close" id="qr-floater-close" aria-label="Dismiss App Store QR code">
+      <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3.5 3.5l9 9M12.5 3.5l-9 9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" fill="none"/></svg>
+    </button>
+    <p class="qr-floater__eyebrow">Scan with your phone</p>
+    <p class="qr-floater__title">Get LensReport on iPhone</p>
+    <img class="qr-floater__code" src="assets/images/app-store-qr.png" alt="QR code linking to LensReport on the Apple App Store" width="168" height="168" loading="lazy" decoding="async">
+    <p class="qr-floater__caption">Or <a class="qr-floater__link" href="https://apps.apple.com/us/app/scan-to-excel-ai-lensreport/id6760954658" target="_blank" rel="noopener noreferrer">open the App Store</a>.</p>
+  </aside>
+
   <nav>
     <div class="nav-inner">
       <a href="/" class="logo">
@@ -1496,16 +1618,16 @@
 
       <div class="pitch">
         <img class="h-logo" src="assets/images/app-logo.png" alt="LensReport app icon" width="72" height="72">
-        <div class="h-badge"><span class="dot"></span>LAUNCHING ON iOS &amp; ANDROID</div>
+        <div class="h-badge"><span class="dot"></span>LIVE ON THE APP STORE</div>
         <p class="sr-only">Animation: a phone scans a fuel receipt. A new row appears in a spreadsheet with the vendor, date, amount and calculated VAT extracted by AI.</p>
         <h1 class="h-headline" id="hero-heading">Scan.<br><span class="green">AI builds the report.</span><br>Ask it anything.</h1>
         <p class="h-promise">No more manual data entry.</p>
         <p class="h-sub">Point your camera at any invoice, receipt, or document. AI reads it, extracts every field, and drops it into a structured report, instantly. <strong>No typing. No copy-paste. Just point and capture.</strong> Then <strong>ask your report anything</strong> in plain English. "What's my biggest expense this month?" "Which supplier am I overpaying?" Get answers grounded in your actual data, not guesses. Export as PDF, Excel, or CSV, or share a PIN-locked link your accountant opens in any browser.</p>
         <div class="h-cta">
-          <span class="h-store" role="img" aria-label="Coming soon on the App Store">
+          <a class="h-store" href="https://apps.apple.com/us/app/scan-to-excel-ai-lensreport/id6760954658" target="_blank" rel="noopener noreferrer" aria-label="Download LensReport on the App Store (opens in a new tab)">
             <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
-            <span class="badge-text"><span class="lbl">Coming soon on</span><span class="st">App Store</span></span>
-          </span>
+            <span class="badge-text"><span class="lbl">Download on the</span><span class="st">App Store</span></span>
+          </a>
           <span class="h-store" role="img" aria-label="Coming soon on Google Play">
             <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 01-.61-.92V2.734a1 1 0 01.609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-3.199l2.302 2.302-2.302 2.302L15.396 12l2.302-2.492zM5.864 2.658L16.8 8.991l-2.302 2.302L5.864 2.658z"/></svg>
             <span class="badge-text"><span class="lbl">Coming soon on</span><span class="st">Google Play</span></span>
@@ -2860,6 +2982,61 @@
         if (e.key === 'ArrowLeft')  goToPanel(state.panel - 1);
         if (e.key === 'ArrowRight') goToPanel(state.panel + 1);
       });
+    })();
+  </script>
+
+  <!-- Floating App Store QR — reveal-after-delay + remember dismissal. -->
+  <script>
+    (function () {
+      var STORAGE_KEY = 'lr_app_qr_dismissed_v1';
+      var REVEAL_DELAY_MS = 4000;
+      var FADE_OUT_MS = 400;
+      var DESKTOP_MQ = '(min-width: 1024px)';
+
+      var el = document.getElementById('qr-floater');
+      var closeBtn = document.getElementById('qr-floater-close');
+      if (!el || !closeBtn) return;
+
+      // Honour prior dismissal. Private mode / disabled storage falls through to "show".
+      try {
+        if (window.localStorage && window.localStorage.getItem(STORAGE_KEY) === '1') return;
+      } catch (_) { /* localStorage unavailable — show widget */ }
+
+      // CSS already hides below 1024px, but skip JS work too when small.
+      var mq = (window.matchMedia ? window.matchMedia(DESKTOP_MQ) : null);
+      if (mq && !mq.matches) return;
+
+      function persistDismissal() {
+        try { if (window.localStorage) window.localStorage.setItem(STORAGE_KEY, '1'); }
+        catch (_) { /* ignore */ }
+      }
+
+      function dismiss() {
+        if (el.hasAttribute('hidden')) return;
+        el.classList.remove('is-visible');
+        window.setTimeout(function () { el.setAttribute('hidden', ''); }, FADE_OUT_MS);
+        persistDismissal();
+      }
+
+      function onKeyDown(e) {
+        if (e.key !== 'Escape' || el.hasAttribute('hidden')) return;
+        dismiss();
+        document.removeEventListener('keydown', onKeyDown);
+      }
+      closeBtn.addEventListener('click', function () {
+        dismiss();
+        document.removeEventListener('keydown', onKeyDown);
+      });
+      document.addEventListener('keydown', onKeyDown);
+
+      window.setTimeout(function () {
+        // Re-check viewport in case the user resized while waiting.
+        if (mq && !mq.matches) return;
+        el.removeAttribute('hidden');
+        // Force a reflow so the entry transition fires from the initial off-state.
+        void el.offsetWidth;
+        el.classList.add('is-visible');
+      }, REVEAL_DELAY_MS);
     })();
   </script>
 </body>
