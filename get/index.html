@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Download LensReport — Scan Receipts to Excel</title>
+  <meta name="description" content="Download LensReport free on iOS and Android. Scan receipts in the field and get real-time reports with working Excel exports.">
+
+  <!-- Open Graph (link preview when shared) -->
+  <meta property="og:title" content="Download LensReport">
+  <meta property="og:description" content="AI business reporting — scan receipts, get real Excel & PDF reports. Free on iOS & Android.">
+  <meta property="og:image" content="https://lensreport.app/assets/images/app-logo-round.png">
+  <meta property="og:url" content="https://lensreport.app/get">
+  <meta property="og:type" content="website">
+
+  <link rel="icon" href="/assets/images/app-icon.png">
+
+  <!-- Device-aware redirect: runs as early as possible so mobile users skip the landing page. -->
+  <script>
+    (function () {
+      var APP_STORE  = "https://apps.apple.com/us/app/scan-to-excel-ai-lensreport/id6760954658";
+      var PLAY_STORE = "https://play.google.com/store/apps/details?id=com.shweth.lensreport";
+
+      var ua = navigator.userAgent || navigator.vendor || window.opera || "";
+
+      // iPadOS 13+ reports as desktop Safari; catch it via touch + Mac platform.
+      var isIOS = /iPad|iPhone|iPod/.test(ua) ||
+                  (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+      var isAndroid = /android/i.test(ua);
+
+      // Allow forcing a store via ?store=ios|android for testing / direct links.
+      var forced = (location.search.match(/[?&]store=([^&]+)/) || [])[1];
+      if (forced === "ios")      { location.replace(APP_STORE);  return; }
+      if (forced === "android")  { location.replace(PLAY_STORE); return; }
+
+      if (isIOS)      { location.replace(APP_STORE);  return; }
+      if (isAndroid)  { location.replace(PLAY_STORE); return; }
+      // Desktop / unknown: fall through to the landing page with both buttons.
+    })();
+  </script>
+
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 32px 20px;
+      background: linear-gradient(160deg, #f4fbf7 0%, #ffffff 60%);
+      color: #1a1a1a;
+    }
+    .card {
+      max-width: 420px;
+      width: 100%;
+      text-align: center;
+    }
+    .logo {
+      width: 96px;
+      height: 96px;
+      border-radius: 24px;
+      margin: 0 auto 24px;
+      display: block;
+      box-shadow: 0 8px 28px rgba(76, 175, 125, 0.25);
+    }
+    h1 {
+      font-size: 26px;
+      line-height: 1.25;
+      margin-bottom: 10px;
+    }
+    .sub {
+      font-size: 16px;
+      color: #555;
+      line-height: 1.55;
+      margin-bottom: 32px;
+    }
+    .buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      text-decoration: none;
+      font-size: 16px;
+      font-weight: 600;
+      padding: 16px 20px;
+      border-radius: 14px;
+      transition: transform .12s ease, box-shadow .12s ease;
+    }
+    .btn:active { transform: scale(0.98); }
+    .btn-ios {
+      background: #1a1a1a;
+      color: #fff;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.18);
+    }
+    .btn-android {
+      background: #4CAF7D;
+      color: #fff;
+      box-shadow: 0 4px 14px rgba(76, 175, 125, 0.35);
+    }
+    .btn svg { width: 22px; height: 22px; flex-shrink: 0; }
+    .note {
+      margin-top: 26px;
+      font-size: 13px;
+      color: #888;
+    }
+    .note a { color: #4CAF7D; text-decoration: none; }
+    .redirecting {
+      margin-top: 22px;
+      font-size: 14px;
+      color: #999;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <main class="card">
+    <img src="/assets/images/app-logo-round.png" alt="LensReport logo" class="logo">
+    <h1>Get LensReport</h1>
+    <p class="sub">AI business reporting — scan receipts and get real Excel &amp; PDF reports in seconds. Free to start, no card needed.</p>
+
+    <div class="buttons">
+      <a class="btn btn-ios" href="https://apps.apple.com/us/app/scan-to-excel-ai-lensreport/id6760954658">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.365 1.43c0 1.14-.42 2.2-1.13 3-.84.96-2.2 1.7-3.32 1.6-.13-1.1.42-2.27 1.1-3 .8-.86 2.2-1.5 3.35-1.6zM20.5 17.18c-.55 1.27-.82 1.84-1.53 2.96-.99 1.56-2.38 3.5-4.1 3.51-1.53.02-1.92-1-3.99-.99-2.07.01-2.5 1.01-4.03.99-1.72-.02-3.04-1.77-4.03-3.33C-.07 16.67-.36 11.1 1.4 8.16 2.66 6.06 4.65 4.83 6.52 4.83c1.9 0 3.1 1.04 4.67 1.04 1.53 0 2.46-1.04 4.66-1.04 1.66 0 3.42.9 4.68 2.46-4.11 2.25-3.44 8.12.97 9.89z"/></svg>
+        Download on the App Store
+      </a>
+      <a class="btn btn-android" href="https://play.google.com/store/apps/details?id=com.shweth.lensreport">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3.6 1.8c-.3.3-.5.7-.5 1.3v17.8c0 .6.2 1 .5 1.3l.1.1L13.4 12 3.7 1.7l-.1.1zM17 8.4l-3.3-1.9-2.6 2.6 2.6 2.6L17 9.7c.9-.5.9-1.3 0-1.3zm.6 4.7l-3.9-2.2-2.7 2.7 8.5 4.8c.7.4 1.4 0 1.4-.8l-3.3-4.5zM5.1 22.3l8.4-8.4-2.6-2.6-5.8 11z"/></svg>
+        Get it on Google Play
+      </a>
+    </div>
+
+    <p class="redirecting" id="redirecting">Taking you to your app store…</p>
+
+    <p class="note">On a computer? <a href="https://lensreport.app">Visit lensreport.app</a> to learn more.</p>
+  </main>
+
+  <noscript>
+    <style>.redirecting { display: none !important; }</style>
+  </noscript>
+</body>
+</html>
