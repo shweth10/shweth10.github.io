@@ -1,1 +1,5 @@
 .superpowers/
+
+# Source assets (originals kept locally; site ships optimized derivatives in assets/images/)
+assets/IAVLensreport.mp4
+assets/Lens Report App store images Eng/
