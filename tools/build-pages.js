@@ -218,7 +218,9 @@ for (const [slug, title, desc] of [
   let html = fs.readFileSync(file, 'utf8');
   if (html.includes('<!-- lr-shell -->')) continue; // already patched
   // Head: add canonical + site.css + description; keep the page's own <style>.
-  html = html.replace(/<title>[^<]*<\/title>/, `<title>${title}</title>\n  <meta name="description" content="${desc}">\n  <link rel="canonical" href="${P.SITE}/${slug}/">\n  <link rel="icon" href="/assets/images/app-logo.png" type="image/png">\n  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">\n  <link rel="stylesheet" href="/assets/site.css">\n  <style>body{max-width:none;padding:0}.legal{max-width:800px;margin:0 auto;padding:24px 28px 48px}.legal header h1{font-family:var(--display)}</style>`);
+  html = html.replace(/<title>[^<]*<\/title>/, `<title>${title}</title>\n  <meta name="description" content="${desc}">\n  <link rel="canonical" href="${P.SITE}/${slug}/">\n  <link rel="icon" href="/assets/images/app-logo.png" type="image/png">\n  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">\n  <link rel="stylesheet" href="/assets/site.css">`);
+  // Override the page's own body width AFTER its <style> so the shell spans the page.
+  html = html.replace('</head>', '  <style>body{max-width:none;padding:0;background:#fff}.legal{max-width:800px;margin:0 auto;padding:24px 28px 48px}.legal header h1{font-family:var(--display)}</style>\n</head>');
   // Body: replace the back link with the nav, wrap the legal text, swap the footer.
   html = html.replace(/<body>\s*<a href="\/" class="back-link">[^<]*<\/a>/, `<body>\n<!-- lr-shell -->\n<div class="c">${P.nav()}</div>\n<div class="legal">`);
   html = html.replace(/<footer>[\s\S]*?<\/footer>\s*<\/body>/, `</div>\n<div class="c">${P.footer()}</div>\n</body>`);
