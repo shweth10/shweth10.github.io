@@ -10,8 +10,9 @@ const desc = 'Log an expense in seconds by photo, voice or a tap. LensReport giv
 const body = `
 <header class="hero-mint">
   <div class="c">
+    <div class="kicker">The AI expense tracker for iPhone</div>
     <h1 class="h1">Every dollar<br>gets a face.</h1>
-    <p class="lede">Snap it, say it or tap it. LensReport turns each expense into a card you'll actually look at, then tells you where to save.</p>
+    <p class="lede">LensReport is an expense tracker you log by photo, voice or a tap. Every expense becomes a card you'll actually look at, and the AI tells you where to save.</p>
     ${P.storeButtons()}
     ${P.stickerRow(12)}
     <p class="caption">224 hand-drawn categories. Coffee looks like coffee, not a grey circle.</p>
