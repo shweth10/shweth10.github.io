@@ -3,163 +3,82 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Download LensReport — Scan Receipts to Excel</title>
-  <meta name="description" content="Download LensReport free on iOS and Android. Scan receipts in the field and get real-time reports with working Excel exports.">
-
-  <!-- Open Graph (link preview when shared) -->
-  <meta property="og:title" content="Download LensReport">
-  <meta property="og:description" content="AI business reporting — scan receipts, get real Excel & PDF reports. Free on iOS & Android.">
-  <meta property="og:image" content="https://lensreport.app/assets/images/app-logo-round.png">
-  <meta property="og:url" content="https://lensreport.app/get">
+  <meta name="format-detection" content="telephone=no,date=no,address=no,email=no">
+  <title>Get LensReport | Expense Tracker AI</title>
+  <meta name="description" content="Download LensReport, the AI expense tracker, on the App Store. Log expenses by photo, voice or a tap. Three free expenses, no card.">
+  <link rel="canonical" href="https://lensreport.app/get/">
+  <meta property="og:site_name" content="LensReport">
+  <meta property="og:title" content="Get LensReport | Expense Tracker AI">
+  <meta property="og:description" content="Download LensReport, the AI expense tracker, on the App Store. Log expenses by photo, voice or a tap. Three free expenses, no card.">
   <meta property="og:type" content="website">
-
-  <link rel="icon" href="/assets/images/app-icon.png">
-
-  <!-- Device-aware redirect: runs as early as possible so mobile users skip the landing page. -->
+  <meta property="og:url" content="https://lensreport.app/get/">
+  <meta property="og:image" content="https://lensreport.app/assets/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Get LensReport | Expense Tracker AI">
+  <meta name="twitter:description" content="Download LensReport, the AI expense tracker, on the App Store. Log expenses by photo, voice or a tap. Three free expenses, no card.">
+  <meta name="twitter:image" content="https://lensreport.app/assets/og.png">
+  <meta name="theme-color" content="#22A05C">
+  <meta name="apple-itunes-app" content="app-id=6760954658">
+  <link rel="icon" href="/assets/images/app-logo.png" type="image/png">
+  <link rel="apple-touch-icon" href="/assets/images/app-icon.png">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:;">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/site.css">
   <script>
     (function () {
-      var APP_STORE  = "https://apps.apple.com/us/app/scan-to-excel-ai-lensreport/id6760954658";
-      var PLAY_STORE = "https://play.google.com/store/apps/details?id=com.shweth.lensreport";
-
-      var ua = navigator.userAgent || navigator.vendor || window.opera || "";
-
-      // iPadOS 13+ reports as desktop Safari; catch it via touch + Mac platform.
-      var isIOS = /iPad|iPhone|iPod/.test(ua) ||
-                  (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
-      var isAndroid = /android/i.test(ua);
-
-      // Allow forcing a store via ?store=ios|android for testing / direct links.
+      var APP_STORE = "https://apps.apple.com/us/app/scan-to-excel-ai-lensreport/id6760954658";
+      var ua = navigator.userAgent || navigator.vendor || "";
+      var isIOS = /iPad|iPhone|iPod/.test(ua) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
       var forced = (location.search.match(/[?&]store=([^&]+)/) || [])[1];
-      if (forced === "ios")      { location.replace(APP_STORE);  return; }
-      if (forced === "android")  { location.replace(PLAY_STORE); return; }
-
-      if (isIOS)      { location.replace(APP_STORE);  return; }
-      if (isAndroid)  { location.replace(PLAY_STORE); return; }
-      // Desktop / unknown: fall through to the landing page with both buttons.
+      if (forced === "ios" || isIOS) { location.replace(APP_STORE); }
+      // Android: the Google Play listing is still in closed testing, so fall through to the page.
     })();
   </script>
-
-  <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 32px 20px;
-      background: linear-gradient(160deg, #f4fbf7 0%, #ffffff 60%);
-      color: #1a1a1a;
-    }
-    .card {
-      max-width: 420px;
-      width: 100%;
-      text-align: center;
-    }
-    .logo {
-      width: 96px;
-      height: 96px;
-      border-radius: 24px;
-      margin: 0 auto 24px;
-      display: block;
-      box-shadow: 0 8px 28px rgba(76, 175, 125, 0.25);
-    }
-    h1 {
-      font-size: 26px;
-      line-height: 1.25;
-      margin-bottom: 10px;
-    }
-    .sub {
-      font-size: 16px;
-      color: #555;
-      line-height: 1.55;
-      margin-bottom: 32px;
-    }
-    .buttons {
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
-    .btn {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      text-decoration: none;
-      font-size: 16px;
-      font-weight: 600;
-      padding: 16px 20px;
-      border-radius: 14px;
-      transition: transform .12s ease, box-shadow .12s ease;
-    }
-    .btn:active { transform: scale(0.98); }
-    .btn-ios {
-      background: #1a1a1a;
-      color: #fff;
-      box-shadow: 0 4px 14px rgba(0,0,0,0.18);
-    }
-    .btn-android {
-      background: #4CAF7D;
-      color: #fff;
-      box-shadow: 0 4px 14px rgba(76, 175, 125, 0.35);
-    }
-    .btn-soon {
-      background: #eef0ef;
-      color: #9aa0a0;
-      box-shadow: none;
-      cursor: default;
-    }
-    .btn-soon:active { transform: none; }
-    .btn-soon .soon-tag {
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: .04em;
-      text-transform: uppercase;
-      background: #d8dcda;
-      color: #71787a;
-      padding: 3px 8px;
-      border-radius: 999px;
-    }
-    .btn svg { width: 22px; height: 22px; flex-shrink: 0; }
-    .note {
-      margin-top: 26px;
-      font-size: 13px;
-      color: #888;
-    }
-    .note a { color: #4CAF7D; text-decoration: none; }
-    .redirecting {
-      margin-top: 22px;
-      font-size: 14px;
-      color: #999;
-      display: none;
-    }
-  </style>
 </head>
-<body>
-  <main class="card">
-    <img src="/assets/images/app-logo-round.png" alt="LensReport logo" class="logo">
-    <h1>Get LensReport</h1>
-    <p class="sub">AI business reporting — scan receipts and get real Excel &amp; PDF reports in seconds. Free to start, no card needed.</p>
+<body class="">
+<div class="c"><nav class="nav" aria-label="Main">
+  <a class="brand" href="/"><img src="/assets/art/logo.png" alt="" width="30" height="30">Lens<b>Report</b></a>
+  <ul>
+    <li><a href="/#how-it-works">How it works</a></li>
+    <li><a href="/#ask-ai">Ask AI</a></li>
+    <li><a href="/cheaper-nearby/">Cheaper nearby</a></li>
+    <li><a href="/support/">Support</a></li>
+  </ul>
+  <a class="btn btn-dark" href="https://apps.apple.com/us/app/scan-to-excel-ai-lensreport/id6760954658" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.4 12.6c0-2.4 2-3.6 2-3.7-1.1-1.6-2.8-1.8-3.4-1.9-1.5-.1-2.8.9-3.6.9-.7 0-1.9-.8-3.1-.8-1.6 0-3.1.9-3.9 2.4-1.7 2.9-.4 7.3 1.2 9.6.8 1.2 1.8 2.5 3 2.4 1.2 0 1.7-.8 3.1-.8s1.9.8 3.1.8c1.3 0 2.1-1.2 2.9-2.4.9-1.3 1.3-2.6 1.3-2.7-.1 0-2.6-1-2.6-3.8zM14 5.4c.7-.8 1.1-1.9 1-3-1 0-2.1.7-2.8 1.5-.6.7-1.2 1.8-1 2.9 1.1.1 2.2-.6 2.8-1.4z"/></svg>Get the app</a>
+</nav></div>
 
-    <div class="buttons">
-      <a class="btn btn-ios" href="https://apps.apple.com/us/app/scan-to-excel-ai-lensreport/id6760954658">
-        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.365 1.43c0 1.14-.42 2.2-1.13 3-.84.96-2.2 1.7-3.32 1.6-.13-1.1.42-2.27 1.1-3 .8-.86 2.2-1.5 3.35-1.6zM20.5 17.18c-.55 1.27-.82 1.84-1.53 2.96-.99 1.56-2.38 3.5-4.1 3.51-1.53.02-1.92-1-3.99-.99-2.07.01-2.5 1.01-4.03.99-1.72-.02-3.04-1.77-4.03-3.33C-.07 16.67-.36 11.1 1.4 8.16 2.66 6.06 4.65 4.83 6.52 4.83c1.9 0 3.1 1.04 4.67 1.04 1.53 0 2.46-1.04 4.66-1.04 1.66 0 3.42.9 4.68 2.46-4.11 2.25-3.44 8.12.97 9.89z"/></svg>
-        Download on the App Store
-      </a>
-      <div class="btn btn-soon" role="text" aria-label="Google Play — coming soon">
-        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3,20.5V3.5C3,2.91 3.34,2.39 3.84,2.15L13.69,12L3.84,21.85C3.34,21.6 3,21.09 3,20.5M16.81,15.12L6.05,21.34L14.54,12.85L16.81,15.12M20.16,10.81C20.5,11.08 20.75,11.5 20.75,12C20.75,12.5 20.5,12.92 20.16,13.19L17.89,14.5L15.39,12L17.89,9.5L20.16,10.81M6.05,2.66L16.81,8.88L14.54,11.15L6.05,2.66Z"/></svg>
-        Google Play
-        <span class="soon-tag">Coming soon</span>
-      </div>
-    </div>
+<section class="hero-mint">
+  <div class="c" style="max-width:640px">
+    <img src="/assets/art/logo.png" alt="" width="72" height="72" style="margin:0 auto 18px;border-radius:18px">
+    <h1 class="h1" style="font-size:44px">Get LensReport</h1>
+    <p class="lede">The AI expense tracker. Log by photo, voice or a tap, then ask where the money went. Three free expenses, no card.</p>
+    <div class="cta-row"><a class="btn btn-dark" href="https://apps.apple.com/us/app/scan-to-excel-ai-lensreport/id6760954658" target="_blank" rel="noopener noreferrer" aria-label="Download LensReport on the App Store"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.4 12.6c0-2.4 2-3.6 2-3.7-1.1-1.6-2.8-1.8-3.4-1.9-1.5-.1-2.8.9-3.6.9-.7 0-1.9-.8-3.1-.8-1.6 0-3.1.9-3.9 2.4-1.7 2.9-.4 7.3 1.2 9.6.8 1.2 1.8 2.5 3 2.4 1.2 0 1.7-.8 3.1-.8s1.9.8 3.1.8c1.3 0 2.1-1.2 2.9-2.4.9-1.3 1.3-2.6 1.3-2.7-.1 0-2.6-1-2.6-3.8zM14 5.4c.7-.8 1.1-1.9 1-3-1 0-2.1.7-2.8 1.5-.6.7-1.2 1.8-1 2.9 1.1.1 2.2-.6 2.8-1.4z"/></svg><span><small>Download on the</small><b>App Store</b></span></a><span class="btn btn-soon" aria-label="Google Play, coming soon"><span><small>Coming soon on</small><b>Google Play</b></span></span></div>
+    <p class="caption">On an iPhone? You will be taken straight to the App Store.</p>
+  </div>
+</section>
+<section class="c" style="padding-block:48px">
+  <div class="feat">
+    <div><img src="/assets/art/feat_log.png" alt="" width="64" height="64"><h3>Log it any way</h3><p>Snap the receipt, say it out loud, or tap it in.</p></div>
+    <div><img src="/assets/art/feat_tips.png" alt="" width="64" height="64"><h3>Tips from your spending</h3><p>A tip that starts with what you actually logged.</p></div>
+    <div><img src="/assets/art/feat_nearby.png" alt="" width="64" height="64"><h3>Cheaper nearby</h3><p>Well-rated spots close by that usually cost less.</p></div>
+    <div><img src="/assets/art/feat_nudge.png" alt="" width="64" height="64"><h3>Nudges before you overspend</h3><p>A budget with a heads-up when a category runs hot.</p></div>
+  </div>
+</section>
 
-    <p class="redirecting" id="redirecting">Taking you to your app store…</p>
-
-    <p class="note">On a computer? <a href="https://lensreport.app">Visit lensreport.app</a> to learn more.</p>
-  </main>
-
-  <noscript>
-    <style>.redirecting { display: none !important; }</style>
-  </noscript>
+<div class="c"><footer class="foot">
+  <span>© 2026 LensReport · Expense Tracker AI</span>
+  <ul>
+    <li><a href="/ai-expense-tracker/">Expense tracker</a></li>
+    <li><a href="/support/">Support</a></li>
+    <li><a href="/privacy/">Privacy</a></li>
+    <li><a href="/terms/">Terms</a></li>
+    <li><a href="/delete-account/">Delete account</a></li>
+  </ul>
+</footer></div>
 </body>
 </html>
