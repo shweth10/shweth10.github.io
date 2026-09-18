@@ -174,3 +174,18 @@ p{margin:0}
   .h2{font-size:28px}
   .page .h1{font-size:32px}
 }
+
+/* Keyword pages: left-aligned hero with a mock beside the copy */
+.hero-left{text-align:left;padding-block:24px 48px}
+.hero-left .demo{padding-block:8px;gap:40px}
+.hero-left .h1{font-size:52px;letter-spacing:-1.4px}
+.hero-left .lede{margin-inline:0}
+.hero-left .cta-row{justify-content:flex-start}
+.hero-left .mock{display:flex;justify-content:center}
+.hero-left .stickers{grid-template-columns:repeat(3,1fr);margin:0;max-width:360px}
+.prose h2.first{margin-top:0}
+@media (max-width:900px){ .hero-left .h1{font-size:40px} }
+@media (max-width:560px){ .hero-left .h1{font-size:32px} }
+.art-push{position:relative;width:min(100%,360px)}
+.art-push > img{width:300px;margin:0 auto 24px}
+.art-push .push{position:absolute;left:0;right:0;bottom:0;margin:0 auto}

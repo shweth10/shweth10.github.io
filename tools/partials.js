@@ -119,9 +119,11 @@ ${STICKERS.slice(0, n).map(([s, amt]) => `  <div class="stk"><img src="${cat(s)}
 </div>`;
 }
 
-/** A push-notification banner mock. */
-function pushMock(title, body) {
-  return `<div class="push" aria-label="Example notification"><img src="/assets/art/logo.png" alt="" width="34" height="34"><div><b>${title}</b><span>${body}</span></div><i>now</i></div>`;
+/** A push-notification banner mock, seated over a character illustration when art is given. */
+function pushMock(title, body, art) {
+  const banner = `<div class="push" aria-label="Example notification"><img src="/assets/art/logo.png" alt="" width="34" height="34"><div><b>${title}</b><span>${body}</span></div><i>now</i></div>`;
+  if (!art) return banner;
+  return `<div class="art-push"><img src="/assets/art/${art}.png" alt="" width="300" height="300">${banner}</div>`;
 }
 
 function jsonLdOrg() {
